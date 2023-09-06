@@ -1,4 +1,8 @@
 ## 앙~골라
+
+### 0. 개발 순서
+**Issue > branch 파기 > kanban 보드 > 개발 > 커밋 > PR > Merge > Issue 닫기 & kanban 보드**
+
 ### 1. Branch 전략
 
 ---
@@ -132,7 +136,7 @@ const Container = styled.div` // styled 부분 컴포넌트 아래에 쓰기
 
 - 머지데이 - 스프린트 끝날 때 다같이 머지 하자
 - 스크럼 시간에 스프린트도 유동적으로
-- 개발 순서 : **Issue > kanban 보드 > 개발 > 커밋 > PR > Merge > Issue 닫기 & kanban 보드**
+
 
 **Issue 템플릿**
 
