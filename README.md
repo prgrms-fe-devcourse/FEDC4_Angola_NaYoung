@@ -12,9 +12,9 @@ main > dev > feature (기능 단위)
 1. **브랜치 명명**
 
 ```markdown
-**feat/#이슈번호/기능명**
+feat/#이슈번호/기능명
 
-****ex) feat/#12/make-post
+ex) feat/#12/make-post
 ```
 
 1. **주의사항**
@@ -29,18 +29,14 @@ main > dev > feature (기능 단위)
 - **커밋을 자주** 하자
 - 커밋 메세지 형식 : `feat: #12 - post 삭제 기능 추가`
 
-| init:  | 프로젝트 첫 세팅 |
+| prefix  | 해당 내용 |
 | --- | --- |
-| feat:  | 기능 구현
-사용자 입장에서 변화가 있을 경우 |
-| refactor:  | 사용자 입장에서 변화가 없는 코드
-파일명 폴더명 변경 및 이동 |
-| chore:      | 주석
-추가적인 의존성 설치
-리드미 수정
-기타 |
-| style:   | CSS만 수정 |
-| fix:  | 버그 수정 |
+| init  | 프로젝트 첫 세팅 |
+| feat  | 기능 구현, 사용자 입장에서 변화가 있을 경우 |
+| refactor  | 사용자 입장에서 변화가 없는 코드, 파일명 폴더명 변경 및 이동 |
+| chore     | 주석, 추가적인 의존성 설치, 리드미 수정, 기타 |
+| style   | CSS만 수정 |
+| fix  | 버그 수정 |
 - 커밋 메세지 Issue와 연결하기
     
     [[개발] Github 이슈와 커밋 메시지를 연결해보자](https://devport.tistory.com/12)
@@ -58,8 +54,8 @@ main > dev > feature (기능 단위)
 ├── src
 │   ├── components
 |   |   └── Post // default 컴포넌트에서 분리가 발생하면 여기에 넣기
-|   |        └── **index.tsx // default 컴포넌트**
-│   ├── types // 명세 + 한 번 이상 쓰이는 타입 파
+|   |        └── index.tsx
+│   ├── types // 명세 + 한 번 이상 쓰이는 타입 파일
 |   ├── pages
 |   ├── constants // 스타일 상수, 그냥 상수는 파일로 분리! 
 |   ├── hooks
@@ -138,7 +134,7 @@ const Container = styled.div` // styled 부분 컴포넌트 아래에 쓰기
 - 스크럼 시간에 스프린트도 유동적으로
 - 개발 순서 : **Issue > kanban 보드 > 개발 > 커밋 > PR > Merge > Issue 닫기 & kanban 보드**
 
-**Issue 템플릿(임시)**
+**Issue 템플릿**
 
 > **Issue 제목 : [Prefix] - 구현 내용**
 > 
@@ -159,7 +155,7 @@ const Container = styled.div` // styled 부분 컴포넌트 아래에 쓰기
 이슈를 읽을 때 참고할 사항 작성
 ```
 
-**PR 템플릿 (임시)**
+**PR 템플릿**
 
 > **PR 제목 : [Prefix] - 구현 내용 (간단히 한 줄로)**
 > 
