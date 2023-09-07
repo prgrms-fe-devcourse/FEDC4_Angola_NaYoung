@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { authInfoState } from '@/atoms';
 import { User } from '@/types';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useSetRecoilState } from 'recoil';
 import useAxiosInstance from './instance';
 
@@ -11,15 +11,17 @@ interface SignUpRequestBody {
 	password: string;
 }
 
-export const useFetchSignUp = async (body: SignUpRequestBody) => {
+export const useFetchSignUp = () => {
 	const { baseInstance } = useAxiosInstance();
-	const { isSuccess, isError, isLoading } = useMutation(() =>
-		baseInstance.post('/signup', body),
+	const { mutate, isLoading, isError, isSuccess } = useMutation(
+		'signUp',
+		(body: SignUpRequestBody) => baseInstance.post('/signup', body),
 	);
 	return {
-		isSuccess,
-		isError,
-		isLoading,
+		signUp: mutate,
+		isSignUpLoading: isLoading,
+		isSignUpError: isError,
+		isSignUpSuccess: isSuccess,
 	};
 };
 
@@ -33,15 +35,16 @@ interface LoginResponse {
 	token: string;
 }
 
-export const useFetchLogin = async (body: LoginRequestBody) => {
+export const useFetchLogin = () => {
 	const { baseInstance } = useAxiosInstance();
 	const setAuth = useSetRecoilState(authInfoState);
-	const { data, isSuccess, isError, isLoading } = useMutation<
-		LoginResponse,
+
+	const { mutate, data, isSuccess, isError, isLoading } = useMutation<
+		AxiosResponse<LoginResponse>,
 		AxiosError,
-		LoginResponse
-	>('login', () => baseInstance.post('/login', body), {
-		onSuccess: (data) => {
+		LoginRequestBody
+	>('login', (body: LoginRequestBody) => baseInstance.post('/login', body), {
+		onSuccess: ({ data }) => {
 			setAuth({
 				userId: data.user._id,
 				token: data.token,
@@ -50,36 +53,47 @@ export const useFetchLogin = async (body: LoginRequestBody) => {
 	});
 
 	return {
-		data: data?.user._id,
-		isSuccess,
-		isError,
-		isLoading,
+		login: mutate,
+		loginData: {
+			userId: data?.data.user._id,
+			fullName: data?.data.user.fullName,
+		},
+		isLoginSuccess: isSuccess,
+		isLoginError: isError,
+		isLoginLoading: isLoading,
 	};
 };
 
-// 로그아웃
-export const useFetchLogOut = async () => {
+export const useFetchLogOut = () => {
 	const { authInstance } = useAxiosInstance();
-	const { isSuccess, isError, isLoading } = useMutation('logOut', () =>
-		authInstance.post('/logout'),
+	const setAuth = useSetRecoilState(authInfoState);
+
+	const { mutate, isSuccess, isError, isLoading } = useMutation(
+		'logOut',
+		() => authInstance.post('/logout'),
+		{
+			onSuccess: () => {
+				setAuth(null);
+			},
+		},
 	);
 
 	return {
-		isSuccess,
-		isError,
-		isLoading,
+		logOut: mutate,
+		isLogOutSuccess: isSuccess,
+		isLogOutError: isError,
+		isLogOutLoading: isLoading,
 	};
 };
 
-// 로그인 인증
 export const useFetchAuthUser = async () => {
 	const { authInstance } = useAxiosInstance();
 	const { data, isSuccess, isError, isLoading } = useQuery<
-		User,
+		AxiosResponse<User>,
 		AxiosError,
 		string | null
 	>('authUser', () => authInstance.get('/auth-user'), {
-		select: (data) => {
+		select: ({ data }) => {
 			if (data) {
 				return data._id;
 			}
