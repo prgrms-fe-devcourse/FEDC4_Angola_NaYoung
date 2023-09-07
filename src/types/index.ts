@@ -1,4 +1,4 @@
-interface User{
+export interface User{
     coverImage: string;
     image: string;
     role: string;
@@ -28,7 +28,7 @@ interface User{
     updatedAt: string;
 }
 
-interface Channel {
+export interface Channel {
   authRequired: boolean;
   posts: string[];
   _id: string;
@@ -38,7 +38,7 @@ interface Channel {
   updatedAt: string;
 }
 
-interface Post {
+export interface Post {
   likes: Like[];
   comments: Comment[];
   _id: string;
@@ -51,7 +51,7 @@ interface Post {
   updatedAt: string; 
 }
 
-interface Like {
+export interface Like {
   _id: string; 
   user: string;
   post: string, 
@@ -59,14 +59,14 @@ interface Like {
   updatedAt: string;
 }
 
-interface Follow {
+export interface Follow {
   _id: string;
   user: string;
   follower: string;
   createdAt: string;
   updatedAt: string;
 }
-interface Notification {
+export interface Notification {
   seen : boolean;
   _id: string;
   author: User;
@@ -78,7 +78,7 @@ interface Notification {
   createdAt: string;
   updatedAt: string;
 }
-interface Comment {
+export interface Comment {
   _id: string;
   comment: string;
   author: User;
@@ -87,7 +87,7 @@ interface Comment {
   updatedAt: string;
 }
 
-interface Message {
+export interface Message {
   _id: string;
   message: string;
   sender: User;
