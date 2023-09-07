@@ -1,7 +1,12 @@
 import _Storage from './storage';
 
-export const tokenStorage = new _Storage<string | null>({
+export interface AuthInfo {
+	token: string;
+	userId: string;
+}
+
+export const authInfoStorage = new _Storage<AuthInfo | null>({
 	storage: localStorage,
-	key: 'auth-token',
+	key: 'auth-info',
 	defaultValue: null,
 });

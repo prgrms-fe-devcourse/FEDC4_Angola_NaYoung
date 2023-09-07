@@ -1,20 +1,18 @@
-import { tokenStorage } from '@/storage';
+import { AuthInfo, authInfoStorage } from '@/storage';
 import { atom, selector } from 'recoil';
 
-const authToken = atom<string | null>({
-	key: 'authToken',
-	default: tokenStorage.getItem(),
+const authInfo = atom<AuthInfo | null>({
+	key: 'authInfo',
+	default: authInfoStorage.getItem(),
 });
 
-export const authTokenState = selector({
-	key: 'autoTokenState',
+export const authInfoState = selector({
+	key: 'autoInfoState',
 	get: ({ get }) => {
-		return get(authToken);
+		return get(authInfo);
 	},
-	set: ({ set }, newToken) => {
-		set(authToken, newToken);
-		if (typeof newToken === 'string') {
-			tokenStorage.setItem(newToken);
-		}
+	set: ({ set }, newInfo) => {
+		set(authInfo, newInfo);
+		authInfoStorage.setItem(newInfo as AuthInfo);
 	},
 });
