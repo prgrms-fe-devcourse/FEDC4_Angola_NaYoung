@@ -1,9 +1,14 @@
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
+
+const queryClient = new QueryClient();
 
 const App = () => {
 	return (
 		<RecoilRoot>
-			<div>test</div>
+			<QueryClientProvider client={queryClient}>
+				<div>test</div>
+			</QueryClientProvider>
 		</RecoilRoot>
 	);
 };
