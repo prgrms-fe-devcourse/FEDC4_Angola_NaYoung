@@ -1,5 +1,11 @@
+import { RecoilRoot } from 'recoil';
+
 const App = () => {
-	return <div>test</div>;
+	return (
+		<RecoilRoot>
+			<div>test</div>
+		</RecoilRoot>
+	);
 };
 
 export default App;
