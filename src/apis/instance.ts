@@ -15,7 +15,7 @@ const useAxiosInstance = () => {
 		},
 	});
 
-	return [baseInstance, authInstance];
+	return { baseInstance, authInstance };
 };
 
 export default useAxiosInstance;
