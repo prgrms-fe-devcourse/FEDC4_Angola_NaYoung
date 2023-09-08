@@ -37,3 +37,40 @@ export const useFetchUsers = () => {
 		isLoading,
 	};
 };
+
+// 사용자 불러오기 fetchUser (GET)
+
+type PickUserData = Pick<
+	User,
+	'image' | 'posts' | 'likes' | 'followers' | 'following' | '_id' | 'fullName'
+>;
+
+export const useFetchUser = ({ userId }: { userId: string }) => {
+	const { baseInstance } = useAxiosInstance();
+	const { data, isError, isSuccess, isLoading } = useQuery<
+		AxiosResponse<User | null>,
+		AxiosError,
+		PickUserData | null
+	>('user', () => baseInstance.get(`/users/${userId}`), {
+		select: ({ data }) => {
+			if (data) {
+				return {
+					image: data.image,
+					posts: data.posts,
+					likes: data.likes,
+					followers: data.followers,
+					following: data.following,
+					_id: data._id,
+					fullName: data.fullName,
+				};
+			}
+			return null;
+		},
+	});
+	return {
+		data,
+		isError,
+		isSuccess,
+		isLoading,
+	};
+};
