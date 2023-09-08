@@ -11,7 +11,6 @@ interface UnLikeRequestBody {
 	id: string;
 }
 
-// Like 객체를 받음, 필요한 건 _id:string, user:string, post:string
 export const useFetchLike = () => {
 	const { authInstance } = useAxiosInstance();
 	const { mutate, data, isSuccess, isError, isLoading } = useMutation<
@@ -34,7 +33,6 @@ export const useFetchLike = () => {
 	};
 };
 
-// // Like 객체를 받음, 리턴 필요 없음
 export const useFetchUnLike = () => {
 	const { authInstance } = useAxiosInstance();
 	const { mutate, isSuccess, isError, isLoading } = useMutation<
