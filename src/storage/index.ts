@@ -1,7 +1,8 @@
+import { AuthInfo } from '@/types/auth';
 import _Storage from './storage';
 
-export const tokenStorage = new _Storage<string | null>({
+export const authInfoStorage = new _Storage<AuthInfo | null>({
 	storage: localStorage,
-	key: 'auth-token',
+	key: 'auth-info',
 	defaultValue: null,
 });
