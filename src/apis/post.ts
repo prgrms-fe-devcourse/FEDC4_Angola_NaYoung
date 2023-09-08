@@ -51,43 +51,43 @@ export const useFetchUserPosts = async (authorId: number) => {
 // 	return res;
 // };
 
-export const useFetchPost = async (postId: number) => {
-	const { baseInstance } = useAxiosInstance();
-	const path = `/posts/${postId}}`;
+// export const useFetchPost = async (postId: number) => {
+// 	const { baseInstance } = useAxiosInstance();
+// 	const path = `/posts/${postId}}`;
 
-	try {
-		const response = await baseInstance.get<Post>(path);
-		return response.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+// 	try {
+// 		const response = await baseInstance.get<Post>(path);
+// 		return response.data;
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// };
 
-export const useFetchCreatePost = async (title: string): Promise<void> => {
-	const { authInstance } = useAxiosInstance();
-	const path = `/posts/create`;
+// export const useFetchCreatePost = async (title: string): Promise<void> => {
+// 	const { authInstance } = useAxiosInstance();
+// 	const path = `/posts/create`;
 
-	const formData = new FormData();
-	formData.append('title', title);
-	formData.append('image', '');
-	formData.append('channelId', CHANNEL_ID);
+// 	const formData = new FormData();
+// 	formData.append('title', title);
+// 	formData.append('image', '');
+// 	formData.append('channelId', CHANNEL_ID);
 
-	try {
-		await authInstance.post(path, formData);
-		console.log('Creating Post Successes');
-	} catch (error) {
-		console.error(error);
-	}
-};
+// 	try {
+// 		await authInstance.post(path, formData);
+// 		console.log('Creating Post Successes');
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// };
 
-export const useFetchDeletePost = async (id: string): Promise<void> => {
-	const { authInstance } = useAxiosInstance();
-	const path = `/posts/delete`;
+// export const useFetchDeletePost = async (id: string): Promise<void> => {
+// 	const { authInstance } = useAxiosInstance();
+// 	const path = `/posts/delete`;
 
-	try {
-		await authInstance.delete(path, { data: { id } });
-		console.log('Deleting Post Successes');
-	} catch (error) {
-		console.error(error);
-	}
-};
+// 	try {
+// 		await authInstance.delete(path, { data: { id } });
+// 		console.log('Deleting Post Successes');
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// };
