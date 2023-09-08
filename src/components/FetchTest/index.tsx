@@ -49,7 +49,7 @@ const FetchTest = () => {
 				<button onClick={() => updateFullName({ fullName: 'lee' })}>
 					updateFullName
 				</button>
-				<button onClick={() => updatePassword({ password: 'changepassword' })}>
+				<button onClick={() => updatePassword({ password: '1234' })}>
 					updatePassword
 				</button>
 			</div>
