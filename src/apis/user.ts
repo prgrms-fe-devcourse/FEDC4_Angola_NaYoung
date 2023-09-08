@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
+import { authInfoState } from '@/atoms';
 import { User } from '@/types';
 import { AxiosError, AxiosResponse } from 'axios';
+import { useRecoilValue } from 'recoil';
 import useAxiosInstance from './instance';
-
-// 사용자 목록 불러오기 :fetchUsers(GET)
 
 type PickUsersData = Pick<
 	User,
@@ -38,33 +38,29 @@ export const useFetchUsers = () => {
 	};
 };
 
-// 사용자 불러오기 fetchUser (GET)
-
 type PickUserData = Pick<
 	User,
 	'image' | 'posts' | 'likes' | 'followers' | 'following' | '_id' | 'fullName'
 >;
 
-export const useFetchUser = ({ userId }: { userId: string }) => {
+export const useFetchUser = () => {
 	const { baseInstance } = useAxiosInstance();
+	const auth = useRecoilValue(authInfoState);
 	const { data, isError, isSuccess, isLoading } = useQuery<
-		AxiosResponse<User | null>,
+		AxiosResponse<User>,
 		AxiosError,
-		PickUserData | null
-	>('user', () => baseInstance.get(`/users/${userId}`), {
+		PickUserData
+	>('user', () => baseInstance.get(`/users/${auth?.userId}`), {
 		select: ({ data }) => {
-			if (data) {
-				return {
-					image: data.image,
-					posts: data.posts,
-					likes: data.likes,
-					followers: data.followers,
-					following: data.following,
-					_id: data._id,
-					fullName: data.fullName,
-				};
-			}
-			return null;
+			return {
+				image: data.image,
+				posts: data.posts,
+				likes: data.likes,
+				followers: data.followers,
+				following: data.following,
+				_id: data._id,
+				fullName: data.fullName,
+			};
 		},
 	});
 	return {
