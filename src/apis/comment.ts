@@ -24,7 +24,7 @@ export const useFetchCreateComment = () => {
 		createComment: mutate,
 		isCreateCommentLoading: isLoading,
 		isCreateCommentError: isError,
-		isCreateCommentSucess: isSuccess,
+		isCreateCommentSuccess: isSuccess,
 	};
 };
 
