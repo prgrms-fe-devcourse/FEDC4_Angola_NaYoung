@@ -50,3 +50,26 @@ export const useFetchUpdateFullName = () => {
 // 		isLoading,
 // 	};
 // };
+
+interface UpdatePasswordRequestBody {
+	password: string;
+}
+
+// 사용자 정보 변경(비밀번호)fetchUpdatePassword (PUT) PUT /settings/update-password
+export const useFetchUpdatePassword = () => {
+	const { authInstance } = useAxiosInstance();
+	const { mutate, data, isLoading, isError, isSuccess } = useMutation<
+		AxiosResponse,
+		AxiosError,
+		UpdatePasswordRequestBody
+	>('updatePassword', (body: UpdatePasswordRequestBody) =>
+		authInstance.put('/settings/update-password', body),
+	);
+	return {
+		updatePassword: mutate,
+		updatePasswordData: { password: data?.data },
+		isUpdatePasswordLoading: isLoading,
+		isUpdatePasswordError: isError,
+		isUpdatePasswordSuccess: isSuccess,
+	};
+};
