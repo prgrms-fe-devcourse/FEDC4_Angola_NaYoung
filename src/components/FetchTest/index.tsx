@@ -1,4 +1,5 @@
 import { useFetchLogOut, useFetchLogin, useFetchSignUp } from '@/apis/auth';
+import { useFetchUpdateFullName, useFetchUpdatePassword } from '@/apis/profile';
 
 const FetchTest = () => {
 	const { signUp, isSignUpError, isSignUpLoading, isSignUpSuccess } =
@@ -7,6 +8,21 @@ const FetchTest = () => {
 		useFetchLogin();
 	const { logOut, isLogOutError, isLogOutLoading, isLogOutSuccess } =
 		useFetchLogOut();
+	const {
+		updateFullName,
+		updateFullNameData,
+		isUpdateFullNameError,
+		isUpdateFullNameSuccess,
+		isUpdateFullNameLoading,
+	} = useFetchUpdateFullName();
+	const {
+		updatePassword,
+		updatePasswordData,
+		isUpdatePasswordError,
+		isUpdatePasswordSuccess,
+		isUpdatePasswordLoading,
+	} = useFetchUpdatePassword();
+
 	return (
 		<>
 			<div>
@@ -30,6 +46,12 @@ const FetchTest = () => {
 					login
 				</button>
 				<button onClick={() => logOut()}>logout</button>
+				<button onClick={() => updateFullName({ fullName: 'lee' })}>
+					updateFullName
+				</button>
+				<button onClick={() => updatePassword({ password: 'changepassword' })}>
+					updatePassword
+				</button>
 			</div>
 			<div>
 				<h1>signup</h1>
@@ -50,6 +72,24 @@ const FetchTest = () => {
 				<div>loading : {isLogOutLoading ? 'loading' : 'not loading'}</div>
 				<div>success : {isLogOutSuccess ? 'success' : 'fail'}</div>
 				<div>error : {isLogOutError ? 'error' : 'none'}</div>
+			</div>
+			<div>
+				<h1>updateFullName</h1>
+				<div>fullName: {updateFullNameData.fullName}</div>
+				<div>
+					loading : {isUpdateFullNameLoading ? 'loading' : 'not loading'}
+				</div>
+				<div>success : {isUpdateFullNameSuccess ? 'success' : 'fail'}</div>
+				<div>error : {isUpdateFullNameError ? 'error' : 'none'}</div>
+			</div>
+			<div>
+				<h1>updatePassword</h1>
+				<div>Password: {updatePasswordData.password}</div>
+				<div>
+					loading : {isUpdatePasswordLoading ? 'loading' : 'not loading'}
+				</div>
+				<div>success : {isUpdatePasswordSuccess ? 'success' : 'fail'}</div>
+				<div>error : {isUpdatePasswordError ? 'error' : 'none'}</div>
 			</div>
 		</>
 	);
