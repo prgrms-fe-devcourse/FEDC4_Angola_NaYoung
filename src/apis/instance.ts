@@ -11,7 +11,7 @@ const useAxiosInstance = () => {
 	const authInstance = axios.create({
 		baseURL: 'https://kdt.frontend.4th.programmers.co.kr:5001/',
 		headers: {
-			Authorization: auth?.token,
+			Authorization: `Bearer ${auth?.token}`,
 		},
 	});
 
