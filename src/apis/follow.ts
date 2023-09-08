@@ -12,7 +12,7 @@ interface UnFollowRequestBody {
 }
 
 // Follow 객체를 받음, _id: string user: string, follower: string
-export const useFetchFollow = async () => {
+export const useFetchFollow = () => {
 	const { authInstance } = useAxiosInstance();
 	const { mutate, data, isSuccess, isError, isLoading } = useMutation<
 		AxiosResponse<Follow>,
@@ -35,7 +35,7 @@ export const useFetchFollow = async () => {
 };
 
 // Follow 객체를 받음, 리턴 필요 없음
-export const useFetchUnFollow = async () => {
+export const useFetchUnFollow = () => {
 	const { authInstance } = useAxiosInstance();
 	const { mutate, isSuccess, isError, isLoading } = useMutation<
 		AxiosResponse<Follow>,
