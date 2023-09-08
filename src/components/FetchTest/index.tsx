@@ -9,14 +9,14 @@ const FetchTest = () => {
 	const { logOut, isLogOutError, isLogOutLoading, isLogOutSuccess } =
 		useFetchLogOut();
 	const {
-		updateFullName,
+		updateFullNameMutate,
 		updateFullNameData,
 		isUpdateFullNameError,
 		isUpdateFullNameSuccess,
 		isUpdateFullNameLoading,
 	} = useFetchUpdateFullName();
 	const {
-		updatePassword,
+		updatePasswordMutate,
 		updatePasswordData,
 		isUpdatePasswordError,
 		isUpdatePasswordSuccess,
@@ -46,10 +46,10 @@ const FetchTest = () => {
 					login
 				</button>
 				<button onClick={() => logOut()}>logout</button>
-				<button onClick={() => updateFullName({ fullName: 'lee' })}>
+				<button onClick={() => updateFullNameMutate({ fullName: 'lee' })}>
 					updateFullName
 				</button>
-				<button onClick={() => updatePassword({ password: '1234' })}>
+				<button onClick={() => updatePasswordMutate({ password: '1234' })}>
 					updatePassword
 				</button>
 			</div>
