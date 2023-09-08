@@ -1,9 +1,6 @@
 import { useMutation } from 'react-query';
 import useAxiosInstance from './instance';
 
-export const CREATE_COMMENT_KEY = 'createComment';
-export const DELETE_COMMENT_KEY = 'deleteComment';
-
 interface CreateCommentRequestBody {
 	comment: string;
 	postId: string;
@@ -16,12 +13,12 @@ export const useFetchCreateComment = () => {
 		authInstance.post('/comments/create', body);
 
 	const { mutate, isLoading, isError, isSuccess } = useMutation(
-		CREATE_COMMENT_KEY,
+		'createCommentMutation',
 		fetcher,
 	);
 
 	return {
-		createComment: mutate,
+		createCommentMutate: mutate,
 		isCreateCommentLoading: isLoading,
 		isCreateCommentError: isError,
 		isCreateCommentSuccess: isSuccess,
@@ -39,14 +36,14 @@ export const useFetchDeleteComment = () => {
 		authInstance.delete('/comments/delete', { data: body });
 
 	const { mutate, isLoading, isError, isSuccess } = useMutation(
-		DELETE_COMMENT_KEY,
+		'deleteCommentMutation',
 		fetcher,
 	);
 
 	return {
-		createComment: mutate,
-		isCreateCommentLoading: isLoading,
-		isCreateCommentError: isError,
-		isCreateCommentSuccess: isSuccess,
+		deleteCommentMutate: mutate,
+		isDeleteCommentLoading: isLoading,
+		isDeleteCommentError: isError,
+		isDeleteCommentSuccess: isSuccess,
 	};
 };
