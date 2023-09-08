@@ -84,7 +84,7 @@ const FetchTest = () => {
 			</div>
 			<div>
 				<h1>updatePassword</h1>
-				<div>Password: {updatePasswordData.password}</div>
+				<div>password: {updatePasswordData.password}</div>
 				<div>
 					loading : {isUpdatePasswordLoading ? 'loading' : 'not loading'}
 				</div>
