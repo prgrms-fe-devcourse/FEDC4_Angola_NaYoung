@@ -8,7 +8,6 @@ import useAxiosInstance from './instance';
 
 interface UpdateFullNameRequestBody {
 	fullName: string;
-	userName: string;
 }
 
 export const useFetchUpdateFullName = () => {
@@ -18,7 +17,7 @@ export const useFetchUpdateFullName = () => {
 		AxiosError,
 		UpdateFullNameRequestBody
 	>('updateFullName', (body: UpdateFullNameRequestBody) =>
-		authInstance.put('/settings/update-user', body),
+		authInstance.put('/settings/update-user', { ...body, username: '' }),
 	);
 	return {
 		updateFullName: mutate,
