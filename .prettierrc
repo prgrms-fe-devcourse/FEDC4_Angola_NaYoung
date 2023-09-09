@@ -19,6 +19,7 @@
     "^@hooks/(.*)$",
     "^@atoms/(.*)$",
     "^@storage/(.*)$",
+    "^@utils/(.*)$",
     "^@styles/(.*)$",
     "^@type/(.*)$",
     "^@constants/(.*)$",
