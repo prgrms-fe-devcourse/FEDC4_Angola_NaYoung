@@ -1,16 +1,19 @@
+import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 
 interface ButtonProps {
 	text: string;
 	disabled?: boolean;
 	onClick?: () => void;
+	style?: CSSProperties;
 }
 
-const Button = ({ text, onClick, disabled = false }: ButtonProps) => {
+const Button = ({ text, onClick, disabled = false, style }: ButtonProps) => {
 	return (
 		<ButtonStyled
 			disabled={disabled}
-			onClick={onClick}>
+			onClick={onClick}
+			style={style}>
 			{text}
 		</ButtonStyled>
 	);
