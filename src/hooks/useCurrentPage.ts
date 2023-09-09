@@ -1,33 +1,47 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useLocation, useMatch } from 'react-router-dom';
 import { routes } from '@/routes';
+import { parseQueryString } from '@/utils/parseQueryString';
 
-const useCurrentPage = () => {
+interface SearchParams {
+	show?: 'true';
+	voted?: 'true';
+	keyword?: string;
+	sort?: string;
+}
+
+interface Params {
+	target?: 'user' | 'post';
+	userId?: string;
+	postId?: string;
+}
+
+interface CurrentPage {
+	title: string;
+	params: Params;
+	search: SearchParams;
+}
+
+const useCurrentPage = (): CurrentPage => {
 	const location = useLocation();
-	const searchParams = location.search
-		.slice(1)
-		.split('&')
-		.reduce((obj, query) => {
-			const [key, value] = query.split('=');
-			return { ...obj, [key]: value };
-		}, {});
+	const searchParams = parseQueryString(location.search);
 
+	let result: CurrentPage = {
+		title: 'not found',
+		params: {},
+		search: {},
+	};
 	for (const route of routes) {
 		const match = useMatch(route.path);
 		if (match) {
-			return {
+			result = {
 				title: route.title,
 				params: match.params,
 				search: searchParams,
 			};
 		}
 	}
-
-	return {
-		title: 'not found',
-		params: {},
-		search: {},
-	};
+	return result;
 };
 
 export default useCurrentPage;
