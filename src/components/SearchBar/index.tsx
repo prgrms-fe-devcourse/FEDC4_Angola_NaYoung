@@ -52,6 +52,8 @@ const SearchBar = () => {
 	);
 };
 
+export default SearchBar;
+
 const StyledForm = styled.form`
 	box-sizing: border-box;
 	display: flex;
@@ -79,5 +81,3 @@ const StyledButton = styled.button`
 	height: 30px;
 	height: 30px;
 `;
-
-export default SearchBar;
