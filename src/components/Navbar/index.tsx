@@ -1,28 +1,28 @@
-import { authInfoState } from '@/atoms';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import { AuthNavbar, CommonNavbar, NonAuthNavbar } from './components';
+import { authInfoState } from '@atoms/index';
+import { AuthMenubar, CommonMenubar, NonAuthMenubar } from './components';
 
 const Navbar = () => {
-	const auth = useRecoilValue(authInfoState);
-	return (
-		<NavbarContainer>
-			<CommonNavbar />
-			<MenubarContainer>
-				{auth?.token ? <AuthNavbar /> : <NonAuthNavbar />}
-			</MenubarContainer>
-		</NavbarContainer>
-	);
+  const auth = useRecoilValue(authInfoState);
+  return (
+    <NavbarContainer>
+      <CommonMenubar />
+      <MenubarContainer>
+        {auth?.token ? <AuthMenubar /> : <NonAuthMenubar />}
+      </MenubarContainer>
+    </NavbarContainer>
+  );
 };
 
 export default Navbar;
 
 const NavbarContainer = styled.div`
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 `;
 
 const MenubarContainer = styled.div`
-	display: flex;
-	margin-left: auto;
+  display: flex;
+  margin-left: auto;
 `;
