@@ -1,18 +1,36 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
+
 
 const SearchBar = () => {
 	const [keyword, setKeyword] = useState<string>('');
+
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const addKeywordToQueryString = ({keyword}: {keyword: string}) => {
+		searchParams.set('keyword', keyword);
+		setSearchParams(searchParams);	
+	}
+
+	const removeKeywordToQueryString = () => {
+		searchParams.delete('keyword');
+		setSearchParams(searchParams);	
+	}
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setKeyword(value);
 	};
 
-	const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (keyword.length) {
+			addKeywordToQueryString({keyword: keyword});
+		}
+		else{
+			removeKeywordToQueryString();
 		}
 	};
 
@@ -22,7 +40,7 @@ const SearchBar = () => {
 
 	return (
 		<StyledForm
-			onSubmit={handleSearch}
+			onSubmit={handleSubmit}
 			onReset={handleReset}>
 			<StyledInput
 				type="text"
