@@ -2,48 +2,48 @@ import { useMutation } from 'react-query';
 import useAxiosInstance from './instance';
 
 interface CreateCommentRequestBody {
-	comment: string;
-	postId: string;
+  comment: string;
+  postId: string;
 }
 
 export const useFetchCreateComment = () => {
-	const { authInstance } = useAxiosInstance();
+  const { authInstance } = useAxiosInstance();
 
-	const fetcher = (body: CreateCommentRequestBody) =>
-		authInstance.post('/comments/create', body);
+  const fetcher = (body: CreateCommentRequestBody) =>
+    authInstance.post('/comments/create', body);
 
-	const { mutate, isLoading, isError, isSuccess } = useMutation(
-		'createCommentMutation',
-		fetcher,
-	);
+  const { mutate, isLoading, isError, isSuccess } = useMutation(
+    'createCommentMutation',
+    fetcher,
+  );
 
-	return {
-		createCommentMutate: mutate,
-		isCreateCommentLoading: isLoading,
-		isCreateCommentError: isError,
-		isCreateCommentSuccess: isSuccess,
-	};
+  return {
+    createCommentMutate: mutate,
+    isCreateCommentLoading: isLoading,
+    isCreateCommentError: isError,
+    isCreateCommentSuccess: isSuccess,
+  };
 };
 
 interface DeleteCommentRequestBody {
-	id: string;
+  id: string;
 }
 
 export const useFetchDeleteComment = () => {
-	const { authInstance } = useAxiosInstance();
+  const { authInstance } = useAxiosInstance();
 
-	const fetcher = (body: DeleteCommentRequestBody) =>
-		authInstance.delete('/comments/delete', { data: body });
+  const fetcher = (body: DeleteCommentRequestBody) =>
+    authInstance.delete('/comments/delete', { data: body });
 
-	const { mutate, isLoading, isError, isSuccess } = useMutation(
-		'deleteCommentMutation',
-		fetcher,
-	);
+  const { mutate, isLoading, isError, isSuccess } = useMutation(
+    'deleteCommentMutation',
+    fetcher,
+  );
 
-	return {
-		deleteCommentMutate: mutate,
-		isDeleteCommentLoading: isLoading,
-		isDeleteCommentError: isError,
-		isDeleteCommentSuccess: isSuccess,
-	};
+  return {
+    deleteCommentMutate: mutate,
+    isDeleteCommentLoading: isLoading,
+    isDeleteCommentError: isError,
+    isDeleteCommentSuccess: isSuccess,
+  };
 };
