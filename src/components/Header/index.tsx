@@ -66,7 +66,7 @@ const Header = () => {
 
 	return (
 		<Container>
-			{['', 'search', 'post'].some((path) => path === getPathname(1)) ? (
+			{['', 'post', 'search'].some((path) => path === getPathname(1)) ? (
 				<SortSelect
 					id="orderSelect"
 					name="order"
