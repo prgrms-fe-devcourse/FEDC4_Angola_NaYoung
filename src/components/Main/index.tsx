@@ -1,16 +1,18 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import useCurrentPage from '@/hooks/useCurrentPage';
-import { routes } from '@/routes';
+import { redirects, routes } from '@/routes';
+
+// 임시 컴포넌트, Header 합칠 때 삭제해야 함
+const Header = ({ title }: { title: string }) => {
+	return <h1>{title}</h1>;
+};
 
 const Main = () => {
 	const { title, params, search } = useCurrentPage();
-
 	return (
 		<>
-			<div>
-				<h1>{title}</h1>
-			</div>
+			<Header title={title} />
 			<Routes>
 				{routes.map(({ path, title, component }) => (
 					<Route
@@ -20,6 +22,13 @@ const Main = () => {
 							...params,
 							...search,
 						})}></Route>
+				))}
+				{redirects.map(({ from, to }) => (
+					<Route
+						key={from + to}
+						path={from}
+						element={<Navigate to={to} />}
+					/>
 				))}
 			</Routes>
 		</>
