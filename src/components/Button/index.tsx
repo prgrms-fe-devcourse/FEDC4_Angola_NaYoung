@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
-interface ButtonType {
+interface ButtonProps {
 	text: string;
 	disabled?: boolean;
 	onClick?: () => void;
 }
 
-const Button = ({ text, onClick, disabled = false }: ButtonType) => {
+const Button = ({ text, onClick, disabled = false }: ButtonProps) => {
 	return (
 		<ButtonStyled
 			disabled={disabled}
@@ -15,6 +15,8 @@ const Button = ({ text, onClick, disabled = false }: ButtonType) => {
 		</ButtonStyled>
 	);
 };
+
+export default Button;
 
 const ButtonStyled = styled.button`
 	border-radius: 54px;
@@ -28,5 +30,3 @@ const ButtonStyled = styled.button`
 		background-color: rgba(60, 100, 105, 0.3);
 	}
 `;
-
-export default Button;
