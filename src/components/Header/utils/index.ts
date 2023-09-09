@@ -1,8 +1,5 @@
+import { getPathname } from '@/utils';
 import { TITLE } from '../constants';
-
-export const getPathname = (segment: number) => {
-	return location.pathname.split('/')[segment];
-};
 
 export const getTitle = (pathname: string) => {
 	return (

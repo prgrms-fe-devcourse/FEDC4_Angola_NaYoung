@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { getPathname } from '@/utils';
 import styled from '@emotion/styled';
-import { getPathname, getTitle } from './utils';
+import { getTitle } from './utils';
 
 const Header = () => {
 	const INITIAL_KEYWORD =
