@@ -55,7 +55,7 @@ const Header = () => {
 	}, [searchParams]);
 
 	useEffect(() => {
-		setTabValue(getPathname(2));
+		setTabValue(getPathname(2) ?? 'post');
 
 		const currentKeyword = searchParams.get('keyword');
 
@@ -66,25 +66,29 @@ const Header = () => {
 
 	return (
 		<Container>
-			<SortSelect
-				id="orderSelect"
-				name="order"
-				value={selectValue}
-				onChange={(e) => {
-					onChangeSelect(e.target.value);
-				}}>
-				{tabValue === 'user' ? (
-					<>
-						<option value="follower">팔로워순</option>
-						<option value="like">좋아요순</option>
-					</>
-				) : (
-					<>
-						<option value="recent">최신순</option>
-						<option value="like">좋아요순</option>
-					</>
-				)}
-			</SortSelect>
+			{['', 'search', 'post'].some((path) => path === getPathname(1)) ? (
+				<SortSelect
+					id="orderSelect"
+					name="order"
+					value={selectValue}
+					onChange={(e) => {
+						onChangeSelect(e.target.value);
+					}}>
+					{tabValue === 'user' ? (
+						<>
+							<option value="follower">팔로워순</option>
+							<option value="like">좋아요순</option>
+						</>
+					) : (
+						<>
+							<option value="recent">최신순</option>
+							<option value="like">좋아요순</option>
+						</>
+					)}
+				</SortSelect>
+			) : (
+				<div />
+			)}
 
 			<Title>
 				<Keyword>
@@ -93,18 +97,22 @@ const Header = () => {
 				{title}
 			</Title>
 
-			<TabBar>
-				<TabBarList
-					className={tabValue === 'user' ? 'bold' : ''}
-					onClick={() => onClickTabBar('user')}>
-					유저
-				</TabBarList>
-				<TabBarList
-					className={tabValue === 'post' ? 'bold' : ''}
-					onClick={() => onClickTabBar('post')}>
-					포스트
-				</TabBarList>
-			</TabBar>
+			{getPathname(1) === 'search' ? (
+				<TabBar>
+					<TabBarList
+						className={tabValue === 'user' ? 'bold' : ''}
+						onClick={() => onClickTabBar('user')}>
+						유저
+					</TabBarList>
+					<TabBarList
+						className={tabValue === 'post' ? 'bold' : ''}
+						onClick={() => onClickTabBar('post')}>
+						포스트
+					</TabBarList>
+				</TabBar>
+			) : (
+				<div />
+			)}
 		</Container>
 	);
 };
@@ -119,11 +127,13 @@ const Container = styled.div`
 	border: 1px solid black;
 	border-radius: 20px 20px 0 0;
 	padding: 0 10px;
+	height: 50px;
 `;
 const SortSelect = styled.select`
 	border-radius: 20px;
 	cursor: pointer;
 	padding: 5px 10px;
+	outline: none;
 `;
 
 const Title = styled.div``;
