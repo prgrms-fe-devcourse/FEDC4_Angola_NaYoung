@@ -2,55 +2,52 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-
 const SearchBar = () => {
 	const [keyword, setKeyword] = useState<string>('');
-
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const addKeywordToQueryString = ({keyword}: {keyword: string}) => {
+	const addKeywordToQueryString = ({ keyword }: { keyword: string }) => {
 		searchParams.set('keyword', keyword);
-		setSearchParams(searchParams);	
-	}
+		setSearchParams(searchParams);
+	};
 
-	const removeKeywordToQueryString = () => {
+	const removeKeywordFromQueryString = () => {
 		searchParams.delete('keyword');
-		setSearchParams(searchParams);	
-	}
+		setSearchParams(searchParams);
+	};
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setKeyword(value);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const onSubmitKeyword = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (keyword.length) {
-			addKeywordToQueryString({keyword: keyword});
-		}
-		else{
-			removeKeywordToQueryString();
+			addKeywordToQueryString({ keyword: keyword });
+		} else {
+			removeKeywordFromQueryString();
 		}
 	};
 
-	const handleReset = () => {
+	const onResetKeyword = () => {
 		setKeyword('');
 	};
 
 	return (
 		<StyledForm
-			onSubmit={handleSubmit}
-			onReset={handleReset}>
+			onSubmit={onSubmitKeyword}
+			onReset={onResetKeyword}>
 			<StyledInput
 				type="text"
 				value={keyword}
 				placeholder="유저 또는 포스트를 검색하세요"
-				onChange={handleInputChange}></StyledInput>
+				onChange={onChangeKeyword}></StyledInput>
 
 			<StyledButton type="reset">X</StyledButton>
 
-			<StyledButton type="submit">돋보기</StyledButton>
+			<StyledButton type="submit">검색</StyledButton>
 		</StyledForm>
 	);
 };
