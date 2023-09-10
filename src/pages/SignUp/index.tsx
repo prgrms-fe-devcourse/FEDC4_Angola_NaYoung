@@ -13,6 +13,8 @@ const SignUp = () => {
   const [fullName, setFullName] = useState('initial');
   const [isDuplicatedEmailChecked, setIsDuplicatedEmailChecked] =
     useState(false);
+  const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
+    useState(false);
   const { signUp, isSignUpSuccess, isSignUpError } = useFetchSignUp();
   const { usersData, isUsersError } = useFetchUsers();
 
@@ -29,7 +31,7 @@ const SignUp = () => {
     setFullName(e.target.value);
   };
 
-  const onClickEmailDuplicatedCheckBtn = () => {
+  const onClickDuplicatedEmailCheckBtn = () => {
     if (isUsersError || !usersData) {
       console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
       return;
@@ -39,6 +41,19 @@ const SignUp = () => {
     } else {
       alert('사용할 수 있는 이메일입니다.');
       setIsDuplicatedEmailChecked(true);
+    }
+  };
+
+  const onClickDuplicatedFullNameCheckBtn = () => {
+    if (isUsersError || !usersData) {
+      console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
+      return;
+    }
+    if (usersData.find((user) => user.fullName === fullName)) {
+      alert('이미 가입된 닉네임입니다.');
+    } else {
+      alert('사용할 수 있는 닉네임입니다.');
+      setIsDuplicatedFullNameChecked(true);
     }
   };
 
@@ -59,6 +74,10 @@ const SignUp = () => {
     }
     if (isDuplicatedEmailChecked === false) {
       alert('이메일 중복 검사를 확인해주세요.');
+      return;
+    }
+    if (isDuplicatedFullNameChecked === false) {
+      alert('닉네임 중복 검사를 확인해주세요.');
       return;
     }
 
@@ -89,7 +108,7 @@ const SignUp = () => {
               />
               <DuplicatedCheckBtn
                 type="button"
-                onClick={onClickEmailDuplicatedCheckBtn}>
+                onClick={onClickDuplicatedEmailCheckBtn}>
                 중복 검사
               </DuplicatedCheckBtn>
             </InputContainer>
@@ -123,7 +142,11 @@ const SignUp = () => {
                 required={true}
                 onChange={onChangeFullName}
               />
-              <DuplicatedCheckBtn type="button">중복 검사</DuplicatedCheckBtn>
+              <DuplicatedCheckBtn
+                type="button"
+                onClick={onClickDuplicatedFullNameCheckBtn}>
+                중복 검사
+              </DuplicatedCheckBtn>
             </InputContainer>
 
             <InputWarning style={{ display: fullName ? `none` : 'block' }}>
