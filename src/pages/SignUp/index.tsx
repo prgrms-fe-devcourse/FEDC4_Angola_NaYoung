@@ -1,4 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useFetchSignUp } from '@/apis/auth.ts';
 import styled from '@emotion/styled';
 
 const SignUp = () => {
@@ -6,6 +8,8 @@ const SignUp = () => {
 	const [password, setPassword] = useState('imsyPassword');
 	const [passwordConfirm, setPasswordConfirm] = useState('imsyPassword');
 	const [fullName, setFullName] = useState('imsyFullName');
+	const { signUp, isSignUpSuccess, isSignUpError, isSignUpLoading } =
+		useFetchSignUp();
 
 	const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
@@ -35,15 +39,30 @@ const SignUp = () => {
 			alert('닉네임은 3자 이상 10자 이하로 입력해주세요.');
 			return;
 		}
+
+		signUp({
+			email,
+			password,
+			fullName,
+		});
+
+		if (isSignUpError) {
+			alert('회원가입에 오류가 발생하였습니다.');
+			return;
+		}
+		if (isSignUpSuccess) {
+			alert('회원가입에 성공하였습니다.');
+			return;
+		}
 	};
+
 	return (
 		<>
 			<SignUpContainer>
 				<Form onSubmit={onSubmit}>
 					<Wrapper>
-						<Label>1. 이메일을 입력하세요</Label>
+						<Label>1. 이메일을 입력해주세요.</Label>
 						<InputStyled
-							className="email"
 							required={true}
 							onChange={onChangeEmail}
 						/>
@@ -54,7 +73,6 @@ const SignUp = () => {
 					<Wrapper>
 						<Label>2. 비밀번호를 입력하세요</Label>
 						<InputStyled
-							className="password"
 							required={true}
 							onChange={onChangePassword}
 						/>
@@ -62,7 +80,6 @@ const SignUp = () => {
 							비밀번호를 입력해주세요.
 						</InputWarning>
 						<InputStyled
-							className="passwordConfirm"
 							required={true}
 							onChange={onChangePasswordConfirm}
 						/>
@@ -74,7 +91,6 @@ const SignUp = () => {
 					<Wrapper>
 						<Label>3. 닉네임을 입력하세요</Label>
 						<InputStyled
-							className="fullName"
 							required={true}
 							onChange={onChangeFullName}
 						/>
@@ -83,6 +99,7 @@ const SignUp = () => {
 						</InputWarning>
 					</Wrapper>
 					<ButtonStyled>가입하기</ButtonStyled>
+					{isSignUpSuccess ? <Navigate to="/login"></Navigate> : null}
 				</Form>
 			</SignUpContainer>
 		</>
