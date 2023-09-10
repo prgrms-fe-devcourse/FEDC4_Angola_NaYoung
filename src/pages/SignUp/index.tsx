@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { BsCheckAll } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useFetchSignUp } from '@apis/auth';
@@ -36,6 +37,10 @@ const SignUp = () => {
       console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
       return;
     }
+    if (email.length < 10) {
+      alert('이메일은 10자 이상 입력해주세요.');
+      return;
+    }
     if (usersData.find((user) => user.email === email)) {
       alert('이미 가입된 이메일입니다.');
     } else {
@@ -49,6 +54,10 @@ const SignUp = () => {
       console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
       return;
     }
+    if (fullName.length < 3 || fullName.length > 10 || fullName == 'initial') {
+      alert('닉네임은 3자 이상 10자 이하로 입력해주세요.');
+      return;
+    }
     if (usersData.find((user) => user.fullName === fullName)) {
       alert('이미 가입된 닉네임입니다.');
     } else {
@@ -60,18 +69,15 @@ const SignUp = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (email.length < 5) {
-      alert('이메일은 10자 이상 입력해주세요.');
+    if (!password || password === 'initial') {
+      alert('비밀번호를 입력해주세요.');
       return;
     }
     if (password !== passwordConfirm) {
-      alert('비밀번호가 다릅니다.\n다시 확인해주세요.');
+      alert('비밀번호가 서로 다릅니다.');
       return;
     }
-    if (fullName.length < 3 || fullName.length > 10) {
-      alert('닉네임은 3자 이상 10자 이하로 입력해주세요.');
-      return;
-    }
+
     if (isDuplicatedEmailChecked === false) {
       alert('이메일 중복 검사를 확인해주세요.');
       return;
@@ -102,34 +108,31 @@ const SignUp = () => {
           <Wrapper>
             <Label>1. 이메일을 입력해주세요.</Label>
             <InputContainer>
-              <InputStyled
-                required={true}
-                onChange={onChangeEmail}
-              />
+              <InputWrapper>
+                <Input onChange={onChangeEmail} />
+                {isDuplicatedEmailChecked && <DoubleCheckIcon />}
+              </InputWrapper>
               <DuplicatedCheckBtn
                 type="button"
                 onClick={onClickDuplicatedEmailCheckBtn}>
                 중복 검사
               </DuplicatedCheckBtn>
             </InputContainer>
-
             <InputWarning style={{ display: email ? `none` : 'block' }}>
               이메일을 입력해주세요.
             </InputWarning>
           </Wrapper>
           <Wrapper>
             <Label>2. 비밀번호를 입력하세요</Label>
-            <InputStyled
-              required={true}
-              onChange={onChangePassword}
-            />
+            <InputWrapper>
+              <Input onChange={onChangePassword} />
+            </InputWrapper>
             <InputWarning style={{ display: password ? `none` : 'block' }}>
               비밀번호를 입력해주세요.
             </InputWarning>
-            <InputStyled
-              required={true}
-              onChange={onChangePasswordConfirm}
-            />
+            <InputWrapper>
+              <Input onChange={onChangePasswordConfirm} />
+            </InputWrapper>
             <InputWarning
               style={{ display: passwordConfirm ? `none` : 'block' }}>
               비밀번호를 재입력해주세요.
@@ -138,17 +141,16 @@ const SignUp = () => {
           <Wrapper>
             <Label>3. 닉네임을 입력하세요</Label>
             <InputContainer>
-              <InputStyled
-                required={true}
-                onChange={onChangeFullName}
-              />
+              <InputWrapper>
+                <Input onChange={onChangeFullName} />
+                {isDuplicatedFullNameChecked && <DoubleCheckIcon />}
+              </InputWrapper>
               <DuplicatedCheckBtn
                 type="button"
                 onClick={onClickDuplicatedFullNameCheckBtn}>
                 중복 검사
               </DuplicatedCheckBtn>
             </InputContainer>
-
             <InputWarning style={{ display: fullName ? `none` : 'block' }}>
               닉네임을 입력해주세요.
             </InputWarning>
@@ -211,8 +213,13 @@ const InputContainer = styled.div`
   gap: 2rem;
 `;
 
-const InputStyled = styled.input`
+const InputWrapper = styled.div`
   width: 70%;
+  position: relative;
+`;
+
+const Input = styled.input`
+  width: 100%;
   padding: 0.4rem 1rem;
   border: 1.5px solid gray;
   border-radius: 4rem;
@@ -252,4 +259,12 @@ const DuplicatedCheckBtn = styled.button`
     background-color: rgba(90, 120, 100, 0.4);
     cursor: pointer;
   }
+`;
+
+const DoubleCheckIcon = styled(BsCheckAll)`
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  color: #00e676;
 `;
