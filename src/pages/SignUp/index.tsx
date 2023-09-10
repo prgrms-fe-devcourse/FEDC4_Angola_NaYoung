@@ -50,6 +50,9 @@ const SignUp = () => {
 		if (isSignUpError) {
 			window.location.reload();
 		}
+		if (isSignUpSuccess) {
+			navigate('/login');
+		}
 	};
 
 	return (
@@ -94,7 +97,7 @@ const SignUp = () => {
 							닉네임을 입력해주세요.
 						</InputWarning>
 					</Wrapper>
-					<ButtonStyled>가입하기</ButtonStyled>
+					<SubmitButton>가입하기</SubmitButton>
 				</Form>
 				{isSignUpSuccess && (
 					<SignUpSuccessModal onClick={() => navigate('/login')} />
@@ -142,6 +145,7 @@ const Label = styled.label`
 	font-size: 20px;
 	font-weight: 500;
 	line-height: 150%;
+	padding-left: 1rem;
 `;
 
 const InputStyled = styled.input`
@@ -153,7 +157,7 @@ const InputStyled = styled.input`
 	font-size: 18px;
 `;
 
-const ButtonStyled = styled.button`
+const SubmitButton = styled.button`
 	padding: 0.5rem 1.5rem;
 	border: 2px solid black;
 	border-radius: 50px;
