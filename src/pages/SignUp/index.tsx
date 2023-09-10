@@ -1,7 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useFetchSignUp } from '@apis/auth.ts';
+import { useFetchSignUp } from '@apis/auth';
+import { useFetchUsers } from '@apis/user';
 import { SignUpFailModal, SignUpSuccessModal } from './SignUpModals';
 
 const SignUp = () => {
@@ -10,7 +11,10 @@ const SignUp = () => {
   const [password, setPassword] = useState('initial');
   const [passwordConfirm, setPasswordConfirm] = useState('initial');
   const [fullName, setFullName] = useState('initial');
+  const [isDuplicatedEmailChecked, setIsDuplicatedEmailChecked] =
+    useState(false);
   const { signUp, isSignUpSuccess, isSignUpError } = useFetchSignUp();
+  const { usersData, isUsersError } = useFetchUsers();
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -23,6 +27,19 @@ const SignUp = () => {
   };
   const onChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
     setFullName(e.target.value);
+  };
+
+  const onClickEmailDuplicatedCheckBtn = () => {
+    if (isUsersError || !usersData) {
+      console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
+      return;
+    }
+    if (usersData.find((user) => user.email === email)) {
+      alert('이미 가입된 이메일입니다.');
+    } else {
+      alert('사용할 수 있는 이메일입니다.');
+      setIsDuplicatedEmailChecked(true);
+    }
   };
 
   const onSubmit = (e: FormEvent) => {
@@ -38,6 +55,10 @@ const SignUp = () => {
     }
     if (fullName.length < 3 || fullName.length > 10) {
       alert('닉네임은 3자 이상 10자 이하로 입력해주세요.');
+      return;
+    }
+    if (isDuplicatedEmailChecked === false) {
+      alert('이메일 중복 검사를 확인해주세요.');
       return;
     }
 
@@ -66,7 +87,11 @@ const SignUp = () => {
                 required={true}
                 onChange={onChangeEmail}
               />
-              <DuplicatedCheckBtn type="button">중복 검사</DuplicatedCheckBtn>
+              <DuplicatedCheckBtn
+                type="button"
+                onClick={onClickEmailDuplicatedCheckBtn}>
+                중복 검사
+              </DuplicatedCheckBtn>
             </InputContainer>
 
             <InputWarning style={{ display: email ? `none` : 'block' }}>
