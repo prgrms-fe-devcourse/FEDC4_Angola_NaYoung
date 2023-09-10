@@ -21,6 +21,7 @@ const SignUp = () => {
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    setIsDuplicatedEmailChecked(false);
   };
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -30,6 +31,7 @@ const SignUp = () => {
   };
   const onChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
     setFullName(e.target.value);
+    setIsDuplicatedFullNameChecked(false);
   };
 
   const onClickDuplicatedEmailCheckBtn = () => {
