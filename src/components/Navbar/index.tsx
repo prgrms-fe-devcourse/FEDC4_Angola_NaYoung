@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@atoms/index';
-import { AuthMenubar, CommonMenubar, NonAuthMenubar } from './components';
+import { AuthMenubar, CommonMenubar, NonAuthMenubar } from './Menubar';
 
 const Navbar = () => {
   const auth = useRecoilValue(authInfoState);
