@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { BsCheckAll } from 'react-icons/bs';
+import { BsCheckAll, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useFetchSignUp } from '@apis/auth';
@@ -16,6 +16,8 @@ const SignUp = () => {
     useState(false);
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
     useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isPasswordConfirmShown, setIsPasswordConfirmShown] = useState(false);
   const { signUp, isSignUpSuccess, isSignUpError } = useFetchSignUp();
   const { usersData, isUsersError } = useFetchUsers();
 
@@ -66,6 +68,13 @@ const SignUp = () => {
       alert('사용할 수 있는 닉네임입니다.');
       setIsDuplicatedFullNameChecked(true);
     }
+  };
+
+  const onClickPasswordShown = () => {
+    setIsPasswordShown(!isPasswordShown);
+  };
+  const onClickPasswordConfirmShown = () => {
+    setIsPasswordConfirmShown(!isPasswordConfirmShown);
   };
 
   const onSubmit = (e: FormEvent) => {
@@ -127,13 +136,29 @@ const SignUp = () => {
           <Wrapper>
             <Label>2. 비밀번호를 입력하세요</Label>
             <InputWrapper>
-              <Input onChange={onChangePassword} />
+              <Input
+                type={isPasswordShown ? 'text' : 'password'}
+                onChange={onChangePassword}
+              />
+              {isPasswordShown ? (
+                <VisibleEyeIcon onClick={onClickPasswordShown} />
+              ) : (
+                <InvisibleEyeIcon onClick={onClickPasswordShown} />
+              )}
             </InputWrapper>
             <InputWarning style={{ display: password ? `none` : 'block' }}>
               비밀번호를 입력해주세요.
             </InputWarning>
             <InputWrapper>
-              <Input onChange={onChangePasswordConfirm} />
+              <Input
+                type={isPasswordConfirmShown ? 'text' : 'password'}
+                onChange={onChangePasswordConfirm}
+              />
+              {isPasswordConfirmShown ? (
+                <VisibleEyeIcon onClick={onClickPasswordConfirmShown} />
+              ) : (
+                <InvisibleEyeIcon onClick={onClickPasswordConfirmShown} />
+              )}
             </InputWrapper>
             <InputWarning
               style={{ display: passwordConfirm ? `none` : 'block' }}>
@@ -265,8 +290,24 @@ const DuplicatedCheckBtn = styled.button`
 
 const DoubleCheckIcon = styled(BsCheckAll)`
   position: absolute;
-  right: 1rem;
+  right: 1.5rem;
   top: 50%;
   transform: translate(0, -50%);
   color: #00e676;
+`;
+
+const VisibleEyeIcon = styled(BsFillEyeFill)`
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  cursor: pointer;
+`;
+
+const InvisibleEyeIcon = styled(BsFillEyeSlashFill)`
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  cursor: pointer;
 `;
