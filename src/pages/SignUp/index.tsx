@@ -1,15 +1,16 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useFetchSignUp } from '@/apis/auth.ts';
 import styled from '@emotion/styled';
+import { SignUpFailModal, SignUpSuccessModal } from './SignUpModals';
 
 const SignUp = () => {
-	const [email, setEmail] = useState('imsyEmail');
-	const [password, setPassword] = useState('imsyPassword');
-	const [passwordConfirm, setPasswordConfirm] = useState('imsyPassword');
-	const [fullName, setFullName] = useState('imsyFullName');
-	const { signUp, isSignUpSuccess, isSignUpError, isSignUpLoading } =
-		useFetchSignUp();
+	const navigate = useNavigate();
+	const [email, setEmail] = useState('initial');
+	const [password, setPassword] = useState('initial');
+	const [passwordConfirm, setPasswordConfirm] = useState('initial');
+	const [fullName, setFullName] = useState('initial');
+	const { signUp, isSignUpSuccess, isSignUpError } = useFetchSignUp();
 
 	const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
@@ -27,7 +28,7 @@ const SignUp = () => {
 	const onSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
-		if (email.length < 10) {
+		if (email.length < 5) {
 			alert('이메일은 10자 이상 입력해주세요.');
 			return;
 		}
@@ -47,12 +48,7 @@ const SignUp = () => {
 		});
 
 		if (isSignUpError) {
-			alert('회원가입에 오류가 발생하였습니다.');
-			return;
-		}
-		if (isSignUpSuccess) {
-			alert('회원가입에 성공하였습니다.');
-			return;
+			window.location.reload();
 		}
 	};
 
@@ -99,8 +95,13 @@ const SignUp = () => {
 						</InputWarning>
 					</Wrapper>
 					<ButtonStyled>가입하기</ButtonStyled>
-					{isSignUpSuccess ? <Navigate to="/login"></Navigate> : null}
 				</Form>
+				{isSignUpSuccess && (
+					<SignUpSuccessModal onClick={() => navigate('/login')} />
+				)}
+				{isSignUpError && (
+					<SignUpFailModal onClick={() => window.location.reload()} />
+				)}
 			</SignUpContainer>
 		</>
 	);
