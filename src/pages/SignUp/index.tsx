@@ -61,10 +61,14 @@ const SignUp = () => {
         <Form onSubmit={onSubmit}>
           <Wrapper>
             <Label>1. 이메일을 입력해주세요.</Label>
-            <InputStyled
-              required={true}
-              onChange={onChangeEmail}
-            />
+            <InputContainer>
+              <InputStyled
+                required={true}
+                onChange={onChangeEmail}
+              />
+              <DuplicatedCheckBtn type="button">중복 검사</DuplicatedCheckBtn>
+            </InputContainer>
+
             <InputWarning style={{ display: email ? `none` : 'block' }}>
               이메일을 입력해주세요.
             </InputWarning>
@@ -89,15 +93,19 @@ const SignUp = () => {
           </Wrapper>
           <Wrapper>
             <Label>3. 닉네임을 입력하세요</Label>
-            <InputStyled
-              required={true}
-              onChange={onChangeFullName}
-            />
+            <InputContainer>
+              <InputStyled
+                required={true}
+                onChange={onChangeFullName}
+              />
+              <DuplicatedCheckBtn type="button">중복 검사</DuplicatedCheckBtn>
+            </InputContainer>
+
             <InputWarning style={{ display: fullName ? `none` : 'block' }}>
               닉네임을 입력해주세요.
             </InputWarning>
           </Wrapper>
-          <SubmitButton>가입하기</SubmitButton>
+          <SubmitButton type="submit">가입하기</SubmitButton>
         </Form>
         {isSignUpSuccess && (
           <SignUpSuccessModal onClick={() => navigate('/login')} />
@@ -148,9 +156,16 @@ const Label = styled.label`
   padding-left: 1rem;
 `;
 
-const InputStyled = styled.input`
+const InputContainer = styled.div`
   width: 100%;
-  padding: 4px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+`;
+
+const InputStyled = styled.input`
+  width: 70%;
+  padding: 0.4rem 1rem;
   border: 1.5px solid gray;
   border-radius: 4rem;
   box-sizing: border-box;
@@ -176,4 +191,17 @@ const InputWarning = styled.div`
   font-size: 15px;
   color: red;
   padding-left: 2rem;
+`;
+
+const DuplicatedCheckBtn = styled.button`
+  padding: 0.4rem 1rem;
+  border: 1px solid black;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: rgba(90, 120, 100, 0.4);
+    cursor: pointer;
+  }
 `;
