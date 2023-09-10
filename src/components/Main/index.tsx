@@ -4,19 +4,36 @@ import { redirects, routes } from '@routes';
 import useCurrentPage from '@hooks/useCurrentPage';
 
 // 임시 컴포넌트, Header 합칠 때 삭제해야 함
-const Header = ({ title }: { title: string }) => {
+interface HeaderProps {
+  title: string;
+  sortProps?: {
+    target: string;
+    sort?: string;
+  };
+}
+const Header = ({ title, sortProps }: HeaderProps) => {
+  console.log(sortProps);
   return <h1>{title}</h1>;
 };
 
 const Main = () => {
-  const { title, params, search } = useCurrentPage();
+  const { title, name, params, search } = useCurrentPage();
+  const objectForSort = {
+    target: (params.target = 'user'),
+    sort: search.sort,
+  };
   return (
     <>
-      <Header title={title} />
+      <Header
+        title={title}
+        sortProps={
+          name === 'home' || name === 'search' ? objectForSort : undefined
+        }
+      />
       <Routes>
-        {routes.map(({ path, title, component }) => (
+        {routes.map(({ path, name, component }) => (
           <Route
-            key={title}
+            key={name}
             path={path}
             element={React.createElement(component, {
               ...params,

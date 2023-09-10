@@ -12,14 +12,19 @@ import {
 // todo: page 넣을 때 수정
 
 export const routes = [
-  { path: '/', title: 'home', component: Home },
-  { path: '/search/:target', title: 'search', component: Search },
-  { path: '/signup', title: 'signup', component: Signup },
-  { path: '/login', title: 'login', component: Login },
-  { path: '/user/:userId', title: 'user', component: User },
-  { path: '/post/:postId', title: 'post', component: Post },
-  { path: '/create-post', title: 'createPost', component: CreatePost },
-  { path: '/mypage', title: 'myPage', component: MyPage },
+  { path: '/', name: 'home', title: 'ANGOLA', component: Home },
+  { path: '/search/:target', name: 'search', title: '검색', component: Search },
+  { path: '/signup', name: 'signup', title: '회원 가입', component: Signup },
+  { path: '/login', name: 'login', title: '로그인', component: Login },
+  { path: '/user/:userId', name: 'user', title: '유저 정보', component: User },
+  { path: '/post/:postId', name: 'post', title: 'ANGOLA', component: Post },
+  {
+    path: '/create-post',
+    name: 'createPost',
+    title: '추가하기',
+    component: CreatePost,
+  },
+  { path: '/mypage', name: 'myPage', title: '마이 페이지', component: MyPage },
 ];
 
 export const redirects = [

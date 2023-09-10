@@ -17,6 +17,7 @@ interface Params {
 }
 
 interface CurrentPage {
+  name: string;
   title: string;
   params: Params;
   search: SearchParams;
@@ -27,6 +28,7 @@ const useCurrentPage = (): CurrentPage => {
   const searchParams = parseQueryString(location.search);
 
   let result: CurrentPage = {
+    name: '404',
     title: 'not found',
     params: {},
     search: {},
@@ -35,6 +37,7 @@ const useCurrentPage = (): CurrentPage => {
     const match = useMatch(route.path);
     if (match) {
       result = {
+        name: route.name,
         title: route.title,
         params: match.params,
         search: searchParams,
