@@ -7,7 +7,7 @@ import useAxiosInstance from './instance';
 
 type PickUsersData = Pick<
   User,
-  'image' | 'likes' | '_id' | 'fullName' | 'followers'
+  'image' | 'likes' | '_id' | 'fullName' | 'followers' | 'email'
 >;
 
 export const useFetchUsers = () => {
@@ -25,16 +25,17 @@ export const useFetchUsers = () => {
           _id: user._id,
           fullName: user.fullName,
           followers: user.followers,
+          email: user.email,
         }));
       }
       return [];
     },
   });
   return {
-    data,
-    isError,
-    isSuccess,
-    isLoading,
+    usersData: data,
+    isUsersError: isError,
+    isUsersSuccess: isSuccess,
+    isUsersLoading: isLoading,
   };
 };
 
@@ -64,9 +65,9 @@ export const useFetchUser = () => {
     },
   });
   return {
-    data,
-    isError,
-    isSuccess,
-    isLoading,
+    userData: data,
+    isUserError: isError,
+    isUserSuccess: isSuccess,
+    isUserLoading: isLoading,
   };
 };
