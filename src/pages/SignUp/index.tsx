@@ -80,17 +80,16 @@ const SignUp = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    if (isDuplicatedEmailChecked === false) {
+      alert('이메일 중복 검사를 확인해주세요.');
+      return;
+    }
     if (!password || password === 'initial') {
       alert('비밀번호를 입력해주세요.');
       return;
     }
     if (password !== passwordConfirm) {
       alert('비밀번호가 서로 다릅니다.');
-      return;
-    }
-
-    if (isDuplicatedEmailChecked === false) {
-      alert('이메일 중복 검사를 확인해주세요.');
       return;
     }
     if (isDuplicatedFullNameChecked === false) {
