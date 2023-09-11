@@ -22,6 +22,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
+      // all files
       "@apis/*": ["./src/apis/*"],
       "@pages/*": ["./src/pages/*"],
       "@components/*": ["./src/components/*"],
@@ -31,7 +32,20 @@
       "@utils/*": ["./src/utils/*"],
       "@styles/*": ["./src/styles/*"],
       "@type/*": ["./src/types/*"],
-      "@constants/*": ["./src/constants/*"]
+      "@constants/*": ["./src/constants/*"],
+      "@routes/*": ["./src/routes/*"],
+      // for index files
+      "@apis": ["./src/apis"],
+      "@pages": ["./src/pages"],
+      "@components": ["./src/components"],
+      "@hooks": ["./src/hooks"],
+      "@atoms": ["./src/atoms"],
+      "@storage": ["./src/storage"],
+      "@utils": ["./src/utils"],
+      "@styles": ["./src/styles"],
+      "@type": ["./src/types"],
+      "@constants": ["./src/constants"],
+      "@routes": ["./src/routes"],
     }
   },
   "include": ["src"],
