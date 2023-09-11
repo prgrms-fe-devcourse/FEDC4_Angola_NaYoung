@@ -80,6 +80,15 @@ const SignUp = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    if (isSignUpError) {
+      window.location.reload();
+      return;
+    }
+    if (isSignUpSuccess) {
+      navigate('/login');
+      return;
+    }
+
     if (isDuplicatedEmailChecked === false) {
       alert('이메일 중복 검사를 확인해주세요.');
       return;
@@ -102,13 +111,6 @@ const SignUp = () => {
       password,
       fullName,
     });
-
-    if (isSignUpError) {
-      window.location.reload();
-    }
-    if (isSignUpSuccess) {
-      navigate('/login');
-    }
   };
 
   return (
