@@ -4,23 +4,27 @@ interface SignUpModalsProps {
   onClick: () => void;
 }
 
-export const SignUpSuccessModal = ({ onClick }: SignUpModalsProps) => {
+export const SignUpSuccessModal = ({
+  onClick: handleClick,
+}: SignUpModalsProps) => {
   return (
     <Modal>
       <Content>
         <p>회원 가입이 완료되었습니다!</p>
-        <button onClick={onClick}>확인</button>
+        <button onClick={handleClick}>확인</button>
       </Content>
     </Modal>
   );
 };
 
-export const SignUpFailModal = ({ onClick }: SignUpModalsProps) => {
+export const SignUpFailModal = ({
+  onClick: handleClick,
+}: SignUpModalsProps) => {
   return (
     <Modal>
       <Content>
         <p>회원 가입에 실패하였습니다!</p>
-        <button onClick={onClick}>확인</button>
+        <button onClick={handleClick}>확인</button>
       </Content>
     </Modal>
   );

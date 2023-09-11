@@ -1,81 +1,57 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { getPathname } from '@utils';
-import { getTitle } from './utils';
 
-const Header = () => {
-  const INITIAL_KEYWORD =
-    getPathname(2) === 'post' ? '전체 포스트' : '전체 유저';
+interface HeaderProps {
+  title: string;
+  sortProps?: {
+    target: string;
+    sort: string;
+  };
+  keyword?: string;
+}
 
-  const location = useLocation();
+const Header = ({ title, sortProps, keyword }: HeaderProps) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const target = sortProps?.target;
+  const sort = sortProps?.sort;
 
-  const [selectValue, setSelectValue] = useState<string>('follower');
-  const [keyword, setKeyword] = useState(INITIAL_KEYWORD);
-  const [tabValue, setTabValue] = useState('post');
-  const title = getTitle(location.pathname);
+  const [selectValue, setSelectValue] = useState(sort);
 
-  const onChangeSelect = (value: string) => {
+  const handleChangeSelect = (value: string) => {
     searchParams.set('sort', value);
+    setSelectValue(value);
     setSearchParams(searchParams);
   };
 
-  const onClickTabBar = (value: string) => {
-    const checkPath = getPathname(2);
-
+  const handleClickTabBar = (value: string) => {
     if (value === 'user') {
-      if (checkPath === 'user') {
+      if (target === 'user') {
         return;
       }
-
       navigate('/search/user?sort=follower');
     }
 
     if (value === 'post') {
-      if (checkPath === 'post') {
+      if (target === 'post') {
         return;
       }
-
       navigate('/search/post?sort=recent');
     }
   };
 
-  useEffect(() => {
-    const currentSort = searchParams.get('sort');
-    const currentKeyword = searchParams.get('keyword');
-
-    if (currentSort) {
-      setSelectValue(currentSort);
-    }
-
-    if (currentKeyword) {
-      setKeyword(currentKeyword);
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
-    setTabValue(getPathname(2) ?? 'post');
-
-    const currentKeyword = searchParams.get('keyword');
-
-    if (!currentKeyword) {
-      setKeyword(INITIAL_KEYWORD);
-    }
-  }, [tabValue, location.pathname, INITIAL_KEYWORD, searchParams]);
-
   return (
     <Container>
-      {['', 'post', 'search'].some((path) => path === getPathname(1)) ? (
+      {sortProps ? (
         <SortSelect
           id="orderSelect"
           name="order"
           value={selectValue}
           onChange={(e) => {
-            onChangeSelect(e.target.value);
+            handleChangeSelect(e.target.value);
           }}>
-          {tabValue === 'user' ? (
+          {target === 'user' ? (
             <>
               <option value="follower">팔로워순</option>
               <option value="like">좋아요순</option>
@@ -92,22 +68,20 @@ const Header = () => {
       )}
 
       <Title>
-        <Keyword>
-          {keyword && getPathname(1) === 'search' ? keyword : null}
-        </Keyword>
+        <Keyword>{keyword || ''}</Keyword>
         {title}
       </Title>
 
-      {getPathname(1) === 'search' ? (
+      {keyword ? (
         <TabBar>
           <TabBarList
-            className={tabValue === 'user' ? 'bold' : ''}
-            onClick={() => onClickTabBar('user')}>
+            className={target === 'user' ? 'bold' : ''}
+            onClick={() => handleClickTabBar('user')}>
             유저
           </TabBarList>
           <TabBarList
-            className={tabValue === 'post' ? 'bold' : ''}
-            onClick={() => onClickTabBar('post')}>
+            className={target === 'post' ? 'bold' : ''}
+            onClick={() => handleClickTabBar('post')}>
             포스트
           </TabBarList>
         </TabBar>

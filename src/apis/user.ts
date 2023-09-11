@@ -12,7 +12,7 @@ export const useFetchUsers = () => {
     AxiosError
   >('user', () => baseInstance.get('/users/get-users'));
   return {
-    usersData: data,
+    usersData: data?.data.filter((user) => user.role !== 'SuperAdmin'),
     isUsersError: isError,
     isUsersSuccess: isSuccess,
     isUsersLoading: isLoading,

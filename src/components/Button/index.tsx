@@ -12,7 +12,7 @@ const Button = ({ text, onClick, disabled = false, style }: ButtonProps) => {
   return (
     <ButtonStyled
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       style={style}>
       {text}
     </ButtonStyled>

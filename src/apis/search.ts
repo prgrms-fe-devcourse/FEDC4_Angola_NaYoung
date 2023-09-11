@@ -13,6 +13,15 @@ export const useFetchSearchPosts = ({ query }: SearchRequestQuery) => {
     AxiosResponse<(User | Post)[]>,
     AxiosError
   >('searchPosts', () => baseInstance.get(`/search/all/${query}`));
+
+  console.log(
+    `useFetchSearchPosts 서버 통신 data:  ${
+      data?.data.filter((resData) => {
+        return 'title' in resData;
+      }) as Post[]
+    }`,
+  );
+
   return {
     searchPostsData: data?.data.filter((resData) => {
       return 'title' in resData;

@@ -13,6 +13,8 @@ export const useFetchAllPosts = () => {
     AxiosResponse<Post[]>,
     AxiosError
   >('allPosts', () => baseInstance.get(path));
+
+  console.log(`useAllSearchPosts 서버 통신 data:  ${data?.data}`);
   return {
     allPostsData: data?.data,
     allPostsSuccess: isSuccess,
@@ -29,6 +31,7 @@ export const useFetchUserPosts = (authorId: string) => {
     AxiosResponse<Post[]>,
     AxiosError
   >('userPosts', () => baseInstance.get(path));
+
   return {
     userPostsData: data?.data,
     userPostsError: isError,

@@ -8,14 +8,14 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const { loginMutate, isLoginError, isLoginSuccess } = useFetchLogin();
 
-  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const onSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (!email) {
@@ -35,14 +35,14 @@ const LoginPage = () => {
   return (
     <>
       <LoginContainer>
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Wrapper>
             <Label>이메일</Label>
-            <InputStyled onChange={onChangeEmail} />
+            <InputStyled onChange={handleChangeEmail} />
           </Wrapper>
           <Wrapper>
             <Label>비밀번호</Label>
-            <InputStyled onChange={onChangePassword} />
+            <InputStyled onChange={handleChangePassword} />
           </Wrapper>
           <LoginErrorMsg style={{ display: isLoginError ? `block` : 'none' }}>
             아이디 또는 비밀번호를 확인하세요.

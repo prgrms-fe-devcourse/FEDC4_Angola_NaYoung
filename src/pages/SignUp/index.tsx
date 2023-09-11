@@ -18,25 +18,25 @@ const SignUp = () => {
     useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isPasswordConfirmShown, setIsPasswordConfirmShown] = useState(false);
-  const { signUp, isSignUpSuccess, isSignUpError } = useFetchSignUp();
+  const { signUpMutate, isSignUpSuccess, isSignUpError } = useFetchSignUp();
   const { usersData, isUsersError } = useFetchUsers();
 
-  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setIsDuplicatedEmailChecked(false);
   };
-  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const onChangePasswordConfirm = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangePasswordConfirm = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswordConfirm(e.target.value);
   };
-  const onChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
     setFullName(e.target.value);
     setIsDuplicatedFullNameChecked(false);
   };
 
-  const onClickDuplicatedEmailCheckBtn = () => {
+  const handleClickDuplicatedEmailCheckBtn = () => {
     if (isUsersError || !usersData) {
       console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
       return;
@@ -53,7 +53,7 @@ const SignUp = () => {
     }
   };
 
-  const onClickDuplicatedFullNameCheckBtn = () => {
+  const handleClickDuplicatedFullNameCheckBtn = () => {
     if (isUsersError || !usersData) {
       console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
       return;
@@ -70,14 +70,14 @@ const SignUp = () => {
     }
   };
 
-  const onClickPasswordShown = () => {
+  const handleClickPasswordShown = () => {
     setIsPasswordShown(!isPasswordShown);
   };
-  const onClickPasswordConfirmShown = () => {
+  const handleClickPasswordConfirmShown = () => {
     setIsPasswordConfirmShown(!isPasswordConfirmShown);
   };
 
-  const onSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (isSignUpError) {
@@ -106,7 +106,7 @@ const SignUp = () => {
       return;
     }
 
-    signUp({
+    signUpMutate({
       email,
       password,
       fullName,
@@ -116,17 +116,17 @@ const SignUp = () => {
   return (
     <>
       <SignUpContainer>
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Wrapper>
             <Label>1. 이메일을 입력해주세요.</Label>
             <InputContainer>
               <InputWrapper>
-                <Input onChange={onChangeEmail} />
+                <Input onChange={handleChangeEmail} />
                 {isDuplicatedEmailChecked && <DoubleCheckIcon />}
               </InputWrapper>
               <DuplicatedCheckBtn
                 type="button"
-                onClick={onClickDuplicatedEmailCheckBtn}>
+                onClick={handleClickDuplicatedEmailCheckBtn}>
                 중복 검사
               </DuplicatedCheckBtn>
             </InputContainer>
@@ -139,12 +139,12 @@ const SignUp = () => {
             <InputWrapper>
               <Input
                 type={isPasswordShown ? 'text' : 'password'}
-                onChange={onChangePassword}
+                onChange={handleChangePassword}
               />
               {isPasswordShown ? (
-                <VisibleEyeIcon onClick={onClickPasswordShown} />
+                <VisibleEyeIcon onClick={handleClickPasswordShown} />
               ) : (
-                <InvisibleEyeIcon onClick={onClickPasswordShown} />
+                <InvisibleEyeIcon onClick={handleClickPasswordShown} />
               )}
             </InputWrapper>
             <InputWarning style={{ display: password ? `none` : 'block' }}>
@@ -153,12 +153,12 @@ const SignUp = () => {
             <InputWrapper>
               <Input
                 type={isPasswordConfirmShown ? 'text' : 'password'}
-                onChange={onChangePasswordConfirm}
+                onChange={handleChangePasswordConfirm}
               />
               {isPasswordConfirmShown ? (
-                <VisibleEyeIcon onClick={onClickPasswordConfirmShown} />
+                <VisibleEyeIcon onClick={handleClickPasswordConfirmShown} />
               ) : (
-                <InvisibleEyeIcon onClick={onClickPasswordConfirmShown} />
+                <InvisibleEyeIcon onClick={handleClickPasswordConfirmShown} />
               )}
             </InputWrapper>
             <InputWarning
@@ -170,12 +170,12 @@ const SignUp = () => {
             <Label>3. 닉네임을 입력하세요</Label>
             <InputContainer>
               <InputWrapper>
-                <Input onChange={onChangeFullName} />
+                <Input onChange={handleChangeFullName} />
                 {isDuplicatedFullNameChecked && <DoubleCheckIcon />}
               </InputWrapper>
               <DuplicatedCheckBtn
                 type="button"
-                onClick={onClickDuplicatedFullNameCheckBtn}>
+                onClick={handleClickDuplicatedFullNameCheckBtn}>
                 중복 검사
               </DuplicatedCheckBtn>
             </InputContainer>

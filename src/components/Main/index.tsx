@@ -1,26 +1,18 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { redirects, routes } from '@routes';
+import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
-
-// 임시 컴포넌트 : Header
-interface HeaderProps {
-  title: string;
-  sortProps?: {
-    target: string;
-    sort?: string;
-  };
-}
-const Header = ({ title, sortProps }: HeaderProps) => {
-  console.log(sortProps);
-  return <h1>{title}</h1>;
-};
 
 const Main = () => {
   const { title, name, params, search } = useCurrentPage();
   const objectForSort = {
-    target: (params.target = 'user'),
-    sort: search.sort,
+    target: params.target || 'post',
+    sort: search.sort
+      ? search.sort
+      : params.target === 'post'
+      ? 'recent'
+      : 'follower',
   };
   return (
     <>
@@ -28,6 +20,12 @@ const Main = () => {
         title={title}
         sortProps={
           name === 'home' || name === 'search' ? objectForSort : undefined
+        }
+        keyword={
+          name === 'search'
+            ? search.keyword ||
+              (params.target === 'user' ? '전체 유저' : '전체 포스트')
+            : undefined
         }
       />
       <Routes>
