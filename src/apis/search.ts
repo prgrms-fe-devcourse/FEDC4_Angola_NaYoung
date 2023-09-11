@@ -4,7 +4,7 @@ import { Post, User } from '@type/index';
 import useAxiosInstance from './instance';
 
 interface SearchRequestQuery {
-  query: string;
+  query?: string;
 }
 
 export const useFetchSearchPosts = ({ query }: SearchRequestQuery) => {
