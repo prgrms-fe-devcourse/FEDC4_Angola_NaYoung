@@ -18,6 +18,7 @@
     "react-icons": "^4.11.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.15.0",
+    "react-spinners": "^0.13.8",
     "recoil": "^0.7.7"
   },
   "devDependencies": {
