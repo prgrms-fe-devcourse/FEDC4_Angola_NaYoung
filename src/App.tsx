@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import FetchTest from '@components/FetchTest';
+import FetchTest from './components/FetchTest';
 
 const queryClient = new QueryClient();
 
