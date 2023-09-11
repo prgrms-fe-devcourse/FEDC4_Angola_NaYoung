@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useFetchLogin } from '@apis/auth';
 
-const LogIn = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, isLoginError, isLoginSuccess } = useFetchLogin();
@@ -34,7 +34,7 @@ const LogIn = () => {
   };
   return (
     <>
-      <LogInContainer>
+      <LoginContainer>
         <Form onSubmit={onSubmit}>
           <Wrapper>
             <Label>이메일</Label>
@@ -44,20 +44,20 @@ const LogIn = () => {
             <Label>비밀번호</Label>
             <InputStyled onChange={onChangePassword} />
           </Wrapper>
-          <LogInErrorMsg style={{ display: isLoginError ? `block` : 'none' }}>
+          <LoginErrorMsg style={{ display: isLoginError ? `block` : 'none' }}>
             아이디 또는 비밀번호를 확인하세요.
-          </LogInErrorMsg>
+          </LoginErrorMsg>
           <SubmitButton>로그인 하기</SubmitButton>
         </Form>
         {isLoginSuccess && <Navigate to="/" />}
-      </LogInContainer>
+      </LoginContainer>
     </>
   );
 };
 
-export default LogIn;
+export default Login;
 
-const LogInContainer = styled.div`
+const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,7 +116,7 @@ const SubmitButton = styled.button`
     cursor: pointer;
   }
 `;
-const LogInErrorMsg = styled.div`
+const LoginErrorMsg = styled.div`
   font-size: 17px;
   color: red;
 `;
