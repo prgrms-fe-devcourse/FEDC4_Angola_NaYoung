@@ -18,7 +18,7 @@ export const useFetchSignUp = () => {
     (body: SignUpRequestBody) => baseInstance.post('/signup', body),
   );
   return {
-    signUp: mutate,
+    signUpMutate: mutate,
     isSignUpLoading: isLoading,
     isSignUpError: isError,
     isSignUpSuccess: isSuccess,
@@ -53,7 +53,7 @@ export const useFetchLogin = () => {
   });
 
   return {
-    login: mutate,
+    loginMutate: mutate,
     loginData: {
       userId: data?.data.user._id,
       fullName: data?.data.user.fullName,
@@ -79,7 +79,7 @@ export const useFetchLogOut = () => {
   );
 
   return {
-    logOut: mutate,
+    logOutMutate: mutate,
     isLogOutSuccess: isSuccess,
     isLogOutError: isError,
     isLogOutLoading: isLoading,
@@ -102,9 +102,9 @@ export const useFetchAuthUser = async () => {
   });
 
   return {
-    data,
-    isSuccess,
-    isError,
-    isLoading,
+    authUserData: data,
+    isAuthUserSuccess: isSuccess,
+    isAuthUserError: isError,
+    isAuthUserLoading: isLoading,
   };
 };
