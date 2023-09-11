@@ -25,7 +25,8 @@ const SearchBar = () => {
 		e.preventDefault();
 
 		if (keyword.length) {
-			addKeywordToQueryString({ keyword: keyword });
+			addKeywordToQueryString({ keyword: keyword.trim() });
+			setKeyword(keyword.trim());
 		} else {
 			removeKeywordFromQueryString();
 		}
