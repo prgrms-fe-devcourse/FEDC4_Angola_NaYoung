@@ -10,7 +10,7 @@ interface UserListProps {
 
 const UserList = ({ keyword, sort }: UserListProps) => {
   const { searchUsersData } = useFetchSearchUsers({ query: keyword });
-  const { data: usersData } = useFetchUsers();
+  const { usersData } = useFetchUsers();
 
   const resultData = keyword
     ? getSortUserList(searchUsersData, sort)
