@@ -1,28 +1,43 @@
 import {
-  CreatePost,
-  Home,
-  Login,
+  CreatePostPage,
+  HomePage,
+  LoginPage,
   MyPage,
-  Post,
-  Search,
-  Signup,
-  User,
+  PostPage,
+  SearchPage,
+  SignUpPage,
+  UserPage,
 } from '@pages';
 
 // todo: page 넣을 때 수정
 
 export const routes = [
-  { path: '/', name: 'home', title: 'ANGOLA', component: Home },
-  { path: '/search/:target', name: 'search', title: '검색', component: Search },
-  { path: '/signup', name: 'signup', title: '회원 가입', component: Signup },
-  { path: '/login', name: 'login', title: '로그인', component: Login },
-  { path: '/user/:userId', name: 'user', title: '유저 정보', component: User },
-  { path: '/post/:postId', name: 'post', title: 'ANGOLA', component: Post },
+  { path: '/', name: 'home', title: 'ANGOLA', component: HomePage },
+  {
+    path: '/search/:target',
+    name: 'search',
+    title: '검색',
+    component: SearchPage,
+  },
+  {
+    path: '/signup',
+    name: 'signUp',
+    title: '회원 가입',
+    component: SignUpPage,
+  },
+  { path: '/login', name: 'login', title: '로그인', component: LoginPage },
+  {
+    path: '/user/:userId',
+    name: 'user',
+    title: '유저 정보',
+    component: UserPage,
+  },
+  { path: '/post/:postId', name: 'post', title: 'ANGOLA', component: PostPage },
   {
     path: '/create-post',
     name: 'createPost',
     title: '추가하기',
-    component: CreatePost,
+    component: CreatePostPage,
   },
   { path: '/mypage', name: 'myPage', title: '마이 페이지', component: MyPage },
 ];
