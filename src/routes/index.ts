@@ -16,7 +16,7 @@ export const routes = [
   {
     path: '/search/:target',
     name: 'search',
-    title: '검색',
+    title: '에 대한 검색 결과',
     component: SearchPage,
   },
   {

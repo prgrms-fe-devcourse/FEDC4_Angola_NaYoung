@@ -9,18 +9,10 @@ interface SearchRequestQuery {
 
 export const useFetchSearchPosts = ({ query }: SearchRequestQuery) => {
   const { baseInstance } = useAxiosInstance();
-  const { data, isSuccess, isError, isLoading } = useQuery<
+  const { data, isSuccess, isError, isLoading, refetch } = useQuery<
     AxiosResponse<(User | Post)[]>,
     AxiosError
   >('searchPosts', () => baseInstance.get(`/search/all/${query}`));
-
-  console.log(
-    `useFetchSearchPosts 서버 통신 data:  ${
-      data?.data.filter((resData) => {
-        return 'title' in resData;
-      }) as Post[]
-    }`,
-  );
 
   return {
     searchPostsData: data?.data.filter((resData) => {
@@ -29,12 +21,13 @@ export const useFetchSearchPosts = ({ query }: SearchRequestQuery) => {
     isSearchPostsSuccess: isSuccess,
     isSearchPostsError: isError,
     isSearchPostsLoading: isLoading,
+    searchPostsDataRefetch: refetch,
   };
 };
 
 export const useFetchSearchUsers = ({ query }: SearchRequestQuery) => {
   const { baseInstance } = useAxiosInstance();
-  const { data, isSuccess, isError, isLoading } = useQuery<
+  const { data, isSuccess, isError, isLoading, refetch } = useQuery<
     AxiosResponse<User[]>,
     AxiosError
   >('searchUsers', () => baseInstance.get(`/search/users/${query}`));
@@ -43,5 +36,6 @@ export const useFetchSearchUsers = ({ query }: SearchRequestQuery) => {
     isSearchUsersSuccess: isSuccess,
     isSearchUsersError: isError,
     isSearchUsersLoading: isLoading,
+    searchUsersDataRefetch: refetch,
   };
 };

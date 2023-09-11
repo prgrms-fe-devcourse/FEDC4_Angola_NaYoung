@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import UserListItem from '@components/UserListItem';
 import { useFetchSearchUsers } from '@apis/search';
 import { useFetchUsers } from '@apis/user';
@@ -9,12 +10,18 @@ interface UserListProps {
 }
 
 const UserList = ({ keyword, sort }: UserListProps) => {
-  const { searchUsersData } = useFetchSearchUsers({ query: keyword });
+  const { searchUsersData, searchUsersDataRefetch } = useFetchSearchUsers({
+    query: keyword,
+  });
   const { usersData } = useFetchUsers();
 
   const resultData = keyword
     ? getSortUserList(searchUsersData, sort)
     : getSortUserList(usersData, sort);
+
+  useEffect(() => {
+    searchUsersDataRefetch();
+  }, [keyword, searchUsersDataRefetch]);
 
   return (
     <ul>

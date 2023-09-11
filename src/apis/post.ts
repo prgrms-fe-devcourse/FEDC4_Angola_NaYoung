@@ -14,7 +14,6 @@ export const useFetchAllPosts = () => {
     AxiosError
   >('allPosts', () => baseInstance.get(path));
 
-  console.log(`useAllSearchPosts 서버 통신 data:  ${data?.data}`);
   return {
     allPostsData: data?.data,
     allPostsSuccess: isSuccess,
