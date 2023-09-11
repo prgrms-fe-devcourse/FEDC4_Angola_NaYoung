@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query';
+import { Like } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
-import { Like } from '@type/index';
 import useAxiosInstance from './instance';
 
 interface LikeRequestBody {

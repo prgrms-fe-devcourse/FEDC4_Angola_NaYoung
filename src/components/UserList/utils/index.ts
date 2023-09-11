@@ -1,4 +1,4 @@
-import { User } from '@type/index';
+import { User } from '@type';
 
 export const getSortUserList = (
   searchData: User[] | undefined,

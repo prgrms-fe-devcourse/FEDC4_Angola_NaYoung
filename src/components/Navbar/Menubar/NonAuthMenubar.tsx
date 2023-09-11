@@ -1,6 +1,6 @@
 import LinkButton from '../LinkButton';
 
-const NonAuthMenubar = () => {
+const NonAuthMenuBar = () => {
   return (
     <>
       <LinkButton to="/login">로그인</LinkButton>
@@ -9,4 +9,4 @@ const NonAuthMenubar = () => {
   );
 };
 
-export default NonAuthMenubar;
+export default NonAuthMenuBar;

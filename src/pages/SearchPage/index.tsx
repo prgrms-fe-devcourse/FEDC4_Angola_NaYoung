@@ -3,9 +3,9 @@ import PostList from '@components/PostList';
 import UserList from '@components/UserList';
 
 interface SearchProps {
-  target: string;
+  target?: string;
   keyword?: string;
-  sort: string;
+  sort?: string;
 }
 
 const SearchPage = ({ target = 'post', keyword, sort }: SearchProps) => {
@@ -14,12 +14,12 @@ const SearchPage = ({ target = 'post', keyword, sort }: SearchProps) => {
       {target === 'user' ? (
         <UserList
           keyword={keyword}
-          sort={sort}
+          sort={sort || 'follower'}
         />
       ) : (
         <PostList
           keyword={keyword}
-          sort={sort}
+          sort={sort || 'recent'}
         />
       )}
     </Container>

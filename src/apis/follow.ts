@@ -1,9 +1,7 @@
 import { useMutation } from 'react-query';
+import { Follow } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
-import { Follow } from '@type/index';
 import useAxiosInstance from './instance';
-
-// import useAxiosInstance from './instance';
 
 interface FollowRequestBody {
   userId: string;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { getPathname } from '@utils/index';
+import { getPathname } from '@utils';
 import { getTitle } from './utils';
 
 const Header = () => {

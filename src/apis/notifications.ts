@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
+import { Notification } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
-import { Notification } from '@type/index';
 import useAxiosInstance from './instance';
 
 export const useFetchGetNotifications = () => {

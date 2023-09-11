@@ -1,4 +1,4 @@
-import { Post } from '@type/index';
+import { Post } from '@type';
 
 export const getSortPostList = (
   searchData: Post[] | undefined,

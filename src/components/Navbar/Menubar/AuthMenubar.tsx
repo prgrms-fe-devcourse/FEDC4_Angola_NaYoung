@@ -1,6 +1,6 @@
 import LinkButton from '../LinkButton';
 
-const AuthMenubar = () => {
+const AuthMenuBar = () => {
   return (
     <>
       <LinkButton to="/mypage">마이페이지</LinkButton>
@@ -9,4 +9,4 @@ const AuthMenubar = () => {
   );
 };
 
-export default AuthMenubar;
+export default AuthMenuBar;

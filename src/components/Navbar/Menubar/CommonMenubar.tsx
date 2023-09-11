@@ -1,10 +1,10 @@
-import LinkButton from '../LinkButton';
-import SearchBar from '../SearchBar';
-import useCurrentPage from '../hooks/useCurrentPage';
+import LinkButton from '@components/NavBar/LinkButton';
+import SearchBar from '@components/SearchBar';
+import useCurrentPage from '@hooks/useCurrentPage';
 
 const SEARCH = 'search';
 
-const CommonMenubar = () => {
+const CommonMenuBar = () => {
   const { name } = useCurrentPage();
   return (
     <>
@@ -22,4 +22,4 @@ const CommonMenubar = () => {
   );
 };
 
-export default CommonMenubar;
+export default CommonMenuBar;

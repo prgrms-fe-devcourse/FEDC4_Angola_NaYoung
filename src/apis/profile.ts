@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query';
+import { User } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
-import { User } from '@type/index';
 import useAxiosInstance from './instance';
 
 interface UpdateFullNameRequestBody {

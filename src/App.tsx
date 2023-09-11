@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import FetchTest from './components/FetchTest';
+import Main from '@components/Main';
+import Navbar from '@components/Navbar';
 
 const queryClient = new QueryClient();
 
@@ -10,7 +11,8 @@ const App = () => {
     <BrowserRouter>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          <FetchTest />
+          <Navbar />
+          <Main />
         </QueryClientProvider>
       </RecoilRoot>
     </BrowserRouter>

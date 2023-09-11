@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
+import { authInfoState } from '@atoms';
+import { User } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
-import { authInfoState } from '@atoms/index';
-import { User } from '@type/index';
 import useAxiosInstance from './instance';
 
 export const useFetchUsers = () => {

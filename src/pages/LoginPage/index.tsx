@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useFetchLogin } from '@apis/auth';
 
-const Login = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { loginMutate, isLoginError, isLoginSuccess } = useFetchLogin();
@@ -55,7 +55,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
 
 const LoginContainer = styled.div`
   display: flex;

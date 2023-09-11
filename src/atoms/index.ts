@@ -1,5 +1,5 @@
+import { authInfoStorage } from '@storage';
 import { atom, selector } from 'recoil';
-import { authInfoStorage } from '@storage/index';
 import { AuthInfo } from '@type/auth';
 
 const authInfo = atom<AuthInfo | null>({

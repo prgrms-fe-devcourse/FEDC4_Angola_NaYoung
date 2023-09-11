@@ -1,4 +1,4 @@
-import { getPathname } from '@utils/index';
+import { getPathname } from '@utils';
 import { TITLE } from '../constants';
 
 export const getTitle = (pathname: string) => {

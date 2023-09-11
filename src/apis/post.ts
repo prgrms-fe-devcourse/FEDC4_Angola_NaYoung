@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from 'react-query';
+import { Post } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
-import { Post } from '@type/index';
 import useAxiosInstance from './instance';
 
-const CHANNEL_ID = '64fab06721f5351a7dd21a66';
+const CHANNEL_ID = '64fab06721f5351a7dd21a66'; // todo : env 파일에 추가
 
 export const useFetchAllPosts = () => {
   const { baseInstance } = useAxiosInstance();

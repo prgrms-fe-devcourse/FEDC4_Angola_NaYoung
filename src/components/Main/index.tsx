@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { redirects, routes } from '@routes';
 import useCurrentPage from '@hooks/useCurrentPage';
 
-// 임시 컴포넌트, Header 합칠 때 삭제해야 함
+// 임시 컴포넌트 : Header
 interface HeaderProps {
   title: string;
   sortProps?: {

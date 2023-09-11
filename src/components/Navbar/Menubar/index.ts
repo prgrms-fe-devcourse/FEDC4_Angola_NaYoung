@@ -1,3 +1,3 @@
-export { default as CommonMenubar } from './CommonMenubar';
-export { default as AuthMenubar } from './AuthMenubar';
-export { default as NonAuthMenubar } from './NonAuthMenubar';
+export { default as CommonMenuBar } from './CommonMenuBar';
+export { default as AuthMenuBar } from './AuthMenuBar';
+export { default as NonAuthMenuBar } from './NonAuthMenuBar';
