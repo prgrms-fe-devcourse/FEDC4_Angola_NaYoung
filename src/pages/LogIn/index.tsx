@@ -6,7 +6,7 @@ import { useFetchLogin } from '@apis/auth';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, isLoginError, isLoginSuccess } = useFetchLogin();
+  const { loginMutate, isLoginError, isLoginSuccess } = useFetchLogin();
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -27,7 +27,7 @@ const Login = () => {
       return;
     }
 
-    login({
+    loginMutate({
       email,
       password,
     });
