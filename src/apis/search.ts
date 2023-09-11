@@ -4,7 +4,7 @@ import { Post, User } from '@type/index';
 import useAxiosInstance from './instance';
 
 interface SearchRequestQuery {
-  query: string;
+  query?: string;
 }
 
 export const useFetchSearchPosts = ({ query }: SearchRequestQuery) => {
@@ -30,7 +30,7 @@ export const useFetchSearchUsers = ({ query }: SearchRequestQuery) => {
     AxiosError
   >('searchUsers', () => baseInstance.get(`/search/users/${query}`));
   return {
-    searchUsersData: data?.data,
+    searchUsersData: data?.data.filter((user) => user.role !== 'SuperAdmin'),
     isSearchUsersSuccess: isSuccess,
     isSearchUsersError: isError,
     isSearchUsersLoading: isLoading,
