@@ -22,9 +22,7 @@ const UserPage = () => {
       <div>닉네임: {userData?.fullName}</div>
       <div>
         받은 포스트 좋아요 수:
-        {userPostsData
-          ?.map((data) => data.likes.length)
-          .reduce((acc, cur) => acc + cur, 0)}
+        {userData?.likes.length}
       </div>
       <div>follower: {userData?.followers?.length || 0}</div>
       <div>following: {userData?.following?.length || 0}</div>
