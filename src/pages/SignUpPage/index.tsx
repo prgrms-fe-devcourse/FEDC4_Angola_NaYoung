@@ -6,7 +6,7 @@ import { useFetchSignUp } from '@apis/auth';
 import { useFetchUsers } from '@apis/user';
 import { SignUpFailModal, SignUpSuccessModal } from './SignUpModals';
 
-const SignUp = () => {
+const SignUpPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('initial');
   const [password, setPassword] = useState('initial');
@@ -196,7 +196,7 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpPage;
 
 const SignUpContainer = styled.div`
   display: flex;
