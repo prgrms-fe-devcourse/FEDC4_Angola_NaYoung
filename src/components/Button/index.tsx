@@ -4,11 +4,11 @@ import styled from '@emotion/styled';
 interface ButtonProps {
   text: string;
   disabled?: boolean;
-  onClick?: () => void;
+  handleClick?: () => void;
   style?: CSSProperties;
 }
 
-const Button = ({ text, onClick, disabled = false, style }: ButtonProps) => {
+const Button = ({ text, handleClick, disabled = false, style }: ButtonProps) => {
   return (
     <ButtonStyled
       disabled={disabled}

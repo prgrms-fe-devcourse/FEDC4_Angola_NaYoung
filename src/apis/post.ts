@@ -16,9 +16,9 @@ export const useFetchAllPosts = () => {
 
   return {
     allPostsData: data?.data,
-    allPostsSuccess: isSuccess,
-    allPostsError: isError,
-    allPostsLoading: isLoading,
+    isAllPostsSuccess: isSuccess,
+    isAllPostsError: isError,
+    isAllPostsLoading: isLoading,
   };
 };
 
@@ -33,9 +33,9 @@ export const useFetchUserPosts = (authorId: string) => {
 
   return {
     userPostsData: data?.data,
-    userPostsError: isError,
-    userPostsLoading: isLoading,
-    userPostsSuccess: isSuccess,
+    isUserPostsError: isError,
+    isUserPostsLoading: isLoading,
+    isUserPostsSuccess: isSuccess,
   };
 };
 
@@ -49,9 +49,9 @@ export const useFetchPost = (postId: string) => {
   >('post', () => baseInstance.get(path));
   return {
     postData: data?.data as Post,
-    postLoading: isLoading,
-    postSuccess: isSuccess,
-    postError: isError,
+    isPostLoading: isLoading,
+    isPostSuccess: isSuccess,
+    isPostError: isError,
   };
 };
 
@@ -75,9 +75,9 @@ export const useFetchCreatePost = () => {
   );
   return {
     createPostMutate: mutate,
-    createPostLoading: isLoading,
-    createPostSuccess: isSuccess,
-    createPostError: isError,
+    isCreatePostLoading: isLoading,
+    isCreatePostSuccess: isSuccess,
+    isCreatePostError: isError,
   };
 };
 
@@ -95,8 +95,8 @@ export const useFetchDeletePost = () => {
   );
   return {
     deletePostMutate: mutate,
-    deletePostLoading: isLoading,
-    deletePostSuccess: isSuccess,
-    deletePostError: isError,
+    isDeletePostLoading: isLoading,
+    isDeletePostSuccess: isSuccess,
+    isDeletePostError: isError,
   };
 };
