@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import TestComponent from '@pages/ReadMorePage/TestComponent';
 
+// import MakeComment from "./MakeComment";
+
 // postData && ( // postData 가 있을 때만 Post 컴포넌트를 렌더링 해주세요!
 //   <Post
 //     postId={postId}
@@ -27,13 +29,16 @@ const ReadMorePage = () => {
   const handleClickItemB = () => {
     votedValue === 'B' ? setVotedValue('') : setVotedValue('B');
   };
+  const handleClickItem = (value: string) => {
+    votedValue === value ? setVotedValue('') : setVotedValue(value);
+  };
 
   return (
     <>
       <ReadMorePageContainer>
         <TestComponent
           voteValue={votedValue}
-          onVote={(value: string) => setVotedValue(value)}
+          onVote={(value: string) => handleClickItem(value)}
         />
         <CommentsContainer>
           <MakeCommentContainer>
