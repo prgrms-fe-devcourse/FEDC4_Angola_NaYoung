@@ -18,7 +18,7 @@ const UserPage = () => {
 
   return (
     <div>
-      <Profile>프로필{userData?.image}</Profile>
+      <div>프로필{userData?.image}</div>
       <div>닉네임: {userData?.fullName}</div>
       <div>
         받은 포스트 좋아요 수:
