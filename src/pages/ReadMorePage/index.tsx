@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 import TestComponent from '@pages/ReadMorePage/TestComponent';
 
 // postData && ( // postData 가 있을 때만 Post 컴포넌트를 렌더링 해주세요!
@@ -12,9 +14,11 @@ import TestComponent from '@pages/ReadMorePage/TestComponent';
 //     onVote={(value: string) => setVotedValue(value)} // detail page 에서만
 //   />
 // );
-
 const ReadMorePage = () => {
+  const userId = useRecoilValue(authInfoState)?.userId;
   const [votedValue, setVotedValue] = useState<string>('');
+
+  console.log(userId);
 
   const handleClickItemA = () => {
     votedValue === 'A' ? setVotedValue('') : setVotedValue('A');
