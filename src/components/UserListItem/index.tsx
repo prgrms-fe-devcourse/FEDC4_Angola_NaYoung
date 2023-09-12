@@ -9,7 +9,6 @@ export const MoreLinkButtonStyles: CSSProperties = {
   height: '100%',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: 'yellow',
   borderTopRightRadius: 12,
   borderBottomRightRadius: 12,
 };
@@ -35,7 +34,6 @@ const UserListItem = ({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'yellow',
     borderRadius: '50%',
   };
 

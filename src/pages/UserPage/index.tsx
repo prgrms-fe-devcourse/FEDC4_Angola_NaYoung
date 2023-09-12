@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
@@ -29,16 +30,28 @@ const UserPage = () => {
         />
       )}
       <ul>
-        {userPostsData?.map((post) => (
-          <PostListItem
-            key={post._id}
-            id={post._id}
-            title={post.title}
-          />
-        ))}
+        {userPostsData?.length === 0 ? (
+          <NoPostMessage>작성한 글이 없습니다.</NoPostMessage>
+        ) : (
+          userPostsData?.map((post) => (
+            <PostListItem
+              key={post._id}
+              id={post._id}
+              title={post.title}
+            />
+          ))
+        )}
       </ul>
     </div>
   );
 };
 
 export default UserPage;
+
+const NoPostMessage = styled.div`
+  display: flex;
+  margin-top: 30px;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+`;
