@@ -43,5 +43,3 @@ const UserPage = () => {
 };
 
 export default UserPage;
-
-const Profile = styled.div``;
