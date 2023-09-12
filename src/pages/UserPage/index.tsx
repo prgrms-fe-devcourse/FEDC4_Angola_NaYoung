@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
@@ -18,7 +17,7 @@ const UserPage = () => {
 
   return (
     <div>
-      <Profile>프로필{userData?.image}</Profile>
+      <div>프로필{userData?.image}</div>
       <div>닉네임: {userData?.fullName}</div>
       <div>
         받은 포스트 좋아요 수:
@@ -41,5 +40,3 @@ const UserPage = () => {
 };
 
 export default UserPage;
-
-const Profile = styled.div``;
