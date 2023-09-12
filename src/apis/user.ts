@@ -1,8 +1,6 @@
 import { useQuery } from 'react-query';
-import { authInfoState } from '@atoms';
 import { User } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
-import { useRecoilValue } from 'recoil';
 import useAxiosInstance from './instance';
 
 export const useFetchUsers = () => {
@@ -19,15 +17,14 @@ export const useFetchUsers = () => {
   };
 };
 
-export const useFetchUser = () => {
+export const useFetchUser = (userId: string) => {
   const { baseInstance } = useAxiosInstance();
-  const auth = useRecoilValue(authInfoState);
   const { data, isError, isSuccess, isLoading } = useQuery<
     AxiosResponse<User>,
     AxiosError
-  >('user', () => baseInstance.get(`/users/${auth?.userId}`));
+  >('user', () => baseInstance.get(`/users/${userId}`));
   return {
-    userData: data,
+    userData: data?.data,
     isUserError: isError,
     isUserSuccess: isSuccess,
     isUserLoading: isLoading,
