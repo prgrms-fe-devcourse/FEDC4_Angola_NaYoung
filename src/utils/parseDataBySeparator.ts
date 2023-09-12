@@ -22,5 +22,5 @@ export const splitPostBySeparator = (target: string): PostData => {
 
 export const splitCommentBySeparator = (target: string): CommentData => {
   const [vote, comment] = target.split(ANGOLA_SEPARATOR);
-  return { vote, comment };
+  return comment ? { vote, comment } : { vote };
 };
