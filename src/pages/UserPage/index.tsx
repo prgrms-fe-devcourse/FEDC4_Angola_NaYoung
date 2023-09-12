@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
