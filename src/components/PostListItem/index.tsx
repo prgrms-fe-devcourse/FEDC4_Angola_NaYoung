@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import LinkButton from '@components/NavBar/LinkButton';
+import { MoreLinkButtonStyles } from '@components/UserListItem';
 
 interface PostListItemProps {
   id: string;
@@ -11,7 +13,13 @@ const PostListItem = ({ id, image, title }: PostListItemProps) => {
     <ListItemContainer>
       {image && <Profile>프로필</Profile>}
       <Title>{title}</Title>
-      <More> more</More>
+      <More>
+        <LinkButton
+          to={`/posts/${id}`}
+          style={MoreLinkButtonStyles}>
+          More
+        </LinkButton>
+      </More>
     </ListItemContainer>
   );
 };
