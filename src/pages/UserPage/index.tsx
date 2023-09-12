@@ -3,6 +3,7 @@ import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
 import useCurrentPage from '@hooks/useCurrentPage';
+import UserInfo from './UserInfo';
 
 const UserPage = () => {
   const { params } = useCurrentPage();
@@ -17,15 +18,16 @@ const UserPage = () => {
 
   return (
     <div>
-      <div>프로필{userData?.image}</div>
-      <div>닉네임: {userData?.fullName}</div>
-      <div>
-        받은 포스트 좋아요 수:
-        {userData?.likes.length}
-      </div>
-      <div>follower: {userData?.followers?.length || 0}</div>
-      <div>following: {userData?.following?.length || 0}</div>
-      <div>작성한 포스트</div>
+      {userData && (
+        <UserInfo
+          id={userData._id}
+          image={userData.image}
+          name={userData.fullName}
+          likes={userData.likes.length}
+          followers={userData.followers.length}
+          following={userData.following.length}
+        />
+      )}
       <ul>
         {userPostsData?.map((post) => (
           <PostListItem
