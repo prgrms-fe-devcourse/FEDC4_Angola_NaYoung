@@ -2,6 +2,17 @@ import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 import LinkButton from '@components/NavBar/LinkButton';
 
+export const MoreLinkButtonStyles: CSSProperties = {
+  all: 'unset',
+  display: 'flex',
+  width: '100%',
+  height: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'yellow',
+  borderTopRightRadius: 12,
+  borderBottomRightRadius: 12,
+};
 interface UserListItemProps {
   id: string;
   image: string;
@@ -17,18 +28,6 @@ const UserListItem = ({
   likes,
   followers,
 }: UserListItemProps) => {
-  const MoreLinkButtonStyles: CSSProperties = {
-    all: 'unset',
-    display: 'flex',
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'yellow',
-    borderTopRightRadius: 12,
-    borderBottomRightRadius: 12,
-  };
-
   const ProfileLinkButtonStyles: CSSProperties = {
     all: 'unset',
     display: 'flex',
