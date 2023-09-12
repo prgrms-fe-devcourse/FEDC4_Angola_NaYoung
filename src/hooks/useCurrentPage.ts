@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useLocation, useMatch } from 'react-router-dom';
 import { routes } from '@routes';
-import { parseQueryString } from '@utils/parseQueryString';
+import { parseQueryString } from '@utils';
 
-interface SearchParams {
+export interface SearchParams {
   show?: 'true';
-  voted?: 'true';
+  voted?: string;
   keyword?: string;
   sort?: string;
 }
 
-interface Params {
+export interface Params {
   target?: 'user' | 'post';
   userId?: string;
   postId?: string;
