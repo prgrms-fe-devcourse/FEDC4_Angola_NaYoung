@@ -24,9 +24,9 @@ const UserPage = () => {
           id={userData._id}
           image={userData.image}
           name={userData.fullName}
-          likes={userData.likes.length}
-          followers={userData.followers.length}
-          following={userData.following.length}
+          likes={userData.likes.length || 0}
+          followers={userData.followers.length || 0}
+          following={userData.following.length || 0}
         />
       )}
       <ul>
