@@ -26,8 +26,8 @@ const UserPage = () => {
           ?.map((data) => data.likes.length)
           .reduce((acc, cur) => acc + cur, 0)}
       </div>
-      <div>follower: {userData?.followers.length}</div>
-      <div>following: {userData?.following.length}</div>
+      <div>follower: {userData?.followers?.length || 0}</div>
+      <div>following: {userData?.following?.length || 0}</div>
       <div>작성한 포스트</div>
       <ul>
         {userPostsData?.map((post) => (
