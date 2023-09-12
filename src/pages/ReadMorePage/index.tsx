@@ -46,7 +46,7 @@ const ReadMorePage = () => {
               </ItemButtonB>
             </ItemButtonsContainer>
             <MakeComment placeholder="의견 입력창"></MakeComment>
-            <SubmitButton>
+            <SubmitButton disabled={votedValue ? false : true}>
               <p>submit</p>
               <p>또는</p>
               <p>skip</p>
