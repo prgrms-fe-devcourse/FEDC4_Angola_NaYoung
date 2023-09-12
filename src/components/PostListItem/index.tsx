@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 interface PostListItemProps {
@@ -7,11 +8,12 @@ interface PostListItemProps {
 }
 
 const PostListItem = ({ id, image, title }: PostListItemProps) => {
+  const navigate = useNavigate();
   return (
     <ListItemContainer>
       <Profile>프로필</Profile>
       <Title>{title}</Title>
-      <More> more</More>
+      <More onClick={() => navigate(`/post/${id}`)}>more</More>
     </ListItemContainer>
   );
 };
