@@ -5,14 +5,21 @@ import useAxiosInstance from './instance';
 
 const CHANNEL_ID = '64fab06721f5351a7dd21a66'; // todo : env 파일에 추가
 
-export const useFetchAllPosts = () => {
+export const useFetchAllPosts = (offset?: number, limit?: number) => {
   const { baseInstance } = useAxiosInstance();
   const path = `/posts/channel/${CHANNEL_ID}`;
 
-  const { data, isError, isLoading, isSuccess } = useQuery<
+  const { data, isError, isLoading, isSuccess, refetch } = useQuery<
     AxiosResponse<Post[]>,
     AxiosError
-  >('allPosts', () => baseInstance.get(path));
+  >('allPosts', () =>
+    baseInstance.get(path, {
+      params: {
+        offset,
+        limit,
+      },
+    }),
+  );
 
   return {
     allPostsData: data?.data,

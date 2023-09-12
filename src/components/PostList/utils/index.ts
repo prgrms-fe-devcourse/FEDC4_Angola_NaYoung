@@ -2,7 +2,7 @@ import { Post } from '@type';
 
 export const getSortPostList = (
   searchData: Post[] | undefined,
-  sort: string,
+  sort?: string,
   keyword?: string,
 ): Post[] | undefined => {
   if (sort === 'recent' && keyword) {
