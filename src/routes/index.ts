@@ -8,10 +8,16 @@ import {
   SignUpPage,
   UserPage,
 } from '@pages';
+import type { Params, SearchParams } from '@hooks/useCurrentPage';
 
-// todo: page 넣을 때 수정
+type RouteComponent<T> = (props: T) => JSX.Element;
 
-export const routes = [
+export const routes: {
+  path: string;
+  name: string;
+  title: string;
+  component: RouteComponent<SearchParams & Params>;
+}[] = [
   { path: '/', name: 'home', title: 'ANGOLA', component: HomePage },
   {
     path: '/search/:target',
