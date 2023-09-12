@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 import Post from '@components/Post';
 import { useFetchPost } from '@apis/post';
+import { authInfoState } from '@atoms/index';
 
 export const CreatePostPage = () => {
   return <div>CreatePostPage</div>;
@@ -21,10 +23,11 @@ export interface PostPageProps {
   show?: 'true';
   voted?: string;
 }
-export const PostPage = ({ postId = '', show, voted }: PostPageProps) => {
-  const { postData, isPostError, isPostLoading, isPostSuccess } =
-    useFetchPost(postId);
+export const PostPage = ({ postId = '', show }: PostPageProps) => {
+  const { postData } = useFetchPost(postId);
   const [votedValue, setVotedValue] = useState('');
+  const auth = useRecoilValue(authInfoState);
+
   return (
     <div>
       {postData && (
@@ -33,27 +36,33 @@ export const PostPage = ({ postId = '', show, voted }: PostPageProps) => {
           authorName={postData.author.fullName}
           authorId={postData.author._id}
           postTitle={postData.title}
+          numberOfComments={postData.comments.length}
+          numberOfLikes={postData.likes.length}
+          likeId={
+            postData.likes.find((like) => like.user === auth?.userId)?._id
+          }
           voteValue={votedValue}
           onVote={(value: string) => setVotedValue(value)}
         />
       )}
       <hr />
-
-      <CommentContainer>
-        <h1>댓글창</h1>
-        <SelectContainer>
-          <SelectBox
-            onClick={() => setVotedValue('a')}
-            className={votedValue === 'a' ? 'active' : ''}>
-            button A
-          </SelectBox>
-          <SelectBox
-            onClick={() => setVotedValue('b')}
-            className={votedValue === 'b' ? 'active' : ''}>
-            button B
-          </SelectBox>
-        </SelectContainer>
-      </CommentContainer>
+      {show && (
+        <CommentContainer>
+          <h1>댓글창</h1>
+          <SelectContainer>
+            <SelectBox
+              onClick={() => setVotedValue('a')}
+              className={votedValue === 'a' ? 'active' : ''}>
+              button A
+            </SelectBox>
+            <SelectBox
+              onClick={() => setVotedValue('b')}
+              className={votedValue === 'b' ? 'active' : ''}>
+              button B
+            </SelectBox>
+          </SelectContainer>
+        </CommentContainer>
+      )}
     </div>
   );
 };
