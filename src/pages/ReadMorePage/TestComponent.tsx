@@ -1,6 +1,15 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 
-const TestComponent = () => {
+interface imsyProps {
+  voteValue: string;
+  onVote: (value: string) => void;
+}
+
+const TestComponent = ({ voteValue, onVote }: imsyProps) => {
+  useEffect(() => {
+    console.log(voteValue);
+  }, [voteValue]);
   return (
     <>
       <ComponentContainer>
@@ -9,7 +18,13 @@ const TestComponent = () => {
           <Title>한 줄 설명</Title>
         </TitleContainer>
         <VoteContainer>
-          <VoteButton style={{ backgroundColor: '#8EE2E2' }}>
+          <VoteButton
+            style={
+              voteValue === 'A'
+                ? { backgroundColor: '#F0000080' }
+                : { backgroundColor: '#8EE2E2' }
+            }
+            onClick={() => onVote('A')}>
             <p
               style={{
                 color: 'white',
@@ -21,7 +36,13 @@ const TestComponent = () => {
             <p>어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구 어쩌미구구</p>
           </VoteButton>
           <VS>VS</VS>
-          <VoteButton style={{ backgroundColor: '#C4A8FF' }}>
+          <VoteButton
+            style={
+              voteValue === 'B'
+                ? { backgroundColor: '#F0000080' }
+                : { backgroundColor: '#C4A8FF' }
+            }
+            onClick={() => onVote('B')}>
             <p
               style={{
                 color: 'white',

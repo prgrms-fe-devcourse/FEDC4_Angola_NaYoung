@@ -1,4 +1,4 @@
-import { MouseEvent, useRef, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import TestComponent from '@pages/ReadMorePage/TestComponent';
 
@@ -14,47 +14,34 @@ import TestComponent from '@pages/ReadMorePage/TestComponent';
 // );
 
 const ReadMorePage = () => {
-  const [votedValue, setVotedValue] = useState('');
-  const buttonARef = useRef<HTMLButtonElement | null>(null);
-  const buttonBRef = useRef<HTMLButtonElement | null>(null);
+  const [votedValue, setVotedValue] = useState<string>('');
 
-  const handleClickItemA = (e: MouseEvent<HTMLButtonElement>) => {
-    if (votedValue === 'A') {
-      e.currentTarget.classList.remove('A');
-      setVotedValue('');
-      return;
-    }
-    buttonBRef.current && buttonBRef.current.classList.remove('B');
-    e.currentTarget.classList.add('A');
-    setVotedValue('A');
+  const handleClickItemA = () => {
+    votedValue === 'A' ? setVotedValue('') : setVotedValue('A');
   };
 
-  const handleClickItemB = (e: MouseEvent<HTMLButtonElement>) => {
-    if (votedValue === 'B') {
-      e.currentTarget.classList.remove('B');
-      setVotedValue('');
-      return;
-    }
-    buttonARef.current && buttonARef.current.classList.remove('A');
-    e.currentTarget.classList.add('B');
-    setVotedValue('B');
+  const handleClickItemB = () => {
+    votedValue === 'B' ? setVotedValue('') : setVotedValue('B');
   };
 
   return (
     <>
       <ReadMorePageContainer>
-        <TestComponent />
+        <TestComponent
+          voteValue={votedValue}
+          onVote={(value: string) => setVotedValue(value)}
+        />
         <CommentsContainer>
           <MakeCommentContainer>
             <ItemButtonsContainer>
               <ItemButtonA
-                ref={buttonARef}
-                onClick={handleClickItemA}>
+                onClick={handleClickItemA}
+                votedValue={votedValue}>
                 A
               </ItemButtonA>
               <ItemButtonB
-                ref={buttonBRef}
-                onClick={handleClickItemB}>
+                onClick={handleClickItemB}
+                votedValue={votedValue}>
                 B
               </ItemButtonB>
             </ItemButtonsContainer>
@@ -118,7 +105,7 @@ const ItemButtonsContainer = styled.div`
   height: 6rem;
 `;
 
-const ItemButtonA = styled.button`
+const ItemButtonA = styled.button<{ votedValue: string }>`
   width: 100%;
   height: 100%;
   border: none;
@@ -126,26 +113,22 @@ const ItemButtonA = styled.button`
   font-size: 1.5rem;
   border-bottom: solid;
   cursor: pointer;
+  background-color: ${(props) => (props.votedValue === 'A' ? 'pink' : 'none')};
 
-  &.A {
-    background-color: pink;
-  }
   &:hover {
     background-color: gray;
   }
 `;
 
-const ItemButtonB = styled.button`
+const ItemButtonB = styled.button<{ votedValue: string }>`
   width: 100%;
   height: 100%;
   border: none;
   background-color: white;
   font-size: 1.5rem;
   cursor: pointer;
+  background-color: ${(props) => (props.votedValue === 'B' ? 'pink' : 'none')};
 
-  &.B {
-    background-color: pink;
-  }
   &:hover {
     background-color: gray;
   }
