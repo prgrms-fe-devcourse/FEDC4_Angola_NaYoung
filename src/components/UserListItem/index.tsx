@@ -1,4 +1,6 @@
+import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
+import LinkButton from '@components/NavBar/LinkButton';
 
 interface UserListItemProps {
   id: string;
@@ -10,14 +12,43 @@ interface UserListItemProps {
 
 const UserListItem = ({
   id,
-  image,
+  // image,
   name,
   likes,
   followers,
 }: UserListItemProps) => {
+  const MoreLinkButtonStyles: CSSProperties = {
+    all: 'unset',
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'yellow',
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+  };
+
+  const ProfileLinkButtonStyles: CSSProperties = {
+    all: 'unset',
+    display: 'flex',
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'yellow',
+    borderRadius: '50%',
+  };
+
   return (
     <List>
-      <Profile>프로필</Profile>
+      <Profile>
+        <LinkButton
+          to={`/user/${id}`}
+          style={ProfileLinkButtonStyles}>
+          프로필
+        </LinkButton>
+      </Profile>
       <UserInfo>
         <div>{name} 🌱 🐣</div>
         <LikesAndFollowers>
@@ -25,7 +56,13 @@ const UserListItem = ({
           <div>🙍{followers}</div>
         </LikesAndFollowers>
       </UserInfo>
-      <More> more</More>
+      <More>
+        <LinkButton
+          to={`/user/${id}`}
+          style={MoreLinkButtonStyles}>
+          More
+        </LinkButton>
+      </More>
     </List>
   );
 };
@@ -51,6 +88,7 @@ const Profile = styled.div`
   font-size: 12px;
   margin-left: 10px;
   margin: 10px 0 10px 10px;
+  cursor: pointer;
 `;
 
 const UserInfo = styled.div`
