@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 
 interface PostListItemProps {
   id: string;
-  image: string;
+  image?: string;
   title: string;
 }
 
 const PostListItem = ({ id, image, title }: PostListItemProps) => {
   return (
     <ListItemContainer>
-      <Profile>프로필</Profile>
+      {image && <Profile>프로필</Profile>}
       <Title>{title}</Title>
       <More> more</More>
     </ListItemContainer>
