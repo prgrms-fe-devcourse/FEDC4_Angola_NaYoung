@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { redirects, routes } from '@routes';
+import ReadMorePage from '@pages/ReadMorePage';
 import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
 
@@ -45,6 +46,9 @@ const Main = () => {
             element={<Navigate to={to} />}
           />
         ))}
+        <Route
+          path={'/readMore'}
+          element={React.createElement(ReadMorePage)}></Route>
       </Routes>
     </>
   );
