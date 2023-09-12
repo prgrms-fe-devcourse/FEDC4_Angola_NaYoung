@@ -1,3 +1,5 @@
+import Post from '@components/Post';
+
 export const CreatePostPage = () => {
   return <div>CreatePostPage</div>;
 };
@@ -10,6 +12,16 @@ export const UserPage = () => {
 export const MyPage = () => {
   return <div>MyPage</div>;
 };
-export const PostPage = () => {
-  return <div>PostPage</div>;
+
+export interface PostPageProps {
+  postId?: string;
+  show?: 'true';
+  voted?: 'a' | 'b';
+}
+export const PostPage = ({ postId = '', show, voted }: PostPageProps) => {
+  return (
+    <div>
+      <Post postId={postId} />
+    </div>
+  );
 };
