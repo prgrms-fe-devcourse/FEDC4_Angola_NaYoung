@@ -26,7 +26,7 @@ const MyInfo = ({
   const navigate = useNavigate();
   const { updateFullNameMutate } = useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
-  const [isEditingFullName, isSetEditingFullName] = useState(false);
+  const [isEditingFullName, setIsEditingFullName] = useState(false);
   const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
   const [newPassWord, setNewPassWord] = useState(updatePasswordData.password);
   const [confirmNewPassWord, setConfirmNewPassWord] = useState('');
@@ -46,7 +46,7 @@ const MyInfo = ({
         return;
       }
     }
-    isSetEditingFullName(!isEditingFullName);
+    setIsEditingFullName(!isEditingFullName);
   };
 
   const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
