@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useState } from 'react';
 import styled from '@emotion/styled';
 import Spinner from '@components/Spinner';
 import { useFetchCreatePost } from '@apis/post';
@@ -20,7 +20,14 @@ const CreatePostPage = () => {
     isCreatePostError,
   } = useFetchCreatePost();
 
-  const handleChangeInputValues = (e: ChangeEvent<HTMLInputElement>) => {
+  const isCreatePostPossible: boolean =
+    inputValues.title.length > 0 &&
+    inputValues.optionA.length > 0 &&
+    inputValues.optionB.length > 0;
+
+  const handleChangeInputValues = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const { id, value } = e.target;
     setInputValues({
       ...inputValues,
@@ -28,20 +35,7 @@ const CreatePostPage = () => {
     });
   };
 
-  const isCreatePostPossible: boolean =
-    inputValues.title.length > 0 &&
-    inputValues.optionA.length > 0 &&
-    inputValues.optionB.length > 0;
-
-  const handlePreventEnterKeySubmit = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
-  };
-
-  const handleSubmitCreatePost = (e: FormEvent) => {
-    e.preventDefault();
-
+  const handleClickCreatePost = () => {
     if (!isCreatePostPossible) return;
 
     const postTitle = joinDataBySeparator(
@@ -53,53 +47,66 @@ const CreatePostPage = () => {
     createPostMutate({ title: postTitle });
   };
 
+  const handleBlurTrim = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { id, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [id]: value.trim(),
+    });
+  };
+
   return (
     <>
       {isCreatePostLoading ? (
         <Spinner size={100} />
       ) : (
-        <StyledForm onSubmit={handleSubmitCreatePost}>
+        <PageContainer>
           <TitleContainer>
             <TitleInput
               id="title"
               placeholder="한 줄 설명 쓰기"
               value={inputValues.title}
-              maxLength={99}
+              maxLength={100}
               onChange={handleChangeInputValues}
-              onKeyDown={handlePreventEnterKeySubmit}
+              onBlur={handleBlurTrim}
             />
-            <TitleLengthLimit>{inputValues.title.length} / 100</TitleLengthLimit>
+            <TitleLengthLimit>
+              {inputValues.title.length} / 100
+            </TitleLengthLimit>
           </TitleContainer>
-          <ContentContainer>
-            <OptionContainer>
-              <OptionLabel>A 항목</OptionLabel>
+
+          <OptionContainer>
+            <OptionContent>
+              <OptionName>A 항목</OptionName>
               <OptionInput
                 id="optionA"
                 value={inputValues.optionA}
-                maxLength={99}
+                maxLength={100}
                 onChange={handleChangeInputValues}
-                onKeyDown={handlePreventEnterKeySubmit}
+                onBlur={handleBlurTrim}
               />
-            </OptionContainer>
+            </OptionContent>
 
             <p>VS</p>
 
-            <OptionContainer>
-              <OptionLabel>B 항목</OptionLabel>
+            <OptionContent>
+              <OptionName>B 항목</OptionName>
               <OptionInput
                 id="optionB"
                 value={inputValues.optionB}
-                maxLength={99}
+                maxLength={100}
                 onChange={handleChangeInputValues}
-                onKeyDown={handlePreventEnterKeySubmit}
+                onBlur={handleBlurTrim}
               />
-            </OptionContainer>
-          </ContentContainer>
+            </OptionContent>
+          </OptionContainer>
 
-          <ButtonWrapper>
+          <ButtonContainer>
             <StyledButton
-              type="submit"
-              disabled={!isCreatePostPossible}>
+              disabled={!isCreatePostPossible}
+              onClick={handleClickCreatePost}>
               작성 완료하기
             </StyledButton>
             {isCreatePostError && (
@@ -107,13 +114,13 @@ const CreatePostPage = () => {
                 포스트 작성에 실패했습니다 !
               </CreatePostFailText>
             )}
-          </ButtonWrapper>
-        </StyledForm>
+          </ButtonContainer>
+        </PageContainer>
       )}
 
       {isCreatePostSuccess && (
         <CreatePostSuccessModal
-          postId={createPostData === undefined ? 'anyPostId' : createPostData}
+          postId={createPostData === undefined ? null : createPostData}
         />
       )}
     </>
@@ -122,7 +129,7 @@ const CreatePostPage = () => {
 
 export default CreatePostPage;
 
-const StyledForm = styled.form`
+const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -144,7 +151,7 @@ const TitleContainer = styled.div`
 const TitleInput = styled.input`
   border: none;
   outline: none;
-  width: 85%;
+  width: 80%;
   padding: 6px 12px;
 `;
 
@@ -152,7 +159,7 @@ const TitleLengthLimit = styled.span`
   box-sizing: border-box;
 `;
 
-const ContentContainer = styled.div`
+const OptionContainer = styled.div`
   margin-top: 32px;
   display: flex;
   justify-content: space-between;
@@ -160,29 +167,29 @@ const ContentContainer = styled.div`
   width: 80%;
 `;
 
-const OptionContainer = styled.div`
+const OptionContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const OptionLabel = styled.label`
+const OptionName = styled.p`
   box-sizing: border-box;
 `;
 
-const OptionInput = styled.input`
+const OptionInput = styled.textarea`
   box-sizing: border-box;
   padding: 20px;
+  margin-top: 12px;
   border: 2px solid black;
   border-radius: 16px;
   outline: none;
   width: 300px;
   height: 200px;
-
-  white-space: pre-line;
+  font-size: 24px;
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;

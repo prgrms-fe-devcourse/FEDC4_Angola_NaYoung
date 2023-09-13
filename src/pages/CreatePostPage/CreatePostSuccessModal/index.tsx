@@ -4,18 +4,15 @@ import styled from '@emotion/styled';
 import LinkButton from '@components/NavBar/LinkButton';
 
 interface CreatePostSuccessModalProps {
-  postId: string;
+  postId: string | null;
 }
 
 const CreatePostSuccessModal = ({ postId }: CreatePostSuccessModalProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleKeyDown = (e: Event) => {
-      if (
-        e instanceof KeyboardEvent &&
-        (e.key === 'Enter' || e.key === 'Escape')
-      ) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === 'Escape') {
         navigate(`/post/${postId}`);
       }
     };
