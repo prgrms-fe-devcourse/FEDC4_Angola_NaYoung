@@ -9,10 +9,10 @@ interface UserInfoProps {
   likes: number;
   followers: number; // 팔로워 수
   following: number; // 팔로잉 수
-  followerId?: string; //
-  isFollowed: boolean;
+  followerId?: string; // 팔로우 누른사람 Id
+  isFollowed: boolean; // 팔로우를 눌렀는지 체크
 }
-// 유저 입장
+
 const UserInfo = ({
   userId,
   image,
@@ -23,12 +23,11 @@ const UserInfo = ({
   followerId,
   isFollowed,
 }: UserInfoProps) => {
-  const { followMutate, followData } = useFetchFollow();
+  const { followMutate } = useFetchFollow();
   const { unFollowMutate } = useFetchUnFollow();
   const [countFollowers, setCountFollowers] = useState(followers);
   const [isUserFollowed, setIsUserFollowed] = useState(isFollowed);
 
-  console.log(userId, followData);
   useEffect(() => {
     setCountFollowers(followers);
     setIsUserFollowed(isFollowed);

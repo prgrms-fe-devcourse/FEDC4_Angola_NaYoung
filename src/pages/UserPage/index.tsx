@@ -17,19 +17,6 @@ const UserPage = ({ userId }: { userId: string }) => {
     return <Spinner />;
   }
 
-  // userData.followers._id // 고유 id
-  // userData.followers.user // 유저
-  // userData.followers.follower // 나
-  // console.log(userData?.followers);
-
-  // console.log(
-  //   userData?.followers.find((follower) => follower.follower === myId)
-  //     ?.follower,
-  // );
-  // console.log(
-  //   userData?.followers.find((follower) => follower.follower === myId)?._id,
-  // );
-
   return (
     <div>
       {userData && (
