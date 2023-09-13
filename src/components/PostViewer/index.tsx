@@ -7,7 +7,7 @@ import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@atoms/index';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 
-interface PostProps {
+interface PostViewerProps {
   postId: string;
   postTitle: string;
   authorName: string;
@@ -19,7 +19,7 @@ interface PostProps {
   onVote?: (value: string) => void;
 }
 
-const Post = ({
+const PostViewer = ({
   postId,
   postTitle,
   authorName,
@@ -29,9 +29,10 @@ const Post = ({
   onVote,
   numberOfComments,
   numberOfLikes,
-}: PostProps) => {
+}: PostViewerProps) => {
   const { a, b, title } = splitPostBySeparator(postTitle);
   const auth = useRecoilValue(authInfoState);
+  console.log(authorId);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const handleClickVoteButton = (value: string) => {
@@ -71,7 +72,6 @@ const Post = ({
     } else {
       setUserLikeId(undefined);
     }
-    console.log('refetch');
     postRefetch();
   }, [likeData.likeId, liked, likes, postRefetch]);
 
@@ -111,7 +111,7 @@ const Post = ({
   );
 };
 
-export default Post;
+export default PostViewer;
 
 const PostContainer = styled.div`
   padding: 20px;

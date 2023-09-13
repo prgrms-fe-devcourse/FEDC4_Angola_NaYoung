@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import Post from '@components/Post';
+import PostViewer from '@components/PostViewer';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@atoms/index';
 
@@ -31,7 +31,7 @@ export const PostPage = ({ postId = '', show }: PostPageProps) => {
   return (
     <div>
       {postData && (
-        <Post
+        <PostViewer
           postId={postId}
           authorName={postData.author.fullName}
           authorId={postData.author._id}
