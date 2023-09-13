@@ -1,65 +1,44 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import HomePost from '@components/HomePost';
-import { getSortPostList } from '@components/PostList/utils';
+import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
-import { useFetchAllPosts } from '@apis/post';
+import { useFetchPartPosts } from '@apis/post';
 import { authInfoState } from '@atoms/index';
 import { Post } from '@type/index';
-
-interface HomePageProps {
-  sort?: string;
-}
 
 const INTERACTION_OPTION = {
   root: null,
   rootMargin: '0px',
-  threshold: 0.5,
+  threshold: 1.0,
 };
 
-const HomePage = ({ sort }: HomePageProps) => {
+const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const auth = useRecoilValue(authInfoState);
   const [offset, setOffset] = useState(0);
-  const [limit] = useState(4);
+  const [limit] = useState(5);
   const [loading, setLoading] = useState(false);
-  const [resultPostData, setResultPostData] = useState<Post[]>([]);
-  const { allPostsData, allPostsLoading, allPostsRefetch } = useFetchAllPosts(
-    offset,
-    limit,
-  );
-
-  const resultData = getSortPostList(resultPostData, sort);
-
-  useEffect(() => {
-    allPostsRefetch();
-  }, [offset, sort, allPostsRefetch]);
-
-  useEffect(() => {
-    if (allPostsData) {
-      setResultPostData((prev) => [...prev, ...allPostsData]);
-    }
-  }, [allPostsData]);
+  const { partPostsData, isPartPostsLoading, partPostsRefetch } =
+    useFetchPartPosts(offset, limit);
+  const [addPostData, setAddPostData] = useState<Post[]>([]);
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || !allPostsData || allPostsData.length < 4) return;
+    if (!container || !partPostsData || partPostsData.length < 5) return;
 
     const handleIntersection = async (
-      entries: IntersectionObserverEntry[],
+      [entry]: IntersectionObserverEntry[],
       io: IntersectionObserver,
     ) => {
       if (loading) return;
 
-      if (entries[0].isIntersecting) {
+      if (entry.isIntersecting) {
         setLoading(true);
-
-        setOffset((prev) => prev + 4);
-        io.unobserve(entries[0].target);
-        setTimeout(() => {
-          setLoading(false);
-        }, 200);
+        setOffset((prev) => prev + 5);
+        await partPostsRefetch();
+        io.unobserve(entry.target);
+        setLoading(false);
       }
     };
 
@@ -72,23 +51,30 @@ const HomePage = ({ sort }: HomePageProps) => {
     return () => {
       observer.disconnect();
     };
-  }, [allPostsRefetch, allPostsData, loading, offset]);
+  }, [partPostsData, partPostsRefetch, loading]);
+
+  useEffect(() => {
+    if (partPostsData) {
+      setAddPostData((prev) => [...prev, ...partPostsData]);
+    }
+  }, [partPostsData]);
 
   return (
     <Container>
-      {resultData?.map((post) => (
-        <HomePost
-          key={post._id}
+      {addPostData?.map((post, index) => (
+        <PostViewer
+          key={index}
           postId={post._id}
           authorName={post.author.fullName}
           authorId={post.author._id}
           postTitle={post.title}
           likeId={post.likes.find((like) => like.user === auth?.userId)?._id}
           numberOfComments={post.comments.length}
-          numberOfLikes={post.likes.length}></HomePost>
+          numberOfLikes={post.likes.length}></PostViewer>
       ))}
       <ObserverDiv ref={containerRef}></ObserverDiv>
-      {allPostsLoading || loading ? <Spinner size={50} /> : null}
+      {isPartPostsLoading || loading ? <Spinner size={50} /> : null}
+      {loading ? null : <div></div>}
     </Container>
   );
 };
