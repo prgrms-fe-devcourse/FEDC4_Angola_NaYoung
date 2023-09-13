@@ -1,32 +1,52 @@
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
-import useCurrentPage from '@hooks/useCurrentPage';
+import { authInfoState } from '@atoms/index';
 import UserInfo from './UserInfo';
 
-const UserPage = () => {
-  const { params } = useCurrentPage();
-  const { userData, isUserLoading } = useFetchUser(params.userId as string);
-  const { userPostsData, isUserPostsLoading } = useFetchUserPosts(
-    params.userId as string,
-  );
+const UserPage = ({ userId }: { userId: string }) => {
+  const auth = useRecoilValue(authInfoState);
+  const myId = auth?.userId;
+  const { userData, isUserLoading } = useFetchUser(userId);
+  const { userPostsData, isUserPostsLoading } = useFetchUserPosts(userId);
 
   if (isUserLoading || isUserPostsLoading) {
     return <Spinner />;
   }
 
+  // userData.followers._id // 고유 id
+  // userData.followers.user // 유저
+  // userData.followers.follower // 나
+  // console.log(userData?.followers);
+
+  // console.log(
+  //   userData?.followers.find((follower) => follower.follower === myId)
+  //     ?.follower,
+  // );
+  // console.log(
+  //   userData?.followers.find((follower) => follower.follower === myId)?._id,
+  // );
+
   return (
     <div>
       {userData && (
         <UserInfo
-          id={userData._id}
+          userId={userId}
           image={userData.image}
           name={userData.fullName}
           likes={userData.likes?.length}
           followers={userData.followers?.length}
           following={userData.following?.length}
+          followerId={
+            userData.followers.find((follower) => follower.follower === myId)
+              ?._id
+          }
+          isFollowed={userData?.followers.some(
+            (follower) => follower.follower === myId,
+          )}
         />
       )}
       <ul>

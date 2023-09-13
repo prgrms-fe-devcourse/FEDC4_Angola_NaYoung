@@ -1,32 +1,64 @@
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { useFetchFollow, useFetchUnFollow } from '@apis/follow';
 
 interface UserInfoProps {
-  id: string;
+  userId: string; // 해당 유저 아이디
   image: string;
   name: string;
   likes: number;
-  followers: number;
-  following: number;
+  followers: number; // 팔로워 수
+  following: number; // 팔로잉 수
+  followerId?: string; //
+  isFollowed: boolean;
 }
-
+// 유저 입장
 const UserInfo = ({
+  userId,
   image,
   name,
   likes,
   followers,
   following,
+  followerId,
+  isFollowed,
 }: UserInfoProps) => {
+  const { followMutate, followData } = useFetchFollow();
+  const { unFollowMutate } = useFetchUnFollow();
+  const [countFollowers, setCountFollowers] = useState(followers);
+  const [isUserFollowed, setIsUserFollowed] = useState(isFollowed);
+
+  console.log(userId, followData);
+  useEffect(() => {
+    setCountFollowers(followers);
+    setIsUserFollowed(isFollowed);
+  }, [followers, isFollowed]);
+
+  const handleClickFollowButton = () => {
+    if (isFollowed && followerId) {
+      setCountFollowers((prev) => prev - 1);
+      unFollowMutate({ id: followerId });
+    } else {
+      setCountFollowers((prev) => prev + 1);
+      followMutate({ userId });
+    }
+    setIsUserFollowed((prev) => !prev);
+  };
+
   return (
     <Container>
-      <Profile>프로필{image}</Profile>
+      <Profile>프로필 {image}</Profile>
       <NameAndLikes>
         <Name>🌱유저 이름 {name}</Name>
         <Likes>👍 받은 좋아요 {likes}</Likes>
       </NameAndLikes>
       <FollowerAndFollowing>
-        <Follower>🙍 follower {followers}</Follower>
+        <Follower>🙍 follower {countFollowers}</Follower>
         <Following>🙍 following {following}</Following>
       </FollowerAndFollowing>
+      <Button onClick={handleClickFollowButton}>
+        {isUserFollowed ? '언팔로우' : '팔로우'}
+      </Button>
     </Container>
   );
 };
@@ -86,4 +118,19 @@ const Follower = styled.div`
 const Following = styled.div`
   font-size: 18px;
   font-weight: 600;
+`;
+
+const Button = styled.button`
+  border: none;
+  width: 80px;
+  height: 30px;
+  border-radius: 20px;
+  margin-left: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    background-color: yellowgreen;
+    color: white;
+  }
 `;
