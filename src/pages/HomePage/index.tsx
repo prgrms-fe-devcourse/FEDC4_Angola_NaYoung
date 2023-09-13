@@ -24,6 +24,10 @@ const HomePage = () => {
   const [addPostData, setAddPostData] = useState<Post[]>([]);
 
   useEffect(() => {
+    setOffset(5);
+  }, []);
+
+  useEffect(() => {
     const container = containerRef.current;
     if (!container || !partPostsData || partPostsData.length < 5) return;
 
@@ -35,6 +39,7 @@ const HomePage = () => {
 
       if (entry.isIntersecting) {
         setLoading(true);
+        console.log('감지', offset);
         setOffset((prev) => prev + 5);
         await partPostsRefetch();
         io.unobserve(entry.target);
@@ -51,7 +56,7 @@ const HomePage = () => {
     return () => {
       observer.disconnect();
     };
-  }, [partPostsData, partPostsRefetch, loading]);
+  }, [partPostsData, partPostsRefetch, offset, loading]);
 
   useEffect(() => {
     if (partPostsData) {
