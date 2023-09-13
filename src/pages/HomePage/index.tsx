@@ -75,9 +75,8 @@ const HomePage = () => {
           numberOfComments={post.comments.length}
           numberOfLikes={post.likes.length}></PostViewer>
       ))}
-      <ObserverDiv ref={containerRef}></ObserverDiv>
+      <div ref={containerRef} />
       {isPartPostsLoading || loading ? <Spinner size={50} /> : null}
-      {loading ? null : <div></div>}
     </Container>
   );
 };
@@ -92,5 +91,3 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
-const ObserverDiv = styled.div``;
