@@ -43,7 +43,7 @@ export const useFetchPost = (postId: string) => {
   const { baseInstance } = useAxiosInstance();
   const path = `/posts/${postId}`;
 
-  const { data, isLoading, isSuccess, isError } = useQuery<
+  const { data, isLoading, isSuccess, isError, refetch } = useQuery<
     AxiosResponse<Post>,
     AxiosError
   >('post', () => baseInstance.get(path));
@@ -52,6 +52,7 @@ export const useFetchPost = (postId: string) => {
     isPostLoading: isLoading,
     isPostSuccess: isSuccess,
     isPostError: isError,
+    postRefetch: refetch,
   };
 };
 
