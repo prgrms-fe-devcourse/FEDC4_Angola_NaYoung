@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import LinkButton from '@components/NavBar/LinkButton';
 
@@ -7,13 +8,15 @@ interface CreatePostSuccessModalProps {
 }
 
 const CreatePostSuccessModal = ({ postId }: CreatePostSuccessModalProps) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleKeyDown = (e: Event) => {
       if (
         e instanceof KeyboardEvent &&
         (e.key === 'Enter' || e.key === 'Escape')
       ) {
-        // TODO: /post/posdId로 이동시켜주기
+        navigate(`/post/${postId}`);
       }
     };
 
@@ -22,7 +25,7 @@ const CreatePostSuccessModal = ({ postId }: CreatePostSuccessModalProps) => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  });
+  }, []);
 
   return (
     <ModalContainer>
@@ -69,5 +72,3 @@ const ModalText = styled.p`
   font-size: 20px;
   margin-bottom: 32px;
 `;
-
-// TODO: 링크 버튼 스타일 넣어주기

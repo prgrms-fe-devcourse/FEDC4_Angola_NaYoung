@@ -14,6 +14,7 @@ const CreatePostPage = () => {
 
   const {
     createPostMutate,
+    createPostData,
     isCreatePostLoading,
     isCreatePostSuccess,
     isCreatePostError,
@@ -58,22 +59,24 @@ const CreatePostPage = () => {
         <Spinner size={100} />
       ) : (
         <StyledForm onSubmit={handleSubmitCreatePost}>
-          <TitleInput
-            id="title"
-            placeholder="한 줄 설명 쓰기"
-            value={inputValues.title}
-            maxLength={100}
-            onChange={handleChangeInputValues}
-            onKeyDown={handlePreventEnterKeySubmit}
-          />
-
+          <TitleContainer>
+            <TitleInput
+              id="title"
+              placeholder="한 줄 설명 쓰기"
+              value={inputValues.title}
+              maxLength={99}
+              onChange={handleChangeInputValues}
+              onKeyDown={handlePreventEnterKeySubmit}
+            />
+            <TitleLengthLimit>{inputValues.title.length} / 100</TitleLengthLimit>
+          </TitleContainer>
           <ContentContainer>
             <OptionContainer>
               <OptionLabel>A 항목</OptionLabel>
               <OptionInput
                 id="optionA"
                 value={inputValues.optionA}
-                maxLength={100}
+                maxLength={99}
                 onChange={handleChangeInputValues}
                 onKeyDown={handlePreventEnterKeySubmit}
               />
@@ -86,7 +89,7 @@ const CreatePostPage = () => {
               <OptionInput
                 id="optionB"
                 value={inputValues.optionB}
-                maxLength={100}
+                maxLength={99}
                 onChange={handleChangeInputValues}
                 onKeyDown={handlePreventEnterKeySubmit}
               />
@@ -109,7 +112,9 @@ const CreatePostPage = () => {
       )}
 
       {isCreatePostSuccess && (
-        <CreatePostSuccessModal postId="65005b6d583dc7337ffaf578" />
+        <CreatePostSuccessModal
+          postId={createPostData === undefined ? 'anyPostId' : createPostData}
+        />
       )}
     </>
   );
@@ -125,13 +130,26 @@ const StyledForm = styled.form`
   width: 60%;
 `;
 
-const TitleInput = styled.input`
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 8px;
   margin-top: 32px;
   border: 2px solid black;
   border-radius: 16px;
-  outline: none;
   width: 80%;
+`;
+const TitleInput = styled.input`
+  border: none;
+  outline: none;
+  width: 85%;
   padding: 6px 12px;
+`;
+
+const TitleLengthLimit = styled.span`
+  box-sizing: border-box;
 `;
 
 const ContentContainer = styled.div`
@@ -160,6 +178,8 @@ const OptionInput = styled.input`
   outline: none;
   width: 300px;
   height: 200px;
+
+  white-space: pre-line;
 `;
 
 const ButtonWrapper = styled.div`
