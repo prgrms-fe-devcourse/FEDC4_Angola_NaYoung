@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 
 interface PostListItemProps {
   id: string;
@@ -9,10 +10,12 @@ interface PostListItemProps {
 
 const PostListItem = ({ id, image, title }: PostListItemProps) => {
   const navigate = useNavigate();
+  const { title: postTitle } = splitPostBySeparator(title);
   return (
     <ListItemContainer>
       <Profile>프로필</Profile>
-      <Title>{title}</Title>
+      <Title>{postTitle}</Title>
+      <div>{}</div>
       <More onClick={() => navigate(`/post/${id}`)}>more</More>
     </ListItemContainer>
   );
