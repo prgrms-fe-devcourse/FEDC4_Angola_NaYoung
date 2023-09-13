@@ -6,7 +6,7 @@ import { useFetchUpdateFullName, useFetchUpdatePassword } from '@apis/profile';
 import { checkFullNamePattern, checkPassWordPattern } from './utils';
 
 // TODO: return에서 isUpdateFullNameError 발생 시, 모달 보여주고 함수 실행시키고, 이전 값
-interface UserInfoProps {
+interface MyInfoProps {
   id: string;
   image: string;
   name: string;
@@ -22,11 +22,11 @@ const MyInfo = ({
   likes,
   followers,
   following,
-}: UserInfoProps) => {
+}: MyInfoProps) => {
   const navigate = useNavigate();
   const { updateFullNameMutate } = useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
-  const [isEditingFullName, isSetEditingFullName] = useState(false);
+  const [isEditingFullName, setIsEditingFullName] = useState(false);
   const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
   const [newPassWord, setNewPassWord] = useState(updatePasswordData.password);
   const [confirmNewPassWord, setConfirmNewPassWord] = useState('');
@@ -46,7 +46,7 @@ const MyInfo = ({
         return;
       }
     }
-    isSetEditingFullName(!isEditingFullName);
+    setIsEditingFullName(!isEditingFullName);
   };
 
   const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
