@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useFetchLike, useFetchUnLike } from '@apis/like';
-import { useFetchPost } from '@apis/post';
 
 interface ButtonGroupProps {
   numberOfLikes: number;
@@ -24,9 +23,14 @@ const ButtonGroup = ({
   const [likes, setLikes] = useState(numberOfLikes);
   const [isLiked, setIsLiked] = useState(likeId !== undefined);
 
+  useEffect(() => {
+    setLikes(numberOfLikes);
+    setUserLikeId(likeId);
+    setIsLiked(likeId !== undefined);
+  }, [numberOfLikes, likeId]);
+
   const { likeMutate, likeData } = useFetchLike();
   const { unLikeMutate } = useFetchUnLike();
-  const { postRefetch } = useFetchPost(postId);
 
   const handleLike = () => {
     if (userLikeId) {
@@ -46,9 +50,10 @@ const ButtonGroup = ({
       setUserLikeId(undefined);
     }
     return () => {
-      isPostPage && postRefetch();
+      isPostPage;
     };
-  }, [likeData.likeId, isLiked]);
+  }, [likeData.likeId, isLiked, isPostPage]);
+
   return (
     <ShortButtonContainer>
       <ShortButton

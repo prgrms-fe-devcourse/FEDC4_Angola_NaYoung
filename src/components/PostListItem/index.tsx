@@ -6,16 +6,27 @@ interface PostListItemProps {
   id: string;
   image: string;
   title: string;
+  likes: number;
+  comments: number;
 }
 
-const PostListItem = ({ id, image, title }: PostListItemProps) => {
+const PostListItem = ({
+  id,
+  image,
+  title,
+  likes,
+  comments,
+}: PostListItemProps) => {
   const navigate = useNavigate();
   const { title: postTitle } = splitPostBySeparator(title);
   return (
     <ListItemContainer>
       <Profile>프로필</Profile>
       <Title>{postTitle}</Title>
-      <div>{}</div>
+      <Info>
+        <div>♥️{likes}</div>
+        <div>💬{comments}</div>
+      </Info>
       <More onClick={() => navigate(`/post/${id}`)}>more</More>
     </ListItemContainer>
   );
@@ -61,4 +72,13 @@ const More = styled.div`
   align-items: center;
   width: 60px;
   cursor: pointer;
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
 `;
