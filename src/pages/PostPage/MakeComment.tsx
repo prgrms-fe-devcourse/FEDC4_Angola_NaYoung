@@ -11,12 +11,12 @@ const MakeComment = ({ votedValue, handleClickItem }: MakeCommentProps) => {
       <MakeCommentContainer>
         <ItemButtonsContainer>
           <ItemButtonA
-            onClick={() => handleClickItem('A')}
+            onClick={() => handleClickItem('a')}
             votedValue={votedValue}>
             A
           </ItemButtonA>
           <ItemButtonB
-            onClick={() => handleClickItem('B')}
+            onClick={() => handleClickItem('b')}
             votedValue={votedValue}>
             B
           </ItemButtonB>
@@ -61,7 +61,8 @@ const ItemButtonA = styled.button<{ votedValue: string }>`
   font-size: 1.5rem;
   border-bottom: solid;
   cursor: pointer;
-  background-color: ${(props) => (props.votedValue === 'A' ? 'pink' : 'none')};
+  background-color: ${(props) =>
+    props.votedValue === 'a' ? 'orangered' : 'none'};
 
   &:hover {
     background-color: gray;
@@ -75,7 +76,8 @@ const ItemButtonB = styled.button<{ votedValue: string }>`
   background-color: white;
   font-size: 1.5rem;
   cursor: pointer;
-  background-color: ${(props) => (props.votedValue === 'B' ? 'pink' : 'none')};
+  background-color: ${(props) =>
+    props.votedValue === 'b' ? 'orangered' : 'none'};
 
   &:hover {
     background-color: gray;

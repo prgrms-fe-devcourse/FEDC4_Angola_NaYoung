@@ -2,24 +2,24 @@ import { useState } from 'react';
 import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import TestComponent from '@pages/PostPage/TestComponent';
+// import TestComponent from '@pages/PostPage/TestComponent';
+import PostViewer from '@components/PostViewer';
+import { useFetchCreateComment } from '@apis/comment';
+import { useFetchPost } from '@apis/post';
 import MakeComment from './MakeComment';
 
-// postData && ( // postData 가 있을 때만 Post 컴포넌트를 렌더링 해주세요!
-//   <Post
-//     postId={postId}
-//     authorName={postData.author.fullName}
-//     authorId={postData.author._id}
-//     postTitle={postData.title}
-//     voteValue={votedValue} // detail page 에서만
-//     onVote={(value: string) => setVotedValue(value)} // detail page 에서만
-//   />
-// );
 const PostPage = () => {
-  const userId = useRecoilValue(authInfoState)?.userId;
+  const auth = useRecoilValue(authInfoState);
   const [votedValue, setVotedValue] = useState<string>('');
+  const postId = document.location.href.split('/post/:')[1];
+  const { postData } = useFetchPost(postId);
+  const { createCommentMutate, isCreateCommentSuccess, isCreateCommentError } =
+    useFetchCreateComment();
+  const comments = postData?.comments;
+  let createComment;
 
-  console.log(userId);
+  console.log(comments);
+  console.log(auth?.userId);
 
   const handleClickItem = (value: string) => {
     votedValue === value ? setVotedValue('') : setVotedValue(value);
@@ -28,22 +28,40 @@ const PostPage = () => {
   return (
     <>
       <ReadMorePageContainer>
-        <TestComponent
+        {postData && (
+          <PostViewer
+            postId={postId}
+            authorName={postData.author.fullName}
+            authorId={postData.author._id}
+            postTitle={postData.title}
+            numberOfComments={postData.comments.length}
+            numberOfLikes={postData.likes.length}
+            likeId={
+              postData.likes.find((like) => like.user === auth?.userId)?._id
+            }
+            voteValue={votedValue}
+            onVote={(value: string) => handleClickItem(value)}
+          />
+        )}
+        {/* <TestComponent
           voteValue={votedValue}
           onVote={(value: string) => handleClickItem(value)}
-        />
+        /> */}
         <CommentsContainer>
           <MakeComment
             votedValue={votedValue}
             handleClickItem={handleClickItem}
           />
-          <CommentWrapper>
-            <MakerName>작성자 이름</MakerName>
-            <CommentSubWrapper>
-              <VotedItem>A</VotedItem>
-              <Comment>의견 한 줄</Comment>
-            </CommentSubWrapper>
-          </CommentWrapper>
+          {comments &&
+            comments.map((comment) => (
+              <CommentWrapper>
+                <MakerName>작성자 이름</MakerName>
+                <CommentSubWrapper>
+                  <VotedItem>A</VotedItem>
+                  <Comment>의견 한 줄</Comment>
+                </CommentSubWrapper>
+              </CommentWrapper>
+            ))}
         </CommentsContainer>
       </ReadMorePageContainer>
     </>
