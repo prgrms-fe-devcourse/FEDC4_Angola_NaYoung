@@ -27,7 +27,6 @@ const MyInfo = ({
   const { updateFullNameMutate } = useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
   const [isEditingFullName, isSetEditingFullName] = useState(false);
-  //
   const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
   const [newPassWord, setNewPassWord] = useState(updatePasswordData.password);
   const [confirmNewPassWord, setConfirmNewPassWord] = useState('');
@@ -83,65 +82,80 @@ const MyInfo = ({
   };
 
   return (
-    <Container>
+    <MyInfoContainer>
       <Profile>프로필 {image}</Profile>
       <NameAndLikes>
-        {isEditingFullName ? (
-          <input
-            type="text"
-            value={newFullName}
-            onChange={handleChangeFullName}
-          />
-        ) : (
-          <Name>🌱유저 이름 {newFullName}</Name>
-        )}
-        <button onClick={handleClickChangeFullName}>
-          {isEditingFullName ? '제출 하기' : '편집 하기'}
-        </button>
-        <Likes>👍 받은 좋아요 {likes}</Likes>
+        <NamesAndLikes>
+          {isEditingFullName ? (
+            <Input
+              type="text"
+              value={newFullName}
+              placeholder="닉네임 입력"
+              onChange={handleChangeFullName}
+            />
+          ) : (
+            <Container>
+              <Name>🌱유저 이름 </Name>
+              <MyInfoText>{newFullName}</MyInfoText>
+            </Container>
+          )}
+          <Button onClick={handleClickChangeFullName}>
+            {isEditingFullName ? '제출 하기' : '편집 하기'}
+          </Button>
+          <Container>
+            <Likes>👍 받은 좋아요 </Likes> <MyInfoText>{likes}</MyInfoText>
+          </Container>
+        </NamesAndLikes>
       </NameAndLikes>
       <FollowerAndFollowing>
-        <Follower>🙍 follower {followers}</Follower>
-        <Following>🙍 following {following}</Following>
+        <Container>
+          <Follower>🙍 follower</Follower> <MyInfoText>{followers}</MyInfoText>
+        </Container>
+        <Container>
+          <Following>🙍 following</Following>
+          <MyInfoText>{following}</MyInfoText>
+        </Container>
       </FollowerAndFollowing>
       {isEditingPassWord ? (
-        <>
-          비밀번호:
-          <input
+        <PassWordInput>
+          <PassWord>비밀번호</PassWord>
+          <Input
             type="text"
-            placeholder="새 비밀번호"
+            placeholder="새 비밀번호 입력"
             value={newPassWord}
             onChange={handleChangePassWord}
           />
-          비밀번호 확인:
-          <input
+          <PassWord>비밀번호 확인</PassWord>
+          <Input
             type="password"
-            placeholder="비밀번호 확인"
+            placeholder="새 비밀번호 확인"
             value={confirmNewPassWord}
             onChange={handleChangeConfirmPassWord}
           />
-        </>
+        </PassWordInput>
       ) : (
         ''
       )}
-      <button onClick={handleClickChangePassWord}>
+      <Button onClick={handleClickChangePassWord}>
         {isEditingPassWord ? '변경 하기' : '비밀번호 변경'}
-      </button>
+      </Button>
       <div>
-        <button onClick={handleClickLogOutButton}>로그 아웃</button>
+        <Button onClick={handleClickLogOutButton}>로그 아웃</Button>
       </div>
-    </Container>
+    </MyInfoContainer>
   );
 };
 
 export default MyInfo;
 
-const Container = styled.div`
+const MyInfoContainer = styled.div`
   display: flex;
   width: 80%;
+  height: 100%;
   border: 1px solid black;
   align-items: center;
   padding: 30px 10px;
+  gap: 30px;
 `;
 
 const Profile = styled.div`
@@ -159,14 +173,53 @@ const Profile = styled.div`
 const NameAndLikes = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
+  justify-content: center;
+`;
+
+const NamesAndLikes = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 const Name = styled.div`
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 10px;
   color: yellowgreen;
+`;
+
+const MyInfoText = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: auto;
+`;
+
+const Input = styled.input`
+  width: 150px;
+  height: 30px;
+  border-radius: 20px;
+  padding: 3px 3px 0px 10px;
+`;
+
+const Button = styled.button`
+  width: 120px;
+  height: 35px;
+  border-radius: 20px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    background-color: #c2c2c2;
+    color: white;
+  }
 `;
 
 const Likes = styled.div`
@@ -176,17 +229,29 @@ const Likes = styled.div`
 
 const FollowerAndFollowing = styled.div`
   display: flex;
+  gap: 10px;
   flex-direction: column;
-  margin-left: 50px;
 `;
 
 const Follower = styled.div`
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 10px;
 `;
 
 const Following = styled.div`
   font-size: 18px;
   font-weight: 600;
+`;
+
+const PassWordInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PassWord = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+  margin: 10px 0px;
 `;
