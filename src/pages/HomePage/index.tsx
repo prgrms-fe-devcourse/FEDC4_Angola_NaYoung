@@ -36,10 +36,8 @@ const HomePage = () => {
       io: IntersectionObserver,
     ) => {
       if (loading) return;
-
       if (entry.isIntersecting) {
         setLoading(true);
-        console.log('감지', offset);
         setOffset((prev) => prev + 5);
         await partPostsRefetch();
         io.unobserve(entry.target);
@@ -56,7 +54,7 @@ const HomePage = () => {
     return () => {
       observer.disconnect();
     };
-  }, [partPostsData, partPostsRefetch, offset, loading]);
+  }, [partPostsData, partPostsRefetch, loading]);
 
   useEffect(() => {
     if (partPostsData) {
