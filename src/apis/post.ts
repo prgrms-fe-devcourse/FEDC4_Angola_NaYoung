@@ -63,7 +63,11 @@ export const useFetchCreatePost = () => {
   const { authInstance } = useAxiosInstance();
   const path = `/posts/create`;
 
-  const { mutate, isLoading, isSuccess, isError } = useMutation(
+  const { mutate, data, isLoading, isSuccess, isError } = useMutation<
+  AxiosResponse<Post>,
+  AxiosError,
+  CreatePostRequestBody>
+  (
     'createPostMutation',
     (body: CreatePostRequestBody) => {
       const formData = new FormData();
@@ -75,6 +79,7 @@ export const useFetchCreatePost = () => {
   );
   return {
     createPostMutate: mutate,
+    createPostData: data?.data._id,
     isCreatePostLoading: isLoading,
     isCreatePostSuccess: isSuccess,
     isCreatePostError: isError,
