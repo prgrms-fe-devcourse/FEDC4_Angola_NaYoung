@@ -54,8 +54,8 @@ const MyInfo = ({
   };
 
   const handleClickChangePassWord = () => {
-    if (isEditingPassWord) {
-      if (checkPassWordPattern(newPassWord)) {
+    if (isEditingPassWord && newPassWord) {
+      if (checkPassWordPattern({ newPassWord, confirmNewPassWord })) {
         updatePasswordMutate({ password: newPassWord });
       } else {
         setNewPassWord('');
@@ -84,29 +84,27 @@ const MyInfo = ({
   return (
     <MyInfoContainer>
       <Profile>프로필 {image}</Profile>
-      <NameAndLikes>
-        <NamesAndLikes>
-          {isEditingFullName ? (
-            <Input
-              type="text"
-              value={newFullName}
-              placeholder="닉네임 입력"
-              onChange={handleChangeFullName}
-            />
-          ) : (
-            <Container>
-              <Name>🌱유저 이름 </Name>
-              <MyInfoText>{newFullName}</MyInfoText>
-            </Container>
-          )}
-          <Button onClick={handleClickChangeFullName}>
-            {isEditingFullName ? '제출 하기' : '편집 하기'}
-          </Button>
+      <NamesAndLikes>
+        {isEditingFullName ? (
+          <Input
+            type="text"
+            value={newFullName}
+            placeholder="닉네임 입력"
+            onChange={handleChangeFullName}
+          />
+        ) : (
           <Container>
-            <Likes>👍 받은 좋아요 </Likes> <MyInfoText>{likes}</MyInfoText>
+            <Name>🌱유저 이름 </Name>
+            <MyInfoText>{newFullName}</MyInfoText>
           </Container>
-        </NamesAndLikes>
-      </NameAndLikes>
+        )}
+        <Button onClick={handleClickChangeFullName}>
+          {isEditingFullName ? '제출 하기' : '편집 하기'}
+        </Button>
+        <Container>
+          <Likes>👍 받은 좋아요 </Likes> <MyInfoText>{likes}</MyInfoText>
+        </Container>
+      </NamesAndLikes>
       <FollowerAndFollowing>
         <Container>
           <Follower>🙍 follower</Follower> <MyInfoText>{followers}</MyInfoText>
@@ -168,12 +166,6 @@ const Profile = styled.div`
   align-items: center;
   font-size: 12px;
   cursor: pointer;
-`;
-
-const NameAndLikes = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 `;
 
 const NamesAndLikes = styled.div`

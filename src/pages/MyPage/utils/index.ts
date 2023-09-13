@@ -4,6 +4,11 @@ const SPECIAL_CHARACTER = /[~!@#$%^&*()_+|<>?:{}]/;
 const MIN_LENGTH = 5;
 const MAX_LENGTH = 15;
 
+interface checkPassWordPatternProps {
+  newPassWord: string;
+  confirmNewPassWord: string;
+}
+
 export const checkFullNamePattern = (fullName: string) => {
   const trimmedFullName = fullName.trim();
 
@@ -22,8 +27,11 @@ export const checkFullNamePattern = (fullName: string) => {
   }
 };
 
-export const checkPassWordPattern = (passWord: string) => {
-  const trimmedPassWord = passWord.trim();
+export const checkPassWordPattern = ({
+  newPassWord,
+  confirmNewPassWord,
+}: checkPassWordPatternProps) => {
+  const trimmedPassWord = newPassWord.trim();
   if (
     !NUMBER.test(trimmedPassWord) ||
     !CHARACTER.test(trimmedPassWord) ||
@@ -34,6 +42,9 @@ export const checkPassWordPattern = (passWord: string) => {
     alert(
       '비밀번호는 5자리 이상 15자 이하 문자, 숫자, 특수문자로 구성하여야 합니다.',
     );
+    return false;
+  } else if (newPassWord !== confirmNewPassWord) {
+    alert('비밀번호가 일치하지 않습니다.');
     return false;
   } else {
     alert('비밀번호 변경 성공!');
