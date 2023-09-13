@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import UserInfo from '@pages/UserPage/UserInfo';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@atoms/index';
+import MyInfo from './MyInfo';
 
 const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
@@ -21,16 +21,13 @@ const MyPage = () => {
   return (
     <div>
       {userData && (
-        <UserInfo
+        <MyInfo
           id={userData._id}
           image={userData.image}
           name={userData.fullName}
           likes={userData.likes?.length}
           followers={userData.followers?.length}
           following={userData.following?.length}
-          showLogOutButton={true}
-          showChangeFullNameButton={true}
-          showChangePasswordButton={true}
         />
       )}
       <ul>
