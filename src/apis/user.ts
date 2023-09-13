@@ -8,9 +8,9 @@ export const useFetchUsers = () => {
   const { data, isError, isSuccess, isLoading } = useQuery<
     AxiosResponse<User[]>,
     AxiosError
-  >('user', () => baseInstance.get('/users/get-users'));
+  >('users', () => baseInstance.get('/users/get-users'));
   return {
-    usersData: data?.data.filter((user) => user.role !== 'SuperAdmin'),
+    usersData: data?.data,
     isUsersError: isError,
     isUsersSuccess: isSuccess,
     isUsersLoading: isLoading,
