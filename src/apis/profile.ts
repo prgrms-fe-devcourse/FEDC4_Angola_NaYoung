@@ -66,7 +66,7 @@ export const useFetchUpdateProfileImage = () => {
   });
   return {
     updateProfileImageMutate: mutate,
-    updateProfileImageData: data?.data,
+    updateProfileImageData: { image: data?.data.image },
     isUpdateProfileImageLoading: isLoading,
     isUpdateProfileImageError: isError,
     isUpdateProfileImageSuccess: isSuccess,
