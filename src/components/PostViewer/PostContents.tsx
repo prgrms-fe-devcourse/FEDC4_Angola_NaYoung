@@ -75,6 +75,7 @@ const VoteButton = styled.div<{ bgColor: string }>`
   &.active {
     background-color: ${({ bgColor }) => rgba(bgColor, 0.8)};
     box-shadow: 5px 5px 0px 0px ${({ bgColor }) => bgColor};
+    border-width: 3px;
   }
   border: 2px solid black;
   border-radius: 40px;
