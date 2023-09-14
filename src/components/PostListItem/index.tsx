@@ -15,7 +15,7 @@ const PostListItem = ({ id, image, title }: PostListItemProps) => {
       <Title>{title}</Title>
       <More>
         <LinkButton
-          to={`/posts/${id}`}
+          to={`/post/${id}`}
           style={MORE_LINK_BUTTON_STYLES}>
           More
         </LinkButton>
