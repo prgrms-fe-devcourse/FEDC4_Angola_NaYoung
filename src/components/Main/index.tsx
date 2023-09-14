@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import styled from '@emotion/styled';
 import { redirects, routes } from '@routes';
 import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
@@ -28,26 +29,33 @@ const Main = () => {
             : undefined
         }
       />
-      <Routes>
-        {routes.map(({ path, name, component }) => (
-          <Route
-            key={name}
-            path={path}
-            element={React.createElement(component, {
-              ...params,
-              ...search,
-            })}></Route>
-        ))}
-        {redirects.map(({ from, to }) => (
-          <Route
-            key={from + to}
-            path={from}
-            element={<Navigate to={to} />}
-          />
-        ))}
-      </Routes>
+      <Contents>
+        <Routes>
+          {routes.map(({ path, name, component }) => (
+            <Route
+              key={name}
+              path={path}
+              element={React.createElement(component, {
+                ...params,
+                ...search,
+              })}></Route>
+          ))}
+          {redirects.map(({ from, to }) => (
+            <Route
+              key={from + to}
+              path={from}
+              element={<Navigate to={to} />}
+            />
+          ))}
+        </Routes>
+      </Contents>
     </>
   );
 };
 
 export default Main;
+
+const Contents = styled.div`
+  height: 800px;
+  overflow-y: auto;
+`;
