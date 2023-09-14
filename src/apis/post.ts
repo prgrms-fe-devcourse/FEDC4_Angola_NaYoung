@@ -9,16 +9,19 @@ export const useFetchAllPosts = () => {
   const { baseInstance } = useAxiosInstance();
   const path = `/posts/channel/${CHANNEL_ID}`;
 
-  const { data, isError, isLoading, isSuccess } = useQuery<
+  const { data, isError, isLoading, isSuccess, refetch } = useQuery<
     AxiosResponse<Post[]>,
     AxiosError
-  >('allPosts', () => baseInstance.get(path));
+  >('allPosts', () => baseInstance.get(path), {
+    refetchOnWindowFocus: false,
+  });
 
   return {
     allPostsData: data?.data,
     isAllPostsSuccess: isSuccess,
     isAllPostsError: isError,
     isAllPostsLoading: isLoading,
+    allPostsRefetch: refetch,
   };
 };
 
@@ -101,5 +104,38 @@ export const useFetchDeletePost = () => {
     isDeletePostLoading: isLoading,
     isDeletePostSuccess: isSuccess,
     isDeletePostError: isError,
+  };
+};
+
+export const useFetchPartPosts = (offset: number, limit: number) => {
+  const { baseInstance } = useAxiosInstance();
+  const path = `/posts/channel/${CHANNEL_ID}`;
+
+  const { data, isError, isLoading, isSuccess, refetch } = useQuery<
+    AxiosResponse<Post[]>,
+    AxiosError
+  >(
+    'partPosts',
+    () =>
+      baseInstance.get(path, {
+        params: {
+          offset,
+          limit,
+        },
+      }),
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      cacheTime: 0,
+    },
+  );
+
+  return {
+    partPostsData: data?.data,
+    isPartPostsSuccess: isSuccess,
+    isPartPostsError: isError,
+    isPartPostsLoading: isLoading,
+    partPostsRefetch: refetch,
   };
 };
