@@ -1,10 +1,11 @@
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import LinkButton from '@components/NavBar/LinkButton';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
+import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 
 interface PostListItemProps {
   id: string;
-  image: string;
+  image?: string;
   title: string;
   likes: number;
   comments: number;
@@ -17,17 +18,22 @@ const PostListItem = ({
   likes,
   comments,
 }: PostListItemProps) => {
-  const navigate = useNavigate();
   const { title: postTitle } = splitPostBySeparator(title);
   return (
     <ListItemContainer>
-      <Profile>프로필</Profile>
+      {image && <Profile>프로필</Profile>}
       <Title>{postTitle}</Title>
       <Info>
         <div>♥️{likes}</div>
         <div>💬{comments}</div>
       </Info>
-      <More onClick={() => navigate(`/post/${id}`)}>more</More>
+      <More>
+        <LinkButton
+          to={`/posts/${id}`}
+          style={MORE_LINK_BUTTON_STYLES}>
+          More
+        </LinkButton>
+      </More>
     </ListItemContainer>
   );
 };
