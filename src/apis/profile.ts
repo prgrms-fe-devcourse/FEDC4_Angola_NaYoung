@@ -46,3 +46,29 @@ export const useFetchUpdatePassword = () => {
     isUpdatePasswordSuccess: isSuccess,
   };
 };
+
+interface UpdateProfileImageRequestBody {
+  isCover: false;
+  image: Blob;
+}
+
+export const useFetchUpdateProfileImage = () => {
+  const { authInstance } = useAxiosInstance();
+  const { mutate, data, isLoading, isError, isSuccess } = useMutation<
+    AxiosResponse<User>,
+    AxiosError,
+    UpdateProfileImageRequestBody
+  >('updateProfileImageMutation', (body: UpdateProfileImageRequestBody) => {
+    const formData = new FormData();
+    formData.append('image', body.image);
+    formData.append('isCover', 'false');
+    return authInstance.post('/users/upload-photo', formData);
+  });
+  return {
+    updateProfileImageMutate: mutate,
+    updateProfileImageData: data?.data,
+    isUpdateProfileImageLoading: isLoading,
+    isUpdateProfileImageError: isError,
+    isUpdateProfileImageSuccess: isSuccess,
+  };
+};
