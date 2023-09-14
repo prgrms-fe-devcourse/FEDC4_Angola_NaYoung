@@ -1,5 +1,7 @@
 import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
+import { authInfoState } from '@atoms/index';
 import LinkButton from '@components/NavBar/LinkButton';
 import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 
@@ -28,14 +30,35 @@ const UserListItem = ({
   likes,
   followers,
 }: UserListItemProps) => {
+  const auth = useRecoilValue(authInfoState);
+  const myId = auth?.userId;
+
+  const ProfileLinkButtonStyles: CSSProperties = {
+    all: 'unset',
+    display: 'flex',
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '50%',
+  };
+
   return (
     <List>
       <Profile>
-        <LinkButton
-          to={`/user/${id}`}
-          style={PROFILE_LINK_BUTTON_STYLES}>
-          프로필
-        </LinkButton>
+        {myId === id ? (
+          <LinkButton
+            to={`/mypage`}
+            style={ProfileLinkButtonStyles}>
+            프로필
+          </LinkButton>
+        ) : (
+          <LinkButton
+            to={`/user/${id}`}
+            style={ProfileLinkButtonStyles}>
+            프로필
+          </LinkButton>
+        )}
       </Profile>
       <UserInfo>
         <div>{name} 🌱 🐣</div>
@@ -45,11 +68,19 @@ const UserListItem = ({
         </LikesAndFollowers>
       </UserInfo>
       <More>
-        <LinkButton
-          to={`/user/${id}`}
-          style={MORE_LINK_BUTTON_STYLES}>
-          More
-        </LinkButton>
+        {myId === id ? (
+          <LinkButton
+            to={`/mypage`}
+            style={MoreLinkButtonStyles}>
+            More
+          </LinkButton>
+        ) : (
+          <LinkButton
+            to={`/user/${id}`}
+            style={MoreLinkButtonStyles}>
+            More
+          </LinkButton>
+        )}
       </More>
     </List>
   );

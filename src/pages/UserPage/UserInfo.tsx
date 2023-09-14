@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';;
 import styled from '@emotion/styled';
 import { useFetchFollow, useFetchUnFollow } from '@apis/follow';
 
@@ -141,3 +141,4 @@ const Button = styled.button`
     color: white;
   }
 `;
+
