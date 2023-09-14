@@ -1,11 +1,46 @@
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { useFetchCreateComment } from '@apis/comment';
+import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 
 interface MakeCommentProps {
+  postId: string;
   votedValue: string;
   handleClickItem: (value: string) => void;
 }
 
-const MakeComment = ({ votedValue, handleClickItem }: MakeCommentProps) => {
+const MakeComment = ({
+  postId,
+  votedValue,
+  handleClickItem,
+}: MakeCommentProps) => {
+  const [comment, setComment] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { createCommentMutate, isCreateCommentError } = useFetchCreateComment();
+  const handleChangeComment = (e: ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+  };
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    console.log('? ', joinDataBySeparator(votedValue, comment));
+
+    votedValue &&
+      createCommentMutate({
+        comment: joinDataBySeparator(votedValue, comment),
+        postId,
+      });
+
+    if (isCreateCommentError) {
+      alert('댓글 작성에 실패했습니다.');
+      return;
+    }
+    if (!searchParams.get('voted')) {
+      searchParams.set('voted', 'true');
+      setSearchParams(searchParams);
+    }
+  };
   return (
     <>
       <MakeCommentContainer>
@@ -21,12 +56,16 @@ const MakeComment = ({ votedValue, handleClickItem }: MakeCommentProps) => {
             B
           </ItemButtonB>
         </ItemButtonsContainer>
-        <Comment placeholder="의견 입력창"></Comment>
-        <SubmitButton disabled={votedValue ? false : true}>
-          <p>submit</p>
-          <p>또는</p>
-          <p>skip</p>
-        </SubmitButton>
+        <Form onSubmit={handleSubmit}>
+          <Comment
+            placeholder="의견 입력창"
+            onChange={handleChangeComment}></Comment>
+          <SubmitButton disabled={votedValue ? false : true}>
+            <p>submit</p>
+            <p>또는</p>
+            <p>skip</p>
+          </SubmitButton>
+        </Form>
       </MakeCommentContainer>
     </>
   );
@@ -84,11 +123,18 @@ const ItemButtonB = styled.button<{ votedValue: string }>`
   }
 `;
 
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 1rem;
+`;
+
 const Comment = styled.input`
   border: 1px solid black;
   border-radius: 3rem;
   padding: 1rem;
-  width: 80%;
+  width: 100%;
 `;
 
 const SubmitButton = styled.button`
