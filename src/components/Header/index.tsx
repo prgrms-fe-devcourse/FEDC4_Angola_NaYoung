@@ -122,7 +122,7 @@ const Title = styled.div`
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
-  line-height: 150%; /* 54px */
+  line-height: 150%; 
 `;
 
 const Keyword = styled.span`

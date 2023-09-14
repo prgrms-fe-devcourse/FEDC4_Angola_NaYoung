@@ -29,24 +29,26 @@ const Main = () => {
             : undefined
         }
       />
-      <Routes>
-        {routes.map(({ path, name, component }) => (
-          <Route
-            key={name}
-            path={path}
-            element={React.createElement(component, {
-              ...params,
-              ...search,
-            })}></Route>
-        ))}
-        {redirects.map(({ from, to }) => (
-          <Route
-            key={from + to}
-            path={from}
-            element={<Navigate to={to} />}
-          />
-        ))}
-      </Routes>
+      <PageContainer>
+        <Routes>
+          {routes.map(({ path, name, component }) => (
+            <Route
+              key={name}
+              path={path}
+              element={React.createElement(component, {
+                ...params,
+                ...search,
+              })}></Route>
+          ))}
+          {redirects.map(({ from, to }) => (
+            <Route
+              key={from + to}
+              path={from}
+              element={<Navigate to={to} />}
+            />
+          ))}
+        </Routes>
+      </PageContainer>
     </MainContainer>
   );
 };
@@ -66,4 +68,12 @@ const MainContainer = styled.div`
   border-left: 4px solid var(--text, #404040);
   background: var(--white, #fff);
   box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.25);
+`;
+
+const PageContainer = styled.div`
+  box-sizing: border-box;
+  display: flex; 
+  align-self: stretch;
+  justify-content: center;
+  padding: 50px 50px 0px 50px;
 `;
