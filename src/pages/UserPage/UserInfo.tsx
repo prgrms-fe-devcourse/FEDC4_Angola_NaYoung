@@ -10,7 +10,6 @@ interface UserInfoProps {
   followers: number; // 팔로워 수
   following: number; // 팔로잉 수
   followerId?: string; // 팔로우 누른사람 Id
-  isFollowed: boolean; // 팔로우를 눌렀는지 체크
 }
 
 const UserInfo = ({
@@ -21,28 +20,37 @@ const UserInfo = ({
   followers,
   following,
   followerId,
-  isFollowed,
 }: UserInfoProps) => {
-  const { followMutate } = useFetchFollow();
+  const { followMutate, followData } = useFetchFollow();
   const { unFollowMutate } = useFetchUnFollow();
+  const [userFollowerId, setUserFollowerId] = useState(followerId);
   const [countFollowers, setCountFollowers] = useState(followers);
-  const [isUserFollowed, setIsUserFollowed] = useState(isFollowed);
+  const [isFollowed, setIsFollowed] = useState(followerId !== undefined);
 
   useEffect(() => {
     setCountFollowers(followers);
-    setIsUserFollowed(isFollowed);
-  }, [followers, isFollowed]);
+    setUserFollowerId(followerId);
+    setIsFollowed(followerId !== undefined);
+  }, [followers, followerId]);
 
   const handleClickFollowButton = () => {
-    if (isFollowed && followerId) {
+    if (userFollowerId) {
       setCountFollowers((prev) => prev - 1);
-      unFollowMutate({ id: followerId });
+      unFollowMutate({ id: userFollowerId });
     } else {
       setCountFollowers((prev) => prev + 1);
       followMutate({ userId });
     }
-    setIsUserFollowed((prev) => !prev);
+    setIsFollowed((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (isFollowed) {
+      followData.followId && setUserFollowerId(followData.followId); // userLikeId 갱신
+    } else {
+      setUserFollowerId(undefined);
+    }
+  }, [followData.followId, isFollowed]);
 
   return (
     <Container>
@@ -56,7 +64,7 @@ const UserInfo = ({
         <Following>🙍 following {following}</Following>
       </FollowerAndFollowing>
       <Button onClick={handleClickFollowButton}>
-        {isUserFollowed ? '언팔로우' : '팔로우'}
+        {isFollowed ? '언팔로우' : '팔로우'}
       </Button>
     </Container>
   );

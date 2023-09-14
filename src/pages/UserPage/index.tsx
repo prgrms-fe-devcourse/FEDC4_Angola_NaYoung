@@ -31,9 +31,6 @@ const UserPage = ({ userId }: { userId: string }) => {
             userData.followers.find((follower) => follower.follower === myId)
               ?._id
           }
-          isFollowed={userData?.followers.some(
-            (follower) => follower.follower === myId,
-          )}
         />
       )}
       <ul>
