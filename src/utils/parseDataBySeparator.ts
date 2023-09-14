@@ -12,7 +12,9 @@ interface CommentData {
 }
 
 export const joinDataBySeparator = (...targets: string[]): string => {
-  return targets.join(ANGOLA_SEPARATOR);
+  return targets
+    .map((target) => target.replace(ANGOLA_SEPARATOR, ''))
+    .join(ANGOLA_SEPARATOR);
 };
 
 export const splitPostBySeparator = (target: string): PostData => {
