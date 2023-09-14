@@ -1,17 +1,18 @@
 import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 import LinkButton from '@components/NavBar/LinkButton';
+import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 
-export const MoreLinkButtonStyles: CSSProperties = {
+const PROFILE_LINK_BUTTON_STYLES: CSSProperties = {
   all: 'unset',
   display: 'flex',
-  width: '100%',
-  height: '100%',
+  width: 50,
+  height: 50,
   justifyContent: 'center',
   alignItems: 'center',
-  borderTopRightRadius: 12,
-  borderBottomRightRadius: 12,
+  borderRadius: '50%',
 };
+
 interface UserListItemProps {
   id: string;
   image: string;
@@ -27,22 +28,12 @@ const UserListItem = ({
   likes,
   followers,
 }: UserListItemProps) => {
-  const ProfileLinkButtonStyles: CSSProperties = {
-    all: 'unset',
-    display: 'flex',
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '50%',
-  };
-
   return (
     <List>
       <Profile>
         <LinkButton
           to={`/user/${id}`}
-          style={ProfileLinkButtonStyles}>
+          style={PROFILE_LINK_BUTTON_STYLES}>
           프로필
         </LinkButton>
       </Profile>
@@ -56,7 +47,7 @@ const UserListItem = ({
       <More>
         <LinkButton
           to={`/user/${id}`}
-          style={MoreLinkButtonStyles}>
+          style={MORE_LINK_BUTTON_STYLES}>
           More
         </LinkButton>
       </More>

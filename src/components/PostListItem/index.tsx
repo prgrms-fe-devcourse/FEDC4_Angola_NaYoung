@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import LinkButton from '@components/NavBar/LinkButton';
-import { MoreLinkButtonStyles } from '@components/UserListItem';
+import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 
 interface PostListItemProps {
   id: string;
@@ -16,7 +16,7 @@ const PostListItem = ({ id, image, title }: PostListItemProps) => {
       <More>
         <LinkButton
           to={`/posts/${id}`}
-          style={MoreLinkButtonStyles}>
+          style={MORE_LINK_BUTTON_STYLES}>
           More
         </LinkButton>
       </More>
