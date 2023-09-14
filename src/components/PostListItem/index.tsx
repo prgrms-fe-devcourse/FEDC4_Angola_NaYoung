@@ -1,19 +1,25 @@
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import LinkButton from '@components/NavBar/LinkButton';
+import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 
 interface PostListItemProps {
   id: string;
-  image: string;
+  image?: string;
   title: string;
 }
 
 const PostListItem = ({ id, image, title }: PostListItemProps) => {
-  const navigate = useNavigate();
   return (
     <ListItemContainer>
-      <Profile>프로필</Profile>
+      {image && <Profile>프로필</Profile>}
       <Title>{title}</Title>
-      <More onClick={() => navigate(`/post/${id}`)}>more</More>
+      <More>
+        <LinkButton
+          to={`/post/${id}`}
+          style={MORE_LINK_BUTTON_STYLES}>
+          More
+        </LinkButton>
+      </More>
     </ListItemContainer>
   );
 };
