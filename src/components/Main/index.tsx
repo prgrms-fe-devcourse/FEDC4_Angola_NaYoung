@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import styled from '@emotion/styled';
 import { redirects, routes } from '@routes';
 import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
@@ -15,7 +16,7 @@ const Main = () => {
       : 'follower',
   };
   return (
-    <>
+    <MainContainer>
       <Header
         title={title}
         sortProps={
@@ -46,8 +47,23 @@ const Main = () => {
           />
         ))}
       </Routes>
-    </>
+    </MainContainer>
   );
 };
 
 export default Main;
+
+const MainContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 60px 60px 0px 0px;
+  border-top: 4px solid var(--text, #404040);
+  border-right: 4px solid var(--text, #404040);
+  border-left: 4px solid var(--text, #404040);
+  background: var(--white, #fff);
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.25);
+`;

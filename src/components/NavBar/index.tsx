@@ -6,7 +6,7 @@ import { AuthMenuBar, CommonMenuBar, NonAuthMenuBar } from './MenuBar';
 const NavBar = () => {
   const auth = useRecoilValue(authInfoState);
   return (
-    <NavBarContainer>
+    <NavBarContainer>  
       <MenuBarContainer>
         <CommonMenuBar />
       </MenuBarContainer>
