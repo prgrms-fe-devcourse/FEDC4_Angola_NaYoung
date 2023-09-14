@@ -1,87 +1,71 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';;
 import styled from '@emotion/styled';
-import { useFetchLogOut } from '@apis/auth';
-import { useFetchUpdateFullName } from '@apis/profile';
+import { useFetchFollow, useFetchUnFollow } from '@apis/follow';
 
-// TODO: return에서 isUpdateFullNameError 발생 시, 모달 보여주고 함수 실행시키고, 이전 값
 interface UserInfoProps {
-  id: string;
+  userId: string; // 해당 유저 아이디
   image: string;
   name: string;
   likes: number;
-  followers: number;
-  following: number;
-  showLogOutButton?: boolean;
-  showChangeFullNameButton?: boolean;
-  showChangePasswordButton?: boolean;
+  followers: number; // 팔로워 수
+  following: number; // 팔로잉 수
+  followerId?: string; // 팔로우 누른사람 Id
 }
 
 const UserInfo = ({
-  //id,
+  userId,
   image,
   name,
   likes,
   followers,
   following,
-  showLogOutButton,
-  showChangeFullNameButton,
-  showChangePasswordButton,
+  followerId,
 }: UserInfoProps) => {
-  const navigate = useNavigate();
-  const { logOutMutate } = useFetchLogOut();
-  const { updateFullNameMutate } = useFetchUpdateFullName();
-  const [newFullName, setNewFullName] = useState(name);
-  const [isEditing, isSetEditing] = useState(false);
+  const { followMutate, followData } = useFetchFollow();
+  const { unFollowMutate } = useFetchUnFollow();
+  const [userFollowerId, setUserFollowerId] = useState(followerId);
+  const [countFollowers, setCountFollowers] = useState(followers);
+  const [isFollowed, setIsFollowed] = useState(followerId !== undefined);
 
   useEffect(() => {
-    setNewFullName(name);
-  }, [name]);
+    setCountFollowers(followers);
+    setUserFollowerId(followerId);
+    setIsFollowed(followerId !== undefined);
+  }, [followers, followerId]);
 
-  const handleClickLogOutButton = () => {
-    logOutMutate();
-    navigate('/');
-  };
-
-  const handleClickChangeFullName = () => {
-    if (isEditing) {
-      updateFullNameMutate({ fullName: newFullName });
+  const handleClickFollowButton = () => {
+    if (userFollowerId) {
+      setCountFollowers((prev) => prev - 1);
+      unFollowMutate({ id: userFollowerId });
+    } else {
+      setCountFollowers((prev) => prev + 1);
+      followMutate({ userId });
     }
-    isSetEditing(!isEditing);
+    setIsFollowed((prev) => !prev);
   };
 
-  const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewFullName(e.target.value);
-  };
+  useEffect(() => {
+    if (isFollowed) {
+      followData.followId && setUserFollowerId(followData.followId); // userLikeId 갱신
+    } else {
+      setUserFollowerId(undefined);
+    }
+  }, [followData.followId, isFollowed]);
 
   return (
     <Container>
       <Profile>프로필 {image}</Profile>
       <NameAndLikes>
-        {isEditing ? (
-          <input
-            type="text"
-            value={newFullName}
-            onChange={handleChangeFullName}
-          />
-        ) : (
-          <Name>🌱유저 이름 {newFullName}</Name>
-        )}
-        {showChangeFullNameButton && (
-          <button onClick={handleClickChangeFullName}>
-            {isEditing ? '제출 하기' : '편집 하기'}
-          </button>
-        )}
-        <Likes>👍 받은 좋아요 {likes}</Likes>
+        <Name>🌱유저 이름 {name}</Name>
+        <Likes>👍 누른 좋아요 {likes}</Likes>
       </NameAndLikes>
       <FollowerAndFollowing>
-        <Follower>🙍 follower {followers}</Follower>
+        <Follower>🙍 follower {countFollowers}</Follower>
         <Following>🙍 following {following}</Following>
       </FollowerAndFollowing>
-      {showLogOutButton && (
-        <button onClick={handleClickLogOutButton}>로그 아웃</button>
-      )}
-      {/* TODO: 비밀번호 변경함수 */}
+      <Button onClick={handleClickFollowButton}>
+        {isFollowed ? '언팔로우' : '팔로우'}
+      </Button>
     </Container>
   );
 };
@@ -142,3 +126,19 @@ const Following = styled.div`
   font-size: 18px;
   font-weight: 600;
 `;
+
+const Button = styled.button`
+  border: none;
+  width: 80px;
+  height: 30px;
+  border-radius: 20px;
+  margin-left: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    background-color: yellowgreen;
+    color: white;
+  }
+`;
+

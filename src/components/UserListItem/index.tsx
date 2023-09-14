@@ -1,19 +1,20 @@
 import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import LinkButton from '@components/NavBar/LinkButton';
 import { authInfoState } from '@atoms/index';
+import LinkButton from '@components/NavBar/LinkButton';
+import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 
-export const MoreLinkButtonStyles: CSSProperties = {
+const PROFILE_LINK_BUTTON_STYLES: CSSProperties = {
   all: 'unset',
   display: 'flex',
-  width: '100%',
-  height: '100%',
+  width: 50,
+  height: 50,
   justifyContent: 'center',
   alignItems: 'center',
-  borderTopRightRadius: 12,
-  borderBottomRightRadius: 12,
+  borderRadius: '50%',
 };
+
 interface UserListItemProps {
   id: string;
   image: string;
