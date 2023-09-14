@@ -13,14 +13,16 @@ const INTERACTION_OPTION = {
   threshold: 1.0,
 };
 
+const LIMIT = 5;
+
 const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const auth = useRecoilValue(authInfoState);
   const [offset, setOffset] = useState(0);
-  const [limit] = useState(5);
+
   const [isLoading, setIsLoading] = useState(false);
   const { partPostsData, isPartPostsLoading, partPostsRefetch } =
-    useFetchPartPosts(offset, limit);
+    useFetchPartPosts(offset, LIMIT);
   const [addPostData, setAddPostData] = useState<Post[]>([]);
 
   useEffect(() => {
