@@ -19,6 +19,8 @@ interface PostViewerProps {
   numberOfLikes: number;
   voteValue?: string;
   onVote?: (value: string) => void;
+  colorA?: string;
+  colorB?: string;
 }
 
 const PostViewer = ({
@@ -31,6 +33,8 @@ const PostViewer = ({
   onVote,
   numberOfComments,
   numberOfLikes,
+  colorA,
+  colorB,
 }: PostViewerProps) => {
   const { a, b, title } = splitPostBySeparator(postTitle);
   const auth = useRecoilValue(authInfoState);
@@ -66,6 +70,8 @@ const PostViewer = ({
         onGoDetailPage={goDetailPage}
         onShowNonAuthModal={() => setIsModalShow(true)}
         isPostPage={isPostPage}
+        colorA={colorA}
+        colorB={colorB}
       />
       {auth && (
         <ButtonGroup
