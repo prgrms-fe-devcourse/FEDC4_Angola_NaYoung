@@ -3,5 +3,7 @@ export { default as SearchPage } from '@pages/SearchPage';
 export { default as LoginPage } from '@pages/LoginPage';
 export { default as SignUpPage } from '@pages/SignUpPage';
 export { default as CreatePostPage } from '@pages/CreatePostPage';
-export { HomePage, UserPage, MyPage, PostPage } from '@pages/tempPages';
+export { default as MyPage } from '@pages/MyPage';
+export { default as UserPage } from '@pages/UserPage';
 
+export { PostPage } from '@pages/tempPages';
