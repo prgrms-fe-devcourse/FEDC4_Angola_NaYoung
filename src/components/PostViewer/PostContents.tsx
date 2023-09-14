@@ -8,6 +8,7 @@ interface PostContentsProps {
   onVote?: (value: string) => void;
   voteValue?: string;
   onGoDetailPage: () => void;
+  onShowNonAuthModal: () => void;
   isPostPage: boolean;
 }
 
@@ -17,12 +18,13 @@ const PostContents = ({
   onVote,
   voteValue,
   onGoDetailPage: goDetailPage,
+  onShowNonAuthModal: showNonAuthModal,
   isPostPage,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
   const handleClickContent = (value: string) => {
     if (!auth) {
-      alert('로그인하세요'); // todo: Modal
+      showNonAuthModal();
       return;
     }
     onVote && onVote(value);

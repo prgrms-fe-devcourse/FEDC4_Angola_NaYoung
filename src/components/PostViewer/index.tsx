@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@atoms/index';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import ButtonGroup from './ButtonGroup';
+import NonAuthModal from './NonAuthModal';
 import PostContents from './PostContents';
 import PostTitle from './PostTitle';
 
@@ -36,6 +38,7 @@ const PostViewer = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const [isModalShow, setIsModalShow] = useState(false);
   const isPostPage = onVote !== undefined;
   const goDetailPage = () => {
     if (isPostPage) {
@@ -61,6 +64,7 @@ const PostViewer = ({
         onVote={onVote}
         voteValue={voteValue}
         onGoDetailPage={goDetailPage}
+        onShowNonAuthModal={() => setIsModalShow(true)}
         isPostPage={isPostPage}
       />
       {auth && (
@@ -72,6 +76,7 @@ const PostViewer = ({
           onGoDetailPage={goDetailPage}
         />
       )}
+      {isModalShow && <NonAuthModal onClose={() => setIsModalShow(false)} />}
     </PostContainer>
   );
 };
