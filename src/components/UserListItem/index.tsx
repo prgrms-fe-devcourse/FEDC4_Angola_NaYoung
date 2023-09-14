@@ -25,7 +25,7 @@ interface UserListItemProps {
 
 const UserListItem = ({
   id,
-  // image,
+  image,
   name,
   likes,
   followers,
@@ -35,21 +35,37 @@ const UserListItem = ({
 
   return (
     <List>
-      <Profile>
+      <div>
         {myId === id ? (
           <LinkButton
             to={`/mypage`}
             style={PROFILE_LINK_BUTTON_STYLES}>
-            프로필
+            <img
+              src={
+                image
+                  ? image
+                  : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
+              }
+              alt="프로필"
+              style={{ width: '70px', height: '70px', borderRadius: '50%' }}
+            />
           </LinkButton>
         ) : (
           <LinkButton
             to={`/user/${id}`}
             style={PROFILE_LINK_BUTTON_STYLES}>
-            프로필
+            <img
+              src={
+                image
+                  ? image
+                  : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
+              }
+              alt="프로필"
+              style={{ width: '70px', height: '70px', borderRadius: '50%' }}
+            />
           </LinkButton>
         )}
-      </Profile>
+      </div>
       <UserInfo>
         <div>{name} 🌱 🐣</div>
         <LikesAndFollowers>
@@ -86,7 +102,7 @@ const List = styled.li`
   border-radius: 12px;
 `;
 
-const Profile = styled.div`
+/*const Profile = styled.div`
   border: 1px solid black;
   width: 50px;
   height: 50px;
@@ -98,7 +114,7 @@ const Profile = styled.div`
   margin-left: 10px;
   margin: 10px 0 10px 10px;
   cursor: pointer;
-`;
+`;*/
 
 const UserInfo = styled.div`
   flex-grow: 1;
