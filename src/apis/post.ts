@@ -67,18 +67,20 @@ export const useFetchCreatePost = () => {
   const { authInstance } = useAxiosInstance();
   const path = `/posts/create`;
 
-  const { mutate, isLoading, isSuccess, isError } = useMutation(
-    'createPostMutation',
-    (body: CreatePostRequestBody) => {
-      const formData = new FormData();
-      formData.append('title', body.title);
-      formData.append('image', '');
-      formData.append('channelId', CHANNEL_ID);
-      return authInstance.post(path, formData);
-    },
-  );
+  const { mutate, data, isLoading, isSuccess, isError } = useMutation<
+    AxiosResponse<Post>,
+    AxiosError,
+    CreatePostRequestBody
+  >('createPostMutation', (body: CreatePostRequestBody) => {
+    const formData = new FormData();
+    formData.append('title', body.title);
+    formData.append('image', '');
+    formData.append('channelId', CHANNEL_ID);
+    return authInstance.post(path, formData);
+  });
   return {
     createPostMutate: mutate,
+    createPostData: data?.data._id,
     isCreatePostLoading: isLoading,
     isCreatePostSuccess: isSuccess,
     isCreatePostError: isError,

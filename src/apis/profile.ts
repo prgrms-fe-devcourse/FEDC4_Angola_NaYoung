@@ -32,7 +32,7 @@ interface UpdatePasswordRequestBody {
 export const useFetchUpdatePassword = () => {
   const { authInstance } = useAxiosInstance();
   const { mutate, data, isLoading, isError, isSuccess } = useMutation<
-    AxiosResponse,
+    AxiosResponse<string>,
     AxiosError,
     UpdatePasswordRequestBody
   >('updatePasswordMutation', (body: UpdatePasswordRequestBody) =>
