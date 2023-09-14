@@ -70,7 +70,6 @@ const PostViewer = ({
           likeId={likeId}
           postId={postId}
           onGoDetailPage={goDetailPage}
-          isPostPage={isPostPage}
         />
       )}
     </PostContainer>

@@ -5,7 +5,6 @@ import { useFetchLike, useFetchUnLike } from '@apis/like';
 interface ButtonGroupProps {
   numberOfLikes: number;
   numberOfComments: number;
-  isPostPage: boolean;
   likeId: string | undefined;
   postId: string;
   onGoDetailPage: () => void;
@@ -14,7 +13,6 @@ interface ButtonGroupProps {
 const ButtonGroup = ({
   numberOfLikes,
   numberOfComments,
-  isPostPage,
   likeId,
   postId,
   onGoDetailPage: goDetailPage,
@@ -49,10 +47,7 @@ const ButtonGroup = ({
     } else {
       setUserLikeId(undefined);
     }
-    return () => {
-      isPostPage;
-    };
-  }, [likeData.likeId, isLiked, isPostPage]);
+  }, [likeData.likeId, isLiked]);
 
   return (
     <ShortButtonContainer>
