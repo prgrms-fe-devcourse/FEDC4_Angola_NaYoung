@@ -49,7 +49,7 @@ export const useFetchUpdatePassword = () => {
 
 interface UpdateProfileImageRequestBody {
   isCover: false;
-  image: Blob;
+  image: File;
 }
 
 export const useFetchUpdateProfileImage = () => {
