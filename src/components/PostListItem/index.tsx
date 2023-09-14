@@ -29,7 +29,7 @@ const PostListItem = ({
       </Info>
       <More>
         <LinkButton
-          to={`/posts/${id}`}
+          to={`/post/${id}`}
           style={MORE_LINK_BUTTON_STYLES}>
           More
         </LinkButton>
