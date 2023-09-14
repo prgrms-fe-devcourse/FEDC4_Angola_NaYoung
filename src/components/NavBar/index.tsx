@@ -7,7 +7,9 @@ const NavBar = () => {
   const auth = useRecoilValue(authInfoState);
   return (
     <NavBarContainer>
-      <CommonMenuBar />
+      <MenuBarContainer>
+        <CommonMenuBar />
+      </MenuBarContainer>
       <MenuBarContainer>
         {auth?.token ? <AuthMenuBar /> : <NonAuthMenuBar />}
       </MenuBarContainer>
@@ -19,10 +21,17 @@ export default NavBar;
 
 const NavBarContainer = styled.div`
   display: flex;
-  align-items: center;
+  max-height: 144px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
 `;
 
 const MenuBarContainer = styled.div`
   display: flex;
-  margin-left: auto;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
 `;

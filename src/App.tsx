@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
+import styled from '@emotion/styled';
 import { RecoilRoot } from 'recoil';
 import Main from '@components/Main';
 import NavBar from '@components/NavBar';
@@ -11,8 +12,10 @@ const App = () => {
     <BrowserRouter>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          <NavBar />
-          <Main />
+          <PageContainer>
+            <NavBar />
+            <Main />
+          </PageContainer>
         </QueryClientProvider>
       </RecoilRoot>
     </BrowserRouter>
@@ -20,3 +23,13 @@ const App = () => {
 };
 
 export default App;
+
+const PageContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  padding: 0px 120px;
+  flex-direction: column;
+  align-items: center;
+`;
