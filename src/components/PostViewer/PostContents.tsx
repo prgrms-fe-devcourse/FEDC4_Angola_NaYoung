@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { rgba } from 'emotion-rgba';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@atoms/index';
 
@@ -10,6 +11,8 @@ interface PostContentsProps {
   onGoDetailPage: () => void;
   onShowNonAuthModal: () => void;
   isPostPage: boolean;
+  colorA?: string;
+  colorB?: string;
 }
 
 const PostContents = ({
@@ -20,6 +23,8 @@ const PostContents = ({
   onGoDetailPage: goDetailPage,
   onShowNonAuthModal: showNonAuthModal,
   isPostPage,
+  colorA,
+  colorB,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
   const handleClickContent = (value: string) => {
@@ -28,20 +33,22 @@ const PostContents = ({
       return;
     }
     onVote && onVote(value);
-    console.log(onVote);
     goDetailPage();
   };
   const getContentClassName = (value: string) => {
     return isPostPage && voteValue === value ? 'active' : '';
   };
+
   return (
     <VoteButtonContainer>
       <VoteButton
+        bgColor={colorA || '#ffffff'}
         className={getContentClassName('A')}
         onClick={() => handleClickContent('A')}>
         {contentA}
       </VoteButton>
       <VoteButton
+        bgColor={colorB || '#ffffff'}
         className={getContentClassName('B')}
         onClick={() => handleClickContent('B')}>
         {contentB}
@@ -57,15 +64,21 @@ const VoteButtonContainer = styled.div`
   gap: 10px;
 `;
 
-const VoteButton = styled.div`
+const VoteButton = styled.div<{ bgColor: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 200px;
   height: 200px;
+  background-color: ${({ bgColor }) => rgba(bgColor, 0.2)};
+  box-shadow: 5px 5px 0px 0px ${({ bgColor }) => bgColor};
   &.active {
-    background-color: orangered;
+    background-color: ${({ bgColor }) => rgba(bgColor, 0.8)};
+    box-shadow: 5px 5px 0px 0px ${({ bgColor }) => bgColor};
   }
-  border: 1px solid black;
-  border-radius: 20px;
+  border: 2px solid black;
+  border-radius: 40px;
+  word-break: break-all;
+  padding: 5px;
+  white-space: pre;
 `;
