@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import LinkButton from '@components/NavBar/LinkButton';
+import LinkButton from '@components/LinkButton';
 import SearchBar from '@components/SearchBar';
 import useCurrentPage from '@hooks/useCurrentPage';
 import SearchIcon from '@styles/icons/SearchIcon';

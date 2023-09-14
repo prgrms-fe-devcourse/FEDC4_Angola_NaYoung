@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import LinkButton from '@components/NavBar/LinkButton';
+import LinkButton from '@components/LinkButton';
 import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 
 interface PostListItemProps {
