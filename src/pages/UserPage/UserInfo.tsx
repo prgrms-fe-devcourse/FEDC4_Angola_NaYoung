@@ -49,7 +49,7 @@ const UserInfo = ({
       <Profile>프로필 {image}</Profile>
       <NameAndLikes>
         <Name>🌱유저 이름 {name}</Name>
-        <Likes>👍 받은 좋아요 {likes}</Likes>
+        <Likes>👍 누른 좋아요 {likes}</Likes>
       </NameAndLikes>
       <FollowerAndFollowing>
         <Follower>🙍 follower {countFollowers}</Follower>
