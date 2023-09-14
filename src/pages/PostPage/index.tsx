@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import TestComponent from '@pages/ReadMorePage/TestComponent';
+import TestComponent from '@pages/PostPage/TestComponent';
 import MakeComment from './MakeComment';
 
 // postData && ( // postData 가 있을 때만 Post 컴포넌트를 렌더링 해주세요!
@@ -15,7 +15,7 @@ import MakeComment from './MakeComment';
 //     onVote={(value: string) => setVotedValue(value)} // detail page 에서만
 //   />
 // );
-const ReadMorePage = () => {
+const PostPage = () => {
   const userId = useRecoilValue(authInfoState)?.userId;
   const [votedValue, setVotedValue] = useState<string>('');
 
@@ -50,7 +50,7 @@ const ReadMorePage = () => {
   );
 };
 
-export default ReadMorePage;
+export default PostPage;
 
 const ReadMorePageContainer = styled.div`
   display: flex;
