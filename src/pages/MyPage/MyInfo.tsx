@@ -18,6 +18,7 @@ interface MyInfoProps {
   likes: number;
   followers: number;
   following: number;
+  myLevel: number;
   myColor: string;
   myEmoji: string;
 }
@@ -29,6 +30,7 @@ const MyInfo = ({
   likes,
   followers,
   following,
+  myLevel,
   myColor,
   myEmoji,
 }: MyInfoProps) => {
@@ -157,7 +159,7 @@ const MyInfo = ({
           disabled={isUpdateProfileImageLoading}
         />
       </div>
-      <NamesAndLikes>
+      <NamesLevelLikes>
         {isEditingFullName ? (
           <Input
             type="text"
@@ -167,17 +169,23 @@ const MyInfo = ({
           />
         ) : (
           <Container>
-            <Name>{myEmoji}유저 이름 </Name>
-            <MyName color={myColor}>{newFullName}</MyName>
+            <Name>유저 이름</Name>
+            <MyName color={myColor}>
+              {myEmoji} {newFullName}
+            </MyName>
           </Container>
         )}
+        <Container>
+          <Level color={myColor}>Level {myLevel}</Level>
+          {myEmoji}
+        </Container>
         <Button onClick={handleClickChangeFullName}>
           {isEditingFullName ? '제출 하기' : '편집 하기'}
         </Button>
         <Container>
           <Likes>👍 받은 좋아요 </Likes> <MyInfoText>{likes}</MyInfoText>
         </Container>
-      </NamesAndLikes>
+      </NamesLevelLikes>
       <FollowerAndFollowing>
         <Container>
           <Follower>🙍 follower</Follower> <MyInfoText>{followers}</MyInfoText>
@@ -244,11 +252,10 @@ const ProfileInput = styled.input`
   display: none;
 `;
 
-const NamesAndLikes = styled.div`
+const NamesLevelLikes = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   gap: 10px;
 `;
 
@@ -263,6 +270,12 @@ const Name = styled.div`
 `;
 
 const MyName = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+  color: ${(props) => props.color};
+`;
+
+const Level = styled.div`
   font-size: 18px;
   font-weight: 600;
   color: ${(props) => props.color};

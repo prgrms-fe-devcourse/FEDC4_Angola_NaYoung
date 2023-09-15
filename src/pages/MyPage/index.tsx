@@ -29,6 +29,7 @@ const MyPage = () => {
           likes={userData.likes?.length}
           followers={userData.followers?.length}
           following={userData.following?.length}
+          myLevel={calculateLevel(userData)}
           myColor={getUserLevelInfo(calculateLevel(userData)).userColor}
           myEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
         />
