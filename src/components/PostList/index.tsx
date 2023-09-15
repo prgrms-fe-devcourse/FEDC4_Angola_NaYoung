@@ -18,8 +18,8 @@ const PostList = ({ keyword, sort }: PostListProps) => {
     });
 
   const resultData = keyword
-    ? getSortPostList(searchPostsData, sort, keyword)
-    : getSortPostList(allPostsData, sort, keyword);
+    ? getSortPostList(searchPostsData, sort)
+    : getSortPostList(allPostsData, sort);
 
   useEffect(() => {
     searchPostsDataRefetch();
