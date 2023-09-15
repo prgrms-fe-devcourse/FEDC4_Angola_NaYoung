@@ -11,7 +11,15 @@ interface PostListItemProps {
 const PostListItem = ({ id, image, title }: PostListItemProps) => {
   return (
     <ListItemContainer>
-      {image && <Profile>프로필</Profile>}
+      <img
+        src={
+          image
+            ? image
+            : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
+        }
+        alt="프로필"
+        style={{ width: '70px', height: '70px', borderRadius: '50%' }}
+      />
       <Title>{title}</Title>
       <More>
         <LinkButton
@@ -32,19 +40,6 @@ const ListItemContainer = styled.li`
   margin: 30px 0;
   gap: 20px;
   border-radius: 12px;
-`;
-
-const Profile = styled.div`
-  border: 1px solid black;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  margin-left: 10px;
-  margin: 10px 0 10px 10px;
 `;
 
 const Title = styled.div`
