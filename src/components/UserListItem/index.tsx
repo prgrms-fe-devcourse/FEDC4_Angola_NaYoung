@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import LinkButton from '@components/NavBar/LinkButton';
+import LinkButton from '@components/LinkButton';
 import { authInfoState } from '@atoms/index';
 import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 

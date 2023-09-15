@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import LinkButton from '@components/NavBar/LinkButton';
+import { MORE_LINK_BUTTON_STYLES } from '@styles';
+import LinkButton from '@components/LinkButton';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
-import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
 
 interface PostListItemProps {
   id: string;
