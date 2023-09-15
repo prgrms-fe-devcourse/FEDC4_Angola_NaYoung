@@ -32,6 +32,7 @@ const UserPage = ({ userId }: { userId: string }) => {
             userData.followers.find((follower) => follower.follower === myId)
               ?._id
           }
+          userLevel={calculateLevel(userData)}
           userColor={getUserLevelInfo(calculateLevel(userData)).userColor}
           userEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
         />
