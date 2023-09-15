@@ -23,7 +23,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const auth = useRecoilValue(authInfoState);
   const userId = auth?.userId;
   const [votedValue, setVotedValue] = useState<string>('');
-  const [submitValue, setSubmitValue] = useState<string | undefined>(voted); // a, b, undefined
+  const [submitValue, setSubmitValue] = useState<string | undefined>(''); // a, b, undefined
   const { postData, postRefetch } = useFetchPost(postId);
   const {
     createCommentMutate,
@@ -44,13 +44,14 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
         (comment) => comment.author._id === userId,
       );
       if (!userComment) {
+        setSubmitValue('');
         return;
       }
       const userVote = splitCommentBySeparator(userComment.comment).vote;
       setVotedValue(userVote);
       setSubmitValue(userVote);
     }
-  }, [postData?.comments, userId, postData]);
+  }, [postData?.comments, userId, postData, submitValue]);
 
   useEffect(() => {
     if (submitValue && show) {
@@ -72,6 +73,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     }
     searchParams.set('voted', voteValue);
     setSearchParams(searchParams);
+    setSubmitValue('');
   };
 
   const deleteComment = (id: string) => {
