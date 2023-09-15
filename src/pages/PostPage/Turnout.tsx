@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
 import { voteRatio } from '@utils/voteRatio';
@@ -8,13 +9,20 @@ interface TurnoutProps {
 }
 const Turnout = ({ comments }: TurnoutProps) => {
   const [ratios, setRatio] = useState([0, 0]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     if (!comments) {
       return;
     }
-    const [aRatio, bRatio] = voteRatio(comments);
-    setRatio([aRatio, bRatio]);
-  }, [comments]);
+
+    setRatio(voteRatio(comments));
+
+    if (!searchParams.get('voted')) {
+      searchParams.set('voted', 'true');
+      setSearchParams(searchParams);
+    }
+  }, [comments, searchParams, setSearchParams]);
   return (
     <>
       <TurnoutContainer>
