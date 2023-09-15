@@ -7,7 +7,7 @@ import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@atoms/index';
 import UserInfo from './UserInfo';
 
-const UserPage = ({ userId }: { userId: string }) => {
+const UserPage = ({ userId = '' }: { userId?: string }) => {
   const auth = useRecoilValue(authInfoState);
   const myId = auth?.userId;
   const { userData, isUserLoading } = useFetchUser(userId);
