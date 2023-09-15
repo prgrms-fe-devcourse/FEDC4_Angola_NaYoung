@@ -1,52 +1,31 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { ChangeEvent, FormEvent, useState } from 'react';
+// import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useFetchCreateComment } from '@apis/comment';
-import { joinDataBySeparator } from '@utils/parseDataBySeparator';
+
+// import { useFetchCreateComment } from '@apis/comment';
+// import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 
 interface MakeCommentProps {
-  postId: string;
   votedValue: string;
   handleClickItem: (value: string) => void;
+  handleSubmitComment: (voteValue: string, comment: string) => void;
 }
 
 const MakeComment = ({
-  postId,
   votedValue,
   handleClickItem,
+  handleSubmitComment,
 }: MakeCommentProps) => {
   const [comment, setComment] = useState<string>('');
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { createCommentMutate, isCreateCommentError, isCreateCommentSuccess } =
-    useFetchCreateComment();
   const handleChangeComment = (e: ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    votedValue &&
-      createCommentMutate({
-        comment: joinDataBySeparator(votedValue, comment),
-        postId,
-      });
-
-    if (isCreateCommentError) {
-      alert('댓글 작성에 실패했습니다.');
-      return;
-    }
-
-    // window.location.reload();
+    handleSubmitComment(votedValue, comment);
   };
 
-  useEffect(() => {
-    if (isCreateCommentSuccess) {
-      if (!searchParams.get('voted') && votedValue) {
-        searchParams.set('voted', votedValue);
-        setSearchParams(searchParams);
-      }
-    }
-  }, [isCreateCommentSuccess]);
   return (
     <>
       <MakeCommentContainer>

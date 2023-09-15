@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
+import { joinDataBySeparator } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostViewer from '@components/PostViewer';
+import Spinner from '@components/Spinner';
+import { useFetchCreateComment } from '@apis/comment';
+import { useFetchDeleteComment } from '@apis/comment';
 import { useFetchPost } from '@apis/post';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
@@ -20,9 +24,15 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const userId = auth?.userId;
   const [votedValue, setVotedValue] = useState<string>('');
   const [submitValue, setSubmitValue] = useState<string | undefined>(voted); // a, b, undefined
-  const { postData } = useFetchPost(postId);
+  const { postData, postRefetch } = useFetchPost(postId);
+  const {
+    createCommentMutate,
+    isCreateCommentSuccess,
+    isCreateCommentLoading,
+  } = useFetchCreateComment();
   const [searchParams, setSearchParams] = useSearchParams();
-  // const comments = postData?.comments;
+  const { deleteCommentMutate, isDeleteCommentError, isDeleteCommentSuccess } =
+    useFetchDeleteComment();
 
   useEffect(() => {
     setSubmitValue(voted);
@@ -34,20 +44,47 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
         if (eachComment.author._id === userId) {
           setVotedValue(eachComment.comment[0]);
           setSubmitValue(eachComment.comment[0]);
-          console.log(votedValue);
-          if (!searchParams.get('voted') && submitValue) {
-            searchParams.set('voted', submitValue);
-            setSearchParams(searchParams);
-          }
           return;
         }
       });
-  }, [postData?.comments, userId]);
+  }, [postData?.comments, userId, postData]);
 
-  console.log(votedValue);
+  useEffect(() => {
+    if (submitValue && show) {
+      searchParams.set('voted', submitValue);
+      setSearchParams(searchParams);
+    }
+  }, [searchParams, setSearchParams, submitValue, show]);
+
   const handleClickItem = (value: string) => {
     votedValue === value ? setVotedValue('') : setVotedValue(value);
   };
+
+  const handleSubmitComment = (voteValue: string, comment: string) => {
+    if (voteValue) {
+      createCommentMutate({
+        comment: joinDataBySeparator(voteValue, comment),
+        postId,
+      });
+    }
+    searchParams.set('voted', voteValue);
+    setSearchParams(searchParams);
+  };
+
+  const deleteComment = (id: string) => {
+    deleteCommentMutate({ id });
+    if (isDeleteCommentError) {
+      alert('댓글 삭제를 실패하였습니다.');
+      return;
+    }
+    searchParams.delete('voted');
+    setSearchParams(searchParams);
+    setSubmitValue('');
+  };
+
+  useEffect(() => {
+    postRefetch();
+  }, [postRefetch, isCreateCommentSuccess, isDeleteCommentSuccess]);
 
   return (
     <>
@@ -68,15 +105,24 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
         {show && (
           <CommentsContainer>
             {submitValue ? (
-              <Turnout comments={postData?.comments} />
+              isCreateCommentLoading ? (
+                <Spinner />
+              ) : (
+                <Turnout comments={postData?.comments} />
+              )
             ) : (
               <MakeComment
                 votedValue={votedValue}
                 handleClickItem={handleClickItem}
-                postId={postId}
+                handleSubmitComment={handleSubmitComment}
               />
             )}
-            {postData && <CommentList comments={postData.comments} />}
+            {postData && (
+              <CommentList
+                comments={postData.comments}
+                deleteComment={deleteComment}
+              />
+            )}
           </CommentsContainer>
         )}
       </ReadMorePageContainer>
