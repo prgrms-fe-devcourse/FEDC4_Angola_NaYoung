@@ -21,6 +21,8 @@ interface UserListItemProps {
   name: string;
   likes: number;
   followers: number;
+  userEmoji: string;
+  userColor: string;
 }
 
 const UserListItem = ({
@@ -29,6 +31,8 @@ const UserListItem = ({
   name,
   likes,
   followers,
+  userEmoji,
+  userColor,
 }: UserListItemProps) => {
   const auth = useRecoilValue(authInfoState);
   const myId = auth?.userId;
@@ -67,7 +71,9 @@ const UserListItem = ({
         )}
       </div>
       <UserInfo>
-        <div>{name} 🌱 🐣</div>
+        <UserName color={userColor}>
+          {name} {userEmoji}
+        </UserName>
         <LikesAndFollowers>
           <div>👍{likes}</div>
           <div>🙍{followers}</div>
@@ -102,26 +108,17 @@ const List = styled.li`
   border-radius: 12px;
 `;
 
-/*const Profile = styled.div`
-  border: 1px solid black;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  margin-left: 10px;
-  margin: 10px 0 10px 10px;
-  cursor: pointer;
-`;*/
-
 const UserInfo = styled.div`
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 14px 0;
+`;
+
+const UserName = styled.div`
+  font-weight: 600;
+  color: ${(props) => props.color};
 `;
 
 const LikesAndFollowers = styled.div`
