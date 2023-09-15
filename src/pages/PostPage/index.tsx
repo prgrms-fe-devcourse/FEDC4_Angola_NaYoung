@@ -88,7 +88,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   return (
     <>
-      <ReadMorePageContainer>
+      <PostPageContainer>
         {postData && (
           <PostViewer
             postId={postId}
@@ -125,14 +125,14 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
             )}
           </CommentsContainer>
         )}
-      </ReadMorePageContainer>
+      </PostPageContainer>
     </>
   );
 };
 
 export default PostPage;
 
-const ReadMorePageContainer = styled.div`
+const PostPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

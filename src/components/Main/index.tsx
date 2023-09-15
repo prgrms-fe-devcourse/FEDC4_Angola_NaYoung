@@ -2,7 +2,6 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { redirects, routes } from '@routes';
-import ReadMorePage from '@pages/ReadMorePage';
 import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
 
