@@ -99,16 +99,14 @@ const MyInfo = ({
   };
 
   // ProfileImage 변경 로직
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    } else {
-      const imageFile = e.target.files[0];
-      if (imageFile) {
-        const imageUrl = URL.createObjectURL(imageFile);
-        setProfileImageUrl(imageUrl);
-        updateProfileImageMutate({ image: imageFile, isCover: false });
-      }
+  const handleChangeProfileImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const imageFile = e.target.files?.[0];
+    console.log(imageFile, image);
+    if (imageFile) {
+      // 이미지 파일 url 생성
+      const imageUrl = URL.createObjectURL(imageFile);
+      setProfileImageUrl(imageUrl);
+      updateProfileImageMutate({ image: imageFile, isCover: false });
     }
   };
 
@@ -117,6 +115,14 @@ const MyInfo = ({
       setProfileImageUrl(updateProfileImageData.image); // 이미지 URL 업데이트
     }
   }, [updateProfileImageData, isUpdateProfileImageSuccess]);
+
+  useEffect(() => {
+    return () => {
+      if (profileImageUrl) {
+        URL.revokeObjectURL(profileImageUrl);
+      }
+    };
+  }, [profileImageUrl]);
 
   // 로그아웃 로직
   const handleClickLogOutButton = () => {
@@ -146,7 +152,7 @@ const MyInfo = ({
           type="file"
           id="profile"
           accept="image/*"
-          onChange={handleImageChange}
+          onChange={handleChangeProfileImage}
           disabled={isUpdateProfileImageLoading}
         />
       </div>
