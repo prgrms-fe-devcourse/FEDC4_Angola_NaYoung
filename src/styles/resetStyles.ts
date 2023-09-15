@@ -92,6 +92,7 @@ export const resetStyles = css`
   /* HTML5 display-role reset for older browsers */
   article,
   aside,
+  button,
   details,
   figcaption,
   figure,
@@ -124,5 +125,11 @@ export const resetStyles = css`
   table {
     border-collapse: collapse;
     border-spacing: 0;
+  }
+  div,
+  input,
+  button,
+  textarea {
+    box-sizing: border-box;
   }
 `;
