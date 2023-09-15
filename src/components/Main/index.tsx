@@ -19,9 +19,7 @@ const Main = () => {
     <MainContainer>
       <Header
         title={title}
-        sortProps={
-          name === 'home' || name === 'search' ? objectForSort : undefined
-        }
+        sortProps={name === 'search' ? objectForSort : undefined}
         keyword={
           name === 'search'
             ? search.keyword ||
@@ -72,7 +70,7 @@ const MainContainer = styled.div`
 
 const PageContainer = styled.div`
   box-sizing: border-box;
-  display: flex; 
+  display: flex;
   align-self: stretch;
   justify-content: center;
   padding: 50px 50px 0px 50px;
