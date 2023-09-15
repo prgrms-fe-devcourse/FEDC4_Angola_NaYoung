@@ -62,7 +62,7 @@ const UserListItem = ({
               src={
                 image
                   ? image
-                  : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
+                  : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
               }
               alt="프로필"
               style={{ width: '70px', height: '70px', borderRadius: '50%' }}
