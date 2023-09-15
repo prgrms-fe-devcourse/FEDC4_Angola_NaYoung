@@ -24,8 +24,6 @@ const MakeComment = ({
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log('? ', joinDataBySeparator(votedValue, comment));
-
     votedValue &&
       createCommentMutate({
         comment: joinDataBySeparator(votedValue, comment),
@@ -104,7 +102,7 @@ const ItemButtonA = styled.button<{ votedValue: string }>`
     props.votedValue === 'a' ? 'orangered' : 'none'};
 
   &:hover {
-    background-color: gray;
+    background-color: #80808030;
   }
 `;
 
@@ -119,7 +117,7 @@ const ItemButtonB = styled.button<{ votedValue: string }>`
     props.votedValue === 'b' ? 'orangered' : 'none'};
 
   &:hover {
-    background-color: gray;
+    background-color: #80808030;
   }
 `;
 
@@ -144,6 +142,9 @@ const SubmitButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: gray;
+    background-color: #80808030;
+  }
+  &:disabled {
+    background-color: #999da020;
   }
 `;

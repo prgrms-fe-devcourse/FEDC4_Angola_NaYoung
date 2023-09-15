@@ -32,7 +32,6 @@ const PostViewer = ({
 }: PostViewerProps) => {
   const { a, b, title } = splitPostBySeparator(postTitle);
   const auth = useRecoilValue(authInfoState);
-  console.log(authorId);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const handleClickVoteButton = (value: string) => {
