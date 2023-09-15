@@ -52,9 +52,12 @@ const ARatio = styled.div<{ ratio: number }>`
   font-size: 1.3rem;
   border-right: 1px solid;
   width: ${(props) => props.ratio}%;
-  ${(props) =>
-    props.ratio > 50
-      ? `
+  ${(props) => {
+    if (props.ratio == 0) {
+      return `display: none`;
+    } else {
+      return props.ratio >= 50
+        ? `
       background-image: linear-gradient(
         45deg,
         #ffa8b8 25%,
@@ -65,7 +68,9 @@ const ARatio = styled.div<{ ratio: number }>`
       background-size: 50px 50px;
       background-repeat: repeat;
     `
-      : `background-color: #80808050`}
+        : `background-color: #80808050`;
+    }
+  }}
 `;
 
 const BRatio = styled.div<{ ratio: number }>`
@@ -75,9 +80,12 @@ const BRatio = styled.div<{ ratio: number }>`
   text-align: end;
   border-left: 1px solid;
   width: ${(props) => props.ratio}%;
-  ${(props) =>
-    props.ratio > 50
-      ? `
+  ${(props) => {
+    if (props.ratio == 0) {
+      return `display: none`;
+    } else {
+      return props.ratio >= 50
+        ? `
       background-image: linear-gradient(
         45deg,
         #ffa8b8 25%,
@@ -88,5 +96,7 @@ const BRatio = styled.div<{ ratio: number }>`
       background-size: 50px 50px;
       background-repeat: repeat;
     `
-      : `background-color: #80808050`}
+        : `background-color: #80808050`;
+    }
+  }}
 `;
