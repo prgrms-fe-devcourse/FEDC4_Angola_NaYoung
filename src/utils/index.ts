@@ -8,3 +8,4 @@ export {
   splitCommentBySeparator,
   splitPostBySeparator,
 } from '@utils/parseDataBySeparator';
+export { getRandomTwoColor } from '@utils/getRandomTwoColor';
