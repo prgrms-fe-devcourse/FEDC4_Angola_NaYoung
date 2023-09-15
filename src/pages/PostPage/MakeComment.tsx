@@ -58,7 +58,7 @@ const MakeCommentContainer = styled.div`
   flex-direction: row;
   padding: 1rem;
   border: 1px solid black;
-  z-index: 100;
+  z-index: 10;
   gap: 1rem;
 `;
 

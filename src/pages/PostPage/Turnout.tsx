@@ -10,7 +10,7 @@ const Turnout = ({ comments }: TurnoutProps) => {
   const [ratios, setRatio] = useState([0, 0]);
 
   useEffect(() => {
-    comments && setRatio(voteRatio(comments));
+    comments && comments.length > 0 && setRatio(voteRatio(comments));
   }, [comments]);
 
   return (

@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
-import { joinDataBySeparator } from '@utils';
+import { joinDataBySeparator, splitCommentBySeparator } from '@utils';
 import { useRecoilValue } from 'recoil';
+import Modal from '@components/Modal';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
-import { useFetchCreateComment } from '@apis/comment';
-import { useFetchDeleteComment } from '@apis/comment';
+import { useFetchCreateComment, useFetchDeleteComment } from '@apis/comment';
 import { useFetchPost } from '@apis/post';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
@@ -39,14 +39,17 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   }, [voted]);
 
   useEffect(() => {
-    postData &&
-      postData.comments.forEach((eachComment) => {
-        if (eachComment.author._id === userId) {
-          setVotedValue(eachComment.comment[0]);
-          setSubmitValue(eachComment.comment[0]);
-          return;
-        }
-      });
+    if (postData) {
+      const userComment = postData?.comments.find(
+        (comment) => comment.author._id === userId,
+      );
+      if (!userComment) {
+        return;
+      }
+      const userVote = splitCommentBySeparator(userComment.comment).vote;
+      setVotedValue(userVote);
+      setSubmitValue(userVote);
+    }
   }, [postData?.comments, userId, postData]);
 
   useEffect(() => {
@@ -73,10 +76,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
-    if (isDeleteCommentError) {
-      alert('댓글 삭제를 실패하였습니다.');
-      return;
-    }
     searchParams.delete('voted');
     setSearchParams(searchParams);
     setSubmitValue('');
@@ -116,11 +115,18 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
               handleSubmitComment={handleSubmitComment}
             />
           )}
-          {postData && (
+          {postData && !isDeleteCommentError && (
             <CommentList
               comments={postData.comments}
               deleteComment={deleteComment}
             />
+          )}
+          {isDeleteCommentError && (
+            <Modal onClose={() => window.location.reload()}>
+              <CommentDeletionFailModal>
+                댓글 삭제에 실패했습니다. ㅋ
+              </CommentDeletionFailModal>
+            </Modal>
           )}
         </CommentsContainer>
       )}
@@ -147,4 +153,14 @@ const CommentsContainer = styled.div`
   border: 2px solid black;
   border-radius: 45px;
   overflow: hidden;
+`;
+
+const CommentDeletionFailModal = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 1rem;
 `;
