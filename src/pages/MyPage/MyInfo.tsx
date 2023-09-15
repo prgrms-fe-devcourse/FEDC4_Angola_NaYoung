@@ -1,8 +1,13 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Spinner from '@components/Spinner';
 import { useFetchLogOut } from '@apis/auth';
-import { useFetchUpdateFullName, useFetchUpdatePassword } from '@apis/profile';
+import {
+  useFetchUpdateFullName,
+  useFetchUpdatePassword,
+  useFetchUpdateProfileImage,
+} from '@apis/profile';
 import { checkFullNamePattern, checkPassWordPattern } from './utils';
 
 // TODO: return에서 isUpdateFullNameError 발생 시, 모달 보여주고 함수 실행시키고, 이전 값
@@ -24,18 +29,30 @@ const MyInfo = ({
   following,
 }: MyInfoProps) => {
   const navigate = useNavigate();
+  // FullName 변경
   const { updateFullNameMutate } = useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
   const [isEditingFullName, setIsEditingFullName] = useState(false);
+  // PassWord 변경
   const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
   const [newPassWord, setNewPassWord] = useState(updatePasswordData.password);
   const [confirmNewPassWord, setConfirmNewPassWord] = useState('');
   const [isEditingPassWord, setIsEditingPassWord] = useState(false);
+  // ProfileImage 변경
+  const [profileImageUrl, setProfileImageUrl] = useState(image);
+  const {
+    updateProfileImageMutate,
+    updateProfileImageData,
+    isUpdateProfileImageSuccess,
+    isUpdateProfileImageLoading,
+  } = useFetchUpdateProfileImage();
+  // 로그아웃
   const { logOutMutate } = useFetchLogOut();
-
+  // FullName 변경 로직
   useEffect(() => {
     setNewFullName(name);
-  }, [name]);
+    setProfileImageUrl(image);
+  }, [name, image]);
 
   const handleClickChangeFullName = () => {
     if (isEditingFullName) {
@@ -52,14 +69,19 @@ const MyInfo = ({
   const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFullName(e.target.value);
   };
+  // PassWord 변경 로직
+  const resetPassWordFields = () => {
+    setNewPassWord('');
+    setConfirmNewPassWord('');
+  };
 
   const handleClickChangePassWord = () => {
     if (isEditingPassWord && newPassWord) {
       if (checkPassWordPattern({ newPassWord, confirmNewPassWord })) {
         updatePasswordMutate({ password: newPassWord });
+        resetPassWordFields();
       } else {
-        setNewPassWord('');
-        setConfirmNewPassWord('');
+        resetPassWordFields();
         return;
       }
     }
@@ -76,6 +98,32 @@ const MyInfo = ({
     setConfirmNewPassWord(e.target.value);
   };
 
+  // ProfileImage 변경 로직
+  const handleChangeProfileImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const imageFile = e.target.files?.[0];
+    if (imageFile) {
+      // 이미지 파일 url 생성
+      const imageUrl = URL.createObjectURL(imageFile);
+      setProfileImageUrl(imageUrl);
+      updateProfileImageMutate({ image: imageFile, isCover: false });
+    }
+  };
+
+  useEffect(() => {
+    if (isUpdateProfileImageSuccess && updateProfileImageData.image) {
+      setProfileImageUrl(updateProfileImageData.image); // 이미지 URL 업데이트
+    }
+  }, [updateProfileImageData, isUpdateProfileImageSuccess]);
+
+  useEffect(() => {
+    return () => {
+      if (profileImageUrl) {
+        URL.revokeObjectURL(profileImageUrl);
+      }
+    };
+  }, [profileImageUrl]);
+
+  // 로그아웃 로직
   const handleClickLogOutButton = () => {
     logOutMutate();
     navigate('/');
@@ -83,7 +131,35 @@ const MyInfo = ({
 
   return (
     <MyInfoContainer>
-      <Profile>프로필 {image}</Profile>
+      <div>
+        {isUpdateProfileImageLoading && <Spinner />}
+        {profileImageUrl && (
+          <img
+            src={
+              profileImageUrl
+                ? profileImageUrl
+                : 'https://cdn.icon-icons.com/icons2/2645/PNG/512/person_circle_icon_159926.png'
+            }
+            alt="프로필 이미지"
+            style={{
+              objectFit: 'cover',
+              width: '70px',
+              height: '70px',
+              borderRadius: '50%',
+            }}
+          />
+        )}
+        <FileUploadButton htmlFor="profile">
+          <div>프로필 업로드</div>
+        </FileUploadButton>
+        <ProfileInput
+          type="file"
+          id="profile"
+          accept="image/*"
+          onChange={handleChangeProfileImage}
+          disabled={isUpdateProfileImageLoading}
+        />
+      </div>
       <NamesAndLikes>
         {isEditingFullName ? (
           <Input
@@ -154,7 +230,24 @@ const MyInfoContainer = styled.div`
   gap: 30px;
 `;
 
-const Profile = styled.div`
+const FileUploadButton = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(77, 77, 77);
+  width: 120px;
+  height: 35px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+const ProfileInput = styled.input`
+  display: none;
+`;
+
+/*const Profile = styled.div`
   border: 1px solid black;
   width: 50px;
   height: 50px;
@@ -164,7 +257,7 @@ const Profile = styled.div`
   align-items: center;
   font-size: 12px;
   cursor: pointer;
-`;
+`;*/
 
 const NamesAndLikes = styled.div`
   display: flex;
