@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useFetchCreateComment } from '@apis/comment';
@@ -17,7 +17,8 @@ const MakeComment = ({
 }: MakeCommentProps) => {
   const [comment, setComment] = useState<string>('');
   const [searchParams, setSearchParams] = useSearchParams();
-  const { createCommentMutate, isCreateCommentError } = useFetchCreateComment();
+  const { createCommentMutate, isCreateCommentError, isCreateCommentSuccess } =
+    useFetchCreateComment();
   const handleChangeComment = (e: ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
@@ -34,11 +35,18 @@ const MakeComment = ({
       alert('댓글 작성에 실패했습니다.');
       return;
     }
-    if (!searchParams.get('voted')) {
-      searchParams.set('voted', 'true');
-      setSearchParams(searchParams);
-    }
+
+    // window.location.reload();
   };
+
+  useEffect(() => {
+    if (isCreateCommentSuccess) {
+      if (!searchParams.get('voted') && votedValue) {
+        searchParams.set('voted', votedValue);
+        setSearchParams(searchParams);
+      }
+    }
+  }, [isCreateCommentSuccess]);
   return (
     <>
       <MakeCommentContainer>

@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
 import Spinner from '@components/Spinner/index';
@@ -27,13 +27,19 @@ const CommentList = ({ comments }: CommentListProps) => {
     }
   };
 
+  const [commentsData, setCommentsData] = useState(comments);
+
+  useEffect(() => {
+    setCommentsData(comments);
+  }, [comments]);
+
   return (
     <>
       {isDeleteCommentLoading ? (
         <Spinner />
       ) : (
         <>
-          {comments.map((commentItem) => {
+          {commentsData.map((commentItem) => {
             const fullName = commentItem.author.fullName;
             const commentId = commentItem._id;
             const { vote, comment } = splitCommentBySeparator(

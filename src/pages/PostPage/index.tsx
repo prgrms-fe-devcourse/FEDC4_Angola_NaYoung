@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
@@ -8,26 +9,42 @@ import CommentList from './CommentList';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
 
-const PostPage = () => {
+interface PostPageProps {
+  postId?: string;
+  show?: 'true';
+  voted?: string;
+}
+
+const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const auth = useRecoilValue(authInfoState);
   const userId = auth?.userId;
   const [votedValue, setVotedValue] = useState<string>('');
-  const [isVoted, setIsVoted] = useState<boolean>(false);
-  const [, postId, isCommentsShow] =
-    document.location.href.split(/\/post\/:|\?/);
+  const [submitValue, setSubmitValue] = useState<string | undefined>(voted); // a, b, undefined
   const { postData } = useFetchPost(postId);
-  const comments = postData?.comments;
+  const [searchParams, setSearchParams] = useSearchParams();
+  // const comments = postData?.comments;
 
   useEffect(() => {
-    comments &&
-      comments.forEach((eachComment) => {
+    setSubmitValue(voted);
+  }, [voted]);
+
+  useEffect(() => {
+    postData &&
+      postData.comments.forEach((eachComment) => {
         if (eachComment.author._id === userId) {
-          setIsVoted(true);
+          setVotedValue(eachComment.comment[0]);
+          setSubmitValue(eachComment.comment[0]);
+          console.log(votedValue);
+          if (!searchParams.get('voted') && submitValue) {
+            searchParams.set('voted', submitValue);
+            setSearchParams(searchParams);
+          }
           return;
         }
       });
-  }, [comments, userId]);
+  }, [postData?.comments, userId]);
 
+  console.log(votedValue);
   const handleClickItem = (value: string) => {
     votedValue === value ? setVotedValue('') : setVotedValue(value);
   };
@@ -48,10 +65,10 @@ const PostPage = () => {
             onVote={(value: string) => handleClickItem(value)}
           />
         )}
-        {isCommentsShow && (
+        {show && (
           <CommentsContainer>
-            {isVoted ? (
-              <Turnout comments={comments} />
+            {submitValue ? (
+              <Turnout comments={postData?.comments} />
             ) : (
               <MakeComment
                 votedValue={votedValue}
@@ -59,7 +76,7 @@ const PostPage = () => {
                 postId={postId}
               />
             )}
-            {comments && <CommentList comments={comments} />}
+            {postData && <CommentList comments={postData.comments} />}
           </CommentsContainer>
         )}
       </ReadMorePageContainer>
