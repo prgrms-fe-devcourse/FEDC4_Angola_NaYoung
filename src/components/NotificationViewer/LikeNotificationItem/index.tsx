@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Notification } from '@type';
@@ -11,7 +12,19 @@ const LikeNotificationItem = ({
 }) => {
   const navigate = useNavigate();
   // 알림 객체의 postId 값인 notification.post를 가지고 포스트 정보 조회 API 호출
-  const { postData } = useFetchPost(notification.post!); // 유틸 함수에서 검사해서 왔으니 null이 아닐 것
+
+  const { postData, postRefetch, isPostSuccess } = useFetchPost(
+    notification.post!,
+  );
+
+  // TODO: 서버 데이터를 바로 못 받아오는 에러 발생 => refetch 써주니까 어느정도 해결은 됨
+  // => 근데 처음 홈화면에서는 여전히 에러고, 특정 포스트 상세보기 들어간다음부터는 알림을 제대로 받아옴
+  // => 특정 포스트 상세보기에서도 이 API를 한번 호출해서 그런 것 같음,,?
+  console.log('리페치');
+
+  useEffect(() => {
+    postRefetch();
+  }, [isPostSuccess, postRefetch]);
 
   // 응답으로 받은 postData의 title 중, 특수문자 빼고 실제 포스트제목만 return
   const { title: postTitle } = splitPostBySeparator(postData.title);
