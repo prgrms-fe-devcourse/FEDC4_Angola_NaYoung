@@ -142,7 +142,12 @@ const MyInfo = ({
                 : 'https://cdn.icon-icons.com/icons2/2645/PNG/512/person_circle_icon_159926.png'
             }
             alt="프로필 이미지"
-            style={{ width: '70px', height: '70px', borderRadius: '50%' }}
+            style={{
+              objectFit: 'cover',
+              width: '70px',
+              height: '70px',
+              borderRadius: '50%',
+            }}
           />
         )}
         <FileUploadButton htmlFor="profile">
