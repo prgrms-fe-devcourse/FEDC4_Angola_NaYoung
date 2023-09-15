@@ -21,7 +21,6 @@ const Modal = ({ onClose: handleClose, children }: ModalProps) => {
   });
 
   const handleClickModalContainer = (e: React.MouseEvent) => {
-    console.log('click');
     if (e.target !== modalRef.current) {
       handleClose();
     }

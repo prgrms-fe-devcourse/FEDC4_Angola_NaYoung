@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useFetchLike, useFetchUnLike } from '@apis/like';
 
+
 interface ButtonGroupProps {
   numberOfLikes: number;
   numberOfComments: number;
@@ -20,6 +21,9 @@ const ButtonGroup = ({
   const [userLikeId, setUserLikeId] = useState(likeId);
   const [likes, setLikes] = useState(numberOfLikes);
   const [isLiked, setIsLiked] = useState(likeId !== undefined);
+  
+  const { likeMutate, likeData } = useFetchLike();
+  const { unLikeMutate } = useFetchUnLike();
 
   useEffect(() => {
     setLikes(numberOfLikes);
@@ -27,8 +31,6 @@ const ButtonGroup = ({
     setIsLiked(likeId !== undefined);
   }, [numberOfLikes, likeId]);
 
-  const { likeMutate, likeData } = useFetchLike();
-  const { unLikeMutate } = useFetchUnLike();
 
   const handleLike = () => {
     if (userLikeId) {
