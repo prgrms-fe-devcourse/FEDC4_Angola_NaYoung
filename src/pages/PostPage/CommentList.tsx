@@ -1,43 +1,32 @@
 import { MouseEvent, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
-import Spinner from '@components/Spinner/index';
-import { useFetchDeleteComment } from '@apis/comment';
 import { splitCommentBySeparator } from '@utils/parseDataBySeparator';
 
 interface CommentListProps {
   comments: Comment[];
+  deleteComment: (id: string) => void;
 }
 
-const CommentList = ({ comments }: CommentListProps) => {
-  const { deleteCommentMutate, isDeleteCommentError, isDeleteCommentLoading } =
-    useFetchDeleteComment();
-
+const CommentList = ({ comments, deleteComment }: CommentListProps) => {
   const handleClickCancelComment = (e: MouseEvent) => {
     const commentId = e.currentTarget.classList[0];
 
     if (!confirm('정말로 댓글을 삭제하시겠습니까?')) {
       return;
     }
-
-    deleteCommentMutate({ id: commentId });
-    if (isDeleteCommentError) {
-      alert('댓글 삭제를 실패하였습니다.');
-      return;
-    }
+    deleteComment(commentId);
   };
 
   const [commentsData, setCommentsData] = useState(comments);
 
   useEffect(() => {
     setCommentsData(comments);
-  }, [comments]);
+  }, [comments.length, comments]);
 
   return (
     <>
-      {isDeleteCommentLoading ? (
-        <Spinner />
-      ) : (
+      {
         <>
           {commentsData.map((commentItem) => {
             const fullName = commentItem.author.fullName;
@@ -63,7 +52,7 @@ const CommentList = ({ comments }: CommentListProps) => {
             );
           })}
         </>
-      )}
+      }
     </>
   );
 };
