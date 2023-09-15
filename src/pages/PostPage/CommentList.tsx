@@ -26,35 +26,27 @@ const CommentList = ({ comments, deleteComment }: CommentListProps) => {
 
   return (
     <>
-      {
-        <>
-          {commentsData.map((commentItem) => {
-            const fullName = commentItem.author.fullName;
-            const commentId = commentItem._id;
-            const { vote, comment } = splitCommentBySeparator(
-              commentItem.comment,
-            );
-            return (
-              <CommentWrapper key={commentId}>
-                <MakerName>유저 닉네임: {fullName}</MakerName>
-                <CommentSubWrapper>
-                  <VotedItem>{vote.toUpperCase()}</VotedItem>
-                  <CommentStyled>
-                    {comment
-                      ? comment
-                      : `${vote.toUpperCase()}를 선택하였습니다.`}
-                  </CommentStyled>
-                  <Cancel
-                    className={commentId}
-                    onClick={handleClickCancelComment}>
-                    X
-                  </Cancel>
-                </CommentSubWrapper>
-              </CommentWrapper>
-            );
-          })}
-        </>
-      }
+      {commentsData.map((commentItem) => {
+        const fullName = commentItem.author.fullName;
+        const commentId = commentItem._id;
+        const { vote, comment } = splitCommentBySeparator(commentItem.comment);
+        return (
+          <CommentWrapper key={commentId}>
+            <MakerName>유저 닉네임: {fullName}</MakerName>
+            <CommentSubWrapper>
+              <VotedItem>{vote.toUpperCase()}</VotedItem>
+              <CommentStyled>
+                {comment ? comment : `${vote.toUpperCase()}를 선택하였습니다.`}
+              </CommentStyled>
+              <Cancel
+                className={commentId}
+                onClick={handleClickCancelComment}>
+                X
+              </Cancel>
+            </CommentSubWrapper>
+          </CommentWrapper>
+        );
+      })}
     </>
   );
 };
