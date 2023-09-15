@@ -25,9 +25,6 @@ const PostList = ({ keyword, sort }: PostListProps) => {
     searchPostsDataRefetch();
   }, [keyword, searchPostsDataRefetch]);
 
-  // useEffect(() => {
-  //   allPostsRefetch();
-  // }, [sort, allPostsRefetch]);
   return (
     <>
       <ul>
