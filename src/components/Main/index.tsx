@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { redirects, routes } from '@routes';
+import ReadMorePage from '@pages/ReadMorePage';
 import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
 
@@ -29,6 +30,7 @@ const Main = () => {
             : undefined
         }
       />
+
       <PageContainer>
         <Routes>
           {routes.map(({ path, name, component }) => (
@@ -72,7 +74,7 @@ const MainContainer = styled.div`
 
 const PageContainer = styled.div`
   box-sizing: border-box;
-  display: flex; 
+  display: flex;
   align-self: stretch;
   justify-content: center;
   padding: 50px 50px 0px 50px;
