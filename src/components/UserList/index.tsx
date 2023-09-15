@@ -35,7 +35,7 @@ const UserList = ({ keyword, sort }: UserListProps) => {
             id={user._id}
             image={user.image}
             name={user.fullName}
-            likes={user.likes.length}
+            level={calculateLevel(user)}
             followers={user.followers.length}
             userEmoji={getUserLevelInfo(calculateLevel(user)).userEmoji}
             userColor={getUserLevelInfo(calculateLevel(user)).userColor}
