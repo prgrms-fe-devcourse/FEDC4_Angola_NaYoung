@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
+import LinkButton from '@components/LinkButton';
 import Modal from '@components/Modal';
-import LinkButton from '@components/NavBar/LinkButton';
 
 interface NonAuthModal {
   onClose: () => void;
