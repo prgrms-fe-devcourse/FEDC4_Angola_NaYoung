@@ -24,5 +24,3 @@ export const getUserLevelInfo = (level: number) => {
     userEmoji: LEVEL_INFO[level].emoji,
   };
 };
-
-export default getUserLevelInfo;
