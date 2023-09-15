@@ -51,6 +51,9 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   useEffect(() => {
     if (submitValue && show) {
+      console.log('?');
+      console.log(submitValue);
+      console.log(voted);
       searchParams.set('voted', submitValue);
       setSearchParams(searchParams);
     }
@@ -104,7 +107,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
         )}
         {show && (
           <CommentsContainer>
-            {submitValue ? (
+            {submitValue && postData?.comments ? (
               isCreateCommentLoading ? (
                 <Spinner />
               ) : (
