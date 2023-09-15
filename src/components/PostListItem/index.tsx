@@ -7,8 +7,8 @@ interface PostListItemProps {
   id: string;
   image?: string;
   title: string;
-  likes: number;
-  comments: number;
+  likes?: number;
+  comments?: number;
 }
 
 const PostListItem = ({
