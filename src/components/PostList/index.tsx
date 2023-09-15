@@ -29,6 +29,8 @@ const PostList = ({ keyword, sort }: PostListProps) => {
           id={post._id}
           image={post.author.image}
           title={post.title}
+          likes={post.likes.length}
+          comments={post.comments.length}
         />
       ))}
     </ul>

@@ -48,13 +48,13 @@ export const PostPage = ({ postId = '', show }: PostPageProps) => {
           <h1>댓글창</h1>
           <SelectContainer>
             <SelectBox
-              onClick={() => setVotedValue('a')}
-              className={votedValue === 'a' ? 'active' : ''}>
+              onClick={() => setVotedValue('A')}
+              className={votedValue === 'A' ? 'active' : ''}>
               button A
             </SelectBox>
             <SelectBox
-              onClick={() => setVotedValue('b')}
-              className={votedValue === 'b' ? 'active' : ''}>
+              onClick={() => setVotedValue('B')}
+              className={votedValue === 'B' ? 'active' : ''}>
               button B
             </SelectBox>
           </SelectContainer>

@@ -1,4 +1,4 @@
-import LinkButton from '@components/NavBar/LinkButton';
+import LinkButton from '@components/LinkButton';
 
 const NonAuthMenuBar = () => {
   return (

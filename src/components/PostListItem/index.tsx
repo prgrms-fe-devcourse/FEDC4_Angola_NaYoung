@@ -1,14 +1,24 @@
 import styled from '@emotion/styled';
-import LinkButton from '@components/NavBar/LinkButton';
-import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
+import { MORE_LINK_BUTTON_STYLES } from '@styles';
+import LinkButton from '@components/LinkButton';
+import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 
 interface PostListItemProps {
   id: string;
   image?: string;
   title: string;
+  likes: number;
+  comments: number;
 }
 
-const PostListItem = ({ id, image, title }: PostListItemProps) => {
+const PostListItem = ({
+  id,
+  image,
+  title,
+  likes,
+  comments,
+}: PostListItemProps) => {
+  const { title: postTitle } = splitPostBySeparator(title);
   return (
     <ListItemContainer>
       <img
@@ -20,7 +30,11 @@ const PostListItem = ({ id, image, title }: PostListItemProps) => {
         alt="프로필"
         style={{ width: '70px', height: '70px', borderRadius: '50%' }}
       />
-      <Title>{title}</Title>
+      <Title>{postTitle}</Title>
+      <Info>
+        <div>♥️{likes}</div>
+        <div>💬{comments}</div>
+      </Info>
       <More>
         <LinkButton
           to={`/post/${id}`}
@@ -59,4 +73,13 @@ const More = styled.div`
   align-items: center;
   width: 60px;
   cursor: pointer;
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
 `;

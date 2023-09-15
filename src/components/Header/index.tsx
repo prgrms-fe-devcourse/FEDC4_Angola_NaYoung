@@ -43,7 +43,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
 
   return (
     <Container>
-      {sortProps ? (
+      {sortProps && (
         <SortSelect
           id="orderSelect"
           name="order"
@@ -63,8 +63,6 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             </>
           )}
         </SortSelect>
-      ) : (
-        <div />
       )}
 
       <Title>
@@ -72,7 +70,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
         {title}
       </Title>
 
-      {keyword ? (
+      {keyword && (
         <TabBar>
           <TabBarList
             className={target === 'user' ? 'bold' : ''}
@@ -85,8 +83,6 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             포스트
           </TabBarList>
         </TabBar>
-      ) : (
-        <div />
       )}
     </Container>
   );
@@ -95,23 +91,39 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
 export default Header;
 
 const Container = styled.div`
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  position: relative;
+  height: 84px;
+  padding: 0px 60px;
+  justify-content: center;
   align-items: center;
-  width: 80%;
-  border: 1px solid black;
-  border-radius: 20px 20px 0 0;
-  padding: 0 10px;
-  height: 50px;
+  align-self: stretch;
+
+  border-radius: 55px 55px 0px 0px;
+  border-bottom: 4px solid var(--text, #404040);
+  background: var(--dark, #9a9a9a);
 `;
+
 const SortSelect = styled.select`
+  position: absolute;
+  left: 40px;
+  width: 100px;
   border-radius: 20px;
   cursor: pointer;
   padding: 5px 10px;
   outline: none;
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  color: var(--white, #fff);
+  justify-self: center;
+  font-family: Noto Sans KR;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; 
+`;
 
 const Keyword = styled.span`
   font-weight: 600;
@@ -119,6 +131,8 @@ const Keyword = styled.span`
 
 const TabBar = styled.ul`
   display: flex;
+  position: absolute;
+  right: 40px;
   list-style: none;
 `;
 
