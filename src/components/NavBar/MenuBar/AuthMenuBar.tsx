@@ -1,14 +1,23 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import LinkButton from '@components/LinkButton';
+import NotificationViewer from '@components/NotificationViewer';
 
 const AuthMenuBar = () => {
-  // TODO: const [isNotificationViewerShow, set ~ ] = useState(false); 처음에는 안보여줘야 하므로 false
-  //  isNotificationViewerShow && <NotificationViewer>
+  const [isNotificationViewerShow, setIsNotificationViewerShow] =
+    useState(false);
+    
   return (
     <>
       <StyledLinkButton to="/create-post">포스트 작성</StyledLinkButton>
       <StyledLinkButton to="/mypage">마이페이지</StyledLinkButton>
-      <StyledNotificaionButton>알림 목록</StyledNotificaionButton>
+      <StyledNotificaionButton
+        onClick={() => {
+          setIsNotificationViewerShow((prev) => !prev);
+        }}>
+        알림 목록
+      </StyledNotificaionButton>
+      {isNotificationViewerShow && <NotificationViewer/>}
     </>
   );
 };

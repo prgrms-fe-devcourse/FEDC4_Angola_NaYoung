@@ -6,7 +6,7 @@ import { AuthMenuBar, CommonMenuBar, NonAuthMenuBar } from './MenuBar';
 const NavBar = () => {
   const auth = useRecoilValue(authInfoState);
   return (
-    <NavBarContainer>  
+    <NavBarContainer>
       <MenuBarContainer>
         <CommonMenuBar />
       </MenuBarContainer>
@@ -29,6 +29,7 @@ const NavBarContainer = styled.div`
 `;
 
 const MenuBarContainer = styled.div`
+  position: relative; // NotificationViewer를 absolute로 보여주기 위해 
   display: flex;
   justify-content: center;
   align-items: center;

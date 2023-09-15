@@ -5,10 +5,9 @@ import { useFetchPost } from '@apis/post';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 
 const LikeNotificationItem = ({
-  notification, onCloseNotificationViewer
+  notification,
 }: {
   notification: Notification;
-  onCloseNotificationViewer: () => 
 }) => {
   const navigate = useNavigate();
   // 알림 객체의 postId 값인 notification.post를 가지고 포스트 정보 조회 API 호출
@@ -21,7 +20,7 @@ const LikeNotificationItem = ({
   // 1. 포스트 페이지로 이동
   // 2. 이 Viewer닫기 => 페이지 이동해도 NavBar 컴포넌트는 계속 살아있으므로 onClose따로 받아서 처리해줘야 함
   const handleClickMoveToPostPage = () => {
-    navigate(`/post/${notification.post}`); 
+    navigate(`/post/${notification.post}`);
   };
 
   // TODO: 추가구현
