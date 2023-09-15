@@ -170,20 +170,19 @@ const MyInfo = ({
         ) : (
           <Container>
             <Name>유저 이름</Name>
-            <MyName color={myColor}>
-              {myEmoji} {newFullName}
-            </MyName>
+            <MyName color={myColor}>{newFullName}</MyName>
           </Container>
         )}
-        <Container>
-          <Level color={myColor}>Level {myLevel}</Level>
-          {myEmoji}
-        </Container>
         <Button onClick={handleClickChangeFullName}>
           {isEditingFullName ? '제출 하기' : '편집 하기'}
         </Button>
         <Container>
-          <Likes>👍 받은 좋아요 </Likes> <MyInfoText>{likes}</MyInfoText>
+          <Level color={myColor}>
+            {myEmoji}Level {myLevel}
+          </Level>
+        </Container>
+        <Container>
+          <Likes>👍 받은 좋아요 {likes} </Likes>
         </Container>
       </NamesLevelLikes>
       <FollowerAndFollowing>

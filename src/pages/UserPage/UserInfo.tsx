@@ -10,6 +10,7 @@ interface UserInfoProps {
   followers: number;
   following: number;
   followerId?: string;
+  userLevel: number;
   userColor: string;
   userEmoji: string;
 }
@@ -22,6 +23,7 @@ const UserInfo = ({
   followers,
   following,
   followerId,
+  userLevel,
   userColor,
   userEmoji,
 }: UserInfoProps) => {
@@ -57,8 +59,7 @@ const UserInfo = ({
   }, [followData.followId, isFollowed]);
 
   return (
-    <Container>
-      <Profile>프로필</Profile>
+    <UserInfoContainer>
       <img
         src={
           image
@@ -66,15 +67,23 @@ const UserInfo = ({
             : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
         }
         alt="프로필"
-        style={{ width: '100px', height: '100px' }}
+        style={{
+          objectFit: 'cover',
+          width: '70px',
+          height: '70px',
+          borderRadius: '50%',
+        }}
       />
       <NameAndLikes>
-        <NameContainer>
+        <Container>
           <NameLabel>유저 이름</NameLabel>
-          <Name color={userColor}>
-            {userEmoji} {name}
-          </Name>
-        </NameContainer>
+          <Name color={userColor}>{name}</Name>
+        </Container>
+        <Container>
+          <Level color={userColor}>
+            {userEmoji} Level {userLevel}
+          </Level>
+        </Container>
         <Likes>👍 누른 좋아요 {likes}</Likes>
       </NameAndLikes>
       <FollowerAndFollowing>
@@ -84,30 +93,18 @@ const UserInfo = ({
       <Button onClick={handleClickFollowButton}>
         {isFollowed ? '언팔로우' : '팔로우'}
       </Button>
-    </Container>
+    </UserInfoContainer>
   );
 };
 
 export default UserInfo;
 
-const Container = styled.div`
+const UserInfoContainer = styled.div`
   display: flex;
   width: 80%;
   border: 1px solid black;
   align-items: center;
   padding: 30px 10px;
-`;
-
-const Profile = styled.div`
-  border: 1px solid black;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  cursor: pointer;
 `;
 
 const NameAndLikes = styled.div`
@@ -116,7 +113,7 @@ const NameAndLikes = styled.div`
   margin-left: 50px;
 `;
 
-const NameContainer = styled.div`
+const Container = styled.div`
   display: flex;
   font-size: 18px;
   font-weight: 600;
@@ -130,6 +127,13 @@ const NameLabel = styled.div`
 const Name = styled.div`
   margin-bottom: 10px;
   color: ${(props) => props.color};
+`;
+
+const Level = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+  color: ${(props) => props.color};
+  margin-bottom: 10px;
 `;
 
 const Likes = styled.div`
