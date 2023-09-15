@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import UserListItem from '@components/UserListItem';
 import { useFetchSearchUsers } from '@apis/search';
 import { useFetchUsers } from '@apis/user';
+import { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
 import { getSortUserList } from './utils';
 
 interface UserListProps {
@@ -33,6 +34,8 @@ const UserList = ({ keyword, sort }: UserListProps) => {
           name={user.fullName}
           likes={user.likes.length}
           followers={user.followers.length}
+          userEmoji={getUserLevelInfo(calculateLevel(user)).userEmoji}
+          userColor={getUserLevelInfo(calculateLevel(user)).userColor}
         />
       ))}
     </ul>

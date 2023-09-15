@@ -3,13 +3,16 @@ import styled from '@emotion/styled';
 import { useFetchFollow, useFetchUnFollow } from '@apis/follow';
 
 interface UserInfoProps {
-  userId: string; // 해당 유저 아이디
+  userId: string;
   image: string;
   name: string;
   likes: number;
-  followers: number; // 팔로워 수
-  following: number; // 팔로잉 수
-  followerId?: string; // 팔로우 누른사람 Id
+  followers: number;
+  following: number;
+  followerId?: string;
+  userLevel: number;
+  userColor: string;
+  userEmoji: string;
 }
 
 const UserInfo = ({
@@ -20,6 +23,9 @@ const UserInfo = ({
   followers,
   following,
   followerId,
+  userLevel,
+  userColor,
+  userEmoji,
 }: UserInfoProps) => {
   const { followMutate, followData } = useFetchFollow();
   const { unFollowMutate } = useFetchUnFollow();
@@ -46,17 +52,38 @@ const UserInfo = ({
 
   useEffect(() => {
     if (isFollowed) {
-      followData.followId && setUserFollowerId(followData.followId); // userLikeId 갱신
+      followData.followId && setUserFollowerId(followData.followId);
     } else {
       setUserFollowerId(undefined);
     }
   }, [followData.followId, isFollowed]);
 
   return (
-    <Container>
-      <Profile>프로필 {image}</Profile>
+    <UserInfoContainer>
+      <img
+        src={
+          image
+            ? image
+            : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
+        }
+        alt="프로필"
+        style={{
+          objectFit: 'cover',
+          width: '70px',
+          height: '70px',
+          borderRadius: '50%',
+        }}
+      />
       <NameAndLikes>
-        <Name>🌱유저 이름 {name}</Name>
+        <Container>
+          <NameLabel>유저 이름</NameLabel>
+          <Name color={userColor}>{name}</Name>
+        </Container>
+        <Container>
+          <Level color={userColor}>
+            {userEmoji} Level {userLevel}
+          </Level>
+        </Container>
         <Likes>👍 누른 좋아요 {likes}</Likes>
       </NameAndLikes>
       <FollowerAndFollowing>
@@ -66,30 +93,18 @@ const UserInfo = ({
       <Button onClick={handleClickFollowButton}>
         {isFollowed ? '언팔로우' : '팔로우'}
       </Button>
-    </Container>
+    </UserInfoContainer>
   );
 };
 
 export default UserInfo;
 
-const Container = styled.div`
+const UserInfoContainer = styled.div`
   display: flex;
   width: 80%;
   border: 1px solid black;
   align-items: center;
   padding: 30px 10px;
-`;
-
-const Profile = styled.div`
-  border: 1px solid black;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  cursor: pointer;
 `;
 
 const NameAndLikes = styled.div`
@@ -98,11 +113,27 @@ const NameAndLikes = styled.div`
   margin-left: 50px;
 `;
 
-const Name = styled.div`
+const Container = styled.div`
+  display: flex;
   font-size: 18px;
   font-weight: 600;
+  gap: 10px;
+`;
+
+const NameLabel = styled.div`
   margin-bottom: 10px;
-  color: yellowgreen;
+`;
+
+const Name = styled.div`
+  margin-bottom: 10px;
+  color: ${(props) => props.color};
+`;
+
+const Level = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+  color: ${(props) => props.color};
+  margin-bottom: 10px;
 `;
 
 const Likes = styled.div`

@@ -5,6 +5,7 @@ import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@atoms/index';
+import { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
 import MyInfo from './MyInfo';
 
 const MyPage = () => {
@@ -28,6 +29,9 @@ const MyPage = () => {
           likes={userData.likes?.length}
           followers={userData.followers?.length}
           following={userData.following?.length}
+          myLevel={calculateLevel(userData)}
+          myColor={getUserLevelInfo(calculateLevel(userData)).userColor}
+          myEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
         />
       )}
       <ul>
