@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import LinkButton from '@components/LinkButton';
 
 const AuthMenuBar = () => {
+  // TODO: const [isNotificationViewerShow, set ~ ] = useState(false); 처음에는 안보여줘야 하므로 false
+  //  isNotificationViewerShow && <NotificationViewer>
   return (
     <>
       <StyledLinkButton to="/create-post">포스트 작성</StyledLinkButton>
