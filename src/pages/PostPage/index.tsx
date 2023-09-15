@@ -4,7 +4,9 @@ import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import PostViewer from '@components/PostViewer';
+import { useFetchCreateComment } from '@apis/comment';
 import { useFetchPost } from '@apis/post';
+import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
@@ -18,36 +20,53 @@ interface PostPageProps {
 const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const auth = useRecoilValue(authInfoState);
   const userId = auth?.userId;
-  const [votedValue, setVotedValue] = useState<string>('');
+
+  const [voteValue, setVoteValue] = useState<string>('');
   const [submitValue, setSubmitValue] = useState<string | undefined>(voted); // a, b, undefined
-  const { postData } = useFetchPost(postId);
+  const { postData, postRefetch } = useFetchPost(postId);
+  const { createCommentMutate, isCreateCommentSuccess } =
+    useFetchCreateComment();
   const [searchParams, setSearchParams] = useSearchParams();
-  // const comments = postData?.comments;
 
   useEffect(() => {
     setSubmitValue(voted);
   }, [voted]);
 
   useEffect(() => {
-    postData &&
-      postData.comments.forEach((eachComment) => {
-        if (eachComment.author._id === userId) {
-          setVotedValue(eachComment.comment[0]);
-          setSubmitValue(eachComment.comment[0]);
-          console.log(votedValue);
-          if (!searchParams.get('voted') && submitValue) {
-            searchParams.set('voted', submitValue);
-            setSearchParams(searchParams);
-          }
-          return;
-        }
-      });
+    const matchedComment = postData?.comments.find(
+      (comment) => comment.author._id === userId,
+    );
+    if (matchedComment) {
+      setVoteValue(matchedComment.comment[0]);
+      setSubmitValue(matchedComment.comment[0]);
+    }
   }, [postData?.comments, userId]);
 
-  console.log(votedValue);
+  useEffect(() => {
+    if (submitValue) {
+      searchParams.set('voted', submitValue);
+      setSearchParams(searchParams);
+    }
+  }, [searchParams, setSearchParams, submitValue]);
+
   const handleClickItem = (value: string) => {
-    votedValue === value ? setVotedValue('') : setVotedValue(value);
+    voteValue === value ? setVoteValue('') : setVoteValue(value);
   };
+
+  const handleSubmitComment = (voteValue: string, comment: string) => {
+    if (voteValue) {
+      createCommentMutate({
+        comment: joinDataBySeparator(voteValue, comment),
+        postId,
+      });
+    }
+    searchParams.set('voted', voteValue);
+    setSearchParams(searchParams);
+  };
+
+  useEffect(() => {
+    postRefetch();
+  }, [isCreateCommentSuccess]);
 
   return (
     <>
@@ -61,7 +80,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
             numberOfComments={postData.comments.length}
             numberOfLikes={postData.likes.length}
             likeId={postData.likes.find((like) => like.user === userId)?._id}
-            voteValue={votedValue}
+            voteValue={voteValue}
             onVote={(value: string) => handleClickItem(value)}
           />
         )}
@@ -71,9 +90,9 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
               <Turnout comments={postData?.comments} />
             ) : (
               <MakeComment
-                votedValue={votedValue}
+                voteValue={voteValue}
                 handleClickItem={handleClickItem}
-                postId={postId}
+                handleSubmitComment={handleSubmitComment}
               />
             )}
             {postData && <CommentList comments={postData.comments} />}

@@ -5,60 +5,38 @@ import { useFetchCreateComment } from '@apis/comment';
 import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 
 interface MakeCommentProps {
-  postId: string;
-  votedValue: string;
+  voteValue: string;
   handleClickItem: (value: string) => void;
+  handleSubmitComment: (voteValue: string, comment: string) => void;
 }
 
 const MakeComment = ({
-  postId,
-  votedValue,
+  voteValue,
   handleClickItem,
+  handleSubmitComment,
 }: MakeCommentProps) => {
   const [comment, setComment] = useState<string>('');
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { createCommentMutate, isCreateCommentError, isCreateCommentSuccess } =
-    useFetchCreateComment();
   const handleChangeComment = (e: ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    votedValue &&
-      createCommentMutate({
-        comment: joinDataBySeparator(votedValue, comment),
-        postId,
-      });
-
-    if (isCreateCommentError) {
-      alert('댓글 작성에 실패했습니다.');
-      return;
-    }
-
-    // window.location.reload();
+    handleSubmitComment(voteValue, comment);
   };
 
-  useEffect(() => {
-    if (isCreateCommentSuccess) {
-      if (!searchParams.get('voted') && votedValue) {
-        searchParams.set('voted', votedValue);
-        setSearchParams(searchParams);
-      }
-    }
-  }, [isCreateCommentSuccess]);
   return (
     <>
       <MakeCommentContainer>
         <ItemButtonsContainer>
           <ItemButtonA
             onClick={() => handleClickItem('a')}
-            votedValue={votedValue}>
+            voteValue={voteValue}>
             A
           </ItemButtonA>
           <ItemButtonB
             onClick={() => handleClickItem('b')}
-            votedValue={votedValue}>
+            voteValue={voteValue}>
             B
           </ItemButtonB>
         </ItemButtonsContainer>
@@ -66,7 +44,7 @@ const MakeComment = ({
           <Comment
             placeholder="의견 입력창"
             onChange={handleChangeComment}></Comment>
-          <SubmitButton disabled={votedValue ? false : true}>
+          <SubmitButton disabled={voteValue ? false : true}>
             <p>submit</p>
             <p>또는</p>
             <p>skip</p>
@@ -98,7 +76,7 @@ const ItemButtonsContainer = styled.div`
   height: 6rem;
 `;
 
-const ItemButtonA = styled.button<{ votedValue: string }>`
+const ItemButtonA = styled.button<{ voteValue: string }>`
   width: 100%;
   height: 100%;
   border: none;
@@ -107,14 +85,14 @@ const ItemButtonA = styled.button<{ votedValue: string }>`
   border-bottom: solid;
   cursor: pointer;
   background-color: ${(props) =>
-    props.votedValue === 'a' ? 'orangered' : 'none'};
+    props.voteValue === 'a' ? 'orangered' : 'none'};
 
   &:hover {
     background-color: #80808030;
   }
 `;
 
-const ItemButtonB = styled.button<{ votedValue: string }>`
+const ItemButtonB = styled.button<{ voteValue: string }>`
   width: 100%;
   height: 100%;
   border: none;
@@ -122,7 +100,7 @@ const ItemButtonB = styled.button<{ votedValue: string }>`
   font-size: 1.5rem;
   cursor: pointer;
   background-color: ${(props) =>
-    props.votedValue === 'b' ? 'orangered' : 'none'};
+    props.voteValue === 'b' ? 'orangered' : 'none'};
 
   &:hover {
     background-color: #80808030;

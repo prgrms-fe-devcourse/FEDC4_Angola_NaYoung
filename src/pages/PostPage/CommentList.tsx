@@ -31,7 +31,7 @@ const CommentList = ({ comments }: CommentListProps) => {
 
   useEffect(() => {
     setCommentsData(comments);
-  }, [comments]);
+  }, [comments.length]);
 
   return (
     <>
