@@ -1,9 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-// import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-
-// import { useFetchCreateComment } from '@apis/comment';
-// import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 
 interface MakeCommentProps {
   votedValue: string;
