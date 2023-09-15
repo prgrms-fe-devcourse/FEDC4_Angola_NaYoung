@@ -18,6 +18,8 @@ interface MyInfoProps {
   likes: number;
   followers: number;
   following: number;
+  myColor: string;
+  myEmoji: string;
 }
 
 const MyInfo = ({
@@ -27,18 +29,17 @@ const MyInfo = ({
   likes,
   followers,
   following,
+  myColor,
+  myEmoji,
 }: MyInfoProps) => {
   const navigate = useNavigate();
-  // FullName 변경
   const { updateFullNameMutate } = useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
   const [isEditingFullName, setIsEditingFullName] = useState(false);
-  // PassWord 변경
   const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
   const [newPassWord, setNewPassWord] = useState(updatePasswordData.password);
   const [confirmNewPassWord, setConfirmNewPassWord] = useState('');
   const [isEditingPassWord, setIsEditingPassWord] = useState(false);
-  // ProfileImage 변경
   const [profileImageUrl, setProfileImageUrl] = useState(image);
   const {
     updateProfileImageMutate,
@@ -46,9 +47,8 @@ const MyInfo = ({
     isUpdateProfileImageSuccess,
     isUpdateProfileImageLoading,
   } = useFetchUpdateProfileImage();
-  // 로그아웃
   const { logOutMutate } = useFetchLogOut();
-  // FullName 변경 로직
+
   useEffect(() => {
     setNewFullName(name);
     setProfileImageUrl(image);
@@ -69,7 +69,7 @@ const MyInfo = ({
   const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFullName(e.target.value);
   };
-  // PassWord 변경 로직
+
   const resetPassWordFields = () => {
     setNewPassWord('');
     setConfirmNewPassWord('');
@@ -98,11 +98,9 @@ const MyInfo = ({
     setConfirmNewPassWord(e.target.value);
   };
 
-  // ProfileImage 변경 로직
   const handleChangeProfileImage = (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files?.[0];
     if (imageFile) {
-      // 이미지 파일 url 생성
       const imageUrl = URL.createObjectURL(imageFile);
       setProfileImageUrl(imageUrl);
       updateProfileImageMutate({ image: imageFile, isCover: false });
@@ -123,7 +121,6 @@ const MyInfo = ({
     };
   }, [profileImageUrl]);
 
-  // 로그아웃 로직
   const handleClickLogOutButton = () => {
     logOutMutate();
     navigate('/');
@@ -170,8 +167,8 @@ const MyInfo = ({
           />
         ) : (
           <Container>
-            <Name>🌱유저 이름 </Name>
-            <MyInfoText>{newFullName}</MyInfoText>
+            <Name>{myEmoji}유저 이름 </Name>
+            <MyName color={myColor}>{newFullName}</MyName>
           </Container>
         )}
         <Button onClick={handleClickChangeFullName}>
@@ -247,18 +244,6 @@ const ProfileInput = styled.input`
   display: none;
 `;
 
-/*const Profile = styled.div`
-  border: 1px solid black;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  cursor: pointer;
-`;*/
-
 const NamesAndLikes = styled.div`
   display: flex;
   flex-direction: column;
@@ -275,7 +260,12 @@ const Container = styled.div`
 const Name = styled.div`
   font-size: 18px;
   font-weight: 600;
-  color: yellowgreen;
+`;
+
+const MyName = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+  color: ${(props) => props.color};
 `;
 
 const MyInfoText = styled.div`

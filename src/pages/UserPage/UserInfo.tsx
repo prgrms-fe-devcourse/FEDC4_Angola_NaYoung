@@ -3,13 +3,15 @@ import styled from '@emotion/styled';
 import { useFetchFollow, useFetchUnFollow } from '@apis/follow';
 
 interface UserInfoProps {
-  userId: string; // 해당 유저 아이디
+  userId: string;
   image: string;
   name: string;
   likes: number;
-  followers: number; // 팔로워 수
-  following: number; // 팔로잉 수
-  followerId?: string; // 팔로우 누른사람 Id
+  followers: number;
+  following: number;
+  followerId?: string;
+  userColor: string;
+  userEmoji: string;
 }
 
 const UserInfo = ({
@@ -20,6 +22,8 @@ const UserInfo = ({
   followers,
   following,
   followerId,
+  userColor,
+  userEmoji,
 }: UserInfoProps) => {
   const { followMutate, followData } = useFetchFollow();
   const { unFollowMutate } = useFetchUnFollow();
@@ -46,7 +50,7 @@ const UserInfo = ({
 
   useEffect(() => {
     if (isFollowed) {
-      followData.followId && setUserFollowerId(followData.followId); // userLikeId 갱신
+      followData.followId && setUserFollowerId(followData.followId);
     } else {
       setUserFollowerId(undefined);
     }
@@ -54,9 +58,23 @@ const UserInfo = ({
 
   return (
     <Container>
-      <Profile>프로필 {image}</Profile>
+      <Profile>프로필</Profile>
+      <img
+        src={
+          image
+            ? image
+            : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
+        }
+        alt="프로필"
+        style={{ width: '100px', height: '100px' }}
+      />
       <NameAndLikes>
-        <Name>🌱유저 이름 {name}</Name>
+        <NameContainer>
+          <NameLabel>유저 이름</NameLabel>
+          <Name color={userColor}>
+            {userEmoji} {name}
+          </Name>
+        </NameContainer>
         <Likes>👍 누른 좋아요 {likes}</Likes>
       </NameAndLikes>
       <FollowerAndFollowing>
@@ -98,11 +116,20 @@ const NameAndLikes = styled.div`
   margin-left: 50px;
 `;
 
-const Name = styled.div`
+const NameContainer = styled.div`
+  display: flex;
   font-size: 18px;
   font-weight: 600;
+  gap: 10px;
+`;
+
+const NameLabel = styled.div`
   margin-bottom: 10px;
-  color: yellowgreen;
+`;
+
+const Name = styled.div`
+  margin-bottom: 10px;
+  color: ${(props) => props.color};
 `;
 
 const Likes = styled.div`
