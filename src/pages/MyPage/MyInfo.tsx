@@ -101,7 +101,6 @@ const MyInfo = ({
   // ProfileImage 변경 로직
   const handleChangeProfileImage = (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files?.[0];
-    console.log(imageFile, image);
     if (imageFile) {
       // 이미지 파일 url 생성
       const imageUrl = URL.createObjectURL(imageFile);
