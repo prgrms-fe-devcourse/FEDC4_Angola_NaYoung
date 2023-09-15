@@ -23,32 +23,31 @@ const MakeComment = ({
   };
 
   return (
-    <>
-      <MakeCommentContainer>
-        <ItemButtonsContainer>
-          <ItemButtonA
-            onClick={() => handleClickItem('a')}
-            votedValue={votedValue}>
-            A
-          </ItemButtonA>
-          <ItemButtonB
-            onClick={() => handleClickItem('b')}
-            votedValue={votedValue}>
-            B
-          </ItemButtonB>
-        </ItemButtonsContainer>
-        <Form onSubmit={handleSubmit}>
-          <Comment
-            placeholder="의견 입력창"
-            onChange={handleChangeComment}></Comment>
-          <SubmitButton disabled={votedValue ? false : true}>
-            <p>submit</p>
-            <p>또는</p>
-            <p>skip</p>
-          </SubmitButton>
-        </Form>
-      </MakeCommentContainer>
-    </>
+    <MakeCommentContainer>
+      <ItemButtonsContainer>
+        <ItemButtonA
+          onClick={() => handleClickItem('a')}
+          votedValue={votedValue}>
+          A
+        </ItemButtonA>
+        <ItemButtonB
+          onClick={() => handleClickItem('b')}
+          votedValue={votedValue}>
+          B
+        </ItemButtonB>
+      </ItemButtonsContainer>
+      <Form onSubmit={handleSubmit}>
+        <Comment
+          placeholder="댓글 입력창"
+          onChange={handleChangeComment}
+        />
+        <SubmitButton disabled={votedValue ? false : true}>
+          <p>submit</p>
+          <p>또는</p>
+          <p>skip</p>
+        </SubmitButton>
+      </Form>
+    </MakeCommentContainer>
   );
 };
 

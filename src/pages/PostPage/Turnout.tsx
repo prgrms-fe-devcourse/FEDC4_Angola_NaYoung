@@ -14,14 +14,12 @@ const Turnout = ({ comments }: TurnoutProps) => {
   }, [comments]);
 
   return (
-    <>
-      <TurnoutContainer>
-        <TurnoutBar>
-          <ARatio ratio={ratios[0]}>A: {ratios[0]}</ARatio>
-          <BRatio ratio={ratios[1]}>B: {ratios[1]}</BRatio>
-        </TurnoutBar>
-      </TurnoutContainer>
-    </>
+    <TurnoutContainer>
+      <TurnoutBar>
+        <ARatio ratio={ratios[0]}>A: {ratios[0]}</ARatio>
+        <BRatio ratio={ratios[1]}>B: {ratios[1]}</BRatio>
+      </TurnoutBar>
+    </TurnoutContainer>
   );
 };
 

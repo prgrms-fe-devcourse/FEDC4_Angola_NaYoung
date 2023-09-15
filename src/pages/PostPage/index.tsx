@@ -87,46 +87,44 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   }, [postRefetch, isCreateCommentSuccess, isDeleteCommentSuccess]);
 
   return (
-    <>
-      <PostPageContainer>
-        {postData && (
-          <PostViewer
-            postId={postId}
-            authorName={postData.author.fullName}
-            authorId={postData.author._id}
-            postTitle={postData.title}
-            numberOfComments={postData.comments.length}
-            numberOfLikes={postData.likes.length}
-            likeId={postData.likes.find((like) => like.user === userId)?._id}
-            voteValue={votedValue}
-            onVote={(value: string) => handleClickItem(value)}
-          />
-        )}
-        {show && (
-          <CommentsContainer>
-            {submitValue && postData?.comments ? (
-              isCreateCommentLoading ? (
-                <Spinner />
-              ) : (
-                <Turnout comments={postData?.comments} />
-              )
+    <PostPageContainer>
+      {postData && (
+        <PostViewer
+          postId={postId}
+          authorName={postData.author.fullName}
+          authorId={postData.author._id}
+          postTitle={postData.title}
+          numberOfComments={postData.comments.length}
+          numberOfLikes={postData.likes.length}
+          likeId={postData.likes.find((like) => like.user === userId)?._id}
+          voteValue={votedValue}
+          onVote={(value: string) => handleClickItem(value)}
+        />
+      )}
+      {show && (
+        <CommentsContainer>
+          {submitValue && postData?.comments ? (
+            isCreateCommentLoading ? (
+              <Spinner />
             ) : (
-              <MakeComment
-                votedValue={votedValue}
-                handleClickItem={handleClickItem}
-                handleSubmitComment={handleSubmitComment}
-              />
-            )}
-            {postData && (
-              <CommentList
-                comments={postData.comments}
-                deleteComment={deleteComment}
-              />
-            )}
-          </CommentsContainer>
-        )}
-      </PostPageContainer>
-    </>
+              <Turnout comments={postData?.comments} />
+            )
+          ) : (
+            <MakeComment
+              votedValue={votedValue}
+              handleClickItem={handleClickItem}
+              handleSubmitComment={handleSubmitComment}
+            />
+          )}
+          {postData && (
+            <CommentList
+              comments={postData.comments}
+              deleteComment={deleteComment}
+            />
+          )}
+        </CommentsContainer>
+      )}
+    </PostPageContainer>
   );
 };
 
