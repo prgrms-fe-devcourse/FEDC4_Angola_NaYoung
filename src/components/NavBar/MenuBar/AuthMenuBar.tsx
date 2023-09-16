@@ -17,7 +17,13 @@ const AuthMenuBar = () => {
         }}>
         알림 목록
       </StyledNotificaionButton>
-      {isNotificationViewerShow && <NotificationViewer />}
+      {isNotificationViewerShow && (
+        <NotificationViewer
+          handleClickCloseViewer={() => {
+            setIsNotificationViewerShow(false);
+          }}
+        />
+      )}
     </>
   );
 };

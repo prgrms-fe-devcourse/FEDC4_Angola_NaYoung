@@ -41,7 +41,13 @@ const decideNotificationType = ({
   }
 };
 
-const NotificationViewer = () => {
+interface NotificationViewePropsType {
+  handleClickCloseViewer: () => void;
+}
+
+const NotificationViewer = ({
+  handleClickCloseViewer,
+}: NotificationViewePropsType) => {
   const {
     getNotificationsData,
     isGetNotificationsLoading,
@@ -54,7 +60,7 @@ const NotificationViewer = () => {
     readNotificationsMutate(undefined, {
       onSuccess: () => {
         getNotificationRefetch();
-        // 이렇게 onSuccess안에서 refetch할 수 있음 ! 
+        // 이렇게 onSuccess안에서 refetch할 수 있음 !
       },
     }); // TODO:MinwooP - 에러 처리
     // TODO:MinwooP - 이후 Notification data 업데이트 안된 상태면 refetch 혹은 invalidQueries 써서 다시 불러오기
@@ -70,7 +76,9 @@ const NotificationViewer = () => {
         <NotificationList>
           {getNotificationsData!.map((notification) => {
             return (
-              <NotificationListItem key={notification._id}>
+              <NotificationListItem
+                key={notification._id}
+                onClick={handleClickCloseViewer}>
                 {decideNotificationType({ notification })}
               </NotificationListItem>
             );
