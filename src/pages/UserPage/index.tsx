@@ -17,8 +17,7 @@ const UserPage = ({ userId = '' }: { userId?: string }) => {
   if (isUserLoading || isUserPostsLoading) {
     return <Spinner />;
   }
-  //console.log(userData?.notifications.map((v) => v.a));
-  //console.log(userData?.notifications.map((v) => v.author._id));
+
   return (
     <div>
       {userData && (
