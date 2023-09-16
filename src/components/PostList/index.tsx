@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import PostListItem from '@components/PostListItem';
+import Spinner from '@components/Spinner';
 import { useFetchAllPosts } from '@apis/post';
 import { useFetchSearchPosts } from '@apis/search';
 import { getSortPostList } from './utils';
@@ -10,30 +11,34 @@ interface PostListProps {
 }
 
 const PostList = ({ keyword, sort }: PostListProps) => {
-  const { searchPostsData, searchPostsDataRefetch } = useFetchSearchPosts({
-    query: keyword,
-  });
-  const { allPostsData } = useFetchAllPosts();
+  const { allPostsData, isAllPostsLoading } = useFetchAllPosts();
+  const { searchPostsData, isSearchPostsLoading, searchPostsDataRefetch } =
+    useFetchSearchPosts({
+      query: keyword,
+    });
+
   const resultData = keyword
-    ? getSortPostList(searchPostsData, sort, keyword)
-    : getSortPostList(allPostsData, sort, keyword);
+    ? getSortPostList(searchPostsData, sort)
+    : getSortPostList(allPostsData, sort);
 
   useEffect(() => {
     searchPostsDataRefetch();
   }, [keyword, searchPostsDataRefetch]);
+
   return (
-    <ul>
-      {resultData?.map((post) => (
-        <PostListItem
-          key={post._id}
-          id={post._id}
-          image={post.author.image}
-          title={post.title}
-          likes={post.likes.length}
-          comments={post.comments.length}
-        />
-      ))}
-    </ul>
+    <>
+      <ul>
+        {resultData?.map((post) => (
+          <PostListItem
+            key={post._id}
+            id={post._id}
+            image={post.author.image}
+            title={post.title}
+          />
+        ))}
+      </ul>
+      {(isAllPostsLoading || isSearchPostsLoading) && <Spinner />}
+    </>
   );
 };
 

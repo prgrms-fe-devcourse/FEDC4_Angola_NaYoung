@@ -53,13 +53,13 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
           }}>
           {target === 'user' ? (
             <>
-              <option value="follower">팔로워순</option>
-              <option value="like">좋아요순</option>
+              <option value="follower">팔로워 순</option>
+              <option value="level">레벨 순</option>
             </>
           ) : (
             <>
-              <option value="recent">최신순</option>
-              <option value="like">좋아요순</option>
+              <option value="recent">최신 순</option>
+              <option value="like">좋아요 순</option>
             </>
           )}
         </SortSelect>
@@ -122,7 +122,7 @@ const Title = styled.div`
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
-  line-height: 150%; 
+  line-height: 150%;
 `;
 
 const Keyword = styled.span`

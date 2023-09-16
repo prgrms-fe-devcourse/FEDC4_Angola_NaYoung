@@ -19,9 +19,7 @@ const Main = () => {
     <MainContainer>
       <Header
         title={title}
-        sortProps={
-          name === 'home' || name === 'search' ? objectForSort : undefined
-        }
+        sortProps={name === 'search' ? objectForSort : undefined}
         keyword={
           name === 'search'
             ? search.keyword ||

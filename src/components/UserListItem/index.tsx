@@ -19,7 +19,7 @@ interface UserListItemProps {
   id: string;
   image: string;
   name: string;
-  likes: number;
+  level: number;
   followers: number;
   userEmoji: string;
   userColor: string;
@@ -29,7 +29,7 @@ const UserListItem = ({
   id,
   image,
   name,
-  likes,
+  level,
   followers,
   userEmoji,
   userColor,
@@ -71,11 +71,11 @@ const UserListItem = ({
         )}
       </div>
       <UserInfo>
-        <UserName color={userColor}>
-          {name} {userEmoji}
-        </UserName>
+        <UserName color={userColor}>{name}</UserName>
         <LikesAndFollowers>
-          <div>👍{likes}</div>
+          <div>
+            {userEmoji}Lv.{level}
+          </div>
           <div>🙍{followers}</div>
         </LikesAndFollowers>
       </UserInfo>
