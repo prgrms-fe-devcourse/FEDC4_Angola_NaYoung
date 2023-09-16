@@ -6,7 +6,7 @@ import NotificationViewer from '@components/NotificationViewer';
 const AuthMenuBar = () => {
   const [isNotificationViewerShow, setIsNotificationViewerShow] =
     useState(false);
-    
+
   return (
     <>
       <StyledLinkButton to="/create-post">포스트 작성</StyledLinkButton>
@@ -17,7 +17,7 @@ const AuthMenuBar = () => {
         }}>
         알림 목록
       </StyledNotificaionButton>
-      {isNotificationViewerShow && <NotificationViewer/>}
+      {isNotificationViewerShow && <NotificationViewer />}
     </>
   );
 };

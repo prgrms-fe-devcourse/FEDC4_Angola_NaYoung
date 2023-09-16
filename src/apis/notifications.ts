@@ -8,7 +8,7 @@ export const useFetchGetNotifications = () => {
 
   const fetcher = () => authInstance.get('/notifications');
 
-  const { data, isLoading, isError, isSuccess } = useQuery<
+  const { data, isLoading, isError, isSuccess, refetch } = useQuery<
     AxiosResponse<Notification[]>,
     AxiosError
   >('getNotifications', fetcher);
@@ -18,6 +18,7 @@ export const useFetchGetNotifications = () => {
     isGetNotificationsLoading: isLoading,
     isGetNotificationsError: isError,
     isGetNotificationsSuccess: isSuccess,
+    getNotificationRefetch: refetch
   };
 };
 

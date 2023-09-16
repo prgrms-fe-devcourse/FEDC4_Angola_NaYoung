@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Notification } from '@type';
@@ -11,7 +10,7 @@ const FollowNotificationItem = ({
   const navigate = useNavigate();
 
   const handleClickMoveToUserPage = () => {
-    navigate(`/user/${notification.post}`);
+    navigate(`/user/${notification.author._id}`);
   };
 
   return (
