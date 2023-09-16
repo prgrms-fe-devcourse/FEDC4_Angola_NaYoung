@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useFetchFollow, useFetchUnFollow } from '@apis/follow';
+import { useFetchCreateNotification } from '@apis/notifications';
 
 interface UserInfoProps {
   userId: string;
@@ -10,6 +11,7 @@ interface UserInfoProps {
   followers: number;
   following: number;
   followerId?: string;
+  checkedNotification: boolean;
   userLevel: number;
   userColor: string;
   userEmoji: string;
@@ -23,12 +25,15 @@ const UserInfo = ({
   followers,
   following,
   followerId,
+  checkedNotification,
   userLevel,
   userColor,
   userEmoji,
 }: UserInfoProps) => {
-  const { followMutate, followData } = useFetchFollow();
+  const { followMutate, followData, isFollowSuccess } = useFetchFollow();
   const { unFollowMutate } = useFetchUnFollow();
+  const { createNotificationMutate, createNotificationData } =
+    useFetchCreateNotification();
   const [userFollowerId, setUserFollowerId] = useState(followerId);
   const [countFollowers, setCountFollowers] = useState(followers);
   const [isFollowed, setIsFollowed] = useState(followerId !== undefined);
@@ -53,10 +58,30 @@ const UserInfo = ({
   useEffect(() => {
     if (isFollowed) {
       followData.followId && setUserFollowerId(followData.followId);
+      if (
+        isFollowSuccess &&
+        !createNotificationData?.author &&
+        !checkedNotification
+      ) {
+        createNotificationMutate({
+          notificationType: 'FOLLOW',
+          notificationTypeId: followData.followId || '',
+          userId,
+          postId: null,
+        });
+      }
     } else {
       setUserFollowerId(undefined);
     }
-  }, [followData.followId, isFollowed]);
+  }, [
+    followData.followId,
+    createNotificationMutate,
+    isFollowed,
+    isFollowSuccess,
+    userId,
+    createNotificationData?.author,
+    checkedNotification,
+  ]);
 
   return (
     <UserInfoContainer>

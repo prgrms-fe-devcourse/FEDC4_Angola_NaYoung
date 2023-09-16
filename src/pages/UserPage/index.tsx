@@ -17,7 +17,8 @@ const UserPage = ({ userId = '' }: { userId?: string }) => {
   if (isUserLoading || isUserPostsLoading) {
     return <Spinner />;
   }
-
+  //console.log(userData?.notifications.map((v) => v.a));
+  //console.log(userData?.notifications.map((v) => v.author._id));
   return (
     <div>
       {userData && (
@@ -32,6 +33,9 @@ const UserPage = ({ userId = '' }: { userId?: string }) => {
             userData.followers.find((follower) => follower.follower === myId)
               ?._id
           }
+          checkedNotification={userData?.notifications.some(
+            (v) => v.author._id,
+          )}
           userLevel={calculateLevel(userData)}
           userColor={getUserLevelInfo(calculateLevel(userData)).userColor}
           userEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
