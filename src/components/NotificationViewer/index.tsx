@@ -37,10 +37,6 @@ const NotificationViewer = () => {
   const { getNotificationsData, isGetNotificationsLoading } =
     useFetchGetNotifications();
 
-  console.log(
-    `렌더링 => notification 목록 가져오기 api 실행 : ${getNotificationsData}`,
-  );
-
   if (isGetNotificationsLoading) return <Spinner />;
 
   return (
@@ -67,13 +63,13 @@ export default NotificationViewer;
 
 const NotificationViewerContainer = styled.div`
   position: absolute; // TODO: 알림 버튼을 relative
-  top: 100px; // TODO: 알림 버튼 바로 밑에 붙도록
+  top: 120px; // TODO: 알림 버튼 바로 밑에 붙도록
   right: 0;
   z-index: 2; // TODO: 나중에 z-index 기준 컴포넌트 별로 설정 필요
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: yellow;
+  background-color: blue;
 `;
 
 const EmptyNotificationList = styled.div``;
@@ -87,4 +83,8 @@ const NotificationBottomBar = styled.div`
 
 const NotificationListItem = styled.li`
   display: flex;
+  width: 400px;
+  height: 50px;
+  background-color: white;
+  margin-bottom: 8px;
 `;
