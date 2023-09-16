@@ -55,6 +55,25 @@ export const useFetchPost = (postId: string) => {
     isPostLoading: isLoading,
     isPostSuccess: isSuccess,
     isPostError: isError,
+    postRefetch: refetch, 
+  };
+};
+
+
+// TODO:@MinwooP - 위 useFetchPost에 key만 다르게 넣을 수 있도록 변경하고, 합치기 
+export const useFetchPostNotification = (postId: string) => {
+  const { baseInstance } = useAxiosInstance();
+  const path = `/posts/${postId}`;
+
+  const { data, isLoading, isSuccess, isError, refetch } = useQuery<
+    AxiosResponse<Post>,
+    AxiosError
+  >('postForNotification', () => baseInstance.get(path));
+  return {
+    postData: data?.data as Post,
+    isPostLoading: isLoading,
+    isPostSuccess: isSuccess,
+    isPostError: isError,
     postRefetch: refetch,
   };
 };
