@@ -58,6 +58,9 @@ const UserInfo = ({
   useEffect(() => {
     if (isFollowed) {
       followData.followId && setUserFollowerId(followData.followId);
+      // 팔로우 성공 시 &&
+      // 팔로우 등록/취소 시 중복 호출 막음 &&
+      // 새로고침 또는 페이지 이동 시 중복 호출 막음
       if (
         isFollowSuccess &&
         !createNotificationData?.author &&

@@ -17,6 +17,7 @@ const UserPage = ({ userId = '' }: { userId?: string }) => {
   if (isUserLoading || isUserPostsLoading) {
     return <Spinner />;
   }
+  console.log(userData?.notifications);
 
   return (
     <div>
@@ -32,6 +33,7 @@ const UserPage = ({ userId = '' }: { userId?: string }) => {
             userData.followers.find((follower) => follower.follower === myId)
               ?._id
           }
+          // 알림 생성 중복 체크
           checkedNotification={userData?.notifications.some(
             (v) => v.author._id,
           )}
