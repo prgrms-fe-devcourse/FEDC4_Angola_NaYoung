@@ -10,3 +10,4 @@ export {
 } from '@utils/parseDataBySeparator';
 
 export { voteRatio } from '@utils/voteRatio';
+export { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';

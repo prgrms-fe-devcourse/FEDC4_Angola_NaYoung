@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
 import { joinDataBySeparator, splitCommentBySeparator } from '@utils';
+import { calculateLevel } from '@utils';
 import { useRecoilValue } from 'recoil';
 import Modal from '@components/Modal';
 import PostViewer from '@components/PostViewer';
@@ -100,6 +101,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
           likeId={postData.likes.find((like) => like.user === userId)?._id}
           voteValue={votedValue}
           onVote={(value: string) => handleClickItem(value)}
+          authorLevel={calculateLevel(postData.author)}
         />
       )}
       {show && (
