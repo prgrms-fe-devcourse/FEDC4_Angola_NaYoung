@@ -17,8 +17,8 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <ButtonStyled
-      size={size}
       type={type}
+      size={size}
       isFollowed={isFollowed}
       {...props}>
       {children}
