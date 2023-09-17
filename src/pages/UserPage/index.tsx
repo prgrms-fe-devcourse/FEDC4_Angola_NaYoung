@@ -101,7 +101,7 @@ const PostsListTitle = styled.div`
   text-align: center;
   /* title */
   font-family: Mabinogi_Classic;
-  font-size: 28px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 28px */
