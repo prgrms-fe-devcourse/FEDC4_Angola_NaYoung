@@ -1,28 +1,39 @@
 import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 
+// interface ButtonProps {
+//   text: string;
+//   disabled?: boolean;
+//   handleClick?: () => void;
+//   style?: CSSProperties;
+//   size?: 'sm' | 'md';
+// }
+
 interface ButtonProps {
-  text: string;
+  children?: string;
   disabled?: boolean;
   handleClick?: () => void;
   style?: CSSProperties;
   size?: 'sm' | 'md';
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
 const Button = ({
-  text,
-  handleClick,
+  children,
   disabled = false,
+  handleClick,
   style,
   size = 'sm',
+  type = 'submit',
 }: ButtonProps) => {
   return (
     <ButtonStyled
       size={size}
       disabled={disabled}
       onClick={handleClick}
-      style={style}>
-      {text}
+      style={style}
+      type={type}>
+      {children}
     </ButtonStyled>
   );
 };
