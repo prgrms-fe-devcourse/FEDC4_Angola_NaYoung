@@ -1,14 +1,6 @@
 import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 
-// interface ButtonProps {
-//   text: string;
-//   disabled?: boolean;
-//   handleClick?: () => void;
-//   style?: CSSProperties;
-//   size?: 'sm' | 'md';
-// }
-
 interface ButtonProps {
   children?: string;
   disabled?: boolean;
