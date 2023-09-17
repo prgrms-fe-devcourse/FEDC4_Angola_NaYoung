@@ -14,7 +14,7 @@ const MakeComment = ({
   handleSubmitComment,
 }: MakeCommentProps) => {
   const [comment, setComment] = useState<string>('');
-  const handleChangeComment = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
   const handleSubmit = (e: FormEvent) => {
@@ -112,11 +112,18 @@ const ItemButtonB = styled.button<{ votedValue: string }>`
   }
 `;
 
-const Comment = styled.input`
-  border: 1px solid black;
-  border-radius: 3rem;
-  padding: 1rem;
-  width: 100%;
+const Comment = styled.textarea`
+  display: flex;
+  flex-direction: column;
+  padding: ${pxToRem(16)} ${pxToRem(24)};
+  height: ${pxToRem(120)};
+  align-items: flex-start;
+  flex: 1 0 0;
+  border-radius: ${pxToRem(40)};
+  border: ${pxToRem(2)} solid #404040;
+  background-color: #e5e5e5;
+  box-shadow: 0px 6px 0px 0px rgba(64, 64, 64, 0.5) inset;
+  resize: none;
 `;
 
 const SubmitButton = styled.button`
