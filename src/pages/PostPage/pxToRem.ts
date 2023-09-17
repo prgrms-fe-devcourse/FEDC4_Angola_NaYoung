@@ -10,6 +10,9 @@ const getBaseFontSize = () => {
 export const baseFontSize = getBaseFontSize();
 
 // px를 rem으로 변환하는 함수
-export const pxToRem = (pxValue: number) => {
+export const pxToRem = (pxValue: number | string) => {
+  if (typeof pxValue === 'string') {
+    pxValue = Number(pxValue.replace('px', ''));
+  }
   return `${pxValue / baseFontSize}rem`;
 };

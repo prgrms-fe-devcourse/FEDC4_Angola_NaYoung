@@ -14,6 +14,7 @@ import { authInfoState } from '@store/auth';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
+import { pxToRem } from './pxToRem';
 
 interface PostPageProps {
   postId?: string;
@@ -162,10 +163,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 };
 
 export default PostPage;
-
-const pxToRem = (pxValue: number) => {
-  return `${pxValue / 16}rem`;
-};
 
 const PostPageContainer = styled.div`
   display: flex;

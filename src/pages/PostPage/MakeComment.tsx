@@ -59,7 +59,7 @@ export default MakeComment;
 const MakeCommentContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 1rem;
+  padding: ${pxToRem(16)};
   border: 1px solid black;
   z-index: 10;
 `;
@@ -68,7 +68,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap: ${pxToRem};
+  gap: ${pxToRem(16)};
 `;
 
 const ItemButtonsContainer = styled.div`
