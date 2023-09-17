@@ -6,11 +6,19 @@ interface ButtonProps {
   disabled?: boolean;
   handleClick?: () => void;
   style?: CSSProperties;
+  size?: 'sm' | 'md';
 }
 
-const Button = ({ text, handleClick, disabled = false, style }: ButtonProps) => {
+const Button = ({
+  text,
+  handleClick,
+  disabled = false,
+  style,
+  size = 'sm',
+}: ButtonProps) => {
   return (
     <ButtonStyled
+      size={size}
       disabled={disabled}
       onClick={handleClick}
       style={style}>
@@ -21,15 +29,33 @@ const Button = ({ text, handleClick, disabled = false, style }: ButtonProps) => 
 
 export default Button;
 
-const ButtonStyled = styled.button`
-  border-radius: 54px;
-  width: 100px;
-  height: 30px;
-  border: 4px solid black;
-  background-color: white;
-  font-size: 20px;
+// Todo(hayamaster): pxToRem util함수 구현 되면 import해서 적용시키기.
+const pxToRem = (pxValue: number) => {
+  return `${pxValue / 16}rem`;
+};
+
+const ButtonStyled = styled.button<{ size: string }>`
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+  height: ${pxToRem(88)};
+  padding: ${pxToRem(16)} ${pxToRem(24)};
+  background-color: #fff;
+  border-radius: ${pxToRem(44)};
+  border: ${pxToRem(2)} solid #404040;
+
+  ${(props) =>
+    props.size === 'sm'
+      ? `width: ${pxToRem(88)}; box-shadow: 0px 4px 0px 0px #404040;`
+      : `width: ${pxToRem(240)}; box-shadow: 0px 6px 0px 0px #404040;`}
 
   &:hover {
-    background-color: rgba(60, 100, 105, 0.3);
+    border: ${pxToRem(3)} solid #404040;
+
+    ${(props) =>
+      props.size === 'sm'
+        ? `box-shadow: 0px 6px 0px 0px #404040;`
+        : `box-shadow: 0px 10px 0px 0px #404040;`}
   }
 `;
