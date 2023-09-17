@@ -163,20 +163,23 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
 export default PostPage;
 
+const pxToRem = (pxValue: number) => {
+  return `${pxValue / 16}rem`;
+};
+
 const PostPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: ${pxToRem(60)};
   width: 100%;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
 `;
 
 const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 100%;
   border: 2px solid black;
   border-radius: 45px;
   overflow: hidden;

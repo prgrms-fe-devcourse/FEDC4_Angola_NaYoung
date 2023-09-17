@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styled from '@emotion/styled';
+import { pxToRem } from './pxToRem';
 
 interface MakeCommentProps {
   votedValue: string;
@@ -24,19 +25,21 @@ const MakeComment = ({
 
   return (
     <MakeCommentContainer>
-      <ItemButtonsContainer>
-        <ItemButtonA
-          onClick={() => handleClickItem('A')}
-          votedValue={votedValue}>
-          A
-        </ItemButtonA>
-        <ItemButtonB
-          onClick={() => handleClickItem('B')}
-          votedValue={votedValue}>
-          B
-        </ItemButtonB>
-      </ItemButtonsContainer>
       <Form onSubmit={handleSubmit}>
+        <ItemButtonsContainer>
+          <ItemButtonA
+            type="button"
+            onClick={() => handleClickItem('A')}
+            votedValue={votedValue}>
+            A
+          </ItemButtonA>
+          <ItemButtonB
+            type="button"
+            onClick={() => handleClickItem('B')}
+            votedValue={votedValue}>
+            B
+          </ItemButtonB>
+        </ItemButtonsContainer>
         <Comment
           placeholder="댓글 입력창"
           onChange={handleChangeComment}
@@ -59,7 +62,13 @@ const MakeCommentContainer = styled.div`
   padding: 1rem;
   border: 1px solid black;
   z-index: 10;
-  gap: 1rem;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: ${pxToRem};
 `;
 
 const ItemButtonsContainer = styled.div`
@@ -101,13 +110,6 @@ const ItemButtonB = styled.button<{ votedValue: string }>`
   &:hover {
     background-color: #80808030;
   }
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 1rem;
 `;
 
 const Comment = styled.input`
