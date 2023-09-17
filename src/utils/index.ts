@@ -9,6 +9,4 @@ export {
   splitPostBySeparator,
 } from '@utils/parseDataBySeparator';
 
-export { getRandomTwoColor } from '@utils/getRandomTwoColor';
-
 export { voteRatio } from '@utils/voteRatio';
