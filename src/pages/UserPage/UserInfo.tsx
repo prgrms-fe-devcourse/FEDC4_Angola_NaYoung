@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { useFetchFollow, useFetchUnFollow } from '@apis/follow';
+import { useRecoilValue } from 'recoil';
+import Image from '@components/Image';
+import { authInfoState } from '@atoms/index';
+import useFollow from './hooks/useFollow';
 
 interface UserInfoProps {
   userId: string;
@@ -27,148 +29,163 @@ const UserInfo = ({
   userColor,
   userEmoji,
 }: UserInfoProps) => {
-  const { followMutate, followData } = useFetchFollow();
-  const { unFollowMutate } = useFetchUnFollow();
-  const [userFollowerId, setUserFollowerId] = useState(followerId);
-  const [countFollowers, setCountFollowers] = useState(followers);
-  const [isFollowed, setIsFollowed] = useState(followerId !== undefined);
+  const auth = useRecoilValue(authInfoState);
+  const { countFollowers, handleClickFollowButton, isFollowed } = useFollow({
+    userId,
+    followers,
+    followerId,
+  });
 
-  useEffect(() => {
-    setCountFollowers(followers);
-    setUserFollowerId(followerId);
-    setIsFollowed(followerId !== undefined);
-  }, [followers, followerId]);
-
-  const handleClickFollowButton = () => {
-    if (userFollowerId) {
-      setCountFollowers((prev) => prev - 1);
-      unFollowMutate({ id: userFollowerId });
-    } else {
-      setCountFollowers((prev) => prev + 1);
-      followMutate({ userId });
-    }
-    setIsFollowed((prev) => !prev);
-  };
-
-  useEffect(() => {
-    if (isFollowed) {
-      followData.followId && setUserFollowerId(followData.followId);
-    } else {
-      setUserFollowerId(undefined);
-    }
-  }, [followData.followId, isFollowed]);
-
+  // TODO: 디폴트 이미지
   return (
-    <UserInfoContainer>
-      <img
-        src={
-          image
-            ? image
-            : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
-        }
-        alt="프로필"
-        style={{
-          objectFit: 'cover',
-          width: '70px',
-          height: '70px',
-          borderRadius: '50%',
-        }}
-      />
-      <NameAndLikes>
-        <Container>
-          <NameLabel>유저 이름</NameLabel>
-          <Name color={userColor}>{name}</Name>
-        </Container>
-        <Container>
-          <Level color={userColor}>
-            {userEmoji} Level {userLevel}
-          </Level>
-        </Container>
-        <Likes>👍 누른 좋아요 {likes}</Likes>
-      </NameAndLikes>
-      <FollowerAndFollowing>
-        <Follower>🙍 follower {countFollowers}</Follower>
-        <Following>🙍 following {following}</Following>
-      </FollowerAndFollowing>
-      <Button onClick={handleClickFollowButton}>
-        {isFollowed ? '언팔로우' : '팔로우'}
-      </Button>
-    </UserInfoContainer>
+    <UserInfoWrapper>
+      <UserProfileContainer>
+        <Emoji>{userEmoji}</Emoji>
+        <Image
+          src={
+            image
+              ? image
+              : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
+          }
+          alt="프로필 이미지"
+        />
+      </UserProfileContainer>
+      <Name color={userColor}>{name}</Name>
+      <UserInfoContainer>
+        <UserInfoBox>
+          <UserInfoText>
+            Level: {userLevel}
+            <Bar>|</Bar>
+          </UserInfoText>
+          <UserInfoText>
+            팔로워: {countFollowers} <Bar>|</Bar>
+          </UserInfoText>
+          <UserInfoText>
+            팔로잉: {following} <Bar>|</Bar>
+          </UserInfoText>
+          <UserInfoText>받은 좋아요: {likes}</UserInfoText>
+        </UserInfoBox>
+        {auth && (
+          <Button
+            isFollowed={isFollowed}
+            onClick={handleClickFollowButton}>
+            {isFollowed ? '언팔로우 하기' : '팔로우 하기'}
+          </Button>
+        )}
+      </UserInfoContainer>
+    </UserInfoWrapper>
   );
 };
 
 export default UserInfo;
 
-const UserInfoContainer = styled.div`
+const UserInfoWrapper = styled.div`
   display: flex;
-  width: 80%;
-  border: 1px solid black;
+  padding: 0px 24px;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 30px 10px;
+  gap: 24px;
+  align-self: stretch;
+  background-color: white;
 `;
 
-const NameAndLikes = styled.div`
+const Emoji = styled.div`
+  color: #000;
+  text-align: center;
+  /* title-lg */
+  font-family: Mabinogi_Classic;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 42px */
+  letter-spacing: -0.924px;
+`;
+
+const UserProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
-`;
-
-const Container = styled.div`
-  display: flex;
-  font-size: 18px;
-  font-weight: 600;
-  gap: 10px;
-`;
-
-const NameLabel = styled.div`
-  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 `;
 
 const Name = styled.div`
-  margin-bottom: 10px;
-  color: ${(props) => props.color};
-`;
-
-const Level = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${(props) => props.color};
-  margin-bottom: 10px;
-`;
-
-const Likes = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const FollowerAndFollowing = styled.div`
   display: flex;
-  flex-direction: column;
-  margin-left: 50px;
-`;
-
-const Follower = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-`;
-
-const Following = styled.div`
-  font-size: 18px;
+  padding: 10px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 27px;
+  background-color: ${(props) => props.color};
+  color: white;
   font-weight: 600;
 `;
 
-const Button = styled.button`
-  border: none;
-  width: 80px;
-  height: 30px;
-  border-radius: 20px;
-  margin-left: 20px;
+const UserInfoContainer = styled.div`
+  display: flex;
+  padding: 12px 0px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  align-self: stretch;
+`;
+
+const UserInfoBox = styled.div`
+  display: flex;
+  color: var(--text, #404040);
+  text-align: center;
+  /* title-sm */
+  font-family: Mabinogi_Classic;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 27px */
+  letter-spacing: -0.396px;
+  gap: 10px;
+`;
+
+const UserInfoText = styled.div`
+  display: flex;
+  gap: 10px;
+  color: var(--text, #404040);
+  text-align: center;
+  /* title-sm */
+  font-family: Mabinogi_Classic;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 27px */
+  letter-spacing: -0.396px;
+`;
+
+const Bar = styled.div`
+  color: var(--dark, #9a9a9a);
+  text-align: center;
+  /* title-sm */
+  font-family: Mabinogi_Classic;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 27px */
+  letter-spacing: -0.396px;
+`;
+
+const Button = styled.button<{ isFollowed: boolean }>`
+  display: flex;
+  padding: 8px 16px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 27px;
+  border: 2px solid var(--text, #404040);
+  background-color: ${(props) => (props.isFollowed ? '#E5E5E5 ' : '#FFF')};
+  /* md-shadow */
+  box-shadow: 0px 6px 0px 0px #404040;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
+  // TODO: hover 색상
   &:hover {
-    background-color: yellowgreen;
+    background-color: #a4a4a4;
     color: white;
   }
 `;
