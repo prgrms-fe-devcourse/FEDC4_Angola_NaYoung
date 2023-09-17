@@ -17,7 +17,6 @@ const UserPage = ({ userId = '' }: { userId?: string }) => {
   if (isUserLoading || isUserPostsLoading) {
     return <Spinner />;
   }
-  console.log(userData?.notifications);
 
   return (
     <div>
@@ -35,7 +34,7 @@ const UserPage = ({ userId = '' }: { userId?: string }) => {
           }
           // 알림 생성 중복 체크
           checkedNotification={userData?.notifications.some(
-            (v) => v.author._id,
+            (v) => v.author._id === myId,
           )}
           userLevel={calculateLevel(userData)}
           userColor={getUserLevelInfo(calculateLevel(userData)).userColor}
