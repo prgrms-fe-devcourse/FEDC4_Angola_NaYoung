@@ -14,7 +14,6 @@ import { authInfoState } from '@store/auth';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
-import { pxToRem } from './pxToRem';
 
 interface PostPageProps {
   postId?: string;
@@ -167,7 +166,7 @@ export default PostPage;
 const PostPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${pxToRem(60)};
+  gap: 60px;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -177,9 +176,6 @@ const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 2px solid black;
-  border-radius: 45px;
-  overflow: hidden;
 `;
 
 const CommentDeletionFailModal = styled.div`

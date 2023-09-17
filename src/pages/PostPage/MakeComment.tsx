@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styled from '@emotion/styled';
+import { pxToRem } from '@utils';
 import { ButtonStyled } from '@components/Button';
-import { pxToRem } from './pxToRem';
 
 interface MakeCommentProps {
   votedValue: string;
@@ -61,10 +61,9 @@ const MakeComment = ({
 export default MakeComment;
 
 const MakeCommentContainer = styled.div`
-  display: flex;
-  flex-direction: row;
   padding: ${pxToRem(16)};
-  border: 1px solid black;
+  border: ${pxToRem(2)} solid #404040;
+  border-radius: ${pxToRem(24)} ${pxToRem(24)} 0 0;
   z-index: 10;
 `;
 
@@ -144,4 +143,12 @@ const SubmitButton = styled(ButtonStyled)<{ votedValue: string }>`
   line-height: 100%;
 
   color: ${(props) => (props.votedValue ? '#404040' : '#9a9a9a')};
+
+  &:hover {
+    ${(props) =>
+      !props.votedValue &&
+      `box-shadow: 0px 6px 0px 0px #404040; border: ${pxToRem(
+        2,
+      )} solid #404040`};
+  }
 `;
