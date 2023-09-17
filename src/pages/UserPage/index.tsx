@@ -32,10 +32,6 @@ const UserPage = ({ userId = '' }: { userId?: string }) => {
             userData.followers.find((follower) => follower.follower === myId)
               ?._id
           }
-          // 알림 생성 중복 체크
-          checkedNotification={userData?.notifications.some(
-            (v) => v.author._id === myId,
-          )}
           userLevel={calculateLevel(userData)}
           userColor={getUserLevelInfo(calculateLevel(userData)).userColor}
           userEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}

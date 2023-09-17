@@ -11,7 +11,6 @@ interface UserInfoProps {
   followers: number;
   following: number;
   followerId?: string;
-  checkedNotification: boolean;
   userLevel: number;
   userColor: string;
   userEmoji: string;
@@ -25,15 +24,13 @@ const UserInfo = ({
   followers,
   following,
   followerId,
-  checkedNotification,
   userLevel,
   userColor,
   userEmoji,
 }: UserInfoProps) => {
   const { followMutate, followData, isFollowSuccess } = useFetchFollow();
   const { unFollowMutate } = useFetchUnFollow();
-  const { createNotificationMutate, createNotificationData } =
-    useFetchCreateNotification();
+  const { createNotificationMutate } = useFetchCreateNotification();
   const [userFollowerId, setUserFollowerId] = useState(followerId);
   const [countFollowers, setCountFollowers] = useState(followers);
   const [isFollowed, setIsFollowed] = useState(followerId !== undefined);
@@ -58,14 +55,7 @@ const UserInfo = ({
   useEffect(() => {
     if (isFollowed) {
       followData.followId && setUserFollowerId(followData.followId);
-      // 팔로우 성공 시 &&
-      // 팔로우 등록/취소 시 중복 호출 막음 &&
-      // 새로고침 또는 페이지 이동 시 중복 호출 막음
-      if (
-        isFollowSuccess &&
-        !createNotificationData?.author &&
-        !checkedNotification
-      ) {
+      if (isFollowSuccess) {
         createNotificationMutate({
           notificationType: 'FOLLOW',
           notificationTypeId: followData.followId || '',
@@ -82,8 +72,6 @@ const UserInfo = ({
     isFollowed,
     isFollowSuccess,
     userId,
-    createNotificationData?.author,
-    checkedNotification,
   ]);
 
   return (
