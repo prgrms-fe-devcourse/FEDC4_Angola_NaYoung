@@ -5,6 +5,7 @@ import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
 import { useFetchPartPosts } from '@apis/post';
 import { authInfoState } from '@atoms/index';
+import { calculateLevel } from '@utils/calculateUserLevel';
 import { Post } from '@type/index';
 
 const INTERACTION_OPTION = {
@@ -72,6 +73,7 @@ const HomePage = () => {
           postId={post._id}
           authorName={post.author.fullName}
           authorId={post.author._id}
+          authorLevel={calculateLevel(post.author)}
           postTitle={post.title}
           likeId={post.likes.find((like) => like.user === auth?.userId)?._id}
           numberOfComments={post.comments.length}

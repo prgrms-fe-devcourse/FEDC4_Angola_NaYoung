@@ -1,17 +1,29 @@
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import NameTag from '@components/NameTag';
 
 interface PostTitleProps {
   title: string;
   authorName: string;
   authorId: string;
+  authorLevel: number;
 }
 
-const PostTitle = ({ title, authorName, authorId }: PostTitleProps) => {
-  const navigate = useNavigate();
+const PostTitle = ({
+  title,
+  authorName,
+  authorId,
+  authorLevel,
+}: PostTitleProps) => {
   return (
     <TitleContainer>
-      <div onClick={() => navigate(`/user/${authorId}`)}>{authorName}</div>
+      <NameTag
+        isNav={true}
+        showLevel={true}
+        userName={authorName}
+        userId={authorId}
+        userLevel={authorLevel}
+        level={authorLevel}
+      />
       <h2>{title}</h2>
     </TitleContainer>
   );
