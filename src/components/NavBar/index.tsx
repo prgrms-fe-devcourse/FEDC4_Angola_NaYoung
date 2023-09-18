@@ -20,8 +20,9 @@ const NavBar = () => {
 export default NavBar;
 
 const NavBarContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
-  max-height: 144px;
+  max-height: 100px;
   justify-content: space-between;
   align-items: flex-start;
   flex: 1 0 0;
@@ -29,6 +30,8 @@ const NavBarContainer = styled.div`
 `;
 
 const MenuBarContainer = styled.div`
+  box-sizing: border-box;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
