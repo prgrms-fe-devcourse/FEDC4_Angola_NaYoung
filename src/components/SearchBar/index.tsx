@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Icon from '@components/Icon';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState<string>('');
@@ -40,15 +42,25 @@ const SearchBar = () => {
     <StyledForm
       onSubmit={handleSubmitKeyword}
       onReset={handleResetKeyword}>
+      <SubmitButton type="submit">
+        <Icon
+          name="search"
+          size={'30'}
+        />
+      </SubmitButton>
       <StyledInput
         type="text"
         value={keyword}
         placeholder="유저 또는 포스트를 검색하세요"
         onChange={handleChangeKeyword}></StyledInput>
 
-      <StyledButton type="reset">X</StyledButton>
-
-      <StyledButton type="submit">검색</StyledButton>
+      <ClearTextButton type="reset">
+        {' '}
+        <Icon
+          name="close"
+          size={'30'}
+        />
+      </ClearTextButton>
     </StyledForm>
   );
 };
@@ -57,28 +69,47 @@ export default SearchBar;
 
 const StyledForm = styled.form`
   box-sizing: border-box;
+  position: relative;
+  max-width: 600px;
+  width: 600px;
+  height: 60px;
   display: flex;
-  justify-content: space-between;
-  border: 2px solid black;
-  border-radius: 16px;
-  width: 300px;
-  padding: 6px 12px;
+  padding: 0px 20px;
+  align-items: center;
+  border-radius: 44px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+
+  &:focus {
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
+`;
+
+const SubmitButton = styled.button`
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: ${ANGOLA_STYLES.color.white};
+  border: none;
 `;
 
 const StyledInput = styled.input`
   box-sizing: border-box;
   border: none;
   outline: none;
-  margin: 0;
+  margin: 0 0 0 12px;
   padding: 0;
   height: 30px;
-  width: 200px;
+  width: 300px; // calc하기
 `;
 
-const StyledButton = styled.button`
+const ClearTextButton = styled.button`
   box-sizing: border-box;
+  position: absolute;
+  right: 12px;
   margin: 0;
   padding: 0;
-  height: 30px;
-  height: 30px;
+  background: ${ANGOLA_STYLES.color.white};
+  border: none;
 `;
