@@ -9,6 +9,5 @@ export {
   splitPostBySeparator,
 } from '@utils/parseDataBySeparator';
 
-export { getRandomTwoColor } from '@utils/getRandomTwoColor';
-
 export { voteRatio } from '@utils/voteRatio';
+export { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
