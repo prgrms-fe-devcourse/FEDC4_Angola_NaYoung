@@ -10,4 +10,5 @@ export {
 } from '@utils/parseDataBySeparator';
 
 export { voteRatio } from '@utils/voteRatio';
+export { pxToRem } from '@utils/pxToRem';
 export { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
