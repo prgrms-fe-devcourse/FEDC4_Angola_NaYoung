@@ -22,7 +22,7 @@ export const ANGOLA_STYLES = {
   },
   textSize: {
     symbol: '48px',
-    titleLg: '28px',
+    titleLg: '24px',
     title: '20px',
     titleSm: '18px',
     text: '16px',
