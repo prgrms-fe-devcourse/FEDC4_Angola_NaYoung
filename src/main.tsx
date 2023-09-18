@@ -7,7 +7,7 @@ import App from './App.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Global styles={{ ...resetStyles, ...commonStyles }} />,
+    <Global styles={{ ...resetStyles, ...commonStyles }} />
     <App />
   </React.StrictMode>,
 );
