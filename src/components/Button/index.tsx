@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface ButtonProps {
   children?: string;
@@ -32,33 +33,28 @@ const Button = ({
 
 export default Button;
 
-// Todo(hayamaster): pxToRem util함수 구현 되면 import해서 적용시키기.
-const pxToRem = (pxValue: number) => {
-  return `${pxValue / 16}rem`;
-};
-
 const ButtonStyled = styled.button<{ size: string }>`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   align-items: flex-start;
-  height: ${pxToRem(88)};
-  padding: ${pxToRem(16)} ${pxToRem(24)};
-  background-color: #fff;
-  border-radius: ${pxToRem(44)};
-  border: ${pxToRem(2)} solid #404040;
+  height: 88px;
+  padding: 16px 24px;
+  background-color: ${ANGOLA_STYLES.color.white};
+  border-radius: 44px;
+  border: ${ANGOLA_STYLES.border.default};
 
   ${(props) =>
     props.size === 'sm'
-      ? `width: ${pxToRem(88)}; box-shadow: 0px 4px 0px 0px #404040;`
-      : `width: ${pxToRem(240)}; box-shadow: 0px 6px 0px 0px #404040;`}
+      ? `width: 88px; box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};`
+      : `width: 240px; box-shadow: ${ANGOLA_STYLES.shadow.button.default};`}
 
   &:hover {
-    border: ${pxToRem(3)} solid #404040;
+    border: 3px solid ${ANGOLA_STYLES.color.text};
 
     ${(props) =>
       props.size === 'sm'
-        ? `box-shadow: 0px 6px 0px 0px #404040;`
-        : `box-shadow: 0px 10px 0px 0px #404040;`}
+        ? `box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};`
+        : `box-shadow: ${ANGOLA_STYLES.shadow.button.hover};`}
   }
 `;
