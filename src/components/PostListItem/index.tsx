@@ -1,6 +1,11 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
+import { useRecoilValue } from 'recoil';
+import Icon from '@components/Icon';
 import LinkButton from '@components/LinkButton';
+import { useFetchDeletePost, useFetchUserPosts } from '@apis/post';
+import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 
 interface PostListItemProps {
@@ -9,6 +14,7 @@ interface PostListItemProps {
   title: string;
   likes?: number;
   comments?: number;
+  canDeletePost?: boolean;
 }
 
 const PostListItem = ({
@@ -17,8 +23,23 @@ const PostListItem = ({
   title,
   likes,
   comments,
+  canDeletePost,
 }: PostListItemProps) => {
+  const auth = useRecoilValue(authInfoState);
   const { title: postTitle } = splitPostBySeparator(title);
+  const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
+  const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
+
+  const handleClickDeletedPost = () => {
+    deletePostMutate({ id });
+  };
+
+  useEffect(() => {
+    if (isDeletePostSuccess) {
+      userPostsRefetch();
+    }
+  }, [userPostsRefetch, isDeletePostSuccess]);
+
   return (
     <ListItemContainer>
       <img
@@ -42,6 +63,11 @@ const PostListItem = ({
           More
         </LinkButton>
       </More>
+      {canDeletePost ? (
+        <button onClick={handleClickDeletedPost}>
+          <Icon name="trash" />
+        </button>
+      ) : null}
     </ListItemContainer>
   );
 };
