@@ -8,9 +8,7 @@ import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import UserInfo from './UserInfo';
-
-const NO_POSTS_LIST_TITLE = '작성한 글이 없습니다.';
-const POSTS_LIST_TITLE = '작성한 포스트';
+import { NO_POSTS_LIST_TITLE, POSTS_LIST_TITLE } from './constants';
 
 interface UserPageProps {
   userId: string;

@@ -1,22 +1,23 @@
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
+import Button from '@components/Button';
 import Image from '@components/Image';
 import NameTag from '@components/NameTag';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import {
+  DEFAULT_PROFILE_IMAGE_SRC,
+  FOLLOW,
+  FOLLOWER,
+  FOLLOWING,
+  GET_LIKES,
+  LEVEL,
+  PROFILE_IMAGE_ALT,
+  UN_FOLLOW,
+} from './constants';
 import useFollow from './hooks/useFollow';
 
-// TODO: (지윤) 유저 페이지 Default 이미지 넣기, 버튼 hover 색상
-
-const PROFILE_IMAGE_ALT = '프로필 이미지';
-const DEFAULT_PROFILE_IMAGE_SRC =
-  'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg';
-const LEVEL = 'Level : ';
-const FOLLOWER = '팔로워 : ';
-const FOLLOWING = '팔로잉 : ';
-const GET_LIKES = '받은 좋아요 : ';
-const UN_FOLLOW = '언팔로우 하기';
-const FOLLOW = '팔로우 하기';
+// TODO: (지윤) 유저 페이지 Default 이미지 넣기
 
 interface UserInfoProps {
   userId: string;
@@ -88,6 +89,7 @@ const UserInfo = ({
         {auth && (
           <Button
             isFollowed={isFollowed}
+            size="md"
             onClick={handleClickFollowButton}>
             {isFollowed ? `${UN_FOLLOW}` : `${FOLLOW}`}
           </Button>
@@ -158,32 +160,4 @@ const Bar = styled.div`
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.396px;
-`;
-
-const Button = styled.button<{ isFollowed: boolean }>`
-  display: flex;
-  width: 135px;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  gap: 10px;
-  border-radius: 27px;
-  border: ${ANGOLA_STYLES.border.default};
-  background-color: ${(props) =>
-    props.isFollowed
-      ? `${ANGOLA_STYLES.color.gray}`
-      : `${ANGOLA_STYLES.color.white}`};
-  box-shadow: ${ANGOLA_STYLES.shadow.button.default};
-  font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  font-weight: 600;
-  cursor: pointer;
-  &:hover {
-    background-color: ${(props) =>
-      props.isFollowed
-        ? `${ANGOLA_STYLES.color.white}`
-        : `${ANGOLA_STYLES.color.gray}`};
-  }
-  &:active {
-    box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
-  }
 `;
