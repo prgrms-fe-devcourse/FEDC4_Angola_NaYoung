@@ -12,3 +12,7 @@ export {
 export { voteRatio } from '@utils/voteRatio';
 export { pxToRem } from '@utils/pxToRem';
 export { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
+export {
+  checkFullNamePattern,
+  checkPassWordPattern,
+} from '@utils/userAuthentication';

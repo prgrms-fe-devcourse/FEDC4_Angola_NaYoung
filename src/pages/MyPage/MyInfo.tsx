@@ -11,7 +11,7 @@ import {
 import {
   checkFullNamePattern,
   checkPassWordPattern,
-} from '@utils/userAuthentication.ts';
+} from '@utils/userAuthentication';
 
 // TODO: return에서 isUpdateFullNameError 발생 시, 모달 보여주고 함수 실행시키고, 이전 값
 interface MyInfoProps {
