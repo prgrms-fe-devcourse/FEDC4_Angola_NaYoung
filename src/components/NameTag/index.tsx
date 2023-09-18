@@ -9,6 +9,7 @@ interface NameTagProps {
   userLevel: number;
   isNav: boolean;
   showLevel: boolean;
+  textSize?: string;
 }
 
 const NameTag = ({
@@ -18,6 +19,7 @@ const NameTag = ({
   userLevel,
   isNav,
   showLevel,
+  textSize,
 }: NameTagProps) => {
   const navigate = useNavigate();
   const handleClickTag = () => {
@@ -27,7 +29,8 @@ const NameTag = ({
   return (
     <TagContainer
       level={userLevel}
-      onClick={handleClickTag}>
+      onClick={handleClickTag}
+      textSize={textSize}>
       <div>
         {showLevel && `Lv.${level} `}
         {userName}
@@ -38,10 +41,10 @@ const NameTag = ({
 
 export default NameTag;
 
-const TagContainer = styled.div<{ level: number }>`
+const TagContainer = styled.div<{ level: number; textSize?: string }>`
   background: ${({ level }) => ANGOLA_STYLES.color.levels[level].fill};
   color: ${({ level }) => ANGOLA_STYLES.color.levels[level].text};
-  font-size: ${ANGOLA_STYLES.textSize.titleLg};
+  font-size: ${({ textSize }) => textSize || ANGOLA_STYLES.textSize.titleLg};
   white-space: nowrap;
   padding: 8px 12px 4px 12px;
   border-radius: 100px;
