@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
 import { useRecoilValue } from 'recoil';
 import Icon from '@components/Icon';
 import LinkButton from '@components/LinkButton';
+import Modal from '@components/Modal';
 import { useFetchDeletePost, useFetchUserPosts } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
@@ -29,9 +30,19 @@ const PostListItem = ({
   const { title: postTitle } = splitPostBySeparator(title);
   const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
   const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleDeleteClick = () => {
+    setIsModalOpen(true);
+  };
 
   const handleClickDeletedPost = () => {
     deletePostMutate({ id });
+    setIsModalOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -64,10 +75,17 @@ const PostListItem = ({
         </LinkButton>
       </More>
       {canDeletePost ? (
-        <button onClick={handleClickDeletedPost}>
+        <button onClick={handleDeleteClick}>
           <Icon name="trash" />
         </button>
       ) : null}
+      {isModalOpen && (
+        <Modal onClose={handleCloseModal}>
+          <div>정말로 삭제하시겠습니까?</div>
+          <button onClick={handleClickDeletedPost}>확인</button>
+          <button onClick={handleCloseModal}>취소</button>
+        </Modal>
+      )}
     </ListItemContainer>
   );
 };
