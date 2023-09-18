@@ -2,24 +2,34 @@ import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 
 interface ModalProps {
-  onClose: () => void;
+  onClose: VoidFunction;
+  onConfirm?: VoidFunction;
   children: React.ReactNode;
 }
 
-const Modal = ({ onClose: handleClose, children }: ModalProps) => {
+const Modal = ({
+  onClose: handleClose,
+  onConfirm: handleConfirm,
+  children,
+}: ModalProps) => {
   const modalRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === 'Escape') {
+      if (handleConfirm && e.key === 'Enter') {
+        e.preventDefault();
+        handleConfirm();
+      }
+      if (e.key === 'Escape') {
         e.preventDefault();
         handleClose();
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  });
+  }, []);
 
   const handleClickModalContainer = (e: React.MouseEvent) => {
     if (e.target !== modalRef.current) {
