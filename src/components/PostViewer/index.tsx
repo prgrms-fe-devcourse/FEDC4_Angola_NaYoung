@@ -76,6 +76,7 @@ const PostViewer = ({
           numberOfComments={numberOfComments}
           likeId={likeId}
           postId={postId}
+          authorId={authorId}
           onGoDetailPage={goDetailPage}
         />
       )}
