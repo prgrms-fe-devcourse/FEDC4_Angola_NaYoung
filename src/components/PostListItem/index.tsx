@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
 import { useRecoilValue } from 'recoil';
@@ -30,29 +30,19 @@ const PostListItem = ({
   const { title: postTitle } = splitPostBySeparator(title);
   const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
   const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const confirmButtonRef = useRef<null | HTMLButtonElement>(null);
+  const [toggleModal, setToggleModal] = useState(false);
 
   const handleClickOpenModal = () => {
-    setIsModalOpen(true);
+    setToggleModal(() => true);
   };
-
-  useEffect(() => {
-    if (!confirmButtonRef.current) {
-      return;
-    }
-    if (isModalOpen) {
-      confirmButtonRef.current.focus();
-    }
-  }, [isModalOpen]);
 
   const handleClickDeletedPost = () => {
     deletePostMutate({ id });
-    setIsModalOpen(false);
+    setToggleModal(() => false);
   };
 
   const handleClickCloseModal = () => {
-    setIsModalOpen(false);
+    setToggleModal(() => false);
   };
 
   useEffect(() => {
@@ -89,14 +79,10 @@ const PostListItem = ({
           <Icon name="trash" />
         </button>
       ) : null}
-      {isModalOpen && (
+      {toggleModal && (
         <Modal onClose={handleClickCloseModal}>
           <div>정말로 삭제하시겠습니까?</div>
-          <button
-            ref={confirmButtonRef}
-            onClick={handleClickDeletedPost}>
-            확인
-          </button>
+          <button onClick={handleClickDeletedPost}>확인</button>
           <button onClick={handleClickCloseModal}>취소</button>
         </Modal>
       )}
