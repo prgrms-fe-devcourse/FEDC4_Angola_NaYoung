@@ -1,6 +1,5 @@
 export const PROFILE_IMAGE_ALT = '프로필 이미지';
-export const DEFAULT_PROFILE_IMAGE_SRC =
-  'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg';
+
 export const LEVEL = 'Level : ';
 export const FOLLOWER = '팔로워 : ';
 export const FOLLOWING = '팔로잉 : ';

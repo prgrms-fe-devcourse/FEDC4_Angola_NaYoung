@@ -6,7 +6,6 @@ import NameTag from '@components/NameTag';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import {
-  DEFAULT_PROFILE_IMAGE_SRC,
   FOLLOW,
   FOLLOWER,
   FOLLOWING,
@@ -54,7 +53,7 @@ const UserInfo = ({
       <UserProfileContainer>
         <Emoji>{userEmoji}</Emoji>
         <Image
-          src={image ? image : `${DEFAULT_PROFILE_IMAGE_SRC}`}
+          src={image ? image : '/src/pages/UserPage/assets/default2.png'}
           alt={PROFILE_IMAGE_ALT}
         />
       </UserProfileContainer>

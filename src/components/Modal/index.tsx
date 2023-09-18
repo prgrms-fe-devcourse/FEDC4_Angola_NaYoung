@@ -47,6 +47,7 @@ const ModalContainer = styled.div`
   justify-content: center;
   z-index: 100;
 `;
+
 const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
