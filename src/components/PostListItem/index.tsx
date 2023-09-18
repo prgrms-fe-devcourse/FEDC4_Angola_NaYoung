@@ -32,17 +32,17 @@ const PostListItem = ({
   const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
   const [toggleModal, setToggleModal] = useState(false);
 
-  const handleClickOpenModal = () => {
+  const handleOpenModal = () => {
     setToggleModal(() => true);
   };
 
-  const handleClickDeletedPost = () => {
-    deletePostMutate({ id });
+  const handleCloseModal = () => {
     setToggleModal(() => false);
   };
 
-  const handleClickCloseModal = () => {
-    setToggleModal(() => false);
+  const handleDeletedPost = () => {
+    deletePostMutate({ id });
+    handleCloseModal();
   };
 
   useEffect(() => {
@@ -75,15 +75,17 @@ const PostListItem = ({
         </LinkButton>
       </More>
       {canDeletePost ? (
-        <button onClick={handleClickOpenModal}>
+        <button onClick={handleOpenModal}>
           <Icon name="trash" />
         </button>
       ) : null}
       {toggleModal && (
-        <Modal onClose={handleClickCloseModal}>
+        <Modal
+          onClose={handleCloseModal}
+          onConfirm={handleDeletedPost}>
           <div>정말로 삭제하시겠습니까?</div>
-          <button onClick={handleClickDeletedPost}>확인</button>
-          <button onClick={handleClickCloseModal}>취소</button>
+          <button onClick={handleDeletedPost}>확인</button>
+          <button onClick={handleCloseModal}>취소</button>
         </Modal>
       )}
     </ListItemContainer>
