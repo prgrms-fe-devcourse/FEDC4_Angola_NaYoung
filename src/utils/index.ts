@@ -12,3 +12,5 @@ export {
 export { getRandomTwoColor } from '@utils/getRandomTwoColor';
 
 export { voteRatio } from '@utils/voteRatio';
+
+export { pxToRem } from '@utils/pxToRem';
