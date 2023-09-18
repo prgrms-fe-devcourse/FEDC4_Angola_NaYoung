@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
 import { splitCommentBySeparator } from '@utils';
@@ -17,16 +17,29 @@ interface CommentListProps {
 const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
   const [isClickedDeleteBtn, setIsClickedDeleteBtn] = useState<boolean>(false);
   const [commentId, setCommentId] = useState<string>('');
+  const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleClickDeleteComment = (e: MouseEvent) => {
     setCommentId(e.currentTarget.classList[0]);
     setIsClickedDeleteBtn(true);
+    deleteButtonRef.current && deleteButtonRef.current.blur();
   };
 
   const handleClickDeleteCommentModalBtn = () => {
     deleteComment(commentId);
     setIsClickedDeleteBtn(false);
   };
+
+  useEffect(() => {
+    if (!isClickedDeleteBtn) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleClickDeleteCommentModalBtn();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  });
 
   const [commentsData, setCommentsData] = useState(comments);
 
@@ -58,7 +71,8 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
                 <DeleteButton
                   size="sm"
                   className={commentItem._id}
-                  onClick={handleClickDeleteComment}>
+                  onClick={handleClickDeleteComment}
+                  ref={deleteButtonRef}>
                   <Icon name={'close'} />
                 </DeleteButton>
               )}

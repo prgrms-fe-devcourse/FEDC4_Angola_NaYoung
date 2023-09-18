@@ -178,6 +178,7 @@ const PostPageContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
 `;
 
 const CommentsContainer = styled.div`
