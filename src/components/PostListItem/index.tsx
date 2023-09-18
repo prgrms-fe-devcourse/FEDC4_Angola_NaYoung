@@ -32,7 +32,7 @@ const PostListItem = ({
   const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleDeleteClick = () => {
+  const handleClickOpenModal = () => {
     setIsModalOpen(true);
   };
 
@@ -41,7 +41,7 @@ const PostListItem = ({
     setIsModalOpen(false);
   };
 
-  const handleCloseModal = () => {
+  const handleClickCloseModal = () => {
     setIsModalOpen(false);
   };
 
@@ -75,15 +75,15 @@ const PostListItem = ({
         </LinkButton>
       </More>
       {canDeletePost ? (
-        <button onClick={handleDeleteClick}>
+        <button onClick={handleClickOpenModal}>
           <Icon name="trash" />
         </button>
       ) : null}
       {isModalOpen && (
-        <Modal onClose={handleCloseModal}>
+        <Modal onClose={handleClickCloseModal}>
           <div>정말로 삭제하시겠습니까?</div>
           <button onClick={handleClickDeletedPost}>확인</button>
-          <button onClick={handleCloseModal}>취소</button>
+          <button onClick={handleClickCloseModal}>취소</button>
         </Modal>
       )}
     </ListItemContainer>
