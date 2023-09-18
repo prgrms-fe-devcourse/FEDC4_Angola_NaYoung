@@ -22,6 +22,31 @@ export const useFetchGetNotifications = () => {
   };
 };
 
+interface getPartNotificationsQueryParams{
+  offset: number;
+  limit: number;
+}
+
+export const useFetchGetPartNotifications = ({offset, limit} : getPartNotificationsQueryParams) => {
+  const { authInstance } = useAxiosInstance();
+
+  const fetcher = () => authInstance.get(`/notifications?offset=${offset}&limit=${limit}`);
+
+  const { data, isLoading, isError, isSuccess, refetch } = useQuery<
+    AxiosResponse<Notification[]>,
+    AxiosError
+  >('getPartNotifications', fetcher);
+
+  return {
+    getPartNotificationsData: data?.data,
+    isGetPartNotificationsLoading: isLoading,
+    isGetPartNotificationsError: isError,
+    isGetPartNotificationsSuccess: isSuccess,
+    getPartNotificationRefetch: refetch
+  };
+};
+
+
 export const useFetchReadNotifications = () => {
   const { authInstance } = useAxiosInstance();
 
