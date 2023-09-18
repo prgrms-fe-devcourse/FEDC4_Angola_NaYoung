@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { rgba } from 'emotion-rgba';
 import { useRecoilValue } from 'recoil';
-import { authInfoState } from '@atoms/index';
+import { authInfoState } from '@store/auth';
 
 interface PostContentsProps {
   contentA: string;

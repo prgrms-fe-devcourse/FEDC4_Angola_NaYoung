@@ -6,7 +6,7 @@ const AuthMenuBar = () => {
     <>
       <StyledLinkButton to="/create-post">포스트 작성</StyledLinkButton>
       <StyledLinkButton to="/mypage">마이페이지</StyledLinkButton>
-      <StyledNotificaionButton>알림 목록</StyledNotificaionButton>
+      <StyledNotificationButton>알림 목록</StyledNotificationButton>
     </>
   );
 };
@@ -27,7 +27,7 @@ const StyledLinkButton = styled(LinkButton)`
   box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.25);
 `;
 
-const StyledNotificaionButton = styled.button`
+const StyledNotificationButton = styled.button`
   box-sizing: border-box;
   display: flex;
   width: 88px;

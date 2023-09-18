@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import { authInfoState } from '@atoms/index';
+import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import ButtonGroup from './ButtonGroup';
 import NonAuthModal from './NonAuthModal';
@@ -14,13 +14,12 @@ interface PostViewerProps {
   postTitle: string;
   authorName: string;
   authorId: string;
+  authorLevel: number;
   likeId: string | undefined;
   numberOfComments: number;
   numberOfLikes: number;
   voteValue?: string;
   onVote?: (value: string) => void;
-  colorA?: string;
-  colorB?: string;
 }
 
 const PostViewer = ({
@@ -28,13 +27,12 @@ const PostViewer = ({
   postTitle,
   authorName,
   authorId,
+  authorLevel,
   likeId,
   voteValue,
   onVote,
   numberOfComments,
   numberOfLikes,
-  colorA,
-  colorB,
 }: PostViewerProps) => {
   const { a, b, title } = splitPostBySeparator(postTitle);
   const auth = useRecoilValue(authInfoState);
@@ -61,6 +59,7 @@ const PostViewer = ({
         title={title}
         authorName={authorName}
         authorId={authorId}
+        authorLevel={authorLevel}
       />
       <PostContents
         contentA={a}
@@ -70,8 +69,6 @@ const PostViewer = ({
         onGoDetailPage={goDetailPage}
         onShowNonAuthModal={() => setIsModalShow(true)}
         isPostPage={isPostPage}
-        colorA={colorA}
-        colorB={colorB}
       />
       {auth && (
         <ButtonGroup

@@ -1,5 +1,5 @@
 import { User } from '@type';
-import { calculateLevel } from '@utils/calculateUserLevel';
+import { calculateLevel } from '@utils';
 
 export const getSortUserList = (
   searchData: User[] | undefined,

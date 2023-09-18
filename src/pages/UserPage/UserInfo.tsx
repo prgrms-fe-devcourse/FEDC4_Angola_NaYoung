@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import Image from '@components/Image';
-import { authInfoState } from '@atoms/index';
+import { authInfoState } from '@store/auth';
 import useFollow from './hooks/useFollow';
 
 interface UserInfoProps {

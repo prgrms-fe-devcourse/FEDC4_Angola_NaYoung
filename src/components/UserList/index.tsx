@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
+import { calculateLevel, getUserLevelInfo } from '@utils';
 import Spinner from '@components/Spinner';
 import UserListItem from '@components/UserListItem';
 import { useFetchSearchUsers } from '@apis/search';
 import { useFetchUsers } from '@apis/user';
-import { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
 import { getSortUserList } from './utils';
 
 interface UserListProps {
