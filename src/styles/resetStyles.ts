@@ -126,6 +126,7 @@ export const resetStyles = css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+  body,
   div,
   input,
   button,

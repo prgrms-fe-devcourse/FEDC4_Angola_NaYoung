@@ -57,6 +57,7 @@ export const commonStyles = css`
   body {
     background-color: ${ANGOLA_STYLES.color.gray};
     padding: 0 80px;
+    margin: 0;
   }
   * {
     font-family: 'MabinogiClassicR';
