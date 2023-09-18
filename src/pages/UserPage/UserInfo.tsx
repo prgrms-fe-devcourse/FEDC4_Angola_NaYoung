@@ -1,8 +1,18 @@
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import Image from '@components/Image';
+import NameTag from '@components/NameTag';
 import { authInfoState } from '@store/auth';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import useFollow from './hooks/useFollow';
+
+const PROFILE_IMAGE_ALT = '프로필 이미지';
+const LEVEL = 'Level : ';
+const FOLLOWER = '팔로워 : ';
+const FOLLOWING = '팔로잉 : ';
+const GET_LIKES = '받은 좋아요 : ';
+const UN_FOLLOW = '언팔로우 하기';
+const FOLLOW = '팔로우 하기';
 
 interface UserInfoProps {
   userId: string;
@@ -13,7 +23,6 @@ interface UserInfoProps {
   following: number;
   followerId?: string;
   userLevel: number;
-  userColor: string;
   userEmoji: string;
 }
 
@@ -26,7 +35,6 @@ const UserInfo = ({
   following,
   followerId,
   userLevel,
-  userColor,
   userEmoji,
 }: UserInfoProps) => {
   const auth = useRecoilValue(authInfoState);
@@ -36,7 +44,7 @@ const UserInfo = ({
     followerId,
   });
 
-  // TODO: 디폴트 이미지
+  // TODO: (지윤) 유저 페이지 Default 이미지 넣기
   return (
     <UserInfoWrapper>
       <UserProfileContainer>
@@ -47,29 +55,42 @@ const UserInfo = ({
               ? image
               : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
           }
-          alt="프로필 이미지"
+          alt={PROFILE_IMAGE_ALT}
         />
       </UserProfileContainer>
-      <Name color={userColor}>{name}</Name>
+      <NameTag
+        level={userLevel}
+        userName={name}
+        userId={userId}
+        userLevel={userLevel}
+        isNav={false}
+        showLevel={false}
+      />
       <UserInfoContainer>
-        <UserInfoBox>
-          <UserInfoText>
-            Level: {userLevel}
-            <Bar>|</Bar>
-          </UserInfoText>
-          <UserInfoText>
-            팔로워: {countFollowers} <Bar>|</Bar>
-          </UserInfoText>
-          <UserInfoText>
-            팔로잉: {following} <Bar>|</Bar>
-          </UserInfoText>
-          <UserInfoText>받은 좋아요: {likes}</UserInfoText>
-        </UserInfoBox>
+        <UserInfoText>
+          {LEVEL}
+          {userLevel}
+        </UserInfoText>
+        <Bar>|</Bar>
+        <UserInfoText>
+          {FOLLOWER}
+          {countFollowers}
+        </UserInfoText>
+        <Bar>|</Bar>
+        <UserInfoText>
+          {FOLLOWING}
+          {following}
+        </UserInfoText>
+        <Bar>|</Bar>
+        <UserInfoText>
+          {GET_LIKES}
+          {likes}
+        </UserInfoText>
         {auth && (
           <Button
             isFollowed={isFollowed}
             onClick={handleClickFollowButton}>
-            {isFollowed ? '언팔로우 하기' : '팔로우 하기'}
+            {isFollowed ? `${UN_FOLLOW}` : `${FOLLOW}`}
           </Button>
         )}
       </UserInfoContainer>
@@ -87,18 +108,16 @@ const UserInfoWrapper = styled.div`
   align-items: center;
   gap: 24px;
   align-self: stretch;
-  background-color: white;
+  background-color: ${ANGOLA_STYLES.color.white};
 `;
 
 const Emoji = styled.div`
-  color: #000;
+  color: ${ANGOLA_STYLES.color.text};
   text-align: center;
-  /* title-lg */
-  font-family: Mabinogi_Classic;
-  font-size: 40px;
+  font-size: ${ANGOLA_STYLES.textSize.titleLg};
   font-style: normal;
   font-weight: 400;
-  line-height: 100%; /* 42px */
+  line-height: 100%;
   letter-spacing: -0.924px;
 `;
 
@@ -110,82 +129,62 @@ const UserProfileContainer = styled.div`
   gap: 20px;
 `;
 
-const Name = styled.div`
-  display: flex;
-  padding: 10px 20px;
-  align-items: center;
-  gap: 10px;
-  border-radius: 27px;
-  background-color: ${(props) => props.color};
-  color: white;
-  font-weight: 600;
-`;
-
 const UserInfoContainer = styled.div`
   display: flex;
+  width: 100%;
   padding: 12px 0px;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   align-self: stretch;
-`;
-
-const UserInfoBox = styled.div`
-  display: flex;
-  color: var(--text, #404040);
-  text-align: center;
-  /* title-sm */
-  font-family: Mabinogi_Classic;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%; /* 27px */
-  letter-spacing: -0.396px;
-  gap: 10px;
 `;
 
 const UserInfoText = styled.div`
   display: flex;
   gap: 10px;
-  color: var(--text, #404040);
+  color: ${ANGOLA_STYLES.color.text};
   text-align: center;
-  /* title-sm */
-  font-family: Mabinogi_Classic;
-  font-size: 18px;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
   font-style: normal;
   font-weight: 600;
-  line-height: 150%; /* 27px */
+  line-height: 150%;
   letter-spacing: -0.396px;
 `;
 
 const Bar = styled.div`
-  color: var(--dark, #9a9a9a);
+  color: ${ANGOLA_STYLES.color.dark};
   text-align: center;
-  /* title-sm */
-  font-family: Mabinogi_Classic;
-  font-size: 18px;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
   font-style: normal;
   font-weight: 600;
-  line-height: 150%; /* 27px */
+  line-height: 150%;
   letter-spacing: -0.396px;
 `;
 
 const Button = styled.button<{ isFollowed: boolean }>`
   display: flex;
-  padding: 8px 16px;
+  width: 135px;
   align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
   gap: 10px;
   border-radius: 27px;
-  border: 2px solid var(--text, #404040);
-  background-color: ${(props) => (props.isFollowed ? '#E5E5E5 ' : '#FFF')};
-  /* md-shadow */
-  box-shadow: 0px 6px 0px 0px #404040;
-  font-size: 12px;
+  border: ${ANGOLA_STYLES.border.default};
+  background-color: ${(props) =>
+    props.isFollowed
+      ? `${ANGOLA_STYLES.color.gray}`
+      : `${ANGOLA_STYLES.color.white}`};
+  box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
   font-weight: 600;
   cursor: pointer;
-  // TODO: hover 색상
   &:hover {
-    background-color: #a4a4a4;
-    color: white;
+    background-color: ${(props) =>
+      props.isFollowed
+        ? `${ANGOLA_STYLES.color.white}`
+        : `${ANGOLA_STYLES.color.gray}`};
+  }
+  &:active {
+    box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
   }
 `;

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface ImageProps {
   src: string;
@@ -18,8 +19,8 @@ const Image = ({ src, alt, ...props }: ImageProps) => {
 export default Image;
 
 const ImageStyles = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  border: 2px solid var(--text, #404040);
+  border: ${ANGOLA_STYLES.border.default};
 `;

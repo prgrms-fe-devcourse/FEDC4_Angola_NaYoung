@@ -6,6 +6,7 @@ import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@store/auth';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import UserInfo from './UserInfo';
 
 const NO_POSTS_LIST_TITLE = '작성한 글이 없습니다.';
@@ -40,23 +41,16 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
             )?._id
           }
           userLevel={calculateLevel(userData)}
-          userColor={getUserLevelInfo(calculateLevel(userData)).userColor}
           userEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
         />
       )}
       <PostsListContainer>
         <PostsListUl>
-          {/* TODO: 작성한 글이 없을 때는 색상 변경? (레드) */}
           <PostsListTitle>
             {userPostsData?.length === 0
               ? NO_POSTS_LIST_TITLE
               : POSTS_LIST_TITLE}
           </PostsListTitle>
-          {/* {userPostsData?.length === 0 ? (
-            <NoPostsListTitle>{NO_POSTS_MESSAGE}</NoPostsListTitle>
-          ) : (
-            <PostsListTitle>{POSTS_LIST_TITLE}</PostsListTitle>
-          )} */}
           {userPostsData?.map((post) => (
             <PostListItem
               key={post._id}
@@ -73,12 +67,11 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
 export default UserPage;
 
 const UserPageWrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   padding: 32px 40px;
   flex-direction: column;
   align-items: center;
-  gap: 60px;
+  gap: 50px;
   flex: 1 0 0;
   align-self: stretch;
 `;
@@ -97,23 +90,10 @@ const PostsListUl = styled.ul`
 `;
 
 const PostsListTitle = styled.div`
-  color: var(--dark, #9a9a9a);
+  color: ${ANGOLA_STYLES.color.dark};
   text-align: center;
-  /* title */
-  font-family: Mabinogi_Classic;
-  font-size: 20px;
+  font-size: ${ANGOLA_STYLES.textSize.title};
   font-style: normal;
   font-weight: 400;
-  line-height: 100%; /* 28px */
+  line-height: 100%;
 `;
-
-// const NoPostsListTitle = styled.div`
-//   color: var(--dark, red);
-//   text-align: center;
-//   /* title */
-//   font-family: Mabinogi_Classic;
-//   font-size: 28px;
-//   font-style: normal;
-//   font-weight: 400;
-//   line-height: 100%; /* 28px */
-// `;
