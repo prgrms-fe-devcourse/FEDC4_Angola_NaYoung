@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import { authInfoState } from '@atoms/index';
+import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import ButtonGroup from './ButtonGroup';
 import NonAuthModal from './NonAuthModal';

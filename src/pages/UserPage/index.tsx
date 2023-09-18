@@ -5,7 +5,7 @@ import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
-import { authInfoState } from '@atoms/index';
+import { authInfoState } from '@store/auth';
 import UserInfo from './UserInfo';
 
 const UserPage = ({ userId = '' }: { userId?: string }) => {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
 import { joinDataBySeparator, splitCommentBySeparator } from '@utils';
 import { calculateLevel } from '@utils';
@@ -11,6 +10,7 @@ import Spinner from '@components/Spinner';
 import { useFetchCreateComment, useFetchDeleteComment } from '@apis/comment';
 import { useFetchCreateNotification } from '@apis/notifications';
 import { useFetchPost } from '@apis/post';
+import { authInfoState } from '@store/auth';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';

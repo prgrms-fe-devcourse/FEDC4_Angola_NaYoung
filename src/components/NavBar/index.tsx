@@ -1,12 +1,12 @@
-import { authInfoState } from '@atoms';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
+import { authInfoState } from '@store/auth';
 import { AuthMenuBar, CommonMenuBar, NonAuthMenuBar } from './MenuBar';
 
 const NavBar = () => {
   const auth = useRecoilValue(authInfoState);
   return (
-    <NavBarContainer>  
+    <NavBarContainer>
       <MenuBarContainer>
         <CommonMenuBar />
       </MenuBarContainer>

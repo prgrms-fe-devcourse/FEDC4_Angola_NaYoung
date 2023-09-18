@@ -1,6 +1,6 @@
-import { authInfoState } from '@atoms';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
+import { authInfoState } from '@store/auth';
 
 const useAxiosInstance = () => {
   const auth = useRecoilValue(authInfoState);

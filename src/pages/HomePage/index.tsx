@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
 import { useFetchPartPosts } from '@apis/post';
-import { authInfoState } from '@atoms/index';
+import { authInfoState } from '@store/auth';
 import { calculateLevel } from '@utils/calculateUserLevel';
 import { Post } from '@type/index';
 

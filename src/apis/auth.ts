@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from 'react-query';
-import { authInfoState } from '@atoms';
 import { User } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useSetRecoilState } from 'recoil';
+import { authInfoState } from '@store/auth';
 import useAxiosInstance from './instance';
 
 interface SignUpRequestBody {
