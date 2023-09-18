@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
 import { useRecoilValue } from 'recoil';
@@ -31,10 +31,20 @@ const PostListItem = ({
   const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
   const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const confirmButtonRef = useRef<null | HTMLButtonElement>(null);
 
   const handleClickOpenModal = () => {
     setIsModalOpen(true);
   };
+
+  useEffect(() => {
+    if (!confirmButtonRef.current) {
+      return;
+    }
+    if (isModalOpen) {
+      confirmButtonRef.current.focus();
+    }
+  }, [isModalOpen]);
 
   const handleClickDeletedPost = () => {
     deletePostMutate({ id });
@@ -82,7 +92,11 @@ const PostListItem = ({
       {isModalOpen && (
         <Modal onClose={handleClickCloseModal}>
           <div>정말로 삭제하시겠습니까?</div>
-          <button onClick={handleClickDeletedPost}>확인</button>
+          <button
+            ref={confirmButtonRef}
+            onClick={handleClickDeletedPost}>
+            확인
+          </button>
           <button onClick={handleClickCloseModal}>취소</button>
         </Modal>
       )}
