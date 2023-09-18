@@ -6,7 +6,13 @@ import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@store/auth';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import MyInfo from './MyInfo';
+
+// TODO: 유저페이지와 마이페이지의 포스트 리스트 부분이 똑같다..! 공통으로 빼야 할까?
+
+const NO_POSTS_LIST_TITLE = '작성한 글이 없습니다.';
+const POSTS_LIST_TITLE = '작성한 포스트';
 
 const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
@@ -20,7 +26,7 @@ const MyPage = () => {
   }
 
   return (
-    <div>
+    <MyPageWrapper>
       {userData && (
         <MyInfo
           id={userData._id}
@@ -34,29 +40,56 @@ const MyPage = () => {
           myEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
         />
       )}
-      <ul>
-        {userPostsData?.length === 0 ? (
-          <NoPostMessage>작성한 글이 없습니다.</NoPostMessage>
-        ) : (
-          userPostsData?.map((post) => (
+      <UserPostsListContainer>
+        <UserPostsListUl>
+          <UserPostsListTitle>
+            {userPostsData?.length === 0
+              ? NO_POSTS_LIST_TITLE
+              : POSTS_LIST_TITLE}
+          </UserPostsListTitle>
+          {userPostsData?.map((post) => (
             <PostListItem
               key={post._id}
               id={post._id}
               title={post.title}
             />
-          ))
-        )}
-      </ul>
-    </div>
+          ))}
+        </UserPostsListUl>
+      </UserPostsListContainer>
+    </MyPageWrapper>
   );
 };
 
 export default MyPage;
 
-const NoPostMessage = styled.div`
+const MyPageWrapper = styled.div`
   display: flex;
-  margin-top: 30px;
-  width: 80%;
+  padding: 32px 40px;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  flex: 1 0 0;
+  align-self: stretch;
+`;
+
+const UserPostsListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 24px;
+  align-self: stretch;
+`;
+
+const UserPostsListUl = styled.ul`
+  width: 100%;
+`;
+
+const UserPostsListTitle = styled.div`
+  color: ${ANGOLA_STYLES.color.dark};
+  text-align: center;
+  font-size: ${ANGOLA_STYLES.textSize.title};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
 `;
