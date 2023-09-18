@@ -7,6 +7,8 @@ import { ANGOLA_STYLES } from '@styles/commonStyles';
 import useFollow from './hooks/useFollow';
 
 const PROFILE_IMAGE_ALT = '프로필 이미지';
+const DEFAULT_PROFILE_IMAGE_SRC =
+  'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg';
 const LEVEL = 'Level : ';
 const FOLLOWER = '팔로워 : ';
 const FOLLOWING = '팔로잉 : ';
@@ -50,11 +52,7 @@ const UserInfo = ({
       <UserProfileContainer>
         <Emoji>{userEmoji}</Emoji>
         <Image
-          src={
-            image
-              ? image
-              : 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg'
-          }
+          src={image ? image : `${DEFAULT_PROFILE_IMAGE_SRC}`}
           alt={PROFILE_IMAGE_ALT}
         />
       </UserProfileContainer>
