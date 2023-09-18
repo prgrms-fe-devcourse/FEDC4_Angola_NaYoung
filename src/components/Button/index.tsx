@@ -1,31 +1,26 @@
-import { CSSProperties } from 'react';
+import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import styled from '@emotion/styled';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
-interface ButtonProps {
-  children?: string;
-  disabled?: boolean;
-  handleClick?: () => void;
-  style?: CSSProperties;
+interface ButtonProps
+  extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
   size?: 'sm' | 'md';
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  isFollowed?: boolean;
 }
 
 const Button = ({
   children,
-  disabled = false,
-  handleClick,
-  style,
   size = 'sm',
   type = 'submit',
+  isFollowed,
+  ...props
 }: ButtonProps) => {
   return (
     <ButtonStyled
       size={size}
-      disabled={disabled}
-      onClick={handleClick}
-      style={style}
-      type={type}>
+      type={type}
+      isFollowed={isFollowed}
+      {...props}>
       {children}
     </ButtonStyled>
   );
@@ -33,16 +28,22 @@ const Button = ({
 
 export default Button;
 
-const ButtonStyled = styled.button<{ size: string }>`
+const ButtonStyled = styled.button<ButtonProps>`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   height: 88px;
   padding: 16px 24px;
   background-color: ${ANGOLA_STYLES.color.white};
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
+
+  background-color: ${({ isFollowed }) =>
+    isFollowed
+      ? `${ANGOLA_STYLES.color.gray}`
+      : `${ANGOLA_STYLES.color.white}`};
 
   ${(props) =>
     props.size === 'sm'
