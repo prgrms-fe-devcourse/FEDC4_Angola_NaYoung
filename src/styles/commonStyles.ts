@@ -1,5 +1,3 @@
-import { css } from '@emotion/react';
-
 export const ANGOLA_STYLES = {
   color: {
     white: '#ffffff',
@@ -45,23 +43,3 @@ export const ANGOLA_STYLES = {
     default: '2px solid #404040',
   },
 } as const;
-
-export const commonStyles = css`
-  @font-face {
-    font-family: 'MabinogiClassicR';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/MabinogiClassicR.woff2')
-      format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  body {
-    background-color: ${ANGOLA_STYLES.color.gray};
-    padding: 0 80px;
-    margin: 0;
-  }
-  * {
-    font-family: 'MabinogiClassicR';
-    color: ${ANGOLA_STYLES.color.text};
-    font-size: ${ANGOLA_STYLES.textSize.title};
-  }
-`;
