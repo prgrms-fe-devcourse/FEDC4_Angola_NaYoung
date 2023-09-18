@@ -8,6 +8,7 @@ import Modal from '@components/Modal';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
 import { useFetchCreateComment, useFetchDeleteComment } from '@apis/comment';
+import { useFetchCreateNotification } from '@apis/notifications';
 import { useFetchPost } from '@apis/post';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
@@ -21,18 +22,20 @@ interface PostPageProps {
 
 const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const auth = useRecoilValue(authInfoState);
-  const userId = auth?.userId;
+  const myId = auth?.userId;
   const [votedValue, setVotedValue] = useState<string>('');
-  const [submitValue, setSubmitValue] = useState<string | undefined>(''); // a, b, undefined
+  const [submitValue, setSubmitValue] = useState<string | undefined>('');
+  const [isVoted, setIsVoted] = useState(false);
   const { postData, postRefetch } = useFetchPost(postId);
   const {
     createCommentMutate,
     isCreateCommentSuccess,
     isCreateCommentLoading,
   } = useFetchCreateComment();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { deleteCommentMutate, isDeleteCommentError, isDeleteCommentSuccess } =
     useFetchDeleteComment();
+  const { createNotificationMutate } = useFetchCreateNotification();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     setSubmitValue(voted);
@@ -41,7 +44,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   useEffect(() => {
     if (postData) {
       const userComment = postData?.comments.find(
-        (comment) => comment.author._id === userId,
+        (comment) => comment.author._id === myId,
       );
       if (!userComment) {
         setSubmitValue('');
@@ -51,7 +54,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
       setVotedValue(userVote);
       setSubmitValue(userVote);
     }
-  }, [postData?.comments, userId, postData, submitValue]);
+  }, [postData?.comments, myId, postData, submitValue]);
 
   useEffect(() => {
     if (submitValue && show) {
@@ -62,6 +65,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   const handleClickItem = (value: string) => {
     votedValue === value ? setVotedValue('') : setVotedValue(value);
+    setSubmitValue('');
   };
 
   const handleSubmitComment = (voteValue: string, comment: string) => {
@@ -74,7 +78,26 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     searchParams.set('voted', voteValue);
     setSearchParams(searchParams);
     setSubmitValue('');
+    setIsVoted(true);
   };
+
+  // 투표 완료시, 알림 보내주기.
+  useEffect(() => {
+    if (postData && isVoted && myId) {
+      const userComment = postData.comments.find(
+        (comment) => comment.author._id === myId,
+      );
+
+      if (!userComment) return;
+      setIsVoted(false);
+      createNotificationMutate({
+        notificationType: 'COMMENT',
+        notificationTypeId: userComment._id,
+        userId: myId,
+        postId: postData._id,
+      });
+    }
+  }, [isVoted, postData, myId, createNotificationMutate]);
 
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
@@ -97,7 +120,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
           postTitle={postData.title}
           numberOfComments={postData.comments.length}
           numberOfLikes={postData.likes.length}
-          likeId={postData.likes.find((like) => like.user === userId)?._id}
+          likeId={postData.likes.find((like) => like.user === myId)?._id}
           voteValue={votedValue}
           onVote={(value: string) => handleClickItem(value)}
         />
