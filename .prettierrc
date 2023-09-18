@@ -17,7 +17,7 @@
     "^@components/(.*)$",
     "^@apis/(.*)$",
     "^@hooks/(.*)$",
-    "^@atoms/(.*)$",
+    "^@store/(.*)$",
     "^@storage/(.*)$",
     "^@utils/(.*)$",
     "^@styles/(.*)$",
