@@ -152,6 +152,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
             <CommentList
               comments={postData.comments}
               deleteComment={deleteComment}
+              userId={userId}
             />
           )}
           {isDeleteCommentError && (
