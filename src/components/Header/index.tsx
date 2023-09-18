@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface HeaderProps {
   title: string;
@@ -44,29 +45,32 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
   return (
     <Container>
       {sortProps && (
-        <SortSelect
-          id="orderSelect"
-          name="order"
-          value={selectValue}
-          onChange={(e) => {
-            handleChangeSelect(e.target.value);
-          }}>
-          {target === 'user' ? (
-            <>
-              <option value="follower">팔로워 순</option>
-              <option value="level">레벨 순</option>
-            </>
-          ) : (
-            <>
-              <option value="recent">최신 순</option>
-              <option value="like">좋아요 순</option>
-            </>
-          )}
-        </SortSelect>
+        <SelectContainer>
+          <SortSelect
+            id="orderSelect"
+            name="order"
+            value={selectValue}
+            onChange={(e) => {
+              handleChangeSelect(e.target.value);
+            }}>
+            {target === 'user' ? (
+              <>
+                <option value="follower">팔로워 순</option>
+                <option value="level">레벨 순</option>
+              </>
+            ) : (
+              <>
+                <option value="recent">최신 순</option>
+                <option value="like">좋아요 순</option>
+              </>
+            )}
+          </SortSelect>
+          <SortDirection>▶</SortDirection>
+        </SelectContainer>
       )}
 
       <Title>
-        <Keyword>{keyword || ''}</Keyword>
+        {keyword || ''}
         {title}
       </Title>
 
@@ -77,6 +81,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             onClick={() => handleClickTabBar('user')}>
             유저
           </TabBarList>
+          |
           <TabBarList
             className={target === 'post' ? 'bold' : ''}
             onClick={() => handleClickTabBar('post')}>
@@ -93,59 +98,79 @@ export default Header;
 const Container = styled.div`
   box-sizing: border-box;
   display: flex;
-  position: relative;
-  height: 84px;
+  height: 48px;
   padding: 0px 60px;
-  justify-content: center;
+  position: relative;
   align-items: center;
-  align-self: stretch;
-
+  width: 100%;
+  overflow: hidden;
   border-radius: 55px 55px 0px 0px;
-  border-bottom: 4px solid var(--text, #404040);
+  border: ${ANGOLA_STYLES.border.default};
   background: var(--dark, #9a9a9a);
 `;
 
-const SortSelect = styled.select`
+const SelectContainer = styled.div`
+  position: relative;
   position: absolute;
-  left: 40px;
-  width: 100px;
-  border-radius: 20px;
-  cursor: pointer;
-  padding: 5px 10px;
-  outline: none;
+  top: 50%;
+  left: 160px;
+  transform: translate(-50%, -50%);
 `;
 
+const SortSelect = styled.select`
+  display: flex;
+  width: 200px;
+  height: 40px;
+  padding: 0px 20px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 44px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: #fff;
+  appearance: none;
+`;
+
+const SortDirection = styled.div`
+  transform: rotate(90deg);
+  position: absolute;
+  z-index: 20px;
+  top: 0;
+  right: 30px;
+  bottom: 0;
+`;
 const Title = styled.div`
-  color: var(--white, #fff);
-  justify-self: center;
-  font-family: Noto Sans KR;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%;
-`;
-
-const Keyword = styled.span`
-  font-weight: 600;
+  color: #fff;
+  font-size: ${ANGOLA_STYLES.textSize.title};
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const TabBar = styled.ul`
+  width: 200px;
+  height: 40px;
   display: flex;
-  position: absolute;
-  right: 40px;
+  padding: 0px 20px;
   list-style: none;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  right: -60px;
+  transform: translate(-50%, -50%);
 `;
 
 const TabBarList = styled.li`
-  padding-left: 10px;
+  color: #fff;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
   cursor: pointer;
-
-  &:first-of-type {
-    padding-right: 10px;
-    border-right: 1px solid black;
-  }
-
   &.bold {
-    font-weight: 800;
+    text-shadow:
+      -2.5px 0 black,
+      0 2.5px black,
+      2.5px 0 black,
+      0 -2.5px black;
   }
 `;
