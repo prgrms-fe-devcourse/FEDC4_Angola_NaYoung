@@ -133,7 +133,7 @@ const CommentSubWrapper = styled.div`
 const VotedItem = styled.div`
   display: flex;
   width: 60px;
-  height: 100%;
+  height: 60px;
   padding: 12px 12px 0 12px;
   justify-content: center;
   align-items: center;
