@@ -11,6 +11,7 @@ const Modal = ({ onClose: handleClose, children }: ModalProps) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === 'Escape') {
+        e.preventDefault();
         handleClose();
       }
     };
