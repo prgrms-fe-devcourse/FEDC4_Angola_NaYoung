@@ -6,6 +6,8 @@ import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import useFollow from './hooks/useFollow';
 
+// TODO: (지윤) 유저 페이지 Default 이미지 넣기, 버튼 hover 색상
+
 const PROFILE_IMAGE_ALT = '프로필 이미지';
 const DEFAULT_PROFILE_IMAGE_SRC =
   'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg';
@@ -46,7 +48,6 @@ const UserInfo = ({
     followerId,
   });
 
-  // TODO: (지윤) 유저 페이지 Default 이미지 넣기
   return (
     <UserInfoWrapper>
       <UserProfileContainer>
