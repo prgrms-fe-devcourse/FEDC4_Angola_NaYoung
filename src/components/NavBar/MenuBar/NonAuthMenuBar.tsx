@@ -4,8 +4,8 @@ import LinkButton from '@components/LinkButton';
 const NonAuthMenuBar = () => {
   return (
     <>
-      <RightMenuLinkButton to="/login">로그인</RightMenuLinkButton>
-      <RightMenuLinkButton to="/signup">회원가입</RightMenuLinkButton>
+      <RightMenuLinkButton to="/login">login</RightMenuLinkButton>
+      <RightMenuLinkButton to="/signup">sign up</RightMenuLinkButton>
     </>
   );
 };

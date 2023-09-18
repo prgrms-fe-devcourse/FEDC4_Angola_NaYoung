@@ -29,6 +29,7 @@ const LinkStyled = styled(Link)`
   padding: 0px 20px;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
 
   border-radius: 30px;
   border: ${ANGOLA_STYLES.border.default};

@@ -31,7 +31,7 @@ const NavBarContainer = styled.div`
 
 const MenuBarContainer = styled.div`
   box-sizing: border-box;
-  height: 100px; // TODO:MinwooP - figma에는 없는데 이렇게 안 해주면 이상함 !  
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
