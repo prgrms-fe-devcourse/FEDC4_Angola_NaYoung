@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
-import { getUserLevelInfo, pxToRem, voteRatio } from '@utils';
+import { getUserLevelInfo, voteRatio } from '@utils';
+import { ANGOLA_STYLES } from '../../styles/commonStyles';
 
 interface TurnoutProps {
   comments: Comment[];
@@ -48,20 +49,19 @@ export default Turnout;
 
 const TurnoutContainer = styled.div`
   display: flex;
-  padding: ${pxToRem(16)};
-  border: ${pxToRem(2)} solid #404040;
-  border-radius: ${pxToRem(24)} ${pxToRem(24)} 0 0;
+  padding: 16px;
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 24px 24px 0 0;
   z-index: 10;
 `;
 
 const TurnoutBar = styled.div`
   display: flex;
-  display: row;
-  border: ${pxToRem(2)} solid #404040;
-  border-radius: ${pxToRem(40)};
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 40px;
   width: 100%;
   overflow: hidden;
-  box-shadow: 0 ${pxToRem(4)} 0 0 #404040;
+  box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};
 `;
 
 const ARatio = styled.div<{
@@ -69,19 +69,17 @@ const ARatio = styled.div<{
   votedValue: string | null;
   postColor: string;
 }>`
-  padding: ${pxToRem(8)} ${pxToRem(24)} 0 ${pxToRem(24)};
+  padding: 8px 24px 0 24px;
   justify-content: center;
   align-items: center;
-  border-right: ${pxToRem(1)} solid;
-  font-size: ${pxToRem(18)};
-  font-style: normal;
-  font-weight: 400;
+  border-right: 1px solid;
   line-height: 150%;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
 
   width: ${(props) => props.ratio}%;
   display: ${(props) => (props.ratio == 0 ? 'none' : 'flex')};
   background-color: ${(props) =>
-    props.votedValue === 'A' ? props.postColor : '#e5e5e5'};
+    props.votedValue === 'A' ? props.postColor : ANGOLA_STYLES.color.gray};
 `;
 
 const BRatio = styled.div<{
@@ -89,16 +87,15 @@ const BRatio = styled.div<{
   votedValue: string | null;
   postColor: string;
 }>`
-  padding: ${pxToRem(8)} ${pxToRem(24)} 0 ${pxToRem(24)};
+  padding: 8px 24px 0 24px;
   justify-content: center;
   align-items: center;
-  border-left: ${pxToRem(1)} solid;
-  font-size: ${pxToRem(18)};
-  font-style: normal;
-  font-weight: 400;
+  border-left: 1px solid;
   line-height: 150%;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+
   width: ${(props) => props.ratio}%;
   display: ${(props) => (props.ratio == 0 ? 'none' : 'flex')};
   background-color: ${(props) =>
-    props.votedValue === 'B' ? props.postColor : '#e5e5e5'};
+    props.votedValue === 'B' ? props.postColor : ANGOLA_STYLES.color.gray};
 `;

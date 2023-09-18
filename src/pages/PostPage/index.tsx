@@ -14,6 +14,7 @@ import { useFetchCreateComment, useFetchDeleteComment } from '@apis/comment';
 import { useFetchCreateNotification } from '@apis/notifications';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
+import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
@@ -152,13 +153,13 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
             <CommentList
               comments={postData.comments}
               deleteComment={deleteComment}
-              userId={userId}
+              myId={myId}
             />
           )}
           {isDeleteCommentError && (
             <Modal onClose={() => window.location.reload()}>
               <CommentDeletionFailModal>
-                댓글 삭제에 실패했습니다. ㅋ
+                댓글 삭제에 실패했습니다.
               </CommentDeletionFailModal>
             </Modal>
           )}
@@ -191,6 +192,5 @@ const CommentDeletionFailModal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
-  font-weight: 1rem;
+  font-size: ${ANGOLA_STYLES.textSize.titleLg};
 `;

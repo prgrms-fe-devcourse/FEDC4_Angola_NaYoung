@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styled from '@emotion/styled';
-import { pxToRem } from '@utils';
 import { ButtonStyled } from '@components/Button';
+import { ANGOLA_STYLES } from '../../styles/commonStyles';
 
 interface MakeCommentProps {
   votedValue: string;
@@ -61,9 +61,9 @@ const MakeComment = ({
 export default MakeComment;
 
 const MakeCommentContainer = styled.div`
-  padding: ${pxToRem(16)};
-  border: ${pxToRem(2)} solid #404040;
-  border-radius: ${pxToRem(24)} ${pxToRem(24)} 0 0;
+  padding: 16px;
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 24px 24px 0 0;
   z-index: 10;
 `;
 
@@ -71,84 +71,82 @@ const Form = styled.form`
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap: ${pxToRem(16)};
+  gap: 16px;
 `;
 
 const ItemButtonsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: ${pxToRem(120)};
+  height: 120px;
 `;
 
 const ItemButtonA = styled(ButtonStyled)<{ votedValue: string }>`
-  width: ${pxToRem(80)};
+  width: 80px;
   height: 50%;
-  padding-top: ${pxToRem(24)};
+  padding-top: 24px;
   justify-content: center;
   align-items: center;
-  box-shadow: none;
-  font-size: ${pxToRem(24)};
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  border-radius: ${pxToRem(40)} ${pxToRem(40)} 0 0;
+  font-size: ${ANGOLA_STYLES.textSize.title};
+  border-radius: 40px 40px 0 0;
   border-bottom: none;
 
-  color: ${(props) => (props.votedValue === 'A' ? '#404040' : '#9a9a9a')};
+  color: ${(props) =>
+    props.votedValue === 'A'
+      ? ANGOLA_STYLES.color.text
+      : ANGOLA_STYLES.color.dark};
 `;
 
 const ItemButtonB = styled(ButtonStyled)<{ votedValue: string }>`
-  width: ${pxToRem(80)};
+  width: 80px;
   height: 50%;
   justify-content: center;
   align-items: center;
-  font-size: ${pxToRem(24)};
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  border-radius: 0 0 ${pxToRem(40)} ${pxToRem(40)};
+  font-size: ${ANGOLA_STYLES.textSize.title};
+  border-radius: 0 0 40px 40px;
 
-  color: ${(props) => (props.votedValue === 'B' ? '#404040' : '#9a9a9a')};
+  color: ${(props) =>
+    props.votedValue === 'B'
+      ? ANGOLA_STYLES.color.text
+      : ANGOLA_STYLES.color.dark};
 `;
 
 const Comment = styled.textarea`
   display: flex;
   flex-direction: column;
-  padding: ${pxToRem(16)} ${pxToRem(24)};
-  height: ${pxToRem(120)};
+  padding: 16px 24px;
   align-items: flex-start;
   flex: 1 0 0;
-  border-radius: ${pxToRem(40)};
-  border: ${pxToRem(2)} solid #404040;
-  background-color: #e5e5e5;
-  box-shadow: 0px 6px 0px 0px rgba(64, 64, 64, 0.5) inset;
+  border-radius: 40px;
+  border: ${ANGOLA_STYLES.border.default};
+  background-color: ${ANGOLA_STYLES.color.gray};
+  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
   resize: none;
-  font-size: ${pxToRem(16)};
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
   letter-spacing: -0.352px;
+
+  &:focus {
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
+  ::placeholder {
+    font-size: ${ANGOLA_STYLES.textSize.text};
+  }
 `;
 
 const SubmitButton = styled(ButtonStyled)<{ votedValue: string }>`
-  width: ${pxToRem(120)};
-  height: ${pxToRem(120)};
-  padding: ${pxToRem(16)} 0;
+  width: 120px;
+  height: 120px;
+  padding: 16px 0;
   justify-content: center;
   align-items: center;
-  border-radius: ${pxToRem(40)};
-  font-size: ${pxToRem(20)};
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
+  border-radius: 40px;
+  font-size: ${ANGOLA_STYLES.textSize.title};
 
-  color: ${(props) => (props.votedValue ? '#404040' : '#9a9a9a')};
+  color: ${(props) =>
+    props.votedValue ? ANGOLA_STYLES.color.text : ANGOLA_STYLES.color.dark};
 
   &:hover {
     ${(props) =>
       !props.votedValue &&
-      `box-shadow: 0px 6px 0px 0px #404040; border: ${pxToRem(
-        2,
-      )} solid #404040`};
+      `${ANGOLA_STYLES.shadow.buttonSm.hover}; ${ANGOLA_STYLES.border.default};`};
   }
 `;
