@@ -19,7 +19,7 @@ const Modal = ({
         e.preventDefault();
         handleConfirm();
       }
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' || e.key === 'Enter') {
         e.preventDefault();
         handleClose();
       }
