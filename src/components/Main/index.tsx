@@ -57,6 +57,7 @@ export default Main;
 
 const MainContainer = styled.div`
   box-sizing: border-box;
+  height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,10 +74,12 @@ const MainContainer = styled.div`
 const PageContainer = styled.div`
   box-sizing: border-box;
   display: flex;
+  min-height: calc(100vh - 148px);
   padding: 32px 40px 0px 40px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
+  overflow: auto;
 `;
