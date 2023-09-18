@@ -45,6 +45,7 @@ const TagContainer = styled.div<{ level: number }>`
   white-space: nowrap;
   padding: 8px 12px 4px 12px;
   border-radius: 100px;
+  height: fit-content;
   > div {
     color: ${({ level }) => ANGOLA_STYLES.color.levels[level].text};
   }

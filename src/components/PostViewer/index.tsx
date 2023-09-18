@@ -87,12 +87,8 @@ const PostViewer = ({
 export default PostViewer;
 
 const PostContainer = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  > h1 {
-    font-size: 20px;
-  }
+  gap: 24px;
 `;
