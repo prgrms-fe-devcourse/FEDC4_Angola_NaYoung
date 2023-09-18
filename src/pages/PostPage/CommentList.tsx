@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import { Comment } from '@type';
 import { pxToRem, splitCommentBySeparator } from '@utils';
 import { ButtonStyled } from '@components/Button';
+import Button from '@components/Button';
+import Modal from '@components/Modal';
 import { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
 
 interface CommentListProps {
@@ -66,6 +68,15 @@ const CommentList = ({ comments, deleteComment, userId }: CommentListProps) => {
                 </Cancel>
               )}
             </CommentSubWrapper>
+            {
+              <Modal onClose={() => window.location.reload()}>
+                정말로 댓글을 삭제하시겠습니까?
+                <ButtonContainer>
+                  <Button>네</Button>
+                  <Button>아니요</Button>
+                </ButtonContainer>
+              </Modal>
+            }
           </CommentWrapper>
         );
       })}
@@ -148,4 +159,9 @@ const Cancel = styled(ButtonStyled)`
   &:hover {
     border: ${pxToRem(2)} solid #404040;
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
