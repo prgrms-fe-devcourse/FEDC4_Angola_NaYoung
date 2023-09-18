@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { joinDataBySeparator, splitCommentBySeparator } from '@utils';
-import { calculateLevel } from '@utils';
+import {
+  calculateLevel,
+  joinDataBySeparator,
+  splitCommentBySeparator,
+} from '@utils';
 import { useRecoilValue } from 'recoil';
 import Modal from '@components/Modal';
 import PostViewer from '@components/PostViewer';
@@ -133,7 +136,10 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
             isCreateCommentLoading ? (
               <Spinner />
             ) : (
-              <Turnout comments={postData?.comments} />
+              <Turnout
+                comments={postData?.comments}
+                authorLevel={calculateLevel(postData.author)}
+              />
             )
           ) : (
             <MakeComment

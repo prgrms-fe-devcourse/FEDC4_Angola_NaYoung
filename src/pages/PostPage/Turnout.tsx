@@ -1,23 +1,44 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
-import { voteRatio } from '@utils/voteRatio';
+import { getUserLevelInfo, pxToRem, voteRatio } from '@utils';
 
 interface TurnoutProps {
   comments: Comment[];
+  authorLevel: number;
 }
-const Turnout = ({ comments }: TurnoutProps) => {
+const Turnout = ({ comments, authorLevel }: TurnoutProps) => {
+  const [searchParams] = useSearchParams();
+  const votedValue = searchParams.get('voted');
   const [ratios, setRatio] = useState([0, 0]);
+  const [postColor, setPostColor] = useState(
+    getUserLevelInfo(authorLevel).userColor,
+  );
 
   useEffect(() => {
     comments && comments.length > 0 && setRatio(voteRatio(comments));
   }, [comments]);
 
+  useEffect(() => {
+    setPostColor(getUserLevelInfo(authorLevel).userColor);
+  }, [authorLevel, setPostColor]);
+
   return (
     <TurnoutContainer>
       <TurnoutBar>
-        <ARatio ratio={ratios[0]}>A: {ratios[0]}</ARatio>
-        <BRatio ratio={ratios[1]}>B: {ratios[1]}</BRatio>
+        <ARatio
+          ratio={ratios[0]}
+          votedValue={votedValue}
+          postColor={postColor}>
+          A: {ratios[0]}%
+        </ARatio>
+        <BRatio
+          ratio={ratios[1]}
+          votedValue={votedValue}
+          postColor={postColor}>
+          B: {ratios[1]}%
+        </BRatio>
       </TurnoutBar>
     </TurnoutContainer>
   );
@@ -27,74 +48,57 @@ export default Turnout;
 
 const TurnoutContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  padding: 1rem;
-  border: 1px solid black;
-  z-index: 100;
-  gap: 1rem;
-  justify-content: center;
+  padding: ${pxToRem(16)};
+  border: ${pxToRem(2)} solid #404040;
+  border-radius: ${pxToRem(24)} ${pxToRem(24)} 0 0;
+  z-index: 10;
 `;
 
 const TurnoutBar = styled.div`
   display: flex;
   display: row;
-  border: 1px solid black;
-  border-radius: 3rem;
+  border: ${pxToRem(2)} solid #404040;
+  border-radius: ${pxToRem(40)};
   width: 100%;
   overflow: hidden;
+  box-shadow: 0 ${pxToRem(4)} 0 0 #404040;
 `;
 
-const ARatio = styled.div<{ ratio: number }>`
-  padding: 1rem;
-  font-weight: 700;
-  font-size: 1.3rem;
-  border-right: 1px solid;
+const ARatio = styled.div<{
+  ratio: number;
+  votedValue: string | null;
+  postColor: string;
+}>`
+  padding: ${pxToRem(8)} ${pxToRem(24)} 0 ${pxToRem(24)};
+  justify-content: center;
+  align-items: center;
+  border-right: ${pxToRem(1)} solid;
+  font-size: ${pxToRem(18)};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+
   width: ${(props) => props.ratio}%;
-  ${(props) => {
-    if (props.ratio == 0) {
-      return `display: none`;
-    } else {
-      return props.ratio >= 50
-        ? `
-      background-image: linear-gradient(
-        45deg,
-        #ffa8b8 25%,
-        #8ee2e2 25% 50%,
-        #ffa8b8 50% 75%,
-        #8ee2e2 75%
-      );
-      background-size: 50px 50px;
-      background-repeat: repeat;
-    `
-        : `background-color: #80808050`;
-    }
-  }}
+  display: ${(props) => (props.ratio == 0 ? 'none' : 'flex')};
+  background-color: ${(props) =>
+    props.votedValue === 'A' ? props.postColor : '#e5e5e5'};
 `;
 
-const BRatio = styled.div<{ ratio: number }>`
-  padding: 1rem;
-  font-weight: 700;
-  font-size: 1.3rem;
-  text-align: end;
-  border-left: 1px solid;
+const BRatio = styled.div<{
+  ratio: number;
+  votedValue: string | null;
+  postColor: string;
+}>`
+  padding: ${pxToRem(8)} ${pxToRem(24)} 0 ${pxToRem(24)};
+  justify-content: center;
+  align-items: center;
+  border-left: ${pxToRem(1)} solid;
+  font-size: ${pxToRem(18)};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
   width: ${(props) => props.ratio}%;
-  ${(props) => {
-    if (props.ratio == 0) {
-      return `display: none`;
-    } else {
-      return props.ratio >= 50
-        ? `
-      background-image: linear-gradient(
-        45deg,
-        #ffa8b8 25%,
-        #8ee2e2 25% 50%,
-        #ffa8b8 50% 75%,
-        #8ee2e2 75%
-      );
-      background-size: 50px 50px;
-      background-repeat: repeat;
-    `
-        : `background-color: #80808050`;
-    }
-  }}
+  display: ${(props) => (props.ratio == 0 ? 'none' : 'flex')};
+  background-color: ${(props) =>
+    props.votedValue === 'B' ? props.postColor : '#e5e5e5'};
 `;
