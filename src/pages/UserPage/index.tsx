@@ -23,6 +23,8 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
     return <Spinner />;
   }
 
+  //console.log(userData, userPostsData, userId);
+
   return (
     <UserPageWrapper>
       {userData && (
@@ -49,7 +51,7 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
               ? USER_POSTS_TITLE.NO_POSTS
               : USER_POSTS_TITLE.POSTS}
           </PostsListTitle>
-          {userPostsData?.map((post) => (
+          {userData?.posts.map((post) => (
             <PostListItem
               key={post._id}
               id={post._id}
