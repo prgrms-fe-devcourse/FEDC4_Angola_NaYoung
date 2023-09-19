@@ -1,22 +1,12 @@
-import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import Icon from '@components/Icon';
+import Image from '@components/Image';
 import LinkButton from '@components/LinkButton';
 import NameTag from '@components/NameTag';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
-
-const PROFILE_LINK_BUTTON_STYLES: CSSProperties = {
-  all: 'unset',
-  display: 'flex',
-  width: 50,
-  height: 50,
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: '50%',
-};
 
 interface UserListItemProps {
   id: string;
@@ -40,41 +30,27 @@ const UserListItem = ({
 
   return (
     <ListItemContainer>
-      {myId === id ? (
-        <LinkButton
-          to={`/mypage`}
-          style={PROFILE_LINK_BUTTON_STYLES}>
-          <ProfileImage
-            src={
-              image
-                ? image
-                : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
-            }
-            alt="프로필"
-          />
-        </LinkButton>
-      ) : (
-        <LinkButton
-          to={`/user/${id}`}
-          style={PROFILE_LINK_BUTTON_STYLES}>
-          <ProfileImage
-            src={
-              image
-                ? image
-                : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
-            }
-            alt="프로필"
-          />
-        </LinkButton>
-      )}
+      <Image
+        src={
+          image
+            ? image
+            : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
+        }
+        alt="프로필"
+        size={60}
+        style={{ margin: '0 20px' }}
+      />
       <UserInfo>
-        <NameTag
-          level={level}
-          userName={name}
-          userId={id}
-          userLevel={level}
-          isNav={true}
-          showLevel={false}></NameTag>
+        <div className="user_name">
+          <NameTag
+            level={level}
+            userName={name}
+            userId={id}
+            userLevel={level}
+            isNav={true}
+            showLevel={false}></NameTag>
+        </div>
+
         <LevelAndFollowers>
           <div>
             {userEmoji} Lv.{level}
@@ -84,7 +60,7 @@ const UserListItem = ({
           </div>
         </LevelAndFollowers>
       </UserInfo>
-      <More>
+      <More className="more">
         {myId === id ? (
           <LinkButton
             to={`/mypage`}
@@ -113,17 +89,12 @@ const ListItemContainer = styled.li`
   width: 100%;
   border-radius: 24px;
   border: ${ANGOLA_STYLES.border.default};
-  background: #fff;
-  box-shadow: 0px 6px 0px 0px #404040;
-`;
-
-const ProfileImage = styled.img`
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: ${ANGOLA_STYLES.border.default};
-  margin: 0px 20px;
-  background: #9a9a9a;
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+  overflow: hidden;
+  &:has(.user_name:hover, .more:hover) {
+    box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
+  }
 `;
 
 const UserInfo = styled.div`
