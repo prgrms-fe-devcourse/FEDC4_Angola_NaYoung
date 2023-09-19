@@ -1,6 +1,12 @@
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
+import { useRecoilValue } from 'recoil';
+import Icon from '@components/Icon';
 import LinkButton from '@components/LinkButton';
+import Modal from '@components/Modal';
+import { useFetchDeletePost, useFetchUserPosts } from '@apis/post';
+import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 
 interface PostListItemProps {
@@ -9,6 +15,7 @@ interface PostListItemProps {
   title: string;
   likes?: number;
   comments?: number;
+  canDeletePost?: boolean;
 }
 
 const PostListItem = ({
@@ -17,8 +24,33 @@ const PostListItem = ({
   title,
   likes,
   comments,
+  canDeletePost,
 }: PostListItemProps) => {
+  const auth = useRecoilValue(authInfoState);
   const { title: postTitle } = splitPostBySeparator(title);
+  const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
+  const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
+  const [toggleModal, setToggleModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setToggleModal(() => true);
+  };
+
+  const handleCloseModal = () => {
+    setToggleModal(() => false);
+  };
+
+  const handleDeletedPost = () => {
+    deletePostMutate({ id });
+    handleCloseModal();
+  };
+
+  useEffect(() => {
+    if (isDeletePostSuccess) {
+      userPostsRefetch();
+    }
+  }, [userPostsRefetch, isDeletePostSuccess]);
+
   return (
     <ListItemContainer>
       <img
@@ -42,6 +74,20 @@ const PostListItem = ({
           More
         </LinkButton>
       </More>
+      {canDeletePost ? (
+        <button onClick={handleOpenModal}>
+          <Icon name="trash" />
+        </button>
+      ) : null}
+      {toggleModal && (
+        <Modal
+          onClose={handleCloseModal}
+          onConfirm={handleDeletedPost}>
+          <div>정말로 삭제하시겠습니까?</div>
+          <button onClick={handleDeletedPost}>확인</button>
+          <button onClick={handleCloseModal}>취소</button>
+        </Modal>
+      )}
     </ListItemContainer>
   );
 };

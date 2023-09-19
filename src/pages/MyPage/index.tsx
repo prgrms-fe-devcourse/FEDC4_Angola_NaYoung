@@ -5,6 +5,7 @@ import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
+import useCurrentPage from '@hooks/useCurrentPage';
 import { authInfoState } from '@store/auth';
 import MyInfo from './MyInfo';
 
@@ -14,6 +15,7 @@ const MyPage = () => {
   const { userPostsData, isUserPostsLoading } = useFetchUserPosts(
     auth?.userId as string,
   );
+  const { name } = useCurrentPage();
 
   if (isUserLoading || isUserPostsLoading) {
     return <Spinner />;
@@ -43,6 +45,7 @@ const MyPage = () => {
               key={post._id}
               id={post._id}
               title={post.title}
+              canDeletePost={name === 'myPage'}
             />
           ))
         )}
