@@ -8,5 +8,5 @@ export const GET_LIKES = '받은 좋아요 : ';
 export const UN_FOLLOW = '언팔로우 하기';
 export const FOLLOW = '팔로우 하기';
 
-export const NO_POSTS_LIST_TITLE = '작성한 글이 없습니다.';
+export const NO_POSTS_LIST_TITLE = '작성한 포스트가 없습니다.';
 export const POSTS_LIST_TITLE = '작성한 포스트';
