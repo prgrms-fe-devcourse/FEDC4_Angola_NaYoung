@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import useSort from './Hooks/useSort';
-import { SELECT_OPTION } from './constants';
+import { SELECT_OPTION, TAB_BAR_VALUE } from './constants';
 import { handleClickTabBar } from './utils';
 
 interface HeaderProps {
@@ -64,7 +64,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             onClick={() =>
               handleClickTabBar({ value: 'user', TARGET_VALUE, navigate })
             }>
-            유저
+            {TAB_BAR_VALUE.user}
           </TabBarList>
           |
           <TabBarList
@@ -72,7 +72,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             onClick={() =>
               handleClickTabBar({ value: 'post', TARGET_VALUE, navigate })
             }>
-            포스트
+            {TAB_BAR_VALUE.post}
           </TabBarList>
         </TabBar>
       )}

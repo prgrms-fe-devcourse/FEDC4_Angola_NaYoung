@@ -4,3 +4,8 @@ export const SELECT_OPTION = {
   recent: '최신 순',
   like: '좋아요 순',
 };
+
+export const TAB_BAR_VALUE = {
+  user: '유저',
+  post: '포스트',
+};
