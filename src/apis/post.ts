@@ -29,7 +29,7 @@ export const useFetchUserPosts = (authorId: string) => {
   const { baseInstance } = useAxiosInstance();
   const path = `/posts/author/${authorId}`;
 
-  const { data, isError, isLoading, isSuccess } = useQuery<
+  const { data, isError, isLoading, isSuccess, refetch } = useQuery<
     AxiosResponse<Post[]>,
     AxiosError
   >('userPosts', () => baseInstance.get(path));
@@ -39,6 +39,7 @@ export const useFetchUserPosts = (authorId: string) => {
     isUserPostsError: isError,
     isUserPostsLoading: isLoading,
     isUserPostsSuccess: isSuccess,
+    userPostsRefetch: refetch,
   };
 };
 

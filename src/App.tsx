@@ -27,6 +27,7 @@ export default App;
 const PageContainer = styled.div`
   box-sizing: border-box;
   display: flex;
+  padding: 0 80px;
   flex-direction: column;
   align-items: center;
   width: 100%; 
