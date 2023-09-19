@@ -46,7 +46,10 @@ const LoginPage = () => {
           </Wrapper>
           <Wrapper>
             <Label>비밀번호</Label>
-            <InputStyled onChange={handleChangePassword} />
+            <InputStyled
+              onChange={handleChangePassword}
+              type={'password'}
+            />
             {!password && <InputWarning>비밀번호를 입력하세요.</InputWarning>}
           </Wrapper>
           <LoginErrorMsg style={{ display: isLoginError ? `block` : 'none' }}>
