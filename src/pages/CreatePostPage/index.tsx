@@ -5,7 +5,7 @@ import Spinner from '@components/Spinner';
 import { useFetchCreatePost } from '@apis/post';
 import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import CreatePostSuccessModal from './CreatePostSuccessModal';
+import Modal from '@components/Modal';
 
 const MAX_TITLE_OPTION_LENGTH = 100;
 
@@ -15,6 +15,8 @@ const CreatePostPage = () => {
     optionA: '',
     optionB: '',
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     createPostMutate,
@@ -65,10 +67,15 @@ const CreatePostPage = () => {
   const navigate = useNavigate();
   useEffect(() => { // 포스트 작성 성공 시, 포스트 하나씩 보기로 이동 
     if (isCreatePostSuccess) {
-      console.log("포스트 하나씩 보기로 이동")
       navigate(`/post/${createPostData}`);
     }
   }, [isCreatePostSuccess]);
+
+  useEffect(()=>{ // 포스트 작성 실패 => 모달 open
+    if(isCreatePostError){
+      setIsModalOpen(()=>true);
+    }
+  }, [isCreatePostError])
 
   return (
     <>
@@ -129,10 +136,13 @@ const CreatePostPage = () => {
         </PageContainer>
       )}
 
-      {isCreatePostError && (
-        <CreatePostSuccessModal
-          postId={createPostData === undefined ? null : createPostData}
-        />
+      {isModalOpen && (
+        <Modal
+          onClose={()=>{
+            setIsModalOpen(()=>false)}}
+        >
+          포스트 작성에 실패했습니다. 
+        </Modal>
       )}
     </>
   );
@@ -161,6 +171,10 @@ const TitleContainer = styled.div`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+
+  &:focus-within{
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
 `;
 
 const TitleInput = styled.input`
@@ -253,8 +267,8 @@ const OptionLengthLimit = styled.span`
 `;
 
 const VsContainer = styled.p`
-  color: ${ANGOLA_STYLES.color.black};
   text-align: center;
+  color: ${ANGOLA_STYLES.color.black};
   font-size: ${ANGOLA_STYLES.textSize.symbol};
 `;
 
