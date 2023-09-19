@@ -73,7 +73,7 @@ const UserInfo = ({
         </UserInfoText>
         {auth && (
           <Button
-            isFollowed={isFollowed}
+            toggle={isFollowed}
             size="md"
             onClick={handleClickFollowButton}>
             {isFollowed
