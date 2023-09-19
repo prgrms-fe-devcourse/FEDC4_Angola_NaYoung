@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Notification } from '@type';
+import Icon from '@components/Icon';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 const LikeNotificationItem = ({
   notification,
@@ -9,30 +11,57 @@ const LikeNotificationItem = ({
 }) => {
   const navigate = useNavigate();
 
-  // TODO: title span 태그 및, 아이템 전체에 등록할 핸들러
-  // 1. 포스트 페이지로 이동
-  // 2. 이 Viewer닫기 => 페이지 이동해도 NavBar 컴포넌트는 계속 살아있으므로 onClose따로 받아서 처리해줘야 함
   const handleClickMoveToPostPage = () => {
     navigate(`/post/${notification.post}`);
   };
 
-  // TODO: 추가구현
-  // 유저 이름 클릭 시,해당 유저 페이지로 이동 => notification.author._id 이용하면 될 듯
-
   return (
-    <LikeListItemContent onClick={handleClickMoveToPostPage}>
-      <UserFullNameSpan>{notification.author.fullName}</UserFullNameSpan>님이 내
-      포스트를 좋아합니다.
-    </LikeListItemContent>
+    <LikeListItemContainer onClick={handleClickMoveToPostPage}>
+      <LikeListItemIcon>
+        <Icon
+          name="heart"
+          size={'24'}
+        />
+      </LikeListItemIcon>
+      <LikeListItemText>
+        <UserFullNameSpan>{notification.author.fullName}</UserFullNameSpan>님이
+        내 포스트를 좋아합니다.
+      </LikeListItemText>
+    </LikeListItemContainer>
   );
 };
 
 export default LikeNotificationItem;
 
-const LikeListItemContent = styled.p`
-  box-sizing: border-box;
+const LikeListItemContainer = styled.div`
+  display: flex;
+  padding: 6px 8px 6px 8px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 50px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: ${ANGOLA_STYLES.color.white};
+`;
+
+const LikeListItemIcon = styled.div`
+  display: flex;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50px;
+  background: ${ANGOLA_STYLES.color.gray};
+`;
+
+const LikeListItemText = styled.p`
+  width: 300px;
+  font-size: ${ANGOLA_STYLES.textSize.text};
 `;
 
 const UserFullNameSpan = styled.span`
-  box-sizing: border-box;
+  color: ${ANGOLA_STYLES.color.black};
+  font-weight: 600;
 `;

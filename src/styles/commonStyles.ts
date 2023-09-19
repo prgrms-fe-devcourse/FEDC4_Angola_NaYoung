@@ -1,5 +1,6 @@
 export const ANGOLA_STYLES = {
   color: {
+    black: '#000000',
     white: '#ffffff',
     gray: '#e5e5e5',
     dark: '#9a9a9a',

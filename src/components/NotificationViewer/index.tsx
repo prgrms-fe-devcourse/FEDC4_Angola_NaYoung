@@ -6,6 +6,7 @@ import {
   useFetchGetNotifications,
   useFetchReadNotifications,
 } from '@apis/notifications';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import CommentNotificationItem from './CommentNotificationItem';
 import FollowNotificationItem from './FollowNotificationItem';
 import LikeNotificationItem from './LikeNotificationItem';
@@ -82,7 +83,6 @@ const NotificationViewer = ({
     readNotificationsMutate(undefined, {
       onSuccess: () => {
         getNotificationRefetch();
-        // 이렇게 onSuccess안에서 refetch할 수 있음 !
       },
     }); // TODO:MinwooP - 에러 처리
     // TODO:MinwooP - 이후 Notification data 업데이트 안된 상태면 refetch 혹은 invalidQueries 써서 다시 불러오기
@@ -93,6 +93,12 @@ const NotificationViewer = ({
   return (
     <NotificationViewerBackGround ref={viewerBackGroundRef}>
       <NotificationViewerContainer>
+        <NotificationHeader>
+          <NotificationHeaderTitle>알림 목록</NotificationHeaderTitle>
+          <ShowAllNotificationsCheckBox>
+            지난 알림 보기
+          </ShowAllNotificationsCheckBox>
+        </NotificationHeader>
         {getNotificationsData?.length === 0 ? (
           <EmptyNotificationList>알림 목록이 없습니다.</EmptyNotificationList>
         ) : (
@@ -131,31 +137,55 @@ const NotificationViewerBackGround = styled.div`
 `;
 
 const NotificationViewerContainer = styled.div`
-  position: absolute; // TODO: NotificationViewerBackGround 바로 밑에 붙도록 ?
-  top: 140px;
-  right: 100px;
+  position: absolute;
+  top: 100px;
+  right: 80px;
   z-index: 100; // TODO: 나중에 z-index 기준 컴포넌트 별로 설정 필요
-  height: 300px;
+  padding: 24px 0px 24px 12px;
+
+  height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
+
+  border-radius: 48px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+`;
+
+const NotificationHeader = styled.div`
+  display: flex;
+
+  padding: 0px 24px 0px 12px;
+  height: 20px;
   justify-content: space-between;
-  background-color: blue;
+  align-items: center;
+  align-self: stretch;
+`;
+
+const NotificationHeaderTitle = styled.p`
+  font-size: ${ANGOLA_STYLES.textSize.title};
+`;
+
+const ShowAllNotificationsCheckBox = styled.button`
+  color: ${ANGOLA_STYLES.color.text};
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  text-align: center;
 `;
 
 const EmptyNotificationList = styled.div``;
 
 const NotificationList = styled.ul`
-  height: 250px;
+  height: 400px;
   overflow-y: scroll;
 `;
 
 const NotificationListItem = styled.li`
   display: flex;
-  width: 400px;
-  height: 50px;
-  background-color: white;
   margin-bottom: 8px;
+  border-radius: 50px;
 `;
 
 const NotificationBottomBar = styled.div`
