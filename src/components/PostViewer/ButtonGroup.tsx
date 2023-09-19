@@ -119,6 +119,7 @@ const ActionButton = styled.div`
   box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};
   border-radius: 56px;
   cursor: pointer;
+  transition: 0.2s;
   &:hover:not(:active) {
     box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};
   }

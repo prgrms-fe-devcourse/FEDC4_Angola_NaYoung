@@ -94,7 +94,7 @@ const Selection = styled.div<{ voteColor: string; canVote: boolean }>`
     background: ${({ voteColor }) => voteColor};
   }
   &:hover {
-    transform: scale(1.02);
+    transform: scale(1.015);
   }
 `;
 

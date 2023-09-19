@@ -63,6 +63,8 @@ const PostViewer = ({
         authorName={authorName}
         authorId={authorId}
         authorLevel={authorLevel}
+        onGoDetailPage={goDetailPage}
+        isPostPage={isPostPage}
       />
       <PostContents
         contentA={a}

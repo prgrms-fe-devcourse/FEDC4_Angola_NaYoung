@@ -10,6 +10,8 @@ interface PostTitleProps {
   authorName: string;
   authorId: string;
   authorLevel: number;
+  isPostPage: boolean;
+  onGoDetailPage: VoidFunction;
 }
 
 const PostTitle = ({
@@ -17,9 +19,15 @@ const PostTitle = ({
   authorName,
   authorId,
   authorLevel,
+  isPostPage,
+  onGoDetailPage: goDetailPage,
 }: PostTitleProps) => {
   const levelColor = getUserLevelInfo(authorLevel).userColor;
   const widthRef = useRef<HTMLDivElement | null>(null);
+  const handleClickTitleText = () => {
+    if (isPostPage) return;
+    goDetailPage();
+  };
   return (
     <TitleContainer>
       <TitleShadow
@@ -38,7 +46,12 @@ const PostTitle = ({
             textSize={ANGOLA_STYLES.textSize.titleSm}
           />
         </Tag>
-        <Text tagWidth={widthRef.current?.offsetWidth}>{title}</Text>
+        <Text
+          className={isPostPage ? 'inPost' : 'inHome'}
+          tagWidth={widthRef.current?.offsetWidth}
+          onClick={handleClickTitleText}>
+          {title}
+        </Text>
       </Title>
     </TitleContainer>
   );
@@ -59,7 +72,7 @@ const Title = styled.div`
   border: ${ANGOLA_STYLES.border.default};
   height: 48px;
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
   width: 100%;
   padding: 8px;
@@ -100,10 +113,20 @@ const Text = styled.div<{ tagWidth?: number }>`
   flex-grow: 1;
   flex-shrink: 0;
   font-size: ${ANGOLA_STYLES.textSize.title};
-  max-width: calc(100% - 12px - ${({ tagWidth }) => `${tagWidth || 0}px`});
+  max-width: calc(100% - 12px - ${({ tagWidth }) => `${tagWidth || 20}px`});
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 100%;
+  border-radius: 24px;
+  padding: 4px 8px;
+  &.inHome {
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+      background: ${ANGOLA_STYLES.color.gray};
+    }
+  }
 `;
 
 const TitleShadow = styled(Title)<{ levelColor: string; isGradient: boolean }>`
