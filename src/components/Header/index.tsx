@@ -94,7 +94,7 @@ const Container = styled.div`
   box-sizing: border-box;
   display: flex;
   position: relative;
-  height: 84px;
+  height: 48px;
   padding: 0px 60px;
   justify-content: center;
   align-items: center;
