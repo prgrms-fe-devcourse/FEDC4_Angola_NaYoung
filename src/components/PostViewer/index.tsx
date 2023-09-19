@@ -44,6 +44,7 @@ const PostViewer = ({
   const [isModalShow, setIsModalShow] = useState(false);
   const isPostPage = onVote !== undefined;
   const isVoted = searchParams.get('voted') ? true : false;
+  const isShow = searchParams.get('show') ? true : false;
   const goDetailPage = () => {
     if (isPostPage) {
       if (!searchParams.get('show')) {
@@ -81,6 +82,8 @@ const PostViewer = ({
           likeId={likeId}
           postId={postId}
           authorId={authorId}
+          isShow={isShow}
+          isVoted={isVoted}
           onGoDetailPage={goDetailPage}
         />
       )}
