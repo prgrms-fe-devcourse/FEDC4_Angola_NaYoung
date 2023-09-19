@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface LinkButtonProps {
   to: string;
@@ -21,16 +22,21 @@ const LinkButton = ({ to, children, ...style }: LinkButtonProps) => {
 export default LinkButton;
 
 const LinkStyled = styled(Link)`
+  box-sizing: border-box;
   display: flex;
+  width: 60px;
+  height: 60px;
+  padding: 0px 20px;
   justify-content: center;
   align-items: center;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  padding: 0;
-  background-color: pink;
-  font-size: 12px;
   text-decoration: none;
-  text-align: center;
-  color: black;
+
+  border-radius: 30px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};
+
+  &:hover {
+    box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};
+  }
 `;

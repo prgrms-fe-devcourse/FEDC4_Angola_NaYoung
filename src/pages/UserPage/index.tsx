@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
+import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
-import { authInfoState } from '@atoms/index';
-import { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
+import { authInfoState } from '@store/auth';
 import UserInfo from './UserInfo';
 
 const UserPage = ({ userId = '' }: { userId?: string }) => {

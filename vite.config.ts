@@ -10,7 +10,7 @@ export default defineConfig({
       { find: '@pages', replacement: '/src/pages' },
       { find: '@components', replacement: '/src/components' },
       { find: '@hooks', replacement: '/src/hooks' },
-      { find: '@atoms', replacement: '/src/atoms' },
+      { find: '@store', replacement: '/src/store' },
       { find: '@storage', replacement: '/src/storage' },
       { find: '@utils', replacement: '/src/utils' },
       { find: '@styles', replacement: '/src/styles' },

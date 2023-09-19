@@ -1,4 +1,5 @@
 import { User } from '@type';
+import { calculateLevel } from '@utils';
 
 export const getSortUserList = (
   searchData: User[] | undefined,
@@ -6,8 +7,8 @@ export const getSortUserList = (
 ): User[] | undefined => {
   if (sort === 'follower') {
     return searchData?.sort((a, b) => b.followers.length - a.followers.length);
-  } else if (sort === 'like') {
-    return searchData?.sort((a, b) => b.likes.length - a.likes.length);
+  } else if (sort === 'level') {
+    return searchData?.sort((a, b) => calculateLevel(b) - calculateLevel(a));
   }
   return searchData;
 };

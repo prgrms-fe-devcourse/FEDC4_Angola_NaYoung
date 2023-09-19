@@ -1,15 +1,7 @@
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { User } from '@type/index';
 
-const LEVEL_INFO = [
-  { color: '#5F5F5F', emoji: '🌱' },
-  { color: '#FF6666', emoji: '🥚' },
-  { color: '#F78E61', emoji: '🐣' },
-  { color: '#FFC83B', emoji: '🐥' },
-  { color: '#78D968', emoji: '🐔' },
-  { color: '#58D0E0', emoji: '🐲' },
-  { color: '#588EE0', emoji: '🐉' },
-  { color: '#C370E9', emoji: '👑' },
-];
+const LEVEL_EMOJI = ['🌱', '🥚', '🐣', '🐥', '🐔', '🕊️', '🐉', '👑'];
 
 export const calculateLevel = (user: User): number => {
   const score = user.comments.length + user.posts.length;
@@ -20,7 +12,7 @@ export const calculateLevel = (user: User): number => {
 
 export const getUserLevelInfo = (level: number) => {
   return {
-    userColor: LEVEL_INFO[level].color,
-    userEmoji: LEVEL_INFO[level].emoji,
+    userColor: ANGOLA_STYLES.color.levels[level].fill,
+    userEmoji: LEVEL_EMOJI[level],
   };
 };
