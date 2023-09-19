@@ -34,8 +34,7 @@ const ButtonStyled = styled.button<ButtonProps>`
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  height: 88px;
-  padding: 16px 24px;
+  padding: 8px 16px;
   background-color: ${ANGOLA_STYLES.color.white};
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
@@ -47,8 +46,8 @@ const ButtonStyled = styled.button<ButtonProps>`
 
   ${(props) =>
     props.size === 'sm'
-      ? `width: 88px; box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};`
-      : `width: 240px; box-shadow: ${ANGOLA_STYLES.shadow.button.default};`}
+      ? `box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};`
+      : `width: 150px; height: 45px; box-shadow: ${ANGOLA_STYLES.shadow.button.default};`}
 
   &:hover {
     border: 3px solid ${ANGOLA_STYLES.color.text};
