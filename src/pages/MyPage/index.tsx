@@ -9,19 +9,15 @@ import useCurrentPage from '@hooks/useCurrentPage';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import MyInfo from './MyInfo';
-
-// TODO: 유저페이지와 마이페이지의 포스트 리스트 부분이 똑같다..! 공통으로 빼야 할까?
-
-const NO_POSTS_LIST_TITLE = '작성한 글이 없습니다.';
-const POSTS_LIST_TITLE = '작성한 포스트';
+import { MY_PAGE, MY_POSTS_TITLE } from './constants';
 
 const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
+  const { name } = useCurrentPage();
   const { userData, isUserLoading } = useFetchUser(auth?.userId as string);
   const { userPostsData, isUserPostsLoading } = useFetchUserPosts(
     auth?.userId as string,
   );
-  const { name } = useCurrentPage();
 
   if (isUserLoading || isUserPostsLoading) {
     return <Spinner />;
@@ -42,23 +38,23 @@ const MyPage = () => {
           myEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
         />
       )}
-      <UserPostsListContainer>
-        <UserPostsListUl>
-          <UserPostsListTitle>
+      <PostsListContainer>
+        <PostsListUl>
+          <PostsListTitle>
             {userPostsData?.length === 0
-              ? NO_POSTS_LIST_TITLE
-              : POSTS_LIST_TITLE}
-          </UserPostsListTitle>
+              ? MY_POSTS_TITLE.NO_POSTS
+              : MY_POSTS_TITLE.POSTS}
+          </PostsListTitle>
           {userPostsData?.map((post) => (
             <PostListItem
               key={post._id}
               id={post._id}
               title={post.title}
-              canDeletePost={name === 'myPage'}
+              canDeletePost={name === MY_PAGE}
             />
           ))}
-        </UserPostsListUl>
-      </UserPostsListContainer>
+        </PostsListUl>
+      </PostsListContainer>
     </MyPageWrapper>
   );
 };
@@ -75,7 +71,7 @@ const MyPageWrapper = styled.div`
   align-self: stretch;
 `;
 
-const UserPostsListContainer = styled.div`
+const PostsListContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -84,11 +80,11 @@ const UserPostsListContainer = styled.div`
   align-self: stretch;
 `;
 
-const UserPostsListUl = styled.ul`
+const PostsListUl = styled.ul`
   width: 100%;
 `;
 
-const UserPostsListTitle = styled.div`
+const PostsListTitle = styled.div`
   color: ${ANGOLA_STYLES.color.dark};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.title};
