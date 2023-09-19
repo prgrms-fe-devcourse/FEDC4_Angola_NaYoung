@@ -31,7 +31,7 @@ export const checkEmailPattern = ({
   let msg;
 
   if (!EMAIL_REGEXP.test(trimmedEmail)) {
-    msg = '이메일 형식이 올바르지 않습니다.';
+    msg = '유효한 이메일 주소가 아닙니다.';
     isValidEmail = false;
   } else if (usersData?.find((user) => user.email === email)) {
     msg = '이미 가입된 이메일입니다.';

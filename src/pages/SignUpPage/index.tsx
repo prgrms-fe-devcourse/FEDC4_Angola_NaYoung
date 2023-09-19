@@ -13,8 +13,6 @@ import { useFetchUsers } from '@apis/user';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import { SignUpFailModal, SignUpSuccessModal } from './SignUpModals';
 
-// import Modal from "@components/Modal";
-
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('init');
@@ -212,7 +210,15 @@ const SignUpPage = () => {
                 중복 검사
               </Button>
             </InputContainer>
-            {invalidEmailMsg && <InputWarning>{invalidEmailMsg}</InputWarning>}
+            {invalidEmailMsg && (
+              <InputWarning>
+                <Icon
+                  name={'warn'}
+                  color={'#F66'}
+                />
+                {invalidEmailMsg}
+              </InputWarning>
+            )}
             {validEmailMsg && (
               <InputWarning style={{ color: '#78D968' }}>
                 {validEmailMsg}
@@ -239,6 +245,10 @@ const SignUpPage = () => {
             </InputWrapper>
             {invalidPasswordMsg && (
               <InputWarning style={{ marginBottom: '1rem' }}>
+                <Icon
+                  name={'warn'}
+                  color={'#F66'}
+                />
                 {invalidPasswordMsg}
               </InputWarning>
             )}
@@ -259,7 +269,13 @@ const SignUpPage = () => {
               )}
             </InputWrapper>
             {invalidPasswordConfirmMsg && (
-              <InputWarning>{invalidPasswordConfirmMsg}</InputWarning>
+              <InputWarning>
+                <Icon
+                  name={'warn'}
+                  color={'#F66'}
+                />
+                {invalidPasswordConfirmMsg}
+              </InputWarning>
             )}
             {validPasswordConfirmMsg && (
               <InputWarning style={{ color: '#78D968' }}>
@@ -296,7 +312,13 @@ const SignUpPage = () => {
               </Button>
             </InputContainer>
             {invalidFullNameMsg && (
-              <InputWarning>{invalidFullNameMsg}</InputWarning>
+              <InputWarning>
+                <Icon
+                  name={'warn'}
+                  color={'#F66'}
+                />
+                {invalidFullNameMsg}
+              </InputWarning>
             )}
             {validFullNameMsg && (
               <InputWarning style={{ color: '#78D968' }}>
@@ -391,9 +413,12 @@ const Input = styled.input`
 `;
 
 const InputWarning = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 15px;
-  color: red;
+  color: #f66;
   padding-left: 1rem;
+  gap: 8px;
 `;
 
 const DoubleCheckIcon = styled.div`
