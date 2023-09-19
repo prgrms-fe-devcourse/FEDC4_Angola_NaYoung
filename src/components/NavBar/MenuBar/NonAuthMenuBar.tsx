@@ -1,12 +1,19 @@
+import styled from '@emotion/styled';
 import LinkButton from '@components/LinkButton';
 
 const NonAuthMenuBar = () => {
   return (
     <>
-      <LinkButton to="/login">로그인</LinkButton>
-      <LinkButton to="/signup">회원가입</LinkButton>
+      <RightMenuLinkButton to="/login">login</RightMenuLinkButton>
+      <RightMenuLinkButton to="/signup">sign up</RightMenuLinkButton>
     </>
   );
 };
 
 export default NonAuthMenuBar;
+
+const RightMenuLinkButton = styled(LinkButton)`
+  width: auto;
+  height: 56px;
+  border-radius: 44px;
+`;
