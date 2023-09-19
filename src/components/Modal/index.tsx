@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
+import Icon from '@components/Icon';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface ModalProps {
   onClose: VoidFunction;
@@ -37,15 +39,29 @@ const Modal = ({
     }
   };
   return (
-    <ModalContainer onClick={(e) => handleClickModalContainer(e)}>
-      <ModalContent ref={modalRef}>{children}</ModalContent>
-    </ModalContainer>
+    <ModalWrapper onClick={(e) => handleClickModalContainer(e)}>
+      <Container ref={modalRef}>
+        <ModalHeader>
+          <Button>
+            <Icon
+              name="close"
+              size={ANGOLA_STYLES.textSize.text}
+            />
+          </Button>
+        </ModalHeader>
+        <ModalContent>{children}</ModalContent>
+        <ModalFooter>
+          <Button>확인</Button>
+          {handleConfirm && <Button>취소</Button>}
+        </ModalFooter>
+      </Container>
+    </ModalWrapper>
   );
 };
 
 export default Modal;
 
-const ModalContainer = styled.div`
+const ModalWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -58,16 +74,49 @@ const ModalContainer = styled.div`
   justify-content: center;
   z-index: 100;
 `;
-const ModalContent = styled.div`
+
+const Container = styled.div`
+  background-color: ${ANGOLA_STYLES.color.white};
+  width: 400px;
+  height: fit-content;
+  padding: 20px;
+  box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 600px;
-  height: 400px;
-  border-radius: 50px;
-  border: 2px solid #000;
-  background-color: #fff;
-  padding: 20px;
-  box-sizing: border-box;
+  gap: 20px;
 `;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 15px;
+  border: ${ANGOLA_STYLES.border.default};
+  box-shadow: ${ANGOLA_STYLES.shadow.buttonXs.default};
+  background-color: ${ANGOLA_STYLES.color.white};
+  &:hover {
+    box-shadow: ${ANGOLA_STYLES.shadow.buttonXs.hover};
+    background-color: ${ANGOLA_STYLES.color.gray};
+  }
+  &:active {
+    box-shadow: ${ANGOLA_STYLES.shadow.buttonXs.default};
+  }
+  cursor: pointer;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ModalFooter = styled.div``;
