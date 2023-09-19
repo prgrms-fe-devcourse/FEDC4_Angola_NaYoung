@@ -44,12 +44,12 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
               </>
             )}
           </SortSelect>
-          <SortDirection>
+          <SortIcon>
             <Icon
               name="select_down"
               size="26"
             />
-          </SortDirection>
+          </SortIcon>
         </SelectContainer>
       )}
 
@@ -118,7 +118,7 @@ const SortSelect = styled.select`
   cursor: pointer;
 `;
 
-const SortDirection = styled.div`
+const SortIcon = styled.div`
   position: absolute;
   top: 0;
   right: 16px;
