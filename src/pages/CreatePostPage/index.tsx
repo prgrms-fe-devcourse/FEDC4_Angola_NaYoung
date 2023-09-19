@@ -6,6 +6,8 @@ import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import CreatePostSuccessModal from './CreatePostSuccessModal';
 
+const MAX_TITLE_OPTION_LENGTH = 100;
+
 const CreatePostPage = () => {
   const [inputValues, setInputValues] = useState({
     title: '',
@@ -30,9 +32,10 @@ const CreatePostPage = () => {
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { id, value } = e.target;
+
     setInputValues({
       ...inputValues,
-      [id]: value,
+      [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
     });
   };
 
@@ -69,7 +72,6 @@ const CreatePostPage = () => {
               id="title"
               placeholder="밸런스 포스트에 대한 한 줄 설명을 써주세요"
               value={inputValues.title}
-              maxLength={100}
               onChange={handleChangeInputValues}
               onBlur={handleBlurTrim}
             />
@@ -84,7 +86,6 @@ const CreatePostPage = () => {
               <OptionInput
                 id="optionA"
                 value={inputValues.optionA}
-                maxLength={100}
                 onChange={handleChangeInputValues}
                 onBlur={handleBlurTrim}
                 placeholder="A 항목에 대한 설명을 작성해주세요"
@@ -101,7 +102,6 @@ const CreatePostPage = () => {
               <OptionInput
                 id="optionB"
                 value={inputValues.optionB}
-                maxLength={100}
                 onChange={handleChangeInputValues}
                 onBlur={handleBlurTrim}
                 placeholder="B 항목에 대한 설명을 작성해주세요"
@@ -161,7 +161,7 @@ const TitleInput = styled.input`
   text-align: center;
   width: 80%;
   color: ${ANGOLA_STYLES.color.text};
-  line-height: 100%;
+  line-height: 20%;
 
   &::placeholder {
     color: ${ANGOLA_STYLES.color.dark};
@@ -210,17 +210,16 @@ const OptionInput = styled.textarea`
   display: flex;
   height: 256px;
   min-height: 256px;
+  resize: none;
   padding: 30px;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  gap: 10px;
-  flex-shrink: 0;
   align-self: stretch;
+  flex-shrink: 0;
+  text-align: center;
   outline: none;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
   line-height: 38px; // TODO:MinwooP - 조정하기
-
   border-radius: 24px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.gray};
