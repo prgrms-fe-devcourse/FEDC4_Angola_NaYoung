@@ -14,6 +14,7 @@ import {
   faPen,
   faPenToSquare,
   faSearch,
+  faSortDown,
   faTrash,
   faUser,
   faUsers,
@@ -37,7 +38,8 @@ type IconName =
   | 'trash'
   | 'user'
   | 'close'
-  | 'follower';
+  | 'follower'
+  | 'select_down';
 
 const iconMap = {
   alert: faBell,
@@ -55,6 +57,7 @@ const iconMap = {
   user: faUser,
   close: faXmark,
   follower: faUsers,
+  select_down: faSortDown,
 };
 
 interface IconProps {
