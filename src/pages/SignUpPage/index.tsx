@@ -311,7 +311,9 @@ const SignUpPage = () => {
               width: '150px',
               fontSize: ANGOLA_STYLES.textSize.title,
             }}
-            disabled={true}>
+            disabled={
+              email && password && passwordConfirm && fullName ? false : true
+            }>
             가입 완료하기
           </Button>
         </Form>
