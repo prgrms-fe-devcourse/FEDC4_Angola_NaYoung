@@ -23,8 +23,6 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
     return <Spinner />;
   }
 
-  //console.log(userData, userPostsData, userId);
-
   return (
     <UserPageWrapper>
       {userData && (
