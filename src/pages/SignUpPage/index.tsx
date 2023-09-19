@@ -13,6 +13,8 @@ import { useFetchUsers } from '@apis/user';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import { SignUpFailModal, SignUpSuccessModal } from './SignUpModals';
 
+// import Modal from "@components/Modal";
+
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('init');
@@ -308,7 +310,8 @@ const SignUpPage = () => {
             style={{
               width: '150px',
               fontSize: ANGOLA_STYLES.textSize.title,
-            }}>
+            }}
+            disabled={true}>
             가입 완료하기
           </Button>
         </Form>

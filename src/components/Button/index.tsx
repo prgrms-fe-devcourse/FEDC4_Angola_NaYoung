@@ -58,4 +58,11 @@ const ButtonStyled = styled.button<ButtonProps>`
         ? `box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};`
         : `box-shadow: ${ANGOLA_STYLES.shadow.button.hover};`}
   }
+
+  &:disabled {
+    border: ${ANGOLA_STYLES.border.default};
+    background-color: ${ANGOLA_STYLES.color.gray};
+    box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+    cursor: default;
+  }
 `;

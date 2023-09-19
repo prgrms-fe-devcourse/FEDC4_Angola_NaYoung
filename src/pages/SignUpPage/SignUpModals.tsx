@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import Modal from '@components/Modal';
+import { ANGOLA_STYLES } from '../../styles/commonStyles';
 
 interface SignUpModalsProps {
   onClick: () => void;
@@ -8,10 +10,10 @@ export const SignUpSuccessModal = ({
   onClick: handleClick,
 }: SignUpModalsProps) => {
   return (
-    <Modal>
+    <Modal onClose={handleClick}>
       <Content>
-        <p>회원 가입이 완료되었습니다!</p>
-        <button onClick={handleClick}>확인</button>
+        <Msg>회원 가입이 완료되었습니다!</Msg>
+        {/* <button onClick={handleClick}>확인</button> */}
       </Content>
     </Modal>
   );
@@ -21,24 +23,13 @@ export const SignUpFailModal = ({
   onClick: handleClick,
 }: SignUpModalsProps) => {
   return (
-    <Modal>
+    <Modal onClose={handleClick}>
       <Content>
-        <p>회원 가입에 실패하였습니다!</p>
-        <button onClick={handleClick}>확인</button>
+        <Msg>회원 가입에 실패하였습니다!</Msg>
       </Content>
     </Modal>
   );
 };
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-`;
 
 const Content = styled.div`
   background-color: #fff;
@@ -49,4 +40,8 @@ const Content = styled.div`
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+`;
+
+const Msg = styled.div`
+  font-size: ${ANGOLA_STYLES.textSize.titleLg};
 `;
