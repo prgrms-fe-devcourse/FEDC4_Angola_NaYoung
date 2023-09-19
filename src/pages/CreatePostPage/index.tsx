@@ -1,4 +1,5 @@
-import { ChangeEvent, FocusEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Spinner from '@components/Spinner';
 import { useFetchCreatePost } from '@apis/post';
@@ -61,6 +62,14 @@ const CreatePostPage = () => {
     });
   };
 
+  const navigate = useNavigate();
+  useEffect(() => { // 포스트 작성 성공 시, 포스트 하나씩 보기로 이동 
+    if (isCreatePostSuccess) {
+      console.log("포스트 하나씩 보기로 이동")
+      navigate(`/post/${createPostData}`);
+    }
+  }, [isCreatePostSuccess]);
+
   return (
     <>
       {isCreatePostLoading ? (
@@ -120,7 +129,7 @@ const CreatePostPage = () => {
         </PageContainer>
       )}
 
-      {isCreatePostSuccess && (
+      {isCreatePostError && (
         <CreatePostSuccessModal
           postId={createPostData === undefined ? null : createPostData}
         />
