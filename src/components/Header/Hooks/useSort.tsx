@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-interface useSortProps {
+interface UseSortProps {
   sort?: string;
 }
 
-interface useSortReturnProps {
+interface UseSortReturnProps {
   selectValue: string | undefined;
   handleChangeSelect: (sort: string) => void;
 }
 
-const useSort = ({ sort }: useSortProps): useSortReturnProps => {
+const useSort = ({ sort }: UseSortProps): UseSortReturnProps => {
   const [selectValue, setSelectValue] = useState(sort);
   const [searchParams, setSearchParams] = useSearchParams();
 
