@@ -130,15 +130,10 @@ const SortSelect = styled.select`
   padding: 0px 20px 0px 44px;
   border-radius: 40px;
   border: ${ANGOLA_STYLES.border.default};
-  background: #fff;
+  background: var(--white, #fff);
   appearance: none;
   outline: none;
   cursor: pointer;
-  & option {
-    font-family: 'MabinogiClassicR';
-    color: #404040;
-    font-size: 10px;
-  }
 `;
 
 const SortDirection = styled.div`
@@ -151,7 +146,7 @@ const SortDirection = styled.div`
 `;
 
 const Title = styled.div`
-  color: #fff;
+  color: var(--white, #fff);
   font-size: ${ANGOLA_STYLES.textSize.title};
   position: absolute;
   top: 50%;
@@ -167,7 +162,7 @@ const TabBar = styled.ul`
   list-style: none;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
+  color: var(--white, #fff);
   position: absolute;
   top: 50%;
   right: -60px;
@@ -175,7 +170,7 @@ const TabBar = styled.ul`
 `;
 
 const TabBarList = styled.li`
-  color: #fff;
+  color: var(--white, #fff);
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
   cursor: pointer;
   &.bold {
