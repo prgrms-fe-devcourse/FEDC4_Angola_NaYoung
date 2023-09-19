@@ -66,23 +66,19 @@ const UserInfo = ({
       />
       <UserInfoContainer>
         <UserInfoText>
-          {LEVEL}
-          {userLevel}
+          {LEVEL}&nbsp;&nbsp;{userLevel}
         </UserInfoText>
         <Bar>|</Bar>
         <UserInfoText>
-          {FOLLOWER}
-          {countFollowers}
+          {FOLLOWER}&nbsp;&nbsp;{countFollowers}
         </UserInfoText>
         <Bar>|</Bar>
         <UserInfoText>
-          {FOLLOWING}
-          {following}
+          {FOLLOWING}&nbsp;&nbsp;{following}
         </UserInfoText>
         <Bar>|</Bar>
         <UserInfoText>
-          {GET_LIKES}
-          {likes}
+          {GET_LIKES}&nbsp;&nbsp;{likes}
         </UserInfoText>
         {auth && (
           <Button
@@ -130,17 +126,16 @@ const UserProfileContainer = styled.div`
 
 const UserInfoContainer = styled.div`
   display: flex;
-  width: 100%;
-  padding: 12px 0px;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 12px 0px;
   gap: 24px;
   align-self: stretch;
 `;
 
 const UserInfoText = styled.div`
   display: flex;
-  gap: 10px;
   color: ${ANGOLA_STYLES.color.text};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
