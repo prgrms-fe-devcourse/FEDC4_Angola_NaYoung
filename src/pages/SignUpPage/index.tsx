@@ -6,6 +6,7 @@ import {
   checkFullNamePattern,
   checkPassWordPattern,
 } from '@utils';
+import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { useFetchSignUp } from '@apis/auth';
 import { useFetchUsers } from '@apis/user';
@@ -198,11 +199,12 @@ const SignUpPage = () => {
                   </DoubleCheckIcon>
                 )}
               </InputWrapper>
-              <DuplicatedCheckBtn
+              <Button
                 type="button"
-                onClick={handleClickDuplicatedEmailCheckBtn}>
+                handleClick={handleClickDuplicatedEmailCheckBtn}
+                style={{ width: '100px', padding: '0' }}>
                 중복 검사
-              </DuplicatedCheckBtn>
+              </Button>
             </InputContainer>
             {invalidEmailMsg && <InputWarning>{invalidEmailMsg}</InputWarning>}
             {validEmailMsg && (
@@ -291,7 +293,15 @@ const SignUpPage = () => {
               </InputWarning>
             )}
           </Wrapper>
-          <SubmitButton type="submit">가입 완료하기</SubmitButton>
+          <Button
+            type="submit"
+            size="md"
+            style={{
+              width: '150px',
+              fontSize: ANGOLA_STYLES.textSize.title,
+            }}>
+            가입 완료하기
+          </Button>
         </Form>
         {isSignUpSuccess && (
           <SignUpSuccessModal onClick={() => navigate('/login')} />
@@ -361,21 +371,6 @@ const Input = styled.input`
   ::placeholder {
     color: ${ANGOLA_STYLES.color.dark};
     font-size: ${ANGOLA_STYLES.textSize.text};
-  }
-`;
-
-const SubmitButton = styled.button`
-  padding: 0.5rem 1.5rem;
-  border: 2px solid black;
-  border-radius: 50px;
-  font-size: 18px;
-  font-weight: 600;
-  color: red;
-  background-color: #47e1a8;
-
-  &:hover {
-    background-color: rgba(90, 120, 100, 0.4);
-    cursor: pointer;
   }
 `;
 
