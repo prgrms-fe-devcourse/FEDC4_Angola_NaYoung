@@ -67,10 +67,9 @@ const Icon = ({ name, size, color }: IconProps) => {
   const iconStyles: CSSProperties = {
     width: size || ANGOLA_STYLES.textSize.title,
     height: size || ANGOLA_STYLES.textSize.title,
-    color: color || ANGOLA_STYLES.color.text,
   };
   return (
-    <IconContainer>
+    <IconContainer color={color || ANGOLA_STYLES.color.text}>
       <FontAwesomeIcon
         icon={iconMap[name]}
         style={iconStyles}
@@ -81,6 +80,11 @@ const Icon = ({ name, size, color }: IconProps) => {
 
 export default Icon;
 
-const IconContainer = styled.div`
+const IconContainer = styled.div<{ color: string }>`
   display: inline;
+  > svg {
+    > path {
+      fill: ${({ color }) => color};
+    }
+  }
 `;
