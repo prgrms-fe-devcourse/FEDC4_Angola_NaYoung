@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
+import Icon from '@components/Icon';
 import LinkButton from '@components/LinkButton';
 import NotificationViewer from '@components/NotificationViewer';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import Icon from '@components/Icon';
 
 const AuthMenuBar = () => {
   const [isNotificationViewerShow, setIsNotificationViewerShow] =
@@ -11,22 +11,30 @@ const AuthMenuBar = () => {
 
   return (
     <>
-      <RightMenuLinkButton to="/create-post"> <Icon
-            name="post"
-            size={"30"} 
-          /></RightMenuLinkButton>
-      <RightMenuLinkButton to="/mypage"><Icon
-            name="user"
-            size={"30"} 
-          /></RightMenuLinkButton>
-      <NotificationButton  onClick={() => {
+      <RightMenuLinkButton to="/create-post">
+        {' '}
+        <Icon
+          name="post"
+          size={'30'}
+        />
+      </RightMenuLinkButton>
+      <RightMenuLinkButton to="/mypage">
+        <Icon
+          name="user"
+          size={'30'}
+        />
+      </RightMenuLinkButton>
+      <NotificationButton
+        onClick={() => {
           setIsNotificationViewerShow((prev) => !prev);
-        }}><Icon
-            name="alert"
-            size={"30"} 
-          /></NotificationButton>
+        }}>
+        <Icon
+          name="alert"
+          size={'30'}
+        />
+      </NotificationButton>
 
-{isNotificationViewerShow && (
+      {isNotificationViewerShow && (
         <NotificationViewer
           handleClickCloseViewer={() => {
             setIsNotificationViewerShow(false);
