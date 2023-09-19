@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import useSort from './Hooks/useSort';
 
 interface HeaderProps {
   title: string;
@@ -15,17 +15,9 @@ interface HeaderProps {
 
 const Header = ({ title, sortProps, keyword }: HeaderProps) => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const target = sortProps?.target;
   const sort = sortProps?.sort;
-
-  const [selectValue, setSelectValue] = useState(sort);
-
-  const handleChangeSelect = (value: string) => {
-    searchParams.set('sort', value);
-    setSelectValue(value);
-    setSearchParams(searchParams);
-  };
+  const { selectValue, handleChangeSelect } = useSort({ sort });
 
   const handleClickTabBar = (value: string) => {
     if (value === 'user') {
