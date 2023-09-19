@@ -42,7 +42,7 @@ const Modal = ({
     <ModalWrapper onClick={(e) => handleClickModalContainer(e)}>
       <Container ref={modalRef}>
         <ModalHeader>
-          <Button>
+          <Button onClick={handleClose}>
             <Icon
               name="close"
               size={ANGOLA_STYLES.textSize.text}
@@ -51,8 +51,10 @@ const Modal = ({
         </ModalHeader>
         <ModalContent>{children}</ModalContent>
         <ModalFooter>
-          <Button>확인</Button>
-          {handleConfirm && <Button>취소</Button>}
+          <TextButton onClick={handleConfirm ? handleConfirm : handleClose}>
+            확인
+          </TextButton>
+          {handleConfirm && <TextButton onClick={handleClose}>취소</TextButton>}
         </ModalFooter>
       </Container>
     </ModalWrapper>
@@ -115,8 +117,23 @@ const Button = styled.button`
 
 const ModalContent = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-const ModalFooter = styled.div``;
+const ModalFooter = styled.div`
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+`;
+
+const TextButton = styled(Button)`
+  font-size: ${ANGOLA_STYLES.textSize.title};
+  width: fit-content;
+  height: fit-content;
+  padding: 4px 8px;
+  &:hover {
+    background-color: ${ANGOLA_STYLES.color.white};
+  }
+`;
