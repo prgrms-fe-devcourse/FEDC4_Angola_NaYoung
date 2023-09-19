@@ -38,6 +38,7 @@ const ButtonStyled = styled.button<ButtonProps>`
   background-color: ${ANGOLA_STYLES.color.white};
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
+  cursor: pointer;
 
   background-color: ${({ isFollowed }) =>
     isFollowed

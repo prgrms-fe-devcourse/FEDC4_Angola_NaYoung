@@ -201,8 +201,12 @@ const SignUpPage = () => {
               </InputWrapper>
               <Button
                 type="button"
-                handleClick={handleClickDuplicatedEmailCheckBtn}
-                style={{ width: '100px', padding: '0' }}>
+                onClick={handleClickDuplicatedEmailCheckBtn}
+                style={{
+                  width: '100px',
+                  padding: '0',
+                  fontSize: ANGOLA_STYLES.textSize.titleSm,
+                }}>
                 중복 검사
               </Button>
             </InputContainer>
@@ -278,11 +282,16 @@ const SignUpPage = () => {
                   </DoubleCheckIcon>
                 )}
               </InputWrapper>
-              <DuplicatedCheckBtn
+              <Button
                 type="button"
-                onClick={handleClickDuplicatedFullNameCheckBtn}>
+                onClick={handleClickDuplicatedFullNameCheckBtn}
+                style={{
+                  width: '100px',
+                  padding: '0',
+                  fontSize: ANGOLA_STYLES.textSize.titleSm,
+                }}>
                 중복 검사
-              </DuplicatedCheckBtn>
+              </Button>
             </InputContainer>
             {invalidFullNameMsg && (
               <InputWarning>{invalidFullNameMsg}</InputWarning>
@@ -323,6 +332,8 @@ const SignUpContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 80px;
+  padding-right: 0px;
+  margin-left: 20px;
 `;
 
 const Form = styled.form`
@@ -356,7 +367,7 @@ const InputContainer = styled.div`
 `;
 
 const InputWrapper = styled.div`
-  width: 85%;
+  width: 80%;
   position: relative;
 `;
 
@@ -378,19 +389,6 @@ const InputWarning = styled.div`
   font-size: 15px;
   color: red;
   padding-left: 1rem;
-`;
-
-const DuplicatedCheckBtn = styled.button`
-  padding: 0.4rem 1rem;
-  border: 1px solid black;
-  border-radius: 50px;
-  font-size: 15px;
-  font-weight: 600;
-
-  &:hover {
-    background-color: rgba(90, 120, 100, 0.4);
-    cursor: pointer;
-  }
 `;
 
 const DoubleCheckIcon = styled.div`
