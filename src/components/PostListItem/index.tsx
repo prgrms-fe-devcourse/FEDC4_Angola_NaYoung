@@ -8,6 +8,7 @@ import Modal from '@components/Modal';
 import { useFetchDeletePost, useFetchUserPosts } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface PostListItemProps {
   id: string;
@@ -53,20 +54,20 @@ const PostListItem = ({
 
   return (
     <ListItemContainer>
-      <img
+      <ProfileImage
         src={
           image
             ? image
             : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
         }
-        alt="프로필"
-        style={{ width: '70px', height: '70px', borderRadius: '50%' }}
-      />
-      <Title>{postTitle}</Title>
-      <Info>
-        <div>♥️{likes}</div>
-        <div>💬{comments}</div>
-      </Info>
+        alt="프로필"></ProfileImage>
+      <TitleContainer>
+        <Title>{postTitle}</Title>
+      </TitleContainer>
+      <LikesAndComments>
+        <div>♥️ {likes}</div>
+        <div>💬 {comments}</div>
+      </LikesAndComments>
       <More>
         <LinkButton
           to={`/post/${id}`}
@@ -96,36 +97,53 @@ export default PostListItem;
 
 const ListItemContainer = styled.li`
   display: flex;
-  border: 1px solid black;
-  margin: 30px 0;
-  gap: 20px;
-  border-radius: 12px;
+  height: 100px;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  border-radius: 24px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: #fff;
+  box-shadow: 0px 6px 0px 0px #404040;
+`;
+
+const ProfileImage = styled.img`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: ${ANGOLA_STYLES.border.default};
+  margin: 0px 20px;
+  background: #9a9a9a;
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  padding: 16px 32px;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  border-radius: 24px;
+  background: #e5e5e5;
 `;
 
 const Title = styled.div`
-  border: 1px solid black;
-  border-radius: 30px;
-  flex-grow: 1;
+  color: #404040;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+`;
+
+const LikesAndComments = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 14px 0;
+  flex-direction: column;
+  gap: 12px;
+  font-size: ${ANGOLA_STYLES.textSize.title};
 `;
 
 const More = styled.div`
-  border-left: 1px solid black;
   display: flex;
+  width: 121px;
   justify-content: center;
-  align-items: center;
-  width: 60px;
+  align-self: stretch;
+  border-left: ${ANGOLA_STYLES.border.default};
+  font-size: ${ANGOLA_STYLES.textSize.title};
   cursor: pointer;
-`;
-
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 10px;
-  flex-shrink: 0;
 `;
