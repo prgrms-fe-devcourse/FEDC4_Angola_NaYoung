@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import {
@@ -11,7 +11,13 @@ import Icon from '@components/Icon';
 import { useFetchSignUp } from '@apis/auth';
 import { useFetchUsers } from '@apis/user';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
-import { SignUpFailModal, SignUpSuccessModal } from './SignUpModals';
+import {
+  CheckEmailModal,
+  CheckFullNameModal,
+  CheckPasswordModal,
+  SignUpFailModal,
+  SignUpSuccessModal,
+} from './Modals';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -38,10 +44,13 @@ const SignUpPage = () => {
   const [invalidFullNameMsg, setInvalidFullNameMsg] = useState<string>('');
   const [validFullNameMsg, setValidFullNameMsg] = useState<string>('');
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setIsDuplicatedEmailChecked(false);
     setValidEmailMsg('');
+    setIsSubmitted(false);
 
     if (!e.target.value) {
       setInvalidEmailMsg('이메일을 입력해주세요.');
@@ -94,6 +103,7 @@ const SignUpPage = () => {
     setFullName(e.target.value);
     setIsDuplicatedFullNameChecked(false);
     setValidFullNameMsg('');
+    setIsSubmitted(false);
 
     if (!e.target.value) {
       setInvalidFullNameMsg('닉네임을 입력해주세요.');
@@ -144,6 +154,7 @@ const SignUpPage = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    setIsSubmitted(true);
 
     if (isSignUpError) {
       window.location.reload();
@@ -154,20 +165,14 @@ const SignUpPage = () => {
       return;
     }
 
-    if (isDuplicatedEmailChecked === false) {
-      alert('이메일 중복 검사를 확인해주세요.');
-      return;
-    }
-    if (!password || password === 'initial') {
-      alert('비밀번호를 입력해주세요.');
-      return;
-    }
-    if (password !== passwordConfirm) {
-      alert('비밀번호가 서로 다릅니다.');
-      return;
-    }
-    if (isDuplicatedFullNameChecked === false) {
-      alert('닉네임 중복 검사를 확인해주세요.');
+    if (
+      !isDuplicatedEmailChecked ||
+      invalidPasswordMsg ||
+      invalidPasswordConfirmMsg ||
+      password === 'init' ||
+      passwordConfirm === 'init' ||
+      !isDuplicatedFullNameChecked
+    ) {
       return;
     }
 
@@ -177,6 +182,16 @@ const SignUpPage = () => {
       fullName,
     });
   };
+
+  const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
+  useEffect(() => {
+    email.length > 4 &&
+    password.length > 4 &&
+    passwordConfirm.length > 4 &&
+    fullName.length > 3
+      ? setIsSignUpDisabled(false)
+      : setIsSignUpDisabled(true);
+  }, [email, password, passwordConfirm, fullName]);
 
   return (
     <>
@@ -333,9 +348,7 @@ const SignUpPage = () => {
               width: '150px',
               fontSize: ANGOLA_STYLES.textSize.title,
             }}
-            disabled={
-              email && password && passwordConfirm && fullName ? false : true
-            }>
+            disabled={isSignUpDisabled}>
             가입 완료하기
           </Button>
         </Form>
@@ -345,6 +358,20 @@ const SignUpPage = () => {
         {isSignUpError && (
           <SignUpFailModal onClick={() => window.location.reload()} />
         )}
+        {isSubmitted && !isDuplicatedEmailChecked && (
+          <CheckEmailModal onClick={() => setIsSubmitted(false)} />
+        )}
+        {isSubmitted &&
+          isDuplicatedEmailChecked &&
+          (invalidPasswordMsg || invalidPasswordConfirmMsg) && (
+            <CheckPasswordModal onClick={() => setIsSubmitted(false)} />
+          )}
+        {isSubmitted &&
+          isDuplicatedEmailChecked &&
+          !(invalidPasswordMsg || invalidPasswordConfirmMsg) &&
+          !isDuplicatedFullNameChecked && (
+            <CheckFullNameModal onClick={() => setIsSubmitted(false)} />
+          )}
       </SignUpContainer>
     </>
   );
