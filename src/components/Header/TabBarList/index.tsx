@@ -17,7 +17,7 @@ const TabBarList = ({ name, TARGET_VALUE }: TabBarListProps) => {
       onClick={() =>
         handleClickTabBar({ value: name, TARGET_VALUE, navigate })
       }>
-      {name === 'user' ? TAB_BAR_VALUE.user : TAB_BAR_VALUE.post}
+      {name === 'user' ? TAB_BAR_VALUE.USER : TAB_BAR_VALUE.POST}
     </List>
   );
 };

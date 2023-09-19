@@ -31,13 +31,13 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             }}>
             {TARGET_VALUE === 'user' ? (
               <>
-                <option value="follower">{SELECT_OPTION.follower}</option>
-                <option value="level">{SELECT_OPTION.level}</option>
+                <option value="follower">{SELECT_OPTION.FOLLOWER}</option>
+                <option value="level">{SELECT_OPTION.LEVEL}</option>
               </>
             ) : (
               <>
-                <option value="recent">{SELECT_OPTION.recent}</option>
-                <option value="like">{SELECT_OPTION.like}</option>
+                <option value="recent">{SELECT_OPTION.RECENT}</option>
+                <option value="like">{SELECT_OPTION.LIKE}</option>
               </>
             )}
           </SortSelect>

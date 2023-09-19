@@ -1,11 +1,11 @@
 export const SELECT_OPTION = {
-  follower: '팔로워 순',
-  level: '레벨 순',
-  recent: '최신 순',
-  like: '좋아요 순',
+  FOLLOWER: '팔로워 순',
+  LEVEL: '레벨 순',
+  RECENT: '최신 순',
+  LIKE: '좋아요 순',
 };
 
 export const TAB_BAR_VALUE = {
-  user: '유저',
-  post: '포스트',
+  USER: '유저',
+  POST: '포스트',
 };
