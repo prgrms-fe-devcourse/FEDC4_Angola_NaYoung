@@ -2,7 +2,7 @@ import { MouseEvent, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
 import { splitCommentBySeparator } from '@utils';
-import { ButtonStyled } from '@components/Button';
+import Button, { ButtonStyled } from '@components/Button';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
@@ -65,7 +65,9 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
             <CommentSubWrapper>
               <VotedItem>{vote.toUpperCase()}</VotedItem>
               <CommentStyled>
-                {comment ? comment : `${vote.toUpperCase()}를 선택하였습니다.`}
+                {comment?.trim()
+                  ? comment
+                  : `${vote.toUpperCase()}를 선택하였습니다.`}
               </CommentStyled>
               {myId === commentAuthorId && (
                 <DeleteButton
@@ -78,21 +80,24 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
               )}
             </CommentSubWrapper>
             {isClickedDeleteBtn && (
-              <Modal onClose={() => setIsClickedDeleteBtn(false)}>
-                <ModalWrapper>
+              <Modal
+                onClose={() => setIsClickedDeleteBtn(false)}
+                footerShow={false}>
+                <ModalWrapper onClick={(e) => e.stopPropagation()}>
                   <div>정말로 댓글을 삭제하시겠습니까?</div>
-                  <ButtonContainer onClick={(e) => e.stopPropagation()}>
-                    <ModalButton
+                  <ButtonContainer>
+                    <Button
                       size="sm"
                       onClick={handleClickDeleteCommentModalBtn}
-                      style={{ color: '#F66' }}>
+                      style={{ width: '50px', height: '40px', color: '#F66' }}>
                       네
-                    </ModalButton>
-                    <ModalButton
+                    </Button>
+                    <Button
                       size="sm"
-                      onClick={() => setIsClickedDeleteBtn(false)}>
+                      onClick={() => setIsClickedDeleteBtn(false)}
+                      style={{ width: '90px', height: '40px' }}>
                       아니요
-                    </ModalButton>
+                    </Button>
                   </ButtonContainer>
                 </ModalWrapper>
               </Modal>
@@ -153,16 +158,10 @@ const CommentStyled = styled.div`
 `;
 
 const DeleteButton = styled(ButtonStyled)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   border: 1px solid ${ANGOLA_STYLES.color.text};
-  border-radius: 40px;
   background-color: ${ANGOLA_STYLES.color.gray};
   width: 40px;
   height: 40px;
-  padding: 0;
 
   &:hover {
     border: ${ANGOLA_STYLES.border.default};
@@ -173,9 +172,10 @@ const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 150px;
   justify-content: space-around;
   align-items: center;
+  gap: 50px;
 `;
 
 const ButtonContainer = styled.div`
@@ -183,10 +183,4 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-`;
-
-const ModalButton = styled(ButtonStyled)`
-  justify-content: center;
-  align-items: center;
-  padding: 0;
 `;

@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styled from '@emotion/styled';
-import { ButtonStyled } from '@components/Button';
+import Button, { ButtonStyled } from '@components/Button';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
 
 interface MakeCommentProps {
@@ -28,20 +28,36 @@ const MakeComment = ({
     <MakeCommentContainer>
       <Form onSubmit={handleSubmit}>
         <ItemButtonsContainer>
-          <ItemButtonA
+          <Button
             type="button"
-            size="sm"
             onClick={() => handleClickItem('A')}
-            votedValue={votedValue}>
+            style={{
+              width: '80px',
+              height: '50%',
+              paddingTop: '24px',
+              borderRadius: '40px 40px 0 0',
+              borderBottom: 'none',
+              color:
+                votedValue === 'A'
+                  ? ANGOLA_STYLES.color.text
+                  : ANGOLA_STYLES.color.dark,
+            }}>
             A
-          </ItemButtonA>
-          <ItemButtonB
+          </Button>
+          <Button
             type="button"
-            size="sm"
             onClick={() => handleClickItem('B')}
-            votedValue={votedValue}>
+            style={{
+              width: '80px',
+              height: '50%',
+              borderRadius: '0 0 40px 40px',
+              color:
+                votedValue === 'B'
+                  ? ANGOLA_STYLES.color.text
+                  : ANGOLA_STYLES.color.dark,
+            }}>
             B
-          </ItemButtonB>
+          </Button>
         </ItemButtonsContainer>
         <Comment
           placeholder="의견을 작성해주세요!&#13;&#10;투표만 하고 싶다면, 오른쪽 버튼을 클릭해주세요."
@@ -80,36 +96,6 @@ const ItemButtonsContainer = styled.div`
   height: 120px;
 `;
 
-const ItemButtonA = styled(ButtonStyled)<{ votedValue: string }>`
-  width: 80px;
-  height: 50%;
-  padding-top: 24px;
-  justify-content: center;
-  align-items: center;
-  font-size: ${ANGOLA_STYLES.textSize.title};
-  border-radius: 40px 40px 0 0;
-  border-bottom: none;
-
-  color: ${(props) =>
-    props.votedValue === 'A'
-      ? ANGOLA_STYLES.color.text
-      : ANGOLA_STYLES.color.dark};
-`;
-
-const ItemButtonB = styled(ButtonStyled)<{ votedValue: string }>`
-  width: 80px;
-  height: 50%;
-  justify-content: center;
-  align-items: center;
-  font-size: ${ANGOLA_STYLES.textSize.title};
-  border-radius: 0 0 40px 40px;
-
-  color: ${(props) =>
-    props.votedValue === 'B'
-      ? ANGOLA_STYLES.color.text
-      : ANGOLA_STYLES.color.dark};
-`;
-
 const Comment = styled.textarea`
   display: flex;
   flex-direction: column;
@@ -136,10 +122,6 @@ const SubmitButton = styled(ButtonStyled)<{ votedValue: string }>`
   width: 120px;
   height: 120px;
   padding: 16px 0;
-  justify-content: center;
-  align-items: center;
-  border-radius: 40px;
-  font-size: ${ANGOLA_STYLES.textSize.title};
 
   color: ${(props) =>
     props.votedValue ? ANGOLA_STYLES.color.text : ANGOLA_STYLES.color.dark};

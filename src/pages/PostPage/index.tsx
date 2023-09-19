@@ -52,6 +52,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
         (comment) => comment.author._id === myId,
       );
       if (!userComment) {
+        setVotedValue('');
         setSubmitValue('');
         return;
       }
@@ -62,8 +63,10 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   }, [postData?.comments, myId, postData, submitValue]);
 
   useEffect(() => {
-    if (submitValue && show) {
-      searchParams.set('voted', submitValue);
+    if (show) {
+      submitValue
+        ? searchParams.set('voted', submitValue)
+        : searchParams.delete('voted');
       setSearchParams(searchParams);
     }
   }, [searchParams, setSearchParams, submitValue, show]);
