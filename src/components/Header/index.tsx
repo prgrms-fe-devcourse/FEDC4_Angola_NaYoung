@@ -27,8 +27,6 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       {sortProps && (
         <SelectContainer>
           <SortSelect
-            id="orderSelect"
-            name="order"
             value={selectValue}
             onChange={(e) => {
               handleChangeSelect(e.target.value);
