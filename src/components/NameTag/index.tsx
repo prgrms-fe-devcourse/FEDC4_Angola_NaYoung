@@ -52,4 +52,11 @@ const TagContainer = styled.div<{ level: number; textSize?: string }>`
   > div {
     color: ${({ level }) => ANGOLA_STYLES.color.levels[level].text};
   }
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0px 3px 0px 0px ${ANGOLA_STYLES.color.gray};
+  &:hover {
+    box-shadow: 0px 4px 0px 0px ${ANGOLA_STYLES.color.gray};
+    transform: scale(1.01);
+  }
 `;
