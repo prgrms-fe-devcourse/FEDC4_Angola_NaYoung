@@ -15,10 +15,11 @@ interface HeaderProps {
 }
 
 const Header = ({ title, sortProps, keyword }: HeaderProps) => {
+  const TARGET_VALUE = sortProps?.target;
+  const SORT_VALUE = sortProps?.sort;
+
+  const { selectValue, handleChangeSelect } = useSort({ SORT_VALUE });
   const navigate = useNavigate();
-  const target = sortProps?.target;
-  const sort = sortProps?.sort;
-  const { selectValue, handleChangeSelect } = useSort({ sort });
 
   return (
     <Container>
@@ -31,7 +32,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             onChange={(e) => {
               handleChangeSelect(e.target.value);
             }}>
-            {target === 'user' ? (
+            {TARGET_VALUE === 'user' ? (
               <>
                 <option value="follower">팔로워 순</option>
                 <option value="level">레벨 순</option>
@@ -60,17 +61,17 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       {keyword && (
         <TabBar>
           <TabBarList
-            className={target === 'user' ? 'bold' : ''}
+            className={TARGET_VALUE === 'user' ? 'bold' : ''}
             onClick={() =>
-              handleClickTabBar({ value: 'user', target, navigate })
+              handleClickTabBar({ value: 'user', TARGET_VALUE, navigate })
             }>
             유저
           </TabBarList>
           |
           <TabBarList
-            className={target === 'post' ? 'bold' : ''}
+            className={TARGET_VALUE === 'post' ? 'bold' : ''}
             onClick={() =>
-              handleClickTabBar({ value: 'post', target, navigate })
+              handleClickTabBar({ value: 'post', TARGET_VALUE, navigate })
             }>
             포스트
           </TabBarList>
