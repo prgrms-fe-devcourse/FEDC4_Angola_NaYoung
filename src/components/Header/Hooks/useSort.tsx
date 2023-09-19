@@ -7,7 +7,6 @@ interface useSortProps {
 
 interface useSortReturnProps {
   selectValue: string | undefined;
-
   handleChangeSelect: (sort: string) => void;
 }
 
