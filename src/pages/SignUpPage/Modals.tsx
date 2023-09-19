@@ -8,7 +8,9 @@ interface ModalsProps {
 
 export const SignUpSuccessModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal onClose={handleClick}>
+    <Modal
+      onClose={handleClick}
+      footerShow={false}>
       <Content>
         <Msg>회원 가입이 완료되었습니다!</Msg>
         <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
@@ -19,7 +21,9 @@ export const SignUpSuccessModal = ({ onClick: handleClick }: ModalsProps) => {
 
 export const SignUpFailModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal onClose={handleClick}>
+    <Modal
+      onClose={handleClick}
+      footerShow={false}>
       <Content>
         <Msg>회원 가입에 실패하였습니다!</Msg>
         <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
@@ -30,7 +34,9 @@ export const SignUpFailModal = ({ onClick: handleClick }: ModalsProps) => {
 
 export const CheckEmailModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal onClose={handleClick}>
+    <Modal
+      onClose={handleClick}
+      footerShow={false}>
       <Content>
         <Msg>이메일 중복 검사를 해주세요!</Msg>
         <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
@@ -41,7 +47,9 @@ export const CheckEmailModal = ({ onClick: handleClick }: ModalsProps) => {
 
 export const CheckPasswordModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal onClose={handleClick}>
+    <Modal
+      onClose={handleClick}
+      footerShow={false}>
       <Content>
         <Msg>비밀번호를 다시 확인해주세요!</Msg>
         <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
@@ -52,7 +60,9 @@ export const CheckPasswordModal = ({ onClick: handleClick }: ModalsProps) => {
 
 export const CheckFullNameModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal onClose={handleClick}>
+    <Modal
+      onClose={handleClick}
+      footerShow={false}>
       <Content>
         <Msg>닉네임 중복 검사를 해주세요!</Msg>
         <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
@@ -68,7 +78,7 @@ const Content = styled.div`
   align-items: center;
   padding: 20px;
   height: 100%;
-  gap: 3rem;
+  gap: 2rem;
 `;
 
 const Msg = styled.div`
