@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface HeaderProps {
@@ -65,7 +66,12 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
               </>
             )}
           </SortSelect>
-          <SortDirection>▶</SortDirection>
+          <SortDirection>
+            <Icon
+              name="select_down"
+              size="26"
+            />
+          </SortDirection>
         </SelectContainer>
       )}
 
@@ -121,23 +127,29 @@ const SortSelect = styled.select`
   display: flex;
   width: 200px;
   height: 40px;
-  padding: 0px 20px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 44px;
+  padding: 0px 20px 0px 44px;
+  border-radius: 40px;
   border: ${ANGOLA_STYLES.border.default};
   background: #fff;
   appearance: none;
+  outline: none;
+  cursor: pointer;
+  & option {
+    font-family: 'MabinogiClassicR';
+    color: #404040;
+    font-size: 10px;
+  }
 `;
 
 const SortDirection = styled.div`
-  transform: rotate(90deg);
   position: absolute;
-  z-index: 20px;
   top: 0;
-  right: 30px;
+  right: 16px;
   bottom: 0;
+  cursor: pointer;
+  pointer-events: none;
 `;
+
 const Title = styled.div`
   color: #fff;
   font-size: ${ANGOLA_STYLES.textSize.title};
