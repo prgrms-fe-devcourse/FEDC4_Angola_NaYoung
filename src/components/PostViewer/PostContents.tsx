@@ -11,7 +11,8 @@ interface PostContentsProps {
   onGoDetailPage: () => void;
   onShowNonAuthModal: () => void;
   isPostPage: boolean;
-  authorLevel: number;
+  isVoted: boolean;
+  voteColor: string;
 }
 
 const PostContents = ({
@@ -22,7 +23,8 @@ const PostContents = ({
   onGoDetailPage: goDetailPage,
   onShowNonAuthModal: showNonAuthModal,
   isPostPage,
-  authorLevel,
+  isVoted,
+  voteColor,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
   const handleClickContent = (value: string) => {
@@ -34,17 +36,13 @@ const PostContents = ({
     goDetailPage();
   };
   const getContentClassName = (value: string) => {
-    return isPostPage && voteValue === value
-      ? `active ${authorLevel === 7 ? 'fullLevel' : 'normalLevel'}`
-      : '';
+    return isPostPage && voteValue === value ? 'active' : '';
   };
-  const { fill, text } = ANGOLA_STYLES.color.levels[authorLevel];
-
   return (
     <SelectionContainer>
       <Selection
-        voteColor={fill}
-        voteText={text}
+        voteColor={voteColor}
+        canVote={!isVoted}
         className={getContentClassName('A')}
         onClick={() => handleClickContent('A')}>
         <Type>A</Type>
@@ -52,8 +50,8 @@ const PostContents = ({
       </Selection>
       <VsSymbol>VS</VsSymbol>
       <Selection
-        voteColor={fill}
-        voteText={text}
+        voteColor={voteColor}
+        canVote={!isVoted}
         className={getContentClassName('B')}
         onClick={() => handleClickContent('B')}>
         <Type>B</Type>
@@ -72,7 +70,7 @@ const SelectionContainer = styled.div`
   gap: 36px;
 `;
 
-const Selection = styled.div<{ voteColor: string; voteText: string }>`
+const Selection = styled.div<{ voteColor: string; canVote: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,7 +88,8 @@ const Selection = styled.div<{ voteColor: string; voteText: string }>`
   gap: 16px;
   white-space: pre-wrap;
   transition: transform 0.2s ease-out;
-  cursor: pointer;
+  cursor: ${({ canVote }) => (canVote ? 'pointer' : 'default')};
+  pointer-events: ${({ canVote }) => (canVote ? 'auto' : 'none')};
   &.active {
     background: ${({ voteColor }) => voteColor};
   }

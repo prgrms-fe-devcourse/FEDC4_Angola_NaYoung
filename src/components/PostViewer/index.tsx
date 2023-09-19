@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@store/auth';
+import { getUserLevelInfo } from '@utils/calculateUserLevel';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import ButtonGroup from './ButtonGroup';
 import NonAuthModal from './NonAuthModal';
@@ -42,6 +43,7 @@ const PostViewer = ({
 
   const [isModalShow, setIsModalShow] = useState(false);
   const isPostPage = onVote !== undefined;
+  const isVoted = searchParams.get('voted') ? true : false;
   const goDetailPage = () => {
     if (isPostPage) {
       if (!searchParams.get('show')) {
@@ -64,12 +66,13 @@ const PostViewer = ({
       <PostContents
         contentA={a}
         contentB={b}
-        authorLevel={authorLevel}
+        voteColor={getUserLevelInfo(authorLevel).userColor}
         onVote={onVote}
         voteValue={voteValue}
         onGoDetailPage={goDetailPage}
         onShowNonAuthModal={() => setIsModalShow(true)}
         isPostPage={isPostPage}
+        isVoted={isVoted}
       />
       {auth && (
         <ButtonGroup
