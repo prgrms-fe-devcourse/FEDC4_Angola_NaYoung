@@ -111,7 +111,7 @@ const SortSelect = styled.select`
   padding: 0px 20px 0px 44px;
   border-radius: 40px;
   border: ${ANGOLA_STYLES.border.default};
-  background: var(--white, #fff);
+  background: ${ANGOLA_STYLES.color.white};
   appearance: none;
   outline: none;
   cursor: pointer;
@@ -127,7 +127,7 @@ const SortIcon = styled.div`
 `;
 
 const Title = styled.div`
-  color: var(--white, #fff);
+  color: ${ANGOLA_STYLES.color.white};
   font-size: ${ANGOLA_STYLES.textSize.title};
   position: absolute;
   top: 50%;
@@ -143,7 +143,7 @@ const TabBar = styled.ul`
   list-style: none;
   justify-content: space-between;
   align-items: center;
-  color: var(--white, #fff);
+  color: ${ANGOLA_STYLES.color.white};
   position: absolute;
   top: 50%;
   right: -60px;
@@ -151,7 +151,7 @@ const TabBar = styled.ul`
 `;
 
 const TabBarList = styled.li`
-  color: var(--white, #fff);
+  color: ${ANGOLA_STYLES.color.white};
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
   cursor: pointer;
   &.bold {
