@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import useSort from './Hooks/useSort';
+import { handleClickTabBar } from './utils';
 
 interface HeaderProps {
   title: string;
@@ -18,22 +19,6 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
   const target = sortProps?.target;
   const sort = sortProps?.sort;
   const { selectValue, handleChangeSelect } = useSort({ sort });
-
-  const handleClickTabBar = (value: string) => {
-    if (value === 'user') {
-      if (target === 'user') {
-        return;
-      }
-      navigate('/search/user?sort=follower');
-    }
-
-    if (value === 'post') {
-      if (target === 'post') {
-        return;
-      }
-      navigate('/search/post?sort=recent');
-    }
-  };
 
   return (
     <Container>
@@ -76,13 +61,17 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
         <TabBar>
           <TabBarList
             className={target === 'user' ? 'bold' : ''}
-            onClick={() => handleClickTabBar('user')}>
+            onClick={() =>
+              handleClickTabBar({ value: 'user', target, navigate })
+            }>
             유저
           </TabBarList>
           |
           <TabBarList
             className={target === 'post' ? 'bold' : ''}
-            onClick={() => handleClickTabBar('post')}>
+            onClick={() =>
+              handleClickTabBar({ value: 'post', target, navigate })
+            }>
             포스트
           </TabBarList>
         </TabBar>
