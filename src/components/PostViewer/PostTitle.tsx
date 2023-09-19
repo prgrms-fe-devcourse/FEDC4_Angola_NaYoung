@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import styled from '@emotion/styled';
 import { rgba } from 'emotion-rgba';
 import NameTag from '@components/NameTag';
@@ -18,6 +19,7 @@ const PostTitle = ({
   authorLevel,
 }: PostTitleProps) => {
   const levelColor = getUserLevelInfo(authorLevel).userColor;
+  const widthRef = useRef<HTMLDivElement | null>(null);
   return (
     <TitleContainer>
       <TitleShadow
@@ -25,7 +27,7 @@ const PostTitle = ({
         isGradient={authorLevel === 7}
       />
       <Title>
-        <Tag>
+        <Tag ref={widthRef}>
           <NameTag
             isNav={true}
             showLevel={true}
@@ -33,10 +35,10 @@ const PostTitle = ({
             userId={authorId}
             userLevel={authorLevel}
             level={authorLevel}
-            textSize={ANGOLA_STYLES.textSize.title}
+            textSize={ANGOLA_STYLES.textSize.titleSm}
           />
         </Tag>
-        <Text>{title}</Text>
+        <Text tagWidth={widthRef.current?.offsetWidth}>{title}</Text>
       </Title>
     </TitleContainer>
   );
@@ -57,8 +59,8 @@ const Title = styled.div`
   border: ${ANGOLA_STYLES.border.default};
   height: 48px;
   display: flex;
+  gap: 12px;
   align-items: center;
-  justify-content: center;
   width: 100%;
   padding: 8px;
 
@@ -91,12 +93,18 @@ const Title = styled.div`
 `;
 
 const Tag = styled.div`
-  position: absolute;
   width: min-content;
-  left: 8px;
 `;
 
-const Text = styled.div``;
+const Text = styled.div<{ tagWidth?: number }>`
+  flex-grow: 1;
+  flex-shrink: 0;
+  font-size: ${ANGOLA_STYLES.textSize.title};
+  max-width: calc(100% - 12px - ${({ tagWidth }) => `${tagWidth || 0}px`});
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 const TitleShadow = styled(Title)<{ levelColor: string; isGradient: boolean }>`
   position: absolute;
