@@ -47,17 +47,30 @@ const SignUpPage = () => {
     }
   };
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    const { passwordMsg: msg, isValidPassword } = checkPassWordPattern({
+    const {
+      passwordMsg,
+      passwordConfirmMsg,
+      isValidPassword,
+      isValidPasswordConfirm,
+    } = checkPassWordPattern({
       newPassWord: e.target.value,
+      confirmNewPassWord: passwordConfirm,
     });
     setPassword(e.target.value);
 
     if (!e.target.value) {
       setInvalidPasswordMsg('비밀번호를 입력해주세요.');
     } else if (!isValidPassword) {
-      setInvalidPasswordMsg(msg);
+      setInvalidPasswordMsg(passwordMsg);
     } else {
       setInvalidPasswordMsg('');
+    }
+    if (!isValidPasswordConfirm) {
+      setInvalidPasswordConfirmMsg(passwordConfirmMsg);
+      setValidPasswordConfirmMsg('');
+    } else {
+      setValidPasswordConfirmMsg(passwordConfirmMsg);
+      setInvalidPasswordConfirmMsg('');
     }
   };
   const handleChangePasswordConfirm = (e: ChangeEvent<HTMLInputElement>) => {
@@ -206,7 +219,6 @@ const SignUpPage = () => {
                 onChange={handleChangePassword}
                 placeholder="5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요."
               />
-
               {isPasswordShown ? (
                 <EyeIcon onClick={handleClickPasswordShown}>
                   <Icon name={'eye'} />
@@ -216,10 +228,12 @@ const SignUpPage = () => {
                   <Icon name={'eye_slash'} />
                 </EyeIcon>
               )}
-              {invalidPasswordMsg && (
-                <InputWarning>{invalidPasswordMsg}</InputWarning>
-              )}
             </InputWrapper>
+            {invalidPasswordMsg && (
+              <InputWarning style={{ marginBottom: '1rem' }}>
+                {invalidPasswordMsg}
+              </InputWarning>
+            )}
             <InputWrapper>
               <Input
                 type={isPasswordConfirmShown ? 'text' : 'password'}
@@ -234,9 +248,6 @@ const SignUpPage = () => {
                 <EyeIcon onClick={handleClickPasswordConfirmShown}>
                   <Icon name={'eye_slash'} />
                 </EyeIcon>
-              )}
-              {invalidPasswordMsg && (
-                <InputWarning>{invalidPasswordMsg}</InputWarning>
               )}
             </InputWrapper>
             {invalidPasswordConfirmMsg && (
@@ -311,19 +322,18 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  gap: 50px;
 `;
 
 const Wrapper = styled.div`
-  width: 60%;
+  width: 70%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
 `;
 
 const Label = styled.label`
-  font-size: 20px;
-  font-weight: 500;
+  font-size: ${ANGOLA_STYLES.textSize.title};
   line-height: 150%;
   padding-left: 1rem;
 `;
@@ -332,21 +342,21 @@ const InputContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 const InputWrapper = styled.div`
-  width: 70%;
+  width: 85%;
   position: relative;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 0.4rem 1rem;
-  border: 1.5px solid gray;
-  border-radius: 4rem;
-  box-sizing: border-box;
-  font-size: 18px;
+  padding: 12px 16px 4px 16px;
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 40px;
+  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
 
   ::placeholder {
     color: ${ANGOLA_STYLES.color.dark};
