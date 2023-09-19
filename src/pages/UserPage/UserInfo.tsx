@@ -113,7 +113,7 @@ const UserInfoWrapper = styled.div`
 const Emoji = styled.div`
   color: ${ANGOLA_STYLES.color.text};
   text-align: center;
-  font-size: ${ANGOLA_STYLES.textSize.titleLg};
+  font-size: ${ANGOLA_STYLES.textSize.symbol};
   font-style: normal;
   font-weight: 400;
   line-height: 100%;
