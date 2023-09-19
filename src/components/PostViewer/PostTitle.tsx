@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { rgba } from 'emotion-rgba';
 import NameTag from '@components/NameTag';
@@ -23,11 +23,19 @@ const PostTitle = ({
   onGoDetailPage: goDetailPage,
 }: PostTitleProps) => {
   const levelColor = getUserLevelInfo(authorLevel).userColor;
-  const widthRef = useRef<HTMLDivElement | null>(null);
+  const tagRef = useRef<HTMLDivElement | null>(null);
+  const [tagWidth, setTagWidth] = useState<number>(120);
   const handleClickTitleText = () => {
     if (isPostPage) return;
     goDetailPage();
   };
+  useEffect(() => {
+    if (tagRef.current) {
+      setTagWidth(tagRef.current.offsetWidth);
+    } else {
+      setTagWidth(120);
+    }
+  }, []);
   return (
     <TitleContainer>
       <TitleShadow
@@ -35,7 +43,7 @@ const PostTitle = ({
         isGradient={authorLevel === 7}
       />
       <Title>
-        <Tag ref={widthRef}>
+        <Tag ref={tagRef}>
           <NameTag
             isNav={true}
             showLevel={true}
@@ -48,7 +56,7 @@ const PostTitle = ({
         </Tag>
         <Text
           className={isPostPage ? 'inPost' : 'inHome'}
-          tagWidth={widthRef.current?.offsetWidth}
+          tagWidth={tagWidth}
           onClick={handleClickTitleText}>
           {title}
         </Text>
@@ -109,11 +117,11 @@ const Tag = styled.div`
   width: min-content;
 `;
 
-const Text = styled.div<{ tagWidth?: number }>`
+const Text = styled.div<{ tagWidth: number }>`
   flex-grow: 1;
   flex-shrink: 0;
   font-size: ${ANGOLA_STYLES.textSize.title};
-  max-width: calc(100% - 12px - ${({ tagWidth }) => `${tagWidth || 20}px`});
+  max-width: calc(100% - 12px - ${({ tagWidth }) => `${tagWidth}px`});
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

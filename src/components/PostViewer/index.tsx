@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@store/auth';
 import { getUserLevelInfo } from '@utils/calculateUserLevel';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import ButtonGroup from './ButtonGroup';
 import NonAuthModal from './NonAuthModal';
 import PostContents from './PostContents';
@@ -89,6 +90,7 @@ const PostViewer = ({
           onGoDetailPage={goDetailPage}
         />
       )}
+      <Line />
       {isModalShow && <NonAuthModal onClose={() => setIsModalShow(false)} />}
     </PostContainer>
   );
@@ -102,4 +104,14 @@ const PostContainer = styled.div`
   align-items: center;
   gap: 24px;
   width: 100%;
+`;
+
+const Line = styled.hr`
+  border: none;
+  border-top: 2px dotted ${ANGOLA_STYLES.color.dark};
+  color: ${ANGOLA_STYLES.color.white};
+  background-color: ${ANGOLA_STYLES.color.white};
+  height: 2px;
+  width: 100%;
+  margin-bottom: 32px;
 `;
