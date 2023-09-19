@@ -1,6 +1,5 @@
 export const PROFILE_IMAGE_ALT = '프로필 이미지';
-export const DEFAULT_PROFILE_IMAGE_SRC =
-  '/src/pages/UserPage/assets/default.png';
+export const DEFAULT_PROFILE_IMAGE_SRC = '/public/images/temp.png';
 
 export const LEVEL = 'Level : ';
 export const FOLLOWER = '팔로워 : ';
