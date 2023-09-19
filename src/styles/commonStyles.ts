@@ -39,8 +39,13 @@ export const ANGOLA_STYLES = {
       default: '0px 4px 0px 0px #404040',
       hover: '0px 6px 0px 0px #404040',
     },
+    buttonXs: {
+      default: '0px 2px 0px 0px #404040',
+      hover: '0px 4px 0px 0px #404040',
+    },
   },
   border: {
     default: '2px solid #404040',
+    hover: '3px solid #404040',
   },
 } as const;
