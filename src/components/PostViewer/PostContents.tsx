@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { rgba } from 'emotion-rgba';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@store/auth';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface PostContentsProps {
   contentA: string;
@@ -11,8 +11,7 @@ interface PostContentsProps {
   onGoDetailPage: () => void;
   onShowNonAuthModal: () => void;
   isPostPage: boolean;
-  colorA?: string;
-  colorB?: string;
+  authorLevel: number;
 }
 
 const PostContents = ({
@@ -23,8 +22,7 @@ const PostContents = ({
   onGoDetailPage: goDetailPage,
   onShowNonAuthModal: showNonAuthModal,
   isPostPage,
-  colorA,
-  colorB,
+  authorLevel,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
   const handleClickContent = (value: string) => {
@@ -36,50 +34,89 @@ const PostContents = ({
     goDetailPage();
   };
   const getContentClassName = (value: string) => {
-    return isPostPage && voteValue === value ? 'active' : '';
+    return isPostPage && voteValue === value
+      ? `active ${authorLevel === 7 ? 'fullLevel' : 'normalLevel'}`
+      : '';
   };
+  const { fill, text } = ANGOLA_STYLES.color.levels[authorLevel];
 
   return (
-    <VoteButtonContainer>
-      <VoteButton
-        bgColor={colorA || '#ffffff'}
+    <SelectionContainer>
+      <Selection
+        voteColor={fill}
+        voteText={text}
         className={getContentClassName('A')}
         onClick={() => handleClickContent('A')}>
-        {contentA}
-      </VoteButton>
-      <VoteButton
-        bgColor={colorB || '#ffffff'}
+        <Type>A</Type>
+        <Content>{contentA}</Content>
+      </Selection>
+      <VsSymbol>VS</VsSymbol>
+      <Selection
+        voteColor={fill}
+        voteText={text}
         className={getContentClassName('B')}
         onClick={() => handleClickContent('B')}>
-        {contentB}
-      </VoteButton>
-    </VoteButtonContainer>
+        <Type>B</Type>
+        <Content>{contentB}</Content>
+      </Selection>
+    </SelectionContainer>
   );
 };
 
 export default PostContents;
 
-const VoteButtonContainer = styled.div`
+const SelectionContainer = styled.div`
   display: flex;
-  gap: 10px;
+  align-items: center;
+  align-self: stretch;
+  gap: 36px;
 `;
 
-const VoteButton = styled.div<{ bgColor: string }>`
+const Selection = styled.div<{ voteColor: string; voteText: string }>`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  min-height: 160px;
+  max-height: 256px;
+  line-height: 200%;
+  flex: 1 0 0;
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 24px;
+  word-break: break-all;
+  padding: 16px 16px 24px 16px;
+  gap: 16px;
+  white-space: pre-wrap;
+  transition: transform 0.2s ease-out;
+  cursor: pointer;
+  &.active {
+    background: ${({ voteColor }) => voteColor};
+  }
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
+
+const VsSymbol = styled.div`
+  font-size: ${ANGOLA_STYLES.textSize.symbol};
+  text-shadow:
+    -1px 0px ${ANGOLA_STYLES.color.text},
+    0px 1px ${ANGOLA_STYLES.color.text},
+    1px 0px ${ANGOLA_STYLES.color.text},
+    0px -1px ${ANGOLA_STYLES.color.text};
+`;
+
+const Type = styled.h1`
+  font-size: ${ANGOLA_STYLES.textSize.titleLg};
+`;
+
+const Content = styled.div`
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  height: 200px;
-  background-color: ${({ bgColor }) => rgba(bgColor, 0.2)};
-  box-shadow: 5px 5px 0px 0px ${({ bgColor }) => bgColor};
-  &.active {
-    background-color: ${({ bgColor }) => rgba(bgColor, 0.8)};
-    box-shadow: 5px 5px 0px 0px ${({ bgColor }) => bgColor};
-    border-width: 3px;
-  }
-  border: 2px solid black;
-  border-radius: 40px;
-  word-break: break-all;
-  padding: 5px;
-  white-space: pre;
 `;

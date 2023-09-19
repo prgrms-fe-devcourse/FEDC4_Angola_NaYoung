@@ -64,6 +64,7 @@ const PostViewer = ({
       <PostContents
         contentA={a}
         contentB={b}
+        authorLevel={authorLevel}
         onVote={onVote}
         voteValue={voteValue}
         onGoDetailPage={goDetailPage}
