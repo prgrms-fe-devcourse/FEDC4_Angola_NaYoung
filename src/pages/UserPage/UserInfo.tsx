@@ -5,16 +5,7 @@ import Image from '@components/Image';
 import NameTag from '@components/NameTag';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import {
-  DEFAULT_PROFILE_IMAGE_SRC,
-  FOLLOW,
-  FOLLOWER,
-  FOLLOWING,
-  GET_LIKES,
-  LEVEL,
-  PROFILE_IMAGE_ALT,
-  UN_FOLLOW,
-} from './constants';
+import { FOLLOW_MESSAGE, USER_INFO, USER_PROFILE_IMAGE } from './constants';
 import useFollow from './hooks/useFollow';
 
 interface UserInfoProps {
@@ -52,8 +43,8 @@ const UserInfo = ({
       <UserProfileContainer>
         <Emoji>{userEmoji}</Emoji>
         <Image
-          src={image ? image : `${DEFAULT_PROFILE_IMAGE_SRC}`}
-          alt={PROFILE_IMAGE_ALT}
+          src={image ? image : `${USER_PROFILE_IMAGE.DEFAULT_SRC}`}
+          alt={USER_PROFILE_IMAGE.ALT}
         />
       </UserProfileContainer>
       <NameTag
@@ -66,26 +57,28 @@ const UserInfo = ({
       />
       <UserInfoContainer>
         <UserInfoText>
-          {LEVEL}&nbsp;&nbsp;{userLevel}
+          {USER_INFO.LEVEL}&nbsp;&nbsp;{userLevel}
         </UserInfoText>
         <Bar>|</Bar>
         <UserInfoText>
-          {FOLLOWER}&nbsp;&nbsp;{countFollowers}
+          {USER_INFO.FOLLOWER}&nbsp;&nbsp;{countFollowers}
         </UserInfoText>
         <Bar>|</Bar>
         <UserInfoText>
-          {FOLLOWING}&nbsp;&nbsp;{following}
+          {USER_INFO.FOLLOWING}&nbsp;&nbsp;{following}
         </UserInfoText>
         <Bar>|</Bar>
         <UserInfoText>
-          {GET_LIKES}&nbsp;&nbsp;{likes}
+          {USER_INFO.GET_LIKES}&nbsp;&nbsp;{likes}
         </UserInfoText>
         {auth && (
           <Button
             isFollowed={isFollowed}
             size="md"
             onClick={handleClickFollowButton}>
-            {isFollowed ? `${UN_FOLLOW}` : `${FOLLOW}`}
+            {isFollowed
+              ? `${FOLLOW_MESSAGE.UN_FOLLOW}`
+              : `${FOLLOW_MESSAGE.FOLLOW}`}
           </Button>
         )}
       </UserInfoContainer>

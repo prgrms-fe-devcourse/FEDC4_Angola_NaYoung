@@ -8,7 +8,7 @@ import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import UserInfo from './UserInfo';
-import { NO_POSTS_LIST_TITLE, POSTS_LIST_TITLE } from './constants';
+import { USER_POSTS_TITLE } from './constants';
 
 interface UserPageProps {
   userId: string;
@@ -46,8 +46,8 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
         <PostsListUl>
           <PostsListTitle>
             {userPostsData?.length === 0
-              ? NO_POSTS_LIST_TITLE
-              : POSTS_LIST_TITLE}
+              ? USER_POSTS_TITLE.NO_POSTS
+              : USER_POSTS_TITLE.POSTS}
           </PostsListTitle>
           {userPostsData?.map((post) => (
             <PostListItem
