@@ -7,12 +7,14 @@ interface ModalProps {
   onClose: VoidFunction;
   onConfirm?: VoidFunction;
   children: React.ReactNode;
+  footerShow?: boolean;
 }
 
 const Modal = ({
   onClose: handleClose,
   onConfirm: handleConfirm,
   children,
+  footerShow = true,
 }: ModalProps) => {
   const modalRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
@@ -50,12 +52,16 @@ const Modal = ({
           </Button>
         </ModalHeader>
         <ModalContent>{children}</ModalContent>
-        <ModalFooter>
-          <TextButton onClick={handleConfirm ? handleConfirm : handleClose}>
-            확인
-          </TextButton>
-          {handleConfirm && <TextButton onClick={handleClose}>취소</TextButton>}
-        </ModalFooter>
+        {footerShow && (
+          <ModalFooter>
+            <TextButton onClick={handleConfirm ? handleConfirm : handleClose}>
+              확인
+            </TextButton>
+            {handleConfirm && (
+              <TextButton onClick={handleClose}>취소</TextButton>
+            )}
+          </ModalFooter>
+        )}
       </Container>
     </ModalWrapper>
   );
@@ -67,8 +73,8 @@ const ModalWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  backdrop-filter: blur(2px);
-  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2.5px);
+  background-color: rgba(0, 0, 0, 0.3);
   width: 100%;
   height: 100vh;
   display: flex;
