@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import { useFetchLogin } from '@apis/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import LOGO from './LOGO_FULL.svg';
+import LOGO from '../../../public/images/LOGO_FULL.svg';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('init');

@@ -3,7 +3,7 @@ import Modal from '@components/Modal';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
 
 interface ModalsProps {
-  onClick: () => void;
+  onClick: VoidFunction;
 }
 
 export const SignUpSuccessModal = ({ onClick: handleClick }: ModalsProps) => {
