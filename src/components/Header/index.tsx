@@ -1,10 +1,9 @@
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import useSort from './Hooks/useSort';
-import { SELECT_OPTION, TAB_BAR_VALUE } from './constants';
-import { handleClickTabBar } from './utils';
+import TabBarList from './TabBarList';
+import { SELECT_OPTION } from './constants';
 
 interface HeaderProps {
   title: string;
@@ -20,7 +19,6 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
   const SORT_VALUE = sortProps?.sort;
 
   const { selectValue, handleChangeSelect } = useSort({ SORT_VALUE });
-  const navigate = useNavigate();
 
   return (
     <Container>
@@ -60,20 +58,14 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       {keyword && (
         <TabBar>
           <TabBarList
-            className={TARGET_VALUE === 'user' ? 'select' : ''}
-            onClick={() =>
-              handleClickTabBar({ value: 'user', TARGET_VALUE, navigate })
-            }>
-            {TAB_BAR_VALUE.user}
-          </TabBarList>
+            name="user"
+            TARGET_VALUE={TARGET_VALUE}
+          />
           |
           <TabBarList
-            className={TARGET_VALUE === 'post' ? 'select' : ''}
-            onClick={() =>
-              handleClickTabBar({ value: 'post', TARGET_VALUE, navigate })
-            }>
-            {TAB_BAR_VALUE.post}
-          </TabBarList>
+            name="post"
+            TARGET_VALUE={TARGET_VALUE}
+          />
         </TabBar>
       )}
     </Container>
@@ -148,17 +140,4 @@ const TabBar = styled.ul`
   top: 50%;
   right: -60px;
   transform: translate(-50%, -50%);
-`;
-
-const TabBarList = styled.li`
-  color: ${ANGOLA_STYLES.color.white};
-  font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  cursor: pointer;
-  &.select {
-    text-shadow:
-      -2.5px 0 black,
-      0 2.5px black,
-      2.5px 0 black,
-      0 -2.5px black;
-  }
 `;
