@@ -63,7 +63,8 @@ const PostListItem = ({
         }
         alt="프로필"
         size={60}
-        style={{ margin: '0 20px' }}></Image>
+        style={{ margin: '0 20px' }}
+      />
       <TitleContainer>
         <Title>{postTitle}</Title>
       </TitleContainer>
