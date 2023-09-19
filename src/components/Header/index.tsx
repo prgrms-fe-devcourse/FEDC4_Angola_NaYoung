@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import useSort from './Hooks/useSort';
+import { SELECT_OPTION } from './constants';
 import { handleClickTabBar } from './utils';
 
 interface HeaderProps {
@@ -34,13 +35,13 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             }}>
             {TARGET_VALUE === 'user' ? (
               <>
-                <option value="follower">팔로워 순</option>
-                <option value="level">레벨 순</option>
+                <option value="follower">{SELECT_OPTION.follower}</option>
+                <option value="level">{SELECT_OPTION.level}</option>
               </>
             ) : (
               <>
-                <option value="recent">최신 순</option>
-                <option value="like">좋아요 순</option>
+                <option value="recent">{SELECT_OPTION.recent}</option>
+                <option value="like">{SELECT_OPTION.like}</option>
               </>
             )}
           </SortSelect>
