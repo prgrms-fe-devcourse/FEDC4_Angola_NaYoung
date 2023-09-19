@@ -1,11 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Button from '@components/Button';
 import { useFetchLogin } from '@apis/auth';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
+import LOGO from './LOGO_FULL.svg';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('init');
+  const [password, setPassword] = useState('init');
   const { loginMutate, isLoginError, isLoginSuccess } = useFetchLogin();
 
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -18,12 +21,7 @@ const LoginPage = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!email) {
-      alert('이메일을 입력하세요.');
-      return;
-    }
-    if (!password) {
-      alert('비밀번호를 입력하세요.');
+    if (!email || email === 'init' || !password || password === 'init') {
       return;
     }
 
@@ -36,18 +34,38 @@ const LoginPage = () => {
     <>
       <LoginContainer>
         <Form onSubmit={handleSubmit}>
+          <img
+            src={LOGO}
+            alt="logo"
+            width={'200px'}
+          />
           <Wrapper>
             <Label>이메일</Label>
             <InputStyled onChange={handleChangeEmail} />
+            {!email && <InputWarning>이메일을 입력하세요.</InputWarning>}
           </Wrapper>
           <Wrapper>
             <Label>비밀번호</Label>
             <InputStyled onChange={handleChangePassword} />
+            {!password && <InputWarning>비밀번호를 입력하세요.</InputWarning>}
           </Wrapper>
           <LoginErrorMsg style={{ display: isLoginError ? `block` : 'none' }}>
             아이디 또는 비밀번호를 확인하세요.
           </LoginErrorMsg>
-          <SubmitButton>로그인 하기</SubmitButton>
+          <Button
+            type="submit"
+            size="md"
+            style={{
+              width: '150px',
+              fontSize: ANGOLA_STYLES.textSize.title,
+            }}
+            disabled={
+              email && password && email !== 'init' && password !== 'init'
+                ? false
+                : true
+            }>
+            로그인 하기
+          </Button>
         </Form>
         {isLoginSuccess && <Navigate to="/" />}
       </LoginContainer>
@@ -59,64 +77,57 @@ export default LoginPage;
 
 const LoginContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  padding: 80px;
 `;
 
 const Form = styled.form`
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
-  border: 3px solid black;
-  width: 80%;
-  height: 60%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 3rem;
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
+  gap: 48px;
 `;
 
 const Wrapper = styled.div`
-  width: 40%;
+  width: 60%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
 `;
 
 const Label = styled.label`
-  font-size: 20px;
-  font-weight: 500;
+  font-size: ${ANGOLA_STYLES.textSize.title};
   line-height: 150%;
-  padding-left: 1rem;
+  padding-left: 8px;
 `;
 
 const InputStyled = styled.input`
   width: 100%;
-  padding: 4px 8px;
-  border: 1.5px solid gray;
-  border-radius: 4rem;
+  padding: 12px 16px 4px 16px;
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 40px;
   box-sizing: border-box;
-  font-size: 18px;
-`;
+  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+  font-size: ${ANGOLA_STYLES.textSize.title};
 
-const SubmitButton = styled.button`
-  padding: 0.5rem 1.5rem;
-  border: 2px solid black;
-  border-radius: 50px;
-  font-size: 18px;
-  font-weight: 600;
-  color: red;
-  background-color: #47e1a8;
-
-  &:hover {
-    background-color: rgba(90, 120, 100, 0.4);
-    cursor: pointer;
+  &:focus {
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
 `;
+
+const InputWarning = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: ${ANGOLA_STYLES.textSize.text};
+  color: #f66;
+  padding-left: 1rem;
+  gap: 8px;
+`;
+
 const LoginErrorMsg = styled.div`
-  font-size: 17px;
-  color: red;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  color: #f66;
 `;

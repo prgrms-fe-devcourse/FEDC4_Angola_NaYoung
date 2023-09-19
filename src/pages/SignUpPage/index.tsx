@@ -437,6 +437,10 @@ const Input = styled.input`
     color: ${ANGOLA_STYLES.color.dark};
     font-size: ${ANGOLA_STYLES.textSize.text};
   }
+
+  &:focus {
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
 `;
 
 const InputWarning = styled.div`
