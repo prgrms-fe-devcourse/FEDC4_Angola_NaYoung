@@ -31,7 +31,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const [votedValue, setVotedValue] = useState<string>('');
   const [submitValue, setSubmitValue] = useState<string | undefined>('');
   const [isVoted, setIsVoted] = useState(false);
-  const { postData, postRefetch } = useFetchPost(postId);
+  const { postData, postRefetch, isPostLoading } = useFetchPost(postId);
   const {
     createCommentMutate,
     isCreateCommentSuccess,
@@ -120,53 +120,59 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   return (
     <PostPageContainer>
-      {postData && (
-        <PostViewer
-          postId={postId}
-          authorName={postData.author.fullName}
-          authorId={postData.author._id}
-          postTitle={postData.title}
-          numberOfComments={postData.comments.length}
-          numberOfLikes={postData.likes.length}
-          likeId={postData.likes.find((like) => like.user === myId)?._id}
-          voteValue={votedValue}
-          onVote={(value: string) => handleClickItem(value)}
-          authorLevel={calculateLevel(postData.author)}
-        />
-      )}
-      {show && (
-        <CommentsContainer>
-          {submitValue && postData?.comments ? (
-            isCreateCommentLoading ? (
-              <Spinner />
-            ) : (
-              <Turnout
-                comments={postData?.comments}
-                authorLevel={calculateLevel(postData.author)}
-              />
-            )
-          ) : (
-            <MakeComment
-              votedValue={votedValue}
-              handleClickItem={handleClickItem}
-              handleSubmitComment={handleSubmitComment}
+      {isPostLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          {postData && (
+            <PostViewer
+              postId={postId}
+              authorName={postData.author.fullName}
+              authorId={postData.author._id}
+              postTitle={postData.title}
+              numberOfComments={postData.comments.length}
+              numberOfLikes={postData.likes.length}
+              likeId={postData.likes.find((like) => like.user === myId)?._id}
+              voteValue={votedValue}
+              onVote={(value: string) => handleClickItem(value)}
+              authorLevel={calculateLevel(postData.author)}
             />
           )}
-          {postData && !isDeleteCommentError && (
-            <CommentList
-              comments={postData.comments}
-              deleteComment={deleteComment}
-              myId={myId}
-            />
+          {show && (
+            <CommentsContainer>
+              {submitValue && postData?.comments ? (
+                isCreateCommentLoading ? (
+                  <Spinner />
+                ) : (
+                  <Turnout
+                    comments={postData?.comments}
+                    authorLevel={calculateLevel(postData.author)}
+                  />
+                )
+              ) : (
+                <MakeComment
+                  votedValue={votedValue}
+                  handleClickItem={handleClickItem}
+                  handleSubmitComment={handleSubmitComment}
+                />
+              )}
+              {postData && !isDeleteCommentError && (
+                <CommentList
+                  comments={postData.comments}
+                  deleteComment={deleteComment}
+                  myId={myId}
+                />
+              )}
+              {isDeleteCommentError && (
+                <Modal onClose={() => window.location.reload()}>
+                  <CommentDeletionFailModal>
+                    댓글 삭제에 실패했습니다.
+                  </CommentDeletionFailModal>
+                </Modal>
+              )}
+            </CommentsContainer>
           )}
-          {isDeleteCommentError && (
-            <Modal onClose={() => window.location.reload()}>
-              <CommentDeletionFailModal>
-                댓글 삭제에 실패했습니다.
-              </CommentDeletionFailModal>
-            </Modal>
-          )}
-        </CommentsContainer>
+        </>
       )}
     </PostPageContainer>
   );

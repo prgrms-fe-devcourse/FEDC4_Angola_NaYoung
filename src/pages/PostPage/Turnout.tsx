@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
-import { getUserLevelInfo, voteRatio } from '@utils';
+import { voteRatio } from '@utils';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
 
 interface TurnoutProps {
@@ -13,17 +13,10 @@ const Turnout = ({ comments, authorLevel }: TurnoutProps) => {
   const [searchParams] = useSearchParams();
   const votedValue = searchParams.get('voted');
   const [ratios, setRatio] = useState([0, 0]);
-  const [postColor, setPostColor] = useState(
-    getUserLevelInfo(authorLevel).userColor,
-  );
 
   useEffect(() => {
     comments && comments.length > 0 && setRatio(voteRatio(comments));
   }, [comments]);
-
-  useEffect(() => {
-    setPostColor(getUserLevelInfo(authorLevel).userColor);
-  }, [authorLevel, setPostColor]);
 
   return (
     <TurnoutContainer>
@@ -31,13 +24,13 @@ const Turnout = ({ comments, authorLevel }: TurnoutProps) => {
         <ARatio
           ratio={ratios[0]}
           votedValue={votedValue}
-          postColor={postColor}>
+          level={authorLevel}>
           A: {ratios[0]}%
         </ARatio>
         <BRatio
           ratio={ratios[1]}
           votedValue={votedValue}
-          postColor={postColor}>
+          level={authorLevel}>
           B: {ratios[1]}%
         </BRatio>
       </TurnoutBar>
@@ -67,7 +60,7 @@ const TurnoutBar = styled.div`
 const ARatio = styled.div<{
   ratio: number;
   votedValue: string | null;
-  postColor: string;
+  level: number;
 }>`
   padding: 8px 24px 0 24px;
   justify-content: center;
@@ -76,16 +69,18 @@ const ARatio = styled.div<{
   line-height: 150%;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
 
-  width: ${(props) => props.ratio}%;
-  display: ${(props) => (props.ratio == 0 ? 'none' : 'flex')};
-  background-color: ${(props) =>
-    props.votedValue === 'A' ? props.postColor : ANGOLA_STYLES.color.gray};
+  width: ${({ ratio }) => ratio}%;
+  display: ${({ ratio }) => (ratio == 0 ? 'none' : 'flex')};
+  background: ${({ votedValue, level }) =>
+    votedValue === 'A'
+      ? ANGOLA_STYLES.color.levels[level].fill
+      : ANGOLA_STYLES.color.gray};
 `;
 
 const BRatio = styled.div<{
   ratio: number;
   votedValue: string | null;
-  postColor: string;
+  level: number;
 }>`
   padding: 8px 24px 0 24px;
   justify-content: center;
@@ -94,8 +89,10 @@ const BRatio = styled.div<{
   line-height: 150%;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
 
-  width: ${(props) => props.ratio}%;
-  display: ${(props) => (props.ratio == 0 ? 'none' : 'flex')};
-  background-color: ${(props) =>
-    props.votedValue === 'B' ? props.postColor : ANGOLA_STYLES.color.gray};
+  width: ${({ ratio }) => ratio}%;
+  display: ${({ ratio }) => (ratio == 0 ? 'none' : 'flex')};
+  background: ${({ votedValue, level }) =>
+    votedValue === 'B'
+      ? ANGOLA_STYLES.color.levels[level].fill
+      : ANGOLA_STYLES.color.gray};
 `;
