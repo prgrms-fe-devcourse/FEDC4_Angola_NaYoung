@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useFetchUpdateFullName } from '@apis/profile';
 import { checkFullNamePattern } from '@utils/userAuthentication';
 
@@ -23,13 +23,11 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
         setNewFullName('');
         return;
       }
-    } else {
-      setNewFullName('');
     }
     setIsEditingFullName(!isEditingFullName);
   };
 
-  const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
     setNewFullName(e.target.value);
   };
 

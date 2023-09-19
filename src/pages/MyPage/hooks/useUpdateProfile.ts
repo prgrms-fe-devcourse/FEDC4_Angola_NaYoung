@@ -29,7 +29,7 @@ const useUpdateProfile = ({ image }: useUpdateProfileProps) => {
 
   useEffect(() => {
     if (isUpdateProfileImageSuccess && updateProfileImageData.image) {
-      setProfileImageUrl(updateProfileImageData.image); // 이미지 URL 업데이트
+      setProfileImageUrl(updateProfileImageData.image);
     }
   }, [updateProfileImageData, isUpdateProfileImageSuccess]);
 

@@ -26,7 +26,7 @@ const useUpdatePassWord = () => {
     setIsEditingPassWord(!isEditingPassWord);
   };
 
-  const handleChangePassWord = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePassWord = (e: ChangeEvent<HTMLInputElement>) => {
     setNewPassWord(e.target.value);
   };
 
