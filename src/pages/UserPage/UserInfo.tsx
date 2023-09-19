@@ -17,8 +17,6 @@ import {
 } from './constants';
 import useFollow from './hooks/useFollow';
 
-// TODO: (지윤) 유저 페이지 Default 이미지 넣기
-
 interface UserInfoProps {
   userId: string;
   image: string;
