@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { BsCheckAll, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import {
@@ -7,16 +6,18 @@ import {
   checkFullNamePattern,
   checkPassWordPattern,
 } from '@utils';
+import Icon from '@components/Icon';
 import { useFetchSignUp } from '@apis/auth';
 import { useFetchUsers } from '@apis/user';
+import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import { SignUpFailModal, SignUpSuccessModal } from './SignUpModals';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('initial');
-  const [password, setPassword] = useState('initial');
-  const [passwordConfirm, setPasswordConfirm] = useState('initial');
-  const [fullName, setFullName] = useState('initial');
+  const [email, setEmail] = useState('init');
+  const [password, setPassword] = useState('init');
+  const [passwordConfirm, setPasswordConfirm] = useState('init');
+  const [fullName, setFullName] = useState('in');
   const [isDuplicatedEmailChecked, setIsDuplicatedEmailChecked] =
     useState(false);
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
@@ -168,11 +169,21 @@ const SignUpPage = () => {
       <SignUpContainer>
         <Form onSubmit={handleSubmit}>
           <Wrapper>
-            <Label>1. 이메일을 입력해주세요.</Label>
+            <Label>1. 이메일을 입력하세요.</Label>
             <InputContainer>
               <InputWrapper>
-                <Input onChange={handleChangeEmail} />
-                {isDuplicatedEmailChecked && <DoubleCheckIcon />}
+                <Input
+                  onChange={handleChangeEmail}
+                  placeholder="angola@gmail.com"
+                />
+                {isDuplicatedEmailChecked && (
+                  <DoubleCheckIcon>
+                    <Icon
+                      name={'double_check'}
+                      color={'#78d968'}
+                    />
+                  </DoubleCheckIcon>
+                )}
               </InputWrapper>
               <DuplicatedCheckBtn
                 type="button"
@@ -188,16 +199,22 @@ const SignUpPage = () => {
             )}
           </Wrapper>
           <Wrapper>
-            <Label>2. 비밀번호를 입력하세요</Label>
+            <Label>2. 비밀번호를 입력하세요.</Label>
             <InputWrapper>
               <Input
                 type={isPasswordShown ? 'text' : 'password'}
                 onChange={handleChangePassword}
+                placeholder="5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요."
               />
+
               {isPasswordShown ? (
-                <VisibleEyeIcon onClick={handleClickPasswordShown} />
+                <EyeIcon onClick={handleClickPasswordShown}>
+                  <Icon name={'eye'} />
+                </EyeIcon>
               ) : (
-                <InvisibleEyeIcon onClick={handleClickPasswordShown} />
+                <EyeIcon onClick={handleClickPasswordShown}>
+                  <Icon name={'eye_slash'} />
+                </EyeIcon>
               )}
               {invalidPasswordMsg && (
                 <InputWarning>{invalidPasswordMsg}</InputWarning>
@@ -207,11 +224,19 @@ const SignUpPage = () => {
               <Input
                 type={isPasswordConfirmShown ? 'text' : 'password'}
                 onChange={handleChangePasswordConfirm}
+                placeholder="동일한 비밀번호를 다시 입력해주세요."
               />
               {isPasswordConfirmShown ? (
-                <VisibleEyeIcon onClick={handleClickPasswordConfirmShown} />
+                <EyeIcon onClick={handleClickPasswordConfirmShown}>
+                  <Icon name={'eye'} />
+                </EyeIcon>
               ) : (
-                <InvisibleEyeIcon onClick={handleClickPasswordConfirmShown} />
+                <EyeIcon onClick={handleClickPasswordConfirmShown}>
+                  <Icon name={'eye_slash'} />
+                </EyeIcon>
+              )}
+              {invalidPasswordMsg && (
+                <InputWarning>{invalidPasswordMsg}</InputWarning>
               )}
             </InputWrapper>
             {invalidPasswordConfirmMsg && (
@@ -224,11 +249,21 @@ const SignUpPage = () => {
             )}
           </Wrapper>
           <Wrapper>
-            <Label>3. 닉네임을 입력하세요</Label>
+            <Label>3. 닉네임을 입력하세요.</Label>
             <InputContainer>
               <InputWrapper>
-                <Input onChange={handleChangeFullName} />
-                {isDuplicatedFullNameChecked && <DoubleCheckIcon />}
+                <Input
+                  onChange={handleChangeFullName}
+                  placeholder="3자 이상 8자 이하의 닉네임을 지어주세요."
+                />
+                {isDuplicatedFullNameChecked && (
+                  <DoubleCheckIcon>
+                    <Icon
+                      name={'double_check'}
+                      color={'#78D968'}
+                    />
+                  </DoubleCheckIcon>
+                )}
               </InputWrapper>
               <DuplicatedCheckBtn
                 type="button"
@@ -245,7 +280,7 @@ const SignUpPage = () => {
               </InputWarning>
             )}
           </Wrapper>
-          <SubmitButton type="submit">가입하기</SubmitButton>
+          <SubmitButton type="submit">가입 완료하기</SubmitButton>
         </Form>
         {isSignUpSuccess && (
           <SignUpSuccessModal onClick={() => navigate('/login')} />
@@ -264,22 +299,19 @@ const SignUpContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  padding: 80px;
 `;
 
 const Form = styled.form`
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
-  border: 3px solid black;
-  width: 80%;
-  height: 60%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 3rem;
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
+  gap: 60px;
 `;
 
 const Wrapper = styled.div`
@@ -315,6 +347,11 @@ const Input = styled.input`
   border-radius: 4rem;
   box-sizing: border-box;
   font-size: 18px;
+
+  ::placeholder {
+    color: ${ANGOLA_STYLES.color.dark};
+    font-size: ${ANGOLA_STYLES.textSize.text};
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -351,23 +388,14 @@ const DuplicatedCheckBtn = styled.button`
   }
 `;
 
-const DoubleCheckIcon = styled(BsCheckAll)`
+const DoubleCheckIcon = styled.div`
   position: absolute;
   right: 1.5rem;
   top: 50%;
   transform: translate(0, -50%);
-  fill: #78d968;
 `;
 
-const VisibleEyeIcon = styled(BsFillEyeFill)`
-  position: absolute;
-  right: 1.5rem;
-  top: 50%;
-  transform: translate(0, -50%);
-  cursor: pointer;
-`;
-
-const InvisibleEyeIcon = styled(BsFillEyeSlashFill)`
+const EyeIcon = styled.div`
   position: absolute;
   right: 1.5rem;
   top: 50%;
