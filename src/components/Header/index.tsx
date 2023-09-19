@@ -60,7 +60,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       {keyword && (
         <TabBar>
           <TabBarList
-            className={TARGET_VALUE === 'user' ? 'bold' : ''}
+            className={TARGET_VALUE === 'user' ? 'select' : ''}
             onClick={() =>
               handleClickTabBar({ value: 'user', TARGET_VALUE, navigate })
             }>
@@ -68,7 +68,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
           </TabBarList>
           |
           <TabBarList
-            className={TARGET_VALUE === 'post' ? 'bold' : ''}
+            className={TARGET_VALUE === 'post' ? 'select' : ''}
             onClick={() =>
               handleClickTabBar({ value: 'post', TARGET_VALUE, navigate })
             }>
@@ -154,7 +154,7 @@ const TabBarList = styled.li`
   color: ${ANGOLA_STYLES.color.white};
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
   cursor: pointer;
-  &.bold {
+  &.select {
     text-shadow:
       -2.5px 0 black,
       0 2.5px black,
