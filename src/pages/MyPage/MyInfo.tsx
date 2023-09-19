@@ -1,17 +1,11 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Spinner from '@components/Spinner';
-import { useFetchLogOut } from '@apis/auth';
 import {
-  useFetchUpdateFullName,
-  useFetchUpdatePassword,
-  useFetchUpdateProfileImage,
-} from '@apis/profile';
-import {
-  checkFullNamePattern,
-  checkPassWordPattern,
-} from '@utils/userAuthentication';
+  useLogOut,
+  useUpdateFullName,
+  useUpdatePassWord,
+  useUpdateProfile,
+} from './hooks';
 
 // TODO: return에서 isUpdateFullNameError 발생 시, 모달 보여주고 함수 실행시키고, 이전 값
 interface MyInfoProps {
@@ -27,7 +21,6 @@ interface MyInfoProps {
 }
 
 const MyInfo = ({
-  //id,
   image,
   name,
   likes,
@@ -37,99 +30,26 @@ const MyInfo = ({
   myColor,
   myEmoji,
 }: MyInfoProps) => {
-  const navigate = useNavigate();
-  const { updateFullNameMutate } = useFetchUpdateFullName();
-  const [newFullName, setNewFullName] = useState(name);
-  const [isEditingFullName, setIsEditingFullName] = useState(false);
-  const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
-  const [newPassWord, setNewPassWord] = useState(updatePasswordData.password);
-  const [confirmNewPassWord, setConfirmNewPassWord] = useState('');
-  const [isEditingPassWord, setIsEditingPassWord] = useState(false);
-  const [profileImageUrl, setProfileImageUrl] = useState(image);
   const {
-    updateProfileImageMutate,
-    updateProfileImageData,
-    isUpdateProfileImageSuccess,
     isUpdateProfileImageLoading,
-  } = useFetchUpdateProfileImage();
-  const { logOutMutate } = useFetchLogOut();
-
-  useEffect(() => {
-    setNewFullName(name);
-    setProfileImageUrl(image);
-  }, [name, image]);
-
-  const handleClickChangeFullName = () => {
-    if (isEditingFullName) {
-      if (checkFullNamePattern(newFullName)) {
-        updateFullNameMutate({ fullName: newFullName });
-      } else {
-        setNewFullName('');
-        return;
-      }
-    }
-    setIsEditingFullName(!isEditingFullName);
-  };
-
-  const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewFullName(e.target.value);
-  };
-
-  const resetPassWordFields = () => {
-    setNewPassWord('');
-    setConfirmNewPassWord('');
-  };
-
-  const handleClickChangePassWord = () => {
-    if (isEditingPassWord && newPassWord) {
-      if (checkPassWordPattern({ newPassWord, confirmNewPassWord })) {
-        updatePasswordMutate({ password: newPassWord });
-        resetPassWordFields();
-      } else {
-        resetPassWordFields();
-        return;
-      }
-    }
-    setIsEditingPassWord(!isEditingPassWord);
-  };
-
-  const handleChangePassWord = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPassWord(e.target.value);
-  };
-
-  const handleChangeConfirmPassWord = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setConfirmNewPassWord(e.target.value);
-  };
-
-  const handleChangeProfileImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const imageFile = e.target.files?.[0];
-    if (imageFile) {
-      const imageUrl = URL.createObjectURL(imageFile);
-      setProfileImageUrl(imageUrl);
-      updateProfileImageMutate({ image: imageFile, isCover: false });
-    }
-  };
-
-  useEffect(() => {
-    if (isUpdateProfileImageSuccess && updateProfileImageData.image) {
-      setProfileImageUrl(updateProfileImageData.image); // 이미지 URL 업데이트
-    }
-  }, [updateProfileImageData, isUpdateProfileImageSuccess]);
-
-  useEffect(() => {
-    return () => {
-      if (profileImageUrl) {
-        URL.revokeObjectURL(profileImageUrl);
-      }
-    };
-  }, [profileImageUrl]);
-
-  const handleClickLogOutButton = () => {
-    logOutMutate();
-    navigate('/');
-  };
+    profileImageUrl,
+    handleChangeProfileImage,
+  } = useUpdateProfile({ image });
+  const {
+    isEditingFullName,
+    newFullName,
+    handleChangeFullName,
+    handleClickUpdateFullName,
+  } = useUpdateFullName({ name });
+  const {
+    isEditingPassWord,
+    newPassWord,
+    handleChangePassWord,
+    handleClickUpdatePassWord,
+    confirmNewPassWord,
+    handleChangeConfirmPassWord,
+  } = useUpdatePassWord();
+  const { handleClickLogOut } = useLogOut();
 
   return (
     <MyInfoContainer>
@@ -176,7 +96,7 @@ const MyInfo = ({
             <MyName color={myColor}>{newFullName}</MyName>
           </Container>
         )}
-        <Button onClick={handleClickChangeFullName}>
+        <Button onClick={handleClickUpdateFullName}>
           {isEditingFullName ? '제출 하기' : '편집 하기'}
         </Button>
         <Container>
@@ -215,11 +135,11 @@ const MyInfo = ({
           />
         </PassWordInput>
       ) : null}
-      <Button onClick={handleClickChangePassWord}>
+      <Button onClick={handleClickUpdatePassWord}>
         {isEditingPassWord ? '변경 하기' : '비밀번호 변경'}
       </Button>
       <div>
-        <Button onClick={handleClickLogOutButton}>로그 아웃</Button>
+        <Button onClick={handleClickLogOut}>로그 아웃</Button>
       </div>
     </MyInfoContainer>
   );
