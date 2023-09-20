@@ -4,6 +4,7 @@ export const ANGOLA_STYLES = {
     gray: '#e5e5e5',
     dark: '#9a9a9a',
     text: '#404040',
+    black: '#000000',
     levels: [
       { fill: '#ff6666', text: '#ffffff' },
       { fill: '#f78e61', text: '#ffffff' },
@@ -19,7 +20,7 @@ export const ANGOLA_STYLES = {
     ],
   },
   textSize: {
-    symbol: '48px',
+    symbol: '64px',
     titleLg: '24px',
     title: '20px',
     titleSm: '18px',
@@ -38,8 +39,13 @@ export const ANGOLA_STYLES = {
       default: '0px 4px 0px 0px #404040',
       hover: '0px 6px 0px 0px #404040',
     },
+    buttonXs: {
+      default: '0px 2px 0px 0px #404040',
+      hover: '0px 4px 0px 0px #404040',
+    },
   },
   border: {
     default: '2px solid #404040',
+    hover: '3px solid #404040',
   },
 } as const;

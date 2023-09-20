@@ -6,6 +6,7 @@ interface ButtonProps
   extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
   size?: 'sm' | 'md';
   toggle?: boolean;
+
 }
 
 const Button = ({
@@ -38,6 +39,7 @@ const ButtonStyled = styled.button<ButtonProps>`
   background-color: ${ANGOLA_STYLES.color.white};
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
+  cursor: pointer;
 
   background-color: ${({ toggle }) =>
     toggle ? `${ANGOLA_STYLES.color.gray}` : `${ANGOLA_STYLES.color.white}`};
@@ -54,5 +56,12 @@ const ButtonStyled = styled.button<ButtonProps>`
       props.size === 'sm'
         ? `box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};`
         : `box-shadow: ${ANGOLA_STYLES.shadow.button.hover};`}
+  }
+
+  &:disabled {
+    border: ${ANGOLA_STYLES.border.default};
+    background-color: ${ANGOLA_STYLES.color.gray};
+    box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+    cursor: default;
   }
 `;
