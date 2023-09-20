@@ -48,10 +48,10 @@ type IconName =
   | 'follower'
   | 'select_down'
   | 'notification_check'
-  | 'notification_uncheck';
+  | 'notification_uncheck'
   | 'eye'
   | 'eye_slash'
-  | 'double_check';
+  | 'double_check'
 
 const iconMap = {
   alert: faBell,
