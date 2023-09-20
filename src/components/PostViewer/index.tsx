@@ -3,7 +3,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@store/auth';
+import { getUserLevelInfo } from '@utils/calculateUserLevel';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import ButtonGroup from './ButtonGroup';
 import NonAuthModal from './NonAuthModal';
 import PostContents from './PostContents';
@@ -42,6 +44,8 @@ const PostViewer = ({
 
   const [isModalShow, setIsModalShow] = useState(false);
   const isPostPage = onVote !== undefined;
+  const isVoted = searchParams.get('voted') ? true : false;
+  const isShow = searchParams.get('show') ? true : false;
   const goDetailPage = () => {
     if (isPostPage) {
       if (!searchParams.get('show')) {
@@ -60,15 +64,19 @@ const PostViewer = ({
         authorName={authorName}
         authorId={authorId}
         authorLevel={authorLevel}
+        onGoDetailPage={goDetailPage}
+        isPostPage={isPostPage}
       />
       <PostContents
         contentA={a}
         contentB={b}
+        voteColor={getUserLevelInfo(authorLevel).userColor}
         onVote={onVote}
         voteValue={voteValue}
         onGoDetailPage={goDetailPage}
         onShowNonAuthModal={() => setIsModalShow(true)}
         isPostPage={isPostPage}
+        isVoted={isVoted}
       />
       {auth && (
         <ButtonGroup
@@ -77,9 +85,12 @@ const PostViewer = ({
           likeId={likeId}
           postId={postId}
           authorId={authorId}
+          isShow={isShow}
+          isVoted={isVoted}
           onGoDetailPage={goDetailPage}
         />
       )}
+      <Line />
       {isModalShow && <NonAuthModal onClose={() => setIsModalShow(false)} />}
     </PostContainer>
   );
@@ -88,12 +99,19 @@ const PostViewer = ({
 export default PostViewer;
 
 const PostContainer = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  > h1 {
-    font-size: 20px;
-  }
+  gap: 24px;
+  width: 100%;
+`;
+
+const Line = styled.hr`
+  border: none;
+  border-top: 2px dotted ${ANGOLA_STYLES.color.dark};
+  color: ${ANGOLA_STYLES.color.white};
+  background-color: ${ANGOLA_STYLES.color.white};
+  height: 2px;
+  width: 100%;
+  margin-bottom: 32px;
 `;

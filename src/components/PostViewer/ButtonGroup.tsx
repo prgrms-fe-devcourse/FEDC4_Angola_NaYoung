@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import Icon from '@components/Icon';
 import { useFetchLike, useFetchUnLike } from '@apis/like';
 import { useFetchCreateNotification } from '@apis/notifications';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface ButtonGroupProps {
   numberOfLikes: number;
@@ -9,6 +11,8 @@ interface ButtonGroupProps {
   likeId: string | undefined;
   postId: string;
   authorId: string;
+  isShow: boolean;
+  isVoted: boolean;
   onGoDetailPage: () => void;
 }
 
@@ -18,6 +22,8 @@ const ButtonGroup = ({
   likeId,
   postId,
   authorId,
+  isShow,
+  isVoted,
   onGoDetailPage: goDetailPage,
 }: ButtonGroupProps) => {
   const [userLikeId, setUserLikeId] = useState(likeId);
@@ -60,34 +66,72 @@ const ButtonGroup = ({
     }
   }, [likeData.likeId, isLiked]);
 
+  const getCommentIcon = (isVoted: boolean, isShow: boolean) => {
+    if (isVoted) {
+      return 'comment';
+    }
+    if (isShow) {
+      return 'comment_empty';
+    }
+    return 'comments';
+  };
+
+  const getLikeIcon = (isLiked: boolean) => {
+    return isLiked ? 'heart' : 'heart_empty';
+  };
+
   return (
-    <ShortButtonContainer>
-      <ShortButton
-        className={isLiked ? 'liked' : ''}
-        onClick={handleLike}>
-        ♥️{likes}
-      </ShortButton>
-      <ShortButton onClick={goDetailPage}>💬{numberOfComments}</ShortButton>
-    </ShortButtonContainer>
+    <ActionButtonContainer>
+      <ActionButton
+        onClick={handleLike}
+        className={isLiked ? 'actioned' : ''}>
+        <Icon name={getLikeIcon(isLiked)} />
+        <Number>{likes}</Number>
+      </ActionButton>
+      <ActionButton
+        onClick={goDetailPage}
+        className={isVoted ? 'actioned' : ''}>
+        <Icon name={getCommentIcon(isVoted, isShow)} />
+        <Number>{numberOfComments}</Number>
+        {isShow || <Text>참여하기</Text>}
+      </ActionButton>
+    </ActionButtonContainer>
   );
 };
 
 export default ButtonGroup;
 
-const ShortButtonContainer = styled.div`
+const ActionButtonContainer = styled.div`
   display: flex;
-  color: black;
-  gap: 10px;
+  padding: 24px 0;
+  gap: 24px;
 `;
 
-const ShortButton = styled.div`
+const ActionButton = styled.div`
+  display: flex;
+  padding: 12px;
+  min-width: 64px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   font-size: 20px;
-  border: 1px solid black;
-  padding: 10px;
-  height: 20px;
-  border-radius: 15px;
+  border: ${ANGOLA_STYLES.border.default};
+  box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};
+  border-radius: 56px;
   cursor: pointer;
-  &.liked {
-    background-color: pink;
+  transition: 0.2s;
+  &:hover:not(:active) {
+    box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};
   }
+  &.actioned {
+    background-color: ${ANGOLA_STYLES.color.gray};
+  }
+`;
+
+const Number = styled.div`
+  padding-top: 4px;
+`;
+
+const Text = styled.div`
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
 `;

@@ -10,6 +10,7 @@ import {
   faCheckDouble,
   faCircleExclamation,
   faComment,
+  faComments,
   faEye,
   faEyeSlash,
   faHeart,
@@ -31,6 +32,7 @@ type IconName =
   | 'check'
   | 'warn'
   | 'edit'
+  | 'comments'
   | 'comment'
   | 'comment_empty'
   | 'heart'
@@ -53,6 +55,7 @@ const iconMap = {
   warn: faCircleExclamation,
   edit: faPen,
   comment: faComment,
+  comments: faComments,
   comment_empty: faEmptyComment,
   heart: faHeart,
   heart_plus: faHeartCirclePlus,
