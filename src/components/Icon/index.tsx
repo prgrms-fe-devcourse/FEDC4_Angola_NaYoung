@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import {
   faComment as faEmptyComment,
   faHeart as faEmptyHeart,
+  faSquare as faEmptySquare,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faBell,
@@ -15,6 +16,7 @@ import {
   faPenToSquare,
   faSearch,
   faSortDown,
+  faSquareCheck,
   faTrash,
   faUser,
   faUsers,
@@ -39,7 +41,9 @@ type IconName =
   | 'user'
   | 'close'
   | 'follower'
-  | 'select_down';
+  | 'select_down'
+  | 'notification_check'
+  | 'notification_uncheck';
 
 const iconMap = {
   alert: faBell,
@@ -58,6 +62,8 @@ const iconMap = {
   close: faXmark,
   follower: faUsers,
   select_down: faSortDown,
+  notification_check: faSquareCheck,
+  notification_uncheck: faEmptySquare,
 };
 
 interface IconProps {
