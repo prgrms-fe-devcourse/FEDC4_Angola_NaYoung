@@ -30,17 +30,6 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
     setIsClickedDeleteBtn(false);
   };
 
-  useEffect(() => {
-    if (!isClickedDeleteBtn) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        handleClickDeleteCommentModalBtn();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  });
-
   const [commentsData, setCommentsData] = useState(comments);
 
   useEffect(() => {
@@ -82,6 +71,7 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
             {isClickedDeleteBtn && (
               <Modal
                 onClose={() => setIsClickedDeleteBtn(false)}
+                onConfirm={handleClickDeleteCommentModalBtn}
                 footerShow={false}>
                 <ModalWrapper onClick={(e) => e.stopPropagation()}>
                   <div>정말로 댓글을 삭제하시겠습니까?</div>

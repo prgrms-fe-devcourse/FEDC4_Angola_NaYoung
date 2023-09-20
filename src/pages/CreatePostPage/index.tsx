@@ -1,11 +1,11 @@
 import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Modal from '@components/Modal';
 import Spinner from '@components/Spinner';
 import { useFetchCreatePost } from '@apis/post';
 import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import Modal from '@components/Modal';
 
 const MAX_TITLE_OPTION_LENGTH = 100;
 
@@ -65,17 +65,19 @@ const CreatePostPage = () => {
   };
 
   const navigate = useNavigate();
-  useEffect(() => { // 포스트 작성 성공 시, 포스트 하나씩 보기로 이동 
+  useEffect(() => {
+    // 포스트 작성 성공 시, 포스트 하나씩 보기로 이동
     if (isCreatePostSuccess) {
       navigate(`/post/${createPostData}`);
     }
   }, [isCreatePostSuccess]);
 
-  useEffect(()=>{ // 포스트 작성 실패 => 모달 open
-    if(isCreatePostError){
-      setIsModalOpen(()=>true);
+  useEffect(() => {
+    // 포스트 작성 실패 => 모달 open
+    if (isCreatePostError) {
+      setIsModalOpen(() => true);
     }
-  }, [isCreatePostError])
+  }, [isCreatePostError]);
 
   return (
     <>
@@ -138,10 +140,10 @@ const CreatePostPage = () => {
 
       {isModalOpen && (
         <Modal
-          onClose={()=>{
-            setIsModalOpen(()=>false)}}
-        >
-          포스트 작성에 실패했습니다. 
+          onClose={() => {
+            setIsModalOpen(() => false);
+          }}>
+          포스트 작성에 실패했습니다.
         </Modal>
       )}
     </>
@@ -172,7 +174,7 @@ const TitleContainer = styled.div`
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
 
-  &:focus-within{
+  &:focus-within {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
 `;
