@@ -32,6 +32,7 @@ const UserListItem = ({
         size={60}
         style={{ margin: '0 20px' }}
       />
+
       <UserInfo>
         <div className="user_name">
           <NameTag
@@ -52,6 +53,7 @@ const UserListItem = ({
           </div>
         </LevelAndFollowers>
       </UserInfo>
+
       <More className="more">
         <LinkButton
           to={`/user/${id}`}
