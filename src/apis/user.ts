@@ -19,7 +19,7 @@ export const useFetchUsers = () => {
 
 export const useFetchUser = (userId: string) => {
   const { baseInstance } = useAxiosInstance();
-  const { data, isError, isSuccess, isLoading } = useQuery<
+  const { data, isError, isSuccess, isLoading, refetch } = useQuery<
     AxiosResponse<User>,
     AxiosError
   >('user', () => baseInstance.get(`/users/${userId}`));
@@ -28,5 +28,6 @@ export const useFetchUser = (userId: string) => {
     isUserError: isError,
     isUserSuccess: isSuccess,
     isUserLoading: isLoading,
+    userDataRefetch: refetch,
   };
 };
