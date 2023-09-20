@@ -88,9 +88,7 @@ const HomePage = () => {
 export default HomePage;
 
 const Container = styled.div`
-  width: 80%;
-  border: 1px solid black;
-  border-top: none;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
