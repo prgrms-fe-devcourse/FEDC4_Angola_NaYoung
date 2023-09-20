@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Notification } from '@type';
 import Icon from '@components/Icon';
@@ -9,16 +8,8 @@ const CommentNotificationItem = ({
 }: {
   notification: Notification;
 }) => {
-  const navigate = useNavigate();
-
-  const handleClickMoveToPostPage = () => {
-    navigate(`/post/${notification.post}`);
-  };
-
   return (
-    <CommentListItemContainer
-      seen={notification.seen}
-      onClick={handleClickMoveToPostPage}>
+    <CommentListItemContainer seen={notification.seen}>
       <CommentListItemIcon>
         <Icon
           name="comment"
@@ -31,7 +22,9 @@ const CommentNotificationItem = ({
         />
       </CommentListItemIcon>
       <CommentListItemText seen={notification.seen}>
-        <UserFullNameSpan seen={notification.seen}>
+        <UserFullNameSpan
+          id="userName"
+          seen={notification.seen}>
           {notification.author.fullName}
         </UserFullNameSpan>
         님이 내 포스트에 댓글을 남겼습니다.

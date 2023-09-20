@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Notification } from '@type';
 import Icon from '@components/Icon';
@@ -9,16 +8,8 @@ const LikeNotificationItem = ({
 }: {
   notification: Notification;
 }) => {
-  const navigate = useNavigate();
-
-  const handleClickMoveToPostPage = () => {
-    navigate(`/post/${notification.post}`);
-  };
-
   return (
-    <LikeListItemContainer
-      seen={notification.seen}
-      onClick={handleClickMoveToPostPage}>
+    <LikeListItemContainer seen={notification.seen}>
       <LikeListItemIcon>
         <Icon
           name="heart"
@@ -31,7 +22,9 @@ const LikeNotificationItem = ({
         />
       </LikeListItemIcon>
       <LikeListItemText seen={notification.seen}>
-        <UserFullNameSpan seen={notification.seen}>
+        <UserFullNameSpan
+          id="userName"
+          seen={notification.seen}>
           {notification.author.fullName}
         </UserFullNameSpan>
         님이 내 포스트를 좋아합니다.

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Notification } from '@type';
 import Icon from '@components/Icon';
@@ -40,16 +41,17 @@ const decideNotificationType = ({
 };
 
 interface NotificationViewePropsType {
-  handleClickCloseViewer: () => void;
+  handleClickCloseViewer: VoidFunction;
 }
 
 const NotificationViewer = ({
   handleClickCloseViewer,
 }: NotificationViewePropsType) => {
+  const navigate = useNavigate();
   const viewerBackGroundRef = useRef(null);
   useEffect(() => {
     // Viewer 바깥 영역 클릭 시, 뷰어 닫아지도록
-    const handleClickViewerBackGround = (e: MouseEvent) => {
+    const handleClickViewerBackGround = (e: Event) => {
       if (
         viewerBackGroundRef.current &&
         e.target === viewerBackGroundRef.current
@@ -65,7 +67,7 @@ const NotificationViewer = ({
     };
   });
 
-  // 모든 알림 볼건지
+  // 모든 알림 볼 건지 or 새로운 알림만 볼 건지
   const [isShowAllNotifications, setIsShowAllNotifications] = useState(false);
 
   // 알림 목록 조회 data
@@ -88,7 +90,33 @@ const NotificationViewer = ({
     // TODO:MinwooP - 이후 Notification data 업데이트 안된 상태면 refetch 혹은 invalidQueries 써서 다시 불러오기
   };
 
+  // notification Item을 클릭했을 때, 그 안 userName 클릭 시 해당 유저페이지로 이동,
+  // 그외 클릭시 포스트페이지 or 유저페이지로 이동
+  const handleClickListItem = (
+    e: MouseEvent<HTMLLIElement>,
+    notification: Notification,
+  ) => {
+    if (e.target instanceof HTMLSpanElement && e.target.id === 'userName') {
+      console.log(
+        `유저 이름 클릭 => ${notification.author.fullName} 유저페이지로 이동`,
+      );
+      navigate(`/user/${notification.author._id}`);
+    } else {
+      if (notification.post === null) {
+        navigate(`/user/${notification.author._id}`);
+        console.log(
+          `follow 알림 => ${notification.author.fullName} 유저페이지로 이동`,
+        );
+      } else {
+        console.log('좋아요 or 댓글 알림');
+        navigate(`/post/${notification.post}`);
+      }
+    }
+    handleClickCloseViewer();
+  };
+
   const showNewNotificationList = () => {
+    // FIXME: getNotificationsData를 인자로 받아서 호출해줘야 하나
     const NewNotifications = getNotificationsData!.filter((notification) => {
       return notification.seen === false;
     });
@@ -103,7 +131,9 @@ const NotificationViewer = ({
       return (
         <NotificationListItem
           key={notification._id}
-          onClick={handleClickCloseViewer}>
+          onClick={(e) => {
+            handleClickListItem(e, notification);
+          }}>
           {decideNotificationType({ notification })}
         </NotificationListItem>
       );
@@ -111,21 +141,22 @@ const NotificationViewer = ({
   };
 
   const showAllNotificationList = () => {
-    if (getNotificationsData?.length === 0) {
-      return (
-        <EmptyNotificationList>알림 목록이 없습니다.</EmptyNotificationList>
-      );
-    }
-
-    return getNotificationsData!.map((notification) => {
-      return (
-        <NotificationListItem
-          key={notification._id}
-          onClick={handleClickCloseViewer}>
-          {decideNotificationType({ notification })}
-        </NotificationListItem>
-      );
-    });
+    return getNotificationsData?.length === 0 ? (
+      <EmptyNotificationList>알림 목록이 없습니다.</EmptyNotificationList>
+    ) : (
+      getNotificationsData!.map((notification) => {
+        return (
+          <NotificationListItem
+            id="notificationItem"
+            key={notification._id}
+            onClick={(e: MouseEvent<HTMLLIElement>) => {
+              handleClickListItem(e, notification);
+            }}>
+            {decideNotificationType({ notification })}
+          </NotificationListItem>
+        );
+      })
+    );
   };
 
   if (isGetNotificationsLoading) return <Spinner />;

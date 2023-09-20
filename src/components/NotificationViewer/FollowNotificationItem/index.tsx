@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Notification } from '@type';
 import Icon from '@components/Icon';
@@ -9,16 +8,8 @@ const FollowNotificationItem = ({
 }: {
   notification: Notification;
 }) => {
-  const navigate = useNavigate();
-
-  const handleClickMoveToUserPage = () => {
-    navigate(`/user/${notification.author._id}`);
-  };
-
   return (
-    <FollowListItemContainer
-      seen={notification.seen}
-      onClick={handleClickMoveToUserPage}>
+    <FollowListItemContainer seen={notification.seen}>
       <FollowListItemIcon>
         <Icon
           name="user"
@@ -31,7 +22,9 @@ const FollowNotificationItem = ({
         />
       </FollowListItemIcon>
       <FollowListItemText seen={notification.seen}>
-        <UserFullNameSpan seen={notification.seen}>
+        <UserFullNameSpan
+          id="userName"
+          seen={notification.seen}>
           {notification.author.fullName}
         </UserFullNameSpan>
         님이 나를 팔로우합니다.
