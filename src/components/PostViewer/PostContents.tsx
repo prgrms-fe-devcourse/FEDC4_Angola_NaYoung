@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { useContentClassName } from './hooks';
 
 interface PostContentsProps {
   contentA: string;
@@ -27,6 +28,7 @@ const PostContents = ({
   voteColor,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
+  const getContentClassName = useContentClassName({ isPostPage, voteValue });
   const handleClickContent = (value: string) => {
     if (!auth) {
       showNonAuthModal();
@@ -35,9 +37,7 @@ const PostContents = ({
     onVote && onVote(value);
     goDetailPage();
   };
-  const getContentClassName = (value: string) => {
-    return isPostPage && voteValue === value ? 'active' : '';
-  };
+
   return (
     <SelectionContainer>
       <Selection

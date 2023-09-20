@@ -27,7 +27,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
-type IconName =
+export type IconName =
   | 'alert'
   | 'check'
   | 'warn'
