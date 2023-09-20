@@ -1,19 +1,12 @@
-import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
+import Icon from '@components/Icon';
+import Image from '@components/Image';
 import LinkButton from '@components/LinkButton';
+import NameTag from '@components/NameTag';
 import { authInfoState } from '@store/auth';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
-
-const PROFILE_LINK_BUTTON_STYLES: CSSProperties = {
-  all: 'unset',
-  display: 'flex',
-  width: 50,
-  height: 50,
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: '50%',
-};
 
 interface UserListItemProps {
   id: string;
@@ -22,7 +15,6 @@ interface UserListItemProps {
   level: number;
   followers: number;
   userEmoji: string;
-  userColor: string;
 }
 
 const UserListItem = ({
@@ -32,54 +24,43 @@ const UserListItem = ({
   level,
   followers,
   userEmoji,
-  userColor,
 }: UserListItemProps) => {
   const auth = useRecoilValue(authInfoState);
   const myId = auth?.userId;
 
   return (
-    <List>
-      <div>
-        {myId === id ? (
-          <LinkButton
-            to={`/mypage`}
-            style={PROFILE_LINK_BUTTON_STYLES}>
-            <img
-              src={
-                image
-                  ? image
-                  : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
-              }
-              alt="프로필"
-              style={{ width: '70px', height: '70px', borderRadius: '50%' }}
-            />
-          </LinkButton>
-        ) : (
-          <LinkButton
-            to={`/user/${id}`}
-            style={PROFILE_LINK_BUTTON_STYLES}>
-            <img
-              src={
-                image
-                  ? image
-                  : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
-              }
-              alt="프로필"
-              style={{ width: '70px', height: '70px', borderRadius: '50%' }}
-            />
-          </LinkButton>
-        )}
-      </div>
+    <ListItemContainer>
+      <Image
+        src={
+          image
+            ? image
+            : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
+        }
+        alt="프로필"
+        size={60}
+        style={{ margin: '0 20px' }}
+      />
       <UserInfo>
-        <UserName color={userColor}>{name}</UserName>
-        <LikesAndFollowers>
+        <div className="user_name">
+          <NameTag
+            level={level}
+            userName={name}
+            userId={id}
+            userLevel={level}
+            isNav={true}
+            showLevel={false}></NameTag>
+        </div>
+
+        <LevelAndFollowers>
           <div>
-            {userEmoji}Lv.{level}
+            {userEmoji} Lv.{level}
           </div>
-          <div>🙍{followers}</div>
-        </LikesAndFollowers>
+          <div>
+            <Icon name="follower" /> {followers}
+          </div>
+        </LevelAndFollowers>
       </UserInfo>
-      <More>
+      <More className="more">
         {myId === id ? (
           <LinkButton
             to={`/mypage`}
@@ -94,44 +75,49 @@ const UserListItem = ({
           </LinkButton>
         )}
       </More>
-    </List>
+    </ListItemContainer>
   );
 };
 
 export default UserListItem;
 
-const List = styled.li`
+const ListItemContainer = styled.li`
   display: flex;
-  border: 1px solid black;
-  margin: 30px 0;
-  gap: 20px;
-  border-radius: 12px;
+  height: 100px;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  border-radius: 24px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+  overflow: hidden;
+  &:has(.user_name:hover, .more:hover) {
+    box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
+  }
 `;
 
 const UserInfo = styled.div`
-  flex-grow: 1;
   display: flex;
+  padding: 12px 0px;
   justify-content: space-between;
   align-items: center;
-  margin: 14px 0;
+  flex-grow: 1;
 `;
 
-const UserName = styled.div`
-  font-weight: 600;
-  color: ${(props) => props.color};
-`;
-
-const LikesAndFollowers = styled.div`
+const LevelAndFollowers = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  font-size: ${ANGOLA_STYLES.textSize.title};
 `;
 
 const More = styled.div`
-  border-left: 1px solid black;
   display: flex;
+  width: 121px;
   justify-content: center;
-  align-items: center;
-  width: 60px;
+  align-self: stretch;
+  border-left: ${ANGOLA_STYLES.border.default};
+  font-size: ${ANGOLA_STYLES.textSize.title};
   cursor: pointer;
 `;
