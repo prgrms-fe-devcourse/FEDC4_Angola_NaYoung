@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
@@ -6,16 +7,22 @@ import Spinner from '@components/Spinner';
 import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { USER_POSTS_TITLE } from '@constants/index';
 import UserInfo from './UserInfo';
-import { USER_POSTS_TITLE } from './constants';
+import './constants';
 
 interface UserPageProps {
-  userId: string;
+  userId?: string;
 }
 
 const UserPage = ({ userId = '' }: UserPageProps) => {
   const auth = useRecoilValue(authInfoState);
+  const navigate = useNavigate();
   const { userData, isUserLoading } = useFetchUser(userId);
+
+  if (userId === auth?.userId) {
+    navigate('/mypage', { replace: true });
+  }
 
   if (isUserLoading) {
     return <Spinner />;

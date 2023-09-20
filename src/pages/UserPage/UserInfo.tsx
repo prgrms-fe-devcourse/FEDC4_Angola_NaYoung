@@ -5,7 +5,8 @@ import Image from '@components/Image';
 import NameTag from '@components/NameTag';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { FOLLOW_MESSAGE, USER_INFO, USER_PROFILE_IMAGE } from './constants';
+import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
+import { FOLLOW_MESSAGE } from './constants';
 import useFollow from './hooks/useFollow';
 
 interface UserInfoProps {
