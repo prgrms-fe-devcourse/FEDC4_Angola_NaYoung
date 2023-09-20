@@ -82,10 +82,9 @@ const Container = styled.div`
   position: relative;
   align-items: center;
   width: 100%;
-  overflow: hidden;
   border-radius: 55px 55px 0px 0px;
-  border: ${ANGOLA_STYLES.border.default};
-  background: var(--dark, #9a9a9a);
+  background: ${ANGOLA_STYLES.color.dark};
+  border-bottom: ${ANGOLA_STYLES.border.default};
 `;
 
 const SelectContainer = styled.div`
