@@ -1,13 +1,21 @@
-import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { redirects, routes } from '@routes';
 import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
+import { useScrollToTop } from '@hooks/useScrollToTop';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 const Main = () => {
   const { title, name, params, search } = useCurrentPage();
+  const location = useLocation();
+  const [scrollTargetRef, scrollToTop] = useScrollToTop<HTMLDivElement>();
+
+  useEffect(() => {
+    scrollToTop();
+  }, [location.pathname, scrollToTop]);
+
   const objectForSort = {
     target: params.target || 'post',
     sort: search.sort
@@ -16,6 +24,7 @@ const Main = () => {
       ? 'recent'
       : 'follower',
   };
+
   return (
     <MainContainer>
       <Header
@@ -28,8 +37,7 @@ const Main = () => {
             : undefined
         }
       />
-
-      <PageContainer>
+      <PageContainer ref={scrollTargetRef}>
         <Routes>
           {routes.map(({ path, name, component }) => (
             <Route
