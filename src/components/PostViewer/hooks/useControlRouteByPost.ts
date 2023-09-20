@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { SEARCH_KEYS, SEARCH_VALUES } from '@constants/index';
 
 export const useControlRouteByPost = ({
   postId,
@@ -11,26 +12,30 @@ export const useControlRouteByPost = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const isSearchParamsIn = (searchKey: string) => {
+    return Boolean(searchParams.get(searchKey));
+  };
+
   const [isVoted, setIsVoted] = useState(() =>
-    searchParams.get('voted') ? true : false,
+    isSearchParamsIn(SEARCH_KEYS.VOTED),
   );
   const [isShow, setIsShow] = useState(() =>
-    searchParams.get('show') ? true : false,
+    isSearchParamsIn(SEARCH_KEYS.SHOW),
   );
 
   useEffect(() => {
-    setIsShow(() => (searchParams.get('show') ? true : false));
-    setIsVoted(() => (searchParams.get('voted') ? true : false));
+    setIsShow(() => isSearchParamsIn(SEARCH_KEYS.SHOW));
+    setIsVoted(() => isSearchParamsIn(SEARCH_KEYS.VOTED));
   }, [searchParams]);
 
   const goDetailPage = () => {
-    if (isPostPage) {
-      if (!isShow) {
-        searchParams.set('show', 'true');
-        setSearchParams(searchParams);
-      }
+    if (isPostPage && !isShow) {
+      searchParams.set(SEARCH_KEYS.SHOW, SEARCH_VALUES.SHOW.TRUE);
+      setSearchParams(searchParams);
     } else {
-      navigate(`/post/${postId}?show=true`);
+      navigate(
+        `/post/${postId}?${SEARCH_KEYS.SHOW}=${SEARCH_VALUES.SHOW.TRUE}`,
+      );
     }
   };
 

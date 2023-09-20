@@ -1,3 +1,5 @@
+import { POST_CONTENTS } from '../constants';
+
 interface useContentClassNameProps {
   isPostPage: boolean;
   voteValue?: string;
@@ -7,7 +9,8 @@ export const useContentClassName = ({
   voteValue,
 }: useContentClassNameProps) => {
   const getClassName = (value: string) => {
-    return isPostPage && voteValue === value ? 'active' : '';
+    return isPostPage && voteValue === value ? POST_CONTENTS.ACTIVE : '';
   };
+
   return getClassName;
 };

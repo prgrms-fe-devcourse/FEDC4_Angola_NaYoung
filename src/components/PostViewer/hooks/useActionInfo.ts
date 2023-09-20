@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { IconName } from '@components/Icon';
+import { ACTIONED } from '../constants';
 
-const getCommentIcon = (isVoted: boolean, isShow: boolean) => {
+const getCommentIcon = (isVoted: boolean, isShow: boolean): IconName => {
   if (isVoted) {
     return 'comment';
   }
@@ -9,6 +10,14 @@ const getCommentIcon = (isVoted: boolean, isShow: boolean) => {
     return 'comment_empty';
   }
   return 'comments';
+};
+
+const getLikeIcon = (isLiked: boolean): IconName => {
+  return isLiked ? 'heart' : 'heart_empty';
+};
+
+const getActionClassName = (action: boolean) => {
+  return action ? ACTIONED : '';
 };
 
 interface ActionInfoProps {
@@ -26,19 +35,20 @@ export const useActionInfo = ({
     getCommentIcon(isVoted, isShow),
   );
   const [likeIcon, setLikeIcon] = useState<IconName>(() =>
-    isLiked ? 'heart' : 'heart_empty',
+    getLikeIcon(isLiked),
   );
   const [commentClassName, setCommentClassName] = useState(() =>
-    isVoted ? 'actioned' : '',
+    getActionClassName(isVoted),
   );
   const [likeClassName, setLikeClassName] = useState(() =>
-    isLiked ? 'actioned' : '',
+    getActionClassName(isLiked),
   );
+
   useEffect(() => {
     setCommentIcon(() => getCommentIcon(isVoted, isShow));
-    setLikeIcon(() => (isLiked ? 'heart' : 'heart_empty'));
-    setCommentClassName(() => (isVoted ? 'actioned' : ''));
-    setLikeClassName(() => (isLiked ? 'actioned' : ''));
+    setLikeIcon(() => getLikeIcon(isLiked));
+    setCommentClassName(() => getActionClassName(isVoted));
+    setLikeClassName(() => getActionClassName(isLiked));
   }, [isVoted, isShow, isLiked]);
 
   return { commentIcon, likeIcon, commentClassName, likeClassName };

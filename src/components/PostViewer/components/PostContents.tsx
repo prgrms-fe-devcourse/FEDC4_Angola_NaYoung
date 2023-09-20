@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { useContentClassName } from '@components/PostViewer/hooks';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { POST_CONTENTS } from '../constants';
 
 interface PostContentsProps {
   contentA: string;
@@ -43,18 +44,18 @@ const PostContents = ({
       <Selection
         voteColor={voteColor}
         canVote={!isVoted}
-        className={getContentClassName('A')}
-        onClick={() => handleClickContent('A')}>
-        <Type>A</Type>
+        className={getContentClassName(POST_CONTENTS.VOTE.A)}
+        onClick={() => handleClickContent(POST_CONTENTS.VOTE.A)}>
+        <Type>{POST_CONTENTS.VOTE.A}</Type>
         <Content>{contentA}</Content>
       </Selection>
-      <VsSymbol>VS</VsSymbol>
+      <VsSymbol>{POST_CONTENTS.SYMBOL}</VsSymbol>
       <Selection
         voteColor={voteColor}
         canVote={!isVoted}
-        className={getContentClassName('B')}
-        onClick={() => handleClickContent('B')}>
-        <Type>B</Type>
+        className={getContentClassName(POST_CONTENTS.VOTE.B)}
+        onClick={() => handleClickContent(POST_CONTENTS.VOTE.B)}>
+        <Type>{POST_CONTENTS.VOTE.B}</Type>
         <Content>{contentB}</Content>
       </Selection>
     </SelectionContainer>

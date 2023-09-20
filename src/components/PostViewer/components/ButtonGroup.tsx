@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { useActionInfo, usePostLike } from '@components/PostViewer/hooks';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { BUTTON_GROUP } from '../constants';
 
 interface ButtonGroupProps {
   numberOfLikes: number;
@@ -46,7 +47,7 @@ const ButtonGroup = ({
         className={commentClassName}>
         <Icon name={commentIcon} />
         <Number>{numberOfComments}</Number>
-        {isShow || <Text>참여하기</Text>}
+        {isShow || <Text>{BUTTON_GROUP.PARTICIPATE}</Text>}
       </ActionButton>
     </ActionButtonContainer>
   );

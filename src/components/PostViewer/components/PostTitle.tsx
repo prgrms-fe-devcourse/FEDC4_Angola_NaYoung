@@ -4,6 +4,7 @@ import NameTag from '@components/NameTag';
 import { useElementWidth } from '@components/PostViewer/hooks';
 import { getUserLevelInfo } from '@utils/calculateUserLevel';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { POST_TITLE } from '../constants';
 
 interface PostTitleProps {
   title: string;
@@ -23,7 +24,7 @@ const PostTitle = ({
   onGoDetailPage: goDetailPage,
 }: PostTitleProps) => {
   const { userColor: levelColor } = getUserLevelInfo(authorLevel);
-  const [tagRef, tagWidth] = useElementWidth(120);
+  const [tagRef, tagWidth] = useElementWidth(POST_TITLE.DEFAULT_TAG_WIDTH);
   const handleClickTitleText = () => {
     if (isPostPage) return;
     goDetailPage();
@@ -48,7 +49,11 @@ const PostTitle = ({
           />
         </Tag>
         <Text
-          className={isPostPage ? 'inPost' : 'inHome'}
+          className={
+            isPostPage
+              ? POST_TITLE.LOCATION_CLASS.POST
+              : POST_TITLE.LOCATION_CLASS.HOME
+          }
           tagWidth={tagWidth}
           onClick={handleClickTitleText}>
           {title}
