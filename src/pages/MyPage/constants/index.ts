@@ -11,6 +11,8 @@ export const LABEL = {
   NEW_PASSWORD_CONFIRM: '비밀번호 확인',
 };
 
+export const CHECK_DUPLICATE_BUTTON = '중복 확인';
+
 export const PASSWORD_BUTTON = {
   DONE_MSG: '수정 완료',
   EDIT_MSG: '비밀번호 변경하기',
