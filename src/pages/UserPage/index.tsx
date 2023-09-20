@@ -3,7 +3,6 @@ import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
-import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
@@ -17,9 +16,8 @@ interface UserPageProps {
 const UserPage = ({ userId = '' }: UserPageProps) => {
   const auth = useRecoilValue(authInfoState);
   const { userData, isUserLoading } = useFetchUser(userId);
-  const { userPostsData, isUserPostsLoading } = useFetchUserPosts(userId);
 
-  if (isUserLoading || isUserPostsLoading) {
+  if (isUserLoading) {
     return <Spinner />;
   }
 
@@ -45,7 +43,7 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
       <PostsListContainer>
         <PostsListUl>
           <PostsListTitle>
-            {userPostsData?.length === 0
+            {userData?.posts?.length === 0
               ? USER_POSTS_TITLE.NO_POSTS
               : USER_POSTS_TITLE.POSTS}
           </PostsListTitle>
