@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
+import useUserSort from '@components/PostList/hooks/useUserSort';
 import Spinner from '@components/Spinner';
 import UserListItem from '@components/UserListItem';
-import { useFetchSearchUsers } from '@apis/search';
-import { useFetchUsers } from '@apis/user';
-import { getSortUserList } from './utils';
 
 interface UserListProps {
   keyword?: string;
@@ -13,19 +10,10 @@ interface UserListProps {
 }
 
 const UserList = ({ keyword, sort }: UserListProps) => {
-  const { usersData, isUsersLoading } = useFetchUsers();
-  const { searchUsersData, isSearchUsersLoading, searchUsersDataRefetch } =
-    useFetchSearchUsers({
-      query: keyword,
-    });
-
-  const resultData = keyword
-    ? getSortUserList(searchUsersData, sort)
-    : getSortUserList(usersData, sort);
-
-  useEffect(() => {
-    searchUsersDataRefetch();
-  }, [keyword, searchUsersDataRefetch]);
+  const { resultData, isUsersLoading, isSearchUsersLoading } = useUserSort({
+    keyword,
+    sort,
+  });
 
   return (
     <>
