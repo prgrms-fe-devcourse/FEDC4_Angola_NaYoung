@@ -36,12 +36,12 @@ const MyPage = () => {
         />
       )}
       <PostsListContainer>
+        <PostsListTitle>
+          {userData?.posts.length === 0
+            ? USER_POSTS_TITLE.NO_POSTS
+            : USER_POSTS_TITLE.POSTS}
+        </PostsListTitle>
         <PostsListUl>
-          <PostsListTitle>
-            {userData?.posts.length === 0
-              ? USER_POSTS_TITLE.NO_POSTS
-              : USER_POSTS_TITLE.POSTS}
-          </PostsListTitle>
           {userData?.posts?.map((post) => (
             <PostListItem
               key={post._id}
@@ -89,7 +89,5 @@ const PostsListTitle = styled.div`
   color: ${ANGOLA_STYLES.color.dark};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.title};
-  font-style: normal;
-  font-weight: 400;
   line-height: 100%;
 `;
