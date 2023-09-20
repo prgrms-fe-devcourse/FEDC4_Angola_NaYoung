@@ -1,20 +1,14 @@
 import styled from '@emotion/styled';
 import LinkButton from '@components/LinkButton';
 import Modal from '@components/Modal';
-import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { NON_AUTH_MODAL } from '../constants';
+import { linkButtonStyle } from '../style';
 
 interface NonAuthModal {
   onClose: () => void;
 }
 
 const NonAuthModal = ({ onClose: handleClose }: NonAuthModal) => {
-  const linkButtonStyle = {
-    fontSize: ANGOLA_STYLES.textSize.text,
-    padding: '4px 8px',
-    height: 'fit-content',
-    width: 'fit-content',
-  };
   return (
     <Modal
       onClose={handleClose}
