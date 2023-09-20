@@ -13,7 +13,7 @@ export const LABEL = {
 
 export const PASSWORD_BUTTON = {
   DONE_MSG: '수정 완료',
-  EDIT_MSG: '비밀번호 수정하기',
+  EDIT_MSG: '비밀번호 변경하기',
 };
 
 export const LOG_OUT_TEXT = '로그 아웃';
