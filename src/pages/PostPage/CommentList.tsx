@@ -33,12 +33,12 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
         const commentAuthorId = commentItem.author._id;
         const { vote, comment } = splitCommentBySeparator(commentItem.comment);
         const userLevel = calculateLevel(commentItem.author);
-        const { userColor, userEmoji } = getUserLevelInfo(userLevel);
+        const { userEmoji } = getUserLevelInfo(userLevel);
 
         return (
           <CommentWrapper key={commentItem._id}>
-            <MakerName userColor={userColor}>
-              {fullName}
+            <MakerName level={userLevel}>
+              <span>{`${fullName} `}</span>
               {userEmoji}
             </MakerName>
             <CommentSubWrapper>
@@ -99,10 +99,14 @@ const CommentWrapper = styled.div`
   border-top: none;
 `;
 
-const MakerName = styled.div<{ userColor: string }>`
+const MakerName = styled.div<{ level: number }>`
   font-size: ${ANGOLA_STYLES.textSize.title};
 
-  color: ${(props) => props.userColor};
+  > span {
+    background: ${({ level }) => ANGOLA_STYLES.color.levels[level].fill};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 `;
 
 const CommentSubWrapper = styled.div`
