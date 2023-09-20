@@ -250,8 +250,10 @@ const Input = styled.input`
   border-radius: 27px;
   border: 2px solid var(--text, #404040);
   background: var(--white, #fff);
-  /* input-shadow */
   box-shadow: 0px 6px 0px 0px rgba(64, 64, 64, 0.5) inset;
+  &:focus {
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
 `;
 
 const MyInfoContainer = styled.div`
@@ -297,6 +299,7 @@ const MyInfoBox = styled.div`
 const PassWordContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
 `;
 
 const PassWordBox = styled.div`
