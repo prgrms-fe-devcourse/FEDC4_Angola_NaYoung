@@ -7,6 +7,7 @@ import NameTag from '@components/NameTag';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
+import { USER_PROFILE_IMAGE } from '@constants/index';
 
 interface UserListItemProps {
   id: string;
@@ -31,11 +32,7 @@ const UserListItem = ({
   return (
     <ListItemContainer>
       <Image
-        src={
-          image
-            ? image
-            : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
-        }
+        src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
         alt="프로필"
         size={60}
         style={{ margin: '0 20px' }}
