@@ -18,9 +18,9 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <ButtonStyled
-      size={size}
       type={type}
       toggle={toggle}
+      size={size}
       {...props}>
       {children}
     </ButtonStyled>
@@ -29,7 +29,7 @@ const Button = ({
 
 export default Button;
 
-const ButtonStyled = styled.button<ButtonProps>`
+export const ButtonStyled = styled.button<ButtonProps>`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
