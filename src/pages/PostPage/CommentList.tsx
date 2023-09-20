@@ -5,10 +5,10 @@ import {
   getUserLevelInfo,
   splitCommentBySeparator,
 } from '@utils';
-import Button, { ButtonStyled } from '@components/Button';
+import { ButtonStyled } from '@components/Button';
 import Icon from '@components/Icon';
-import Modal from '@components/Modal';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import CommentDeletionModal from './CommentDeletionModal';
 import useDeleteComment from './Hooks/useDeleteComment';
 
 interface CommentListProps {
@@ -29,8 +29,7 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
   return (
     <>
       {commentsData.map((commentItem) => {
-        const fullName = commentItem.author.fullName;
-        const commentAuthorId = commentItem.author._id;
+        const { fullName, _id: commentAuthorId } = commentItem.author;
         const { vote, comment } = splitCommentBySeparator(commentItem.comment);
         const userLevel = calculateLevel(commentItem.author);
         const { userEmoji } = getUserLevelInfo(userLevel);
@@ -58,28 +57,12 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
               )}
             </CommentSubWrapper>
             {isClickedDeleteBtn && (
-              <Modal
-                onClose={() => setIsClickedDeleteBtn(false)}
-                onConfirm={handleClickDeleteCommentModalBtn}
-                footerShow={false}>
-                <ModalWrapper onClick={(e) => e.stopPropagation()}>
-                  <div>정말로 댓글을 삭제하시겠습니까?</div>
-                  <ButtonContainer>
-                    <Button
-                      size="sm"
-                      onClick={handleClickDeleteCommentModalBtn}
-                      style={{ width: '50px', height: '40px', color: '#F66' }}>
-                      네
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => setIsClickedDeleteBtn(false)}
-                      style={{ width: '90px', height: '40px' }}>
-                      아니요
-                    </Button>
-                  </ButtonContainer>
-                </ModalWrapper>
-              </Modal>
+              <CommentDeletionModal
+                setIsClickedDeleteBtn={setIsClickedDeleteBtn}
+                handleClickDeleteCommentModalBtn={
+                  handleClickDeleteCommentModalBtn
+                }
+              />
             )}
           </CommentWrapper>
         );
@@ -149,21 +132,4 @@ const DeleteButton = styled(ButtonStyled)`
   &:hover {
     border: ${ANGOLA_STYLES.border.default};
   }
-`;
-
-const ModalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 150px;
-  justify-content: space-around;
-  align-items: center;
-  gap: 50px;
-`;
-
-const ButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
 `;
