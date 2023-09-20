@@ -78,7 +78,7 @@ const Selection = styled.div<{ voteColor: string; canVote: boolean }>`
   height: 100%;
   min-height: 160px;
   max-height: 256px;
-  line-height: 200%;
+  line-height: 150%;
   flex: 1 0 0;
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.button.default};
