@@ -98,6 +98,10 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
       if (!userComment) return;
       setIsVoted(false);
+
+      if (myId === postData.author._id) {
+        return;
+      }
       createNotificationMutate({
         notificationType: 'COMMENT',
         notificationTypeId: userComment._id,
