@@ -48,12 +48,12 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
         />
       )}
       <PostsListContainer>
+        <PostsListTitle>
+          {userData?.posts?.length === 0
+            ? USER_POSTS_TITLE.NO_POSTS
+            : USER_POSTS_TITLE.POSTS}
+        </PostsListTitle>
         <PostsListUl>
-          <PostsListTitle>
-            {userData?.posts?.length === 0
-              ? USER_POSTS_TITLE.NO_POSTS
-              : USER_POSTS_TITLE.POSTS}
-          </PostsListTitle>
           {userData?.posts.map((post) => (
             <PostListItem
               key={post._id}
