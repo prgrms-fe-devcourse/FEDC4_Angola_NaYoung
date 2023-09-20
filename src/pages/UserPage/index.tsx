@@ -89,7 +89,11 @@ const PostsListContainer = styled.div`
 `;
 
 const PostsListUl = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+  gap: 32px;
 `;
 
 const PostsListTitle = styled.div`
