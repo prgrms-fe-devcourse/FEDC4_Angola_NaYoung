@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
+import Button from '@components/Button';
+import Icon from '@components/Icon';
+import Image from '@components/Image';
+import NameTag from '@components/NameTag';
 import Spinner from '@components/Spinner';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { MY_INFO, MY_PROFILE_IMAGE } from './constants';
 import {
   useLogOut,
   useUpdateFullName,
@@ -21,13 +27,13 @@ interface MyInfoProps {
 }
 
 const MyInfo = ({
+  id,
   image,
   name,
   likes,
   followers,
   following,
   myLevel,
-  myColor,
   myEmoji,
 }: MyInfoProps) => {
   const {
@@ -52,28 +58,20 @@ const MyInfo = ({
   const { handleClickLogOut } = useLogOut();
 
   return (
-    <MyInfoContainer>
-      <div>
+    <MyInfoWrapper>
+      <MyProfileContainer>
         {isUpdateProfileImageLoading && <Spinner />}
-        {profileImageUrl && (
-          <img
+        <Emoji>{myEmoji}</Emoji>
+        <EditProfile htmlFor="profile">
+          <Image
             src={
               profileImageUrl
                 ? profileImageUrl
-                : 'https://cdn.icon-icons.com/icons2/2645/PNG/512/person_circle_icon_159926.png'
+                : `${MY_PROFILE_IMAGE.DEFAULT_SRC}`
             }
-            alt="프로필 이미지"
-            style={{
-              objectFit: 'cover',
-              width: '70px',
-              height: '70px',
-              borderRadius: '50%',
-            }}
+            alt={MY_PROFILE_IMAGE.ALT}
           />
-        )}
-        <FileUploadButton htmlFor="profile">
-          <div>프로필 업로드</div>
-        </FileUploadButton>
+        </EditProfile>
         <ProfileInput
           type="file"
           id="profile"
@@ -81,8 +79,8 @@ const MyInfo = ({
           onChange={handleChangeProfileImage}
           disabled={isUpdateProfileImageLoading}
         />
-      </div>
-      <NamesLevelLikes>
+      </MyProfileContainer>
+      <MyFullNameContainer>
         {isEditingFullName ? (
           <Input
             type="text"
@@ -91,175 +89,223 @@ const MyInfo = ({
             onChange={handleChangeFullName}
           />
         ) : (
-          <Container>
-            <Name>유저 이름</Name>
-            <MyName color={myColor}>{newFullName}</MyName>
-          </Container>
+          <NameTag
+            level={myLevel}
+            userName={newFullName}
+            userId={id}
+            userLevel={myLevel}
+            isNav={false}
+            showLevel={false}
+          />
         )}
-        <Button onClick={handleClickUpdateFullName}>
-          {isEditingFullName ? '제출 하기' : '편집 하기'}
+        <Button
+          onClick={handleClickUpdateFullName}
+          size="sm"
+          style={{
+            width: '48px',
+            height: '48px',
+            borderRadius: '50%',
+            padding: '0px',
+          }}
+          toggle={isEditingFullName}>
+          {isEditingFullName ? (
+            <Icon
+              name="check"
+              size="20"
+            />
+          ) : (
+            <Icon
+              name="edit"
+              size="20"
+            />
+          )}
         </Button>
-        <Container>
-          <Level color={myColor}>
-            {myEmoji}Level {myLevel}
-          </Level>
-        </Container>
-        <Container>
-          <Likes>👍 받은 좋아요 {likes} </Likes>
-        </Container>
-      </NamesLevelLikes>
-      <FollowerAndFollowing>
-        <Container>
-          <Follower>🙍 follower</Follower> <MyInfoText>{followers}</MyInfoText>
-        </Container>
-        <Container>
-          <Following>🙍 following</Following>
-          <MyInfoText>{following}</MyInfoText>
-        </Container>
-      </FollowerAndFollowing>
-      {isEditingPassWord ? (
-        <PassWordInput>
-          <PassWord>비밀번호</PassWord>
-          <Input
-            type="text"
-            placeholder="새 비밀번호 입력"
-            value={newPassWord}
-            onChange={handleChangePassWord}
-          />
-          <PassWord>비밀번호 확인</PassWord>
-          <Input
-            type="password"
-            placeholder="새 비밀번호 확인"
-            value={confirmNewPassWord}
-            onChange={handleChangeConfirmPassWord}
-          />
-        </PassWordInput>
-      ) : null}
-      <Button onClick={handleClickUpdatePassWord}>
-        {isEditingPassWord ? '변경 하기' : '비밀번호 변경'}
-      </Button>
-      <div>
-        <Button onClick={handleClickLogOut}>로그 아웃</Button>
-      </div>
-    </MyInfoContainer>
+      </MyFullNameContainer>
+      <MyInfoContainer>
+        {isEditingPassWord ? (
+          <PassWordContainer>
+            <PassWordBox>
+              <InputLabel>변경할 비밀번호</InputLabel>
+              <Input
+                type="text"
+                placeholder="새 비밀번호 입력"
+                value={newPassWord}
+                onChange={handleChangePassWord}
+              />
+            </PassWordBox>
+            <PassWordBox>
+              <InputLabel>비밀번호 확인</InputLabel>
+              <Input
+                type="password"
+                placeholder="새 비밀번호 확인"
+                value={confirmNewPassWord}
+                onChange={handleChangeConfirmPassWord}
+              />
+            </PassWordBox>
+          </PassWordContainer>
+        ) : (
+          <MyInfoBox>
+            <MyInfoText>
+              {MY_INFO.LEVEL}&nbsp;&nbsp;{myLevel}
+            </MyInfoText>
+            <Bar>|</Bar>
+            <MyInfoText>
+              {MY_INFO.FOLLOWER}&nbsp;&nbsp;{followers}
+            </MyInfoText>
+            <Bar>|</Bar>
+            <MyInfoText>
+              {MY_INFO.FOLLOWING}&nbsp;&nbsp;{following}
+            </MyInfoText>
+            <Bar>|</Bar>
+            <MyInfoText>
+              {MY_INFO.GET_LIKES}&nbsp;&nbsp;{likes}
+            </MyInfoText>
+            <Bar>|</Bar>
+          </MyInfoBox>
+        )}
+        {isEditingPassWord ? (
+          <Button onClick={handleClickUpdatePassWord}>수정 완료</Button>
+        ) : (
+          <Button onClick={handleClickUpdatePassWord}>비밀번호 수정하기</Button>
+        )}
+        {isEditingPassWord ? null : (
+          <Button onClick={handleClickLogOut}>로그 아웃</Button>
+        )}
+      </MyInfoContainer>
+    </MyInfoWrapper>
   );
 };
 
 export default MyInfo;
 
-const MyInfoContainer = styled.div`
+const MyInfoWrapper = styled.div`
   display: flex;
-  width: 80%;
-  height: 100%;
-  border: 1px solid black;
+  padding: 0px 24px;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 30px 10px;
-  gap: 30px;
+  gap: 24px;
+  align-self: stretch;
+  background-color: ${ANGOLA_STYLES.color.white};
 `;
 
-const FileUploadButton = styled.label`
+const MyProfileContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  border: 1px solid rgb(77, 77, 77);
-  width: 120px;
-  height: 35px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
+  align-items: center;
+  gap: 10px;
+`;
+
+const Emoji = styled.div`
+  color: ${ANGOLA_STYLES.color.text};
+  text-align: center;
+  font-size: ${ANGOLA_STYLES.textSize.symbol};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.924px;
+`;
+
+// TODO: 줄바꿈, 편집 중에는 DISABLED 효과 처리
+const EditProfile = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  position: relative;
+  &:hover img {
+    opacity: 0.5;
+    box-shadow: 0px 6px 0px 0px #404040;
+  }
+  &:hover::after {
+    content: '클릭하여 수정하기';
+    white-space: pre;
+    text-align: center;
+    top: 50%;
+    position: absolute;
+    opacity: 1;
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+  }
 `;
 
 const ProfileInput = styled.input`
   display: none;
 `;
 
-const NamesLevelLikes = styled.div`
+const MyFullNameContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 10px;
-`;
-
-const Container = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const Name = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const MyName = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${(props) => props.color};
-`;
-
-const Level = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${(props) => props.color};
-`;
-
-const MyInfoText = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  margin-left: auto;
 `;
 
 const Input = styled.input`
-  width: 150px;
-  height: 30px;
-  border-radius: 20px;
-  padding: 3px 3px 0px 10px;
-`;
-
-const Button = styled.button`
-  width: 120px;
-  height: 35px;
-  border-radius: 20px;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  &:hover {
-    background-color: #c2c2c2;
-    color: white;
-  }
-`;
-
-const Likes = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const FollowerAndFollowing = styled.div`
   display: flex;
+  padding: 8px 32px;
+  align-items: center;
   gap: 10px;
-  flex-direction: column;
+  border-radius: 27px;
+  border: 2px solid var(--text, #404040);
+  background: var(--white, #fff);
+  /* input-shadow */
+  box-shadow: 0px 6px 0px 0px rgba(64, 64, 64, 0.5) inset;
 `;
 
-const Follower = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const Following = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const PassWordInput = styled.div`
+const MyInfoContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 12px 0px;
+  gap: 24px;
+  align-self: stretch;
 `;
 
-const PassWord = styled.div`
-  font-size: 18px;
+const MyInfoText = styled.div`
+  display: flex;
+  color: ${ANGOLA_STYLES.color.text};
+  text-align: center;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  font-style: normal;
   font-weight: 600;
-  margin: 10px 0px;
+  line-height: 150%;
+  letter-spacing: -0.396px;
+`;
+
+const Bar = styled.div`
+  color: ${ANGOLA_STYLES.color.dark};
+  text-align: center;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.396px;
+`;
+
+const MyInfoBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  gap: 24px;
+  align-self: stretch;
+`;
+
+const PassWordContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PassWordBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`;
+
+const InputLabel = styled.label`
+  font-size: 16px;
 `;

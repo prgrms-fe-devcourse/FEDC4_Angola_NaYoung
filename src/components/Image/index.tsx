@@ -25,4 +25,5 @@ const ImageStyles = styled.img<ImageProps>`
   height: ${(props) => props.size}px;
   border-radius: 50%;
   border: ${ANGOLA_STYLES.border.default};
+  object-fit: cover;
 `;

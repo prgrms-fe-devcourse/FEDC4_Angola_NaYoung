@@ -3,7 +3,6 @@ import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
-import { useFetchUserPosts } from '@apis/post';
 import { useFetchUser } from '@apis/user';
 import useCurrentPage from '@hooks/useCurrentPage';
 import { authInfoState } from '@store/auth';
@@ -15,11 +14,8 @@ const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
   const { name } = useCurrentPage();
   const { userData, isUserLoading } = useFetchUser(auth?.userId as string);
-  const { userPostsData, isUserPostsLoading } = useFetchUserPosts(
-    auth?.userId as string,
-  );
 
-  if (isUserLoading || isUserPostsLoading) {
+  if (isUserLoading) {
     return <Spinner />;
   }
 
@@ -41,11 +37,11 @@ const MyPage = () => {
       <PostsListContainer>
         <PostsListUl>
           <PostsListTitle>
-            {userPostsData?.length === 0
+            {userData?.posts.length === 0
               ? MY_POSTS_TITLE.NO_POSTS
               : MY_POSTS_TITLE.POSTS}
           </PostsListTitle>
-          {userPostsData?.map((post) => (
+          {userData?.posts?.map((post) => (
             <PostListItem
               key={post._id}
               id={post._id}
