@@ -6,6 +6,7 @@ import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
 import { useScrollToTop } from '@hooks/useScrollToTop';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import ToTopButton from './ToTopButton';
 
 const Main = () => {
   const { title, name, params, search } = useCurrentPage();
@@ -57,6 +58,7 @@ const Main = () => {
           ))}
         </Routes>
       </PageContainer>
+      <ToTopButton onScrollToTop={scrollToTop} />
     </MainContainer>
   );
 };
@@ -64,6 +66,7 @@ const Main = () => {
 export default Main;
 
 const MainContainer = styled.div`
+  position: relative;
   box-sizing: border-box;
   height: calc(100vh - 100px);
   display: flex;
