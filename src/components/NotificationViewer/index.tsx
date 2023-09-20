@@ -90,44 +90,94 @@ const NotificationViewer = ({
     // TODO:MinwooP - 이후 Notification data 업데이트 안된 상태면 refetch 혹은 invalidQueries 써서 다시 불러오기
   };
 
-  // notification Item을 클릭했을 때, 그 안 userName 클릭 시 해당 유저페이지로 이동,
-  // 그외 클릭시 포스트페이지 or 유저페이지로 이동
+  // notification Item 클릭 시 페이지 이동 로직
   const handleClickListItem = (
     e: MouseEvent<HTMLLIElement>,
     notification: Notification,
   ) => {
     if (e.target instanceof HTMLSpanElement && e.target.id === 'userName') {
-      console.log(
-        `유저 이름 클릭 => ${notification.author.fullName} 유저페이지로 이동`,
-      );
+      // Item내 userName 클릭 시 해당 유저페이지로 이동,
       navigate(`/user/${notification.author._id}`);
     } else {
       if (notification.post === null) {
-        navigate(`/user/${notification.author._id}`);
-        console.log(
-          `follow 알림 => ${notification.author.fullName} 유저페이지로 이동`,
-        );
+        navigate(`/user/${notification.author._id}`); // 팔로우 알림 클릭 시 => 작성자 유저 페이지로 이동
       } else {
-        console.log('좋아요 or 댓글 알림');
+        // 좋아요, 댓글 알림 클릭 시 시 => 해당 포스트 페이지로 이동
         navigate(`/post/${notification.post}`);
       }
     }
     handleClickCloseViewer();
   };
 
-  const showNewNotificationList = () => {
-    // FIXME: getNotificationsData를 인자로 받아서 호출해줘야 하나
-    const NewNotifications = getNotificationsData!.filter((notification) => {
-      return notification.seen === false;
+  const filterSameFollowerNotifications = (
+    notificationList: Notification[],
+  ) => {
+    const follwerList: string[] | null = [];
+    const filteredNotificationList: Notification[] | null = [];
+
+    notificationList.forEach((notification) => {
+      if (notification.post === null) {
+        // 팔로우 알림일 때
+        if (!follwerList.includes(notification.author.fullName)) {
+          // follweList에 없을 때 추가
+          follwerList.push(notification.author.fullName);
+          filteredNotificationList.push(notification);
+        }
+      } else {
+        // 좋아요, 댓글 알림일 시 바로 List에 추가
+        filteredNotificationList.push(notification);
+      }
     });
 
-    if (NewNotifications.length === 0) {
+    return filteredNotificationList;
+  };
+
+  const showAllNotificationList = () => {
+    if (getNotificationsData?.length === 0) {
+      return (
+        <EmptyNotificationList>알림 목록이 없습니다.</EmptyNotificationList>
+      );
+    }
+
+    const filteredNotificationList = filterSameFollowerNotifications(
+      getNotificationsData!,
+    );
+
+    return filteredNotificationList.map((notification) => {
+      return (
+        <NotificationListItem
+          id="notificationItem"
+          key={notification._id}
+          onClick={(e: MouseEvent<HTMLLIElement>) => {
+            handleClickListItem(e, notification);
+          }}>
+          {decideNotificationType({ notification })}
+        </NotificationListItem>
+      );
+    });
+  };
+
+  const showNewNotificationList = () => {
+    if (getNotificationsData?.length === 0) {
       return (
         <EmptyNotificationList>새 알림 목록이 없습니다.</EmptyNotificationList>
       );
     }
 
-    return NewNotifications.map((notification) => {
+    const newNotificationList = getNotificationsData!.filter((notification) => {
+      return notification.seen === false;
+    });
+
+    if (newNotificationList?.length === 0) {
+      return (
+        <EmptyNotificationList>새 알림 목록이 없습니다.</EmptyNotificationList>
+      );
+    }
+
+    const filteredNotificationList =
+      filterSameFollowerNotifications(newNotificationList);
+
+    return filteredNotificationList.map((notification) => {
       return (
         <NotificationListItem
           key={notification._id}
@@ -138,25 +188,6 @@ const NotificationViewer = ({
         </NotificationListItem>
       );
     });
-  };
-
-  const showAllNotificationList = () => {
-    return getNotificationsData?.length === 0 ? (
-      <EmptyNotificationList>알림 목록이 없습니다.</EmptyNotificationList>
-    ) : (
-      getNotificationsData!.map((notification) => {
-        return (
-          <NotificationListItem
-            id="notificationItem"
-            key={notification._id}
-            onClick={(e: MouseEvent<HTMLLIElement>) => {
-              handleClickListItem(e, notification);
-            }}>
-            {decideNotificationType({ notification })}
-          </NotificationListItem>
-        );
-      })
-    );
   };
 
   if (isGetNotificationsLoading) return <Spinner />;
@@ -205,7 +236,7 @@ const NotificationViewerBackGround = styled.div`
   background-color: rgba(0, 0, 0, 0);
   width: 100%;
   height: 100vh;
-  z-index: 10;
+  z-index: 200; // TODO: 나중에 z-index 기준 컴포넌트 별로 설정 필요
   position: fixed;
   top: 0;
   left: 0;
@@ -215,7 +246,6 @@ const NotificationViewerContainer = styled.div`
   position: absolute;
   top: 100px;
   right: 80px;
-  z-index: 1000; // TODO: 나중에 z-index 기준 컴포넌트 별로 설정 필요
   padding: 24px 0px 24px 12px;
   display: flex;
   flex-direction: column;
