@@ -10,6 +10,7 @@ import { useFetchDeletePost, useFetchUserPosts } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { USER_PROFILE_IMAGE } from '@constants/index';
 
 interface PostListItemProps {
   id: string;
@@ -35,11 +36,11 @@ const PostListItem = ({
   const [toggleModal, setToggleModal] = useState(false);
 
   const handleOpenModal = () => {
-    setToggleModal(() => true);
+    setToggleModal(true);
   };
 
   const handleCloseModal = () => {
-    setToggleModal(() => false);
+    setToggleModal(false);
   };
 
   const handleDeletedPost = () => {
@@ -56,11 +57,7 @@ const PostListItem = ({
   return (
     <ListItemContainer>
       <Image
-        src={
-          image
-            ? image
-            : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
-        }
+        src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
         alt="프로필"
         size={60}
         style={{ margin: '0 20px' }}
@@ -90,18 +87,12 @@ const PostListItem = ({
           More
         </LinkButton>
       </More>
-      {/* {canDeletePost ? (
-        <button onClick={handleOpenModal}>
-          <Icon name="trash" />
-        </button>
-      ) : null} */}
+
       {toggleModal && (
         <Modal
           onClose={handleCloseModal}
           onConfirm={handleDeletedPost}>
           <div>정말로 삭제하시겠습니까?</div>
-          <button onClick={handleDeletedPost}>확인</button>
-          <button onClick={handleCloseModal}>취소</button>
         </Modal>
       )}
     </ListItemContainer>
