@@ -6,7 +6,13 @@ import NameTag from '@components/NameTag';
 import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
-import { LABEL, LOG_OUT_TEXT, PASSWORD_BUTTON, PLACEHOLDER } from './constants';
+import {
+  CHECK_DUPLICATE_BUTTON,
+  LABEL,
+  LOG_OUT_TEXT,
+  PASSWORD_BUTTON,
+  PLACEHOLDER,
+} from './constants';
 import {
   useLogOut,
   useUpdateFullName,
@@ -14,7 +20,6 @@ import {
   useUpdateProfile,
 } from './hooks';
 
-// TODO: 모달 사용, 눈 이모티콘 사용, 닉네임 변경 성공, 실패, 중복시 메세지 생성
 interface MyInfoProps {
   id: string;
   image: string;
@@ -59,6 +64,10 @@ const MyInfo = ({
     handleClickUpdatePassWord,
     confirmNewPassWord,
     handleChangeConfirmPassWord,
+    invalidPasswordMsg,
+    invalidPasswordConfirmMsg,
+    validPasswordConfirmMsg,
+    handleAcceptPassWordButton,
   } = useUpdatePassWord();
   const { handleClickLogOut } = useLogOut();
 
@@ -113,7 +122,7 @@ const MyInfo = ({
                 padding: '0',
                 fontSize: ANGOLA_STYLES.textSize.titleSm,
               }}>
-              중복 확인
+              {CHECK_DUPLICATE_BUTTON}
             </Button>
             <Button
               onClick={handleClickUpdateFullName}
@@ -157,7 +166,7 @@ const MyInfo = ({
             </Button>
           </NameTagContainer>
         )}
-        <div>
+        <>
           {isEditingFullName && (
             <>
               {invalidFullNameMsg && (
@@ -176,28 +185,57 @@ const MyInfo = ({
               )}
             </>
           )}
-        </div>
+        </>
       </MyFullNameContainer>
       <MyInfoContainer>
         {isEditingPassWord ? (
           <PassWordContainer>
             <PassWordBox>
-              <InputLabel>{LABEL.NEW_PASSWORD}</InputLabel>
-              <Input
-                type="text"
-                placeholder={PLACEHOLDER.NEW_PASSWORD}
-                value={newPassWord}
-                onChange={handleChangePassWord}
-              />
+              <PassWordInput>
+                <InputLabel>{LABEL.NEW_PASSWORD}</InputLabel>
+                <Input
+                  type="password"
+                  placeholder={PLACEHOLDER.NEW_PASSWORD}
+                  value={newPassWord}
+                  onChange={handleChangePassWord}
+                  style={{ width: '400px' }}
+                />
+              </PassWordInput>
+              {invalidPasswordMsg && (
+                <InputWarning>
+                  <Icon
+                    name={'warn'}
+                    color={'#F66'}
+                  />
+                  {invalidPasswordMsg}
+                </InputWarning>
+              )}
             </PassWordBox>
             <PassWordBox>
-              <InputLabel>{LABEL.NEW_PASSWORD_CONFIRM}</InputLabel>
-              <Input
-                type="password"
-                placeholder={PLACEHOLDER.NEW_PASSWORD_CONFIRM}
-                value={confirmNewPassWord}
-                onChange={handleChangeConfirmPassWord}
-              />
+              <PassWordInput>
+                <InputLabel>{LABEL.NEW_PASSWORD_CONFIRM}</InputLabel>
+                <Input
+                  type="password"
+                  placeholder={PLACEHOLDER.NEW_PASSWORD_CONFIRM}
+                  value={confirmNewPassWord}
+                  onChange={handleChangeConfirmPassWord}
+                  style={{ width: '400px' }}
+                />
+              </PassWordInput>
+              {invalidPasswordConfirmMsg && (
+                <InputWarning>
+                  <Icon
+                    name={'warn'}
+                    color={'#F66'}
+                  />
+                  {invalidPasswordConfirmMsg}
+                </InputWarning>
+              )}
+              {validPasswordConfirmMsg && (
+                <InputWarning style={{ color: '#78D968' }}>
+                  {validPasswordConfirmMsg}
+                </InputWarning>
+              )}
             </PassWordBox>
           </PassWordContainer>
         ) : (
@@ -221,7 +259,9 @@ const MyInfo = ({
           </MyInfoBox>
         )}
         {isEditingPassWord ? (
-          <Button onClick={handleClickUpdatePassWord}>
+          <Button
+            onClick={handleClickUpdatePassWord}
+            disabled={handleAcceptPassWordButton()}>
             {PASSWORD_BUTTON.DONE_MSG}
           </Button>
         ) : (
@@ -266,7 +306,6 @@ const Emoji = styled.div`
   letter-spacing: -0.924px;
 `;
 
-// TODO: 편집 중에는 DISABLED 효과 처리
 const EditProfile = styled.label`
   display: flex;
   justify-content: center;
@@ -366,12 +405,19 @@ const MyInfoBox = styled.div`
 
 const PassWordContainer = styled.div`
   display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center;*/
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 `;
 
 const PassWordBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const PassWordInput = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
