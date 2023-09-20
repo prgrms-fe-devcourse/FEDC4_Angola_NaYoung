@@ -35,14 +35,16 @@ const Modal = ({
     };
   }, []);
 
-  const handleClickModalContainer = (e: React.MouseEvent) => {
-    if (e.target !== modalRef.current) {
+  const handleClickModalWrapper = (e: React.MouseEvent) => {
+    if (e.target === modalRef.current) {
       handleClose();
     }
   };
   return (
-    <ModalWrapper onClick={(e) => handleClickModalContainer(e)}>
-      <Container ref={modalRef}>
+    <ModalWrapper
+      onClick={(e) => handleClickModalWrapper(e)}
+      ref={modalRef}>
+      <Container>
         <ModalHeader>
           <Button onClick={handleClose}>
             <Icon

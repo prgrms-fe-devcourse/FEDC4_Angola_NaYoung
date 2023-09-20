@@ -9,6 +9,7 @@ export { voteRatio } from '@utils/voteRatio';
 export { pxToRem } from '@utils/pxToRem';
 export { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
 export {
+  checkEmailPattern,
   checkFullNamePattern,
   checkPassWordPattern,
 } from '@utils/userAuthentication';

@@ -17,9 +17,9 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <ButtonStyled
-      size={size}
       type={type}
       toggle={toggle}
+      size={size}
       {...props}>
       {children}
     </ButtonStyled>
@@ -28,7 +28,7 @@ const Button = ({
 
 export default Button;
 
-const ButtonStyled = styled.button<ButtonProps>`
+export const ButtonStyled = styled.button<ButtonProps>`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -38,6 +38,7 @@ const ButtonStyled = styled.button<ButtonProps>`
   background-color: ${ANGOLA_STYLES.color.white};
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
+  cursor: pointer;
 
   background-color: ${({ toggle }) =>
     toggle ? `${ANGOLA_STYLES.color.gray}` : `${ANGOLA_STYLES.color.white}`};
@@ -54,5 +55,12 @@ const ButtonStyled = styled.button<ButtonProps>`
       props.size === 'sm'
         ? `box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};`
         : `box-shadow: ${ANGOLA_STYLES.shadow.button.hover};`}
+  }
+
+  &:disabled {
+    border: ${ANGOLA_STYLES.border.default};
+    background-color: ${ANGOLA_STYLES.color.gray};
+    box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+    cursor: default;
   }
 `;

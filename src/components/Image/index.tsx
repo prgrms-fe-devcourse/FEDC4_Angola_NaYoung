@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
@@ -5,6 +6,7 @@ interface ImageProps {
   src: string;
   alt: string;
   size?: number;
+  style?: CSSProperties;
 }
 
 const Image = ({ src, alt, size = 150, ...props }: ImageProps) => {
