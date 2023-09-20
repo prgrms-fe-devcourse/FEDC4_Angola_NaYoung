@@ -8,8 +8,12 @@ import {
 import {
   faBell,
   faCheck,
+  faCheckDouble,
   faCircleExclamation,
   faComment,
+  faComments,
+  faEye,
+  faEyeSlash,
   faHeart,
   faHeartCirclePlus,
   faPen,
@@ -30,6 +34,7 @@ type IconName =
   | 'check'
   | 'warn'
   | 'edit'
+  | 'comments'
   | 'comment'
   | 'comment_empty'
   | 'heart'
@@ -44,6 +49,9 @@ type IconName =
   | 'select_down'
   | 'notification_check'
   | 'notification_uncheck';
+  | 'eye'
+  | 'eye_slash'
+  | 'double_check';
 
 const iconMap = {
   alert: faBell,
@@ -51,6 +59,7 @@ const iconMap = {
   warn: faCircleExclamation,
   edit: faPen,
   comment: faComment,
+  comments: faComments,
   comment_empty: faEmptyComment,
   heart: faHeart,
   heart_plus: faHeartCirclePlus,
@@ -64,6 +73,9 @@ const iconMap = {
   select_down: faSortDown,
   notification_check: faSquareCheck,
   notification_uncheck: faEmptySquare,
+  eye: faEye,
+  eye_slash: faEyeSlash,
+  double_check: faCheckDouble,
 };
 
 interface IconProps {

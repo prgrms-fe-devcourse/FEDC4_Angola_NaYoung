@@ -29,8 +29,5 @@ const SearchPage = ({ target = 'post', keyword, sort }: SearchProps) => {
 export default SearchPage;
 
 const Container = styled.div`
-  width: 80%;
-  border: 1px solid black;
-  border-top: none;
-  padding: 20px 10px;
+  width: 100%;
 `;

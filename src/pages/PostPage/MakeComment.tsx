@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styled from '@emotion/styled';
+import Button, { ButtonStyled } from '@components/Button';
+import { ANGOLA_STYLES } from '../../styles/commonStyles';
 
 interface MakeCommentProps {
   votedValue: string;
@@ -13,7 +15,7 @@ const MakeComment = ({
   handleSubmitComment,
 }: MakeCommentProps) => {
   const [comment, setComment] = useState<string>('');
-  const handleChangeComment = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
   const handleSubmit = (e: FormEvent) => {
@@ -24,27 +26,48 @@ const MakeComment = ({
 
   return (
     <MakeCommentContainer>
-      <ItemButtonsContainer>
-        <ItemButtonA
-          onClick={() => handleClickItem('A')}
-          votedValue={votedValue}>
-          A
-        </ItemButtonA>
-        <ItemButtonB
-          onClick={() => handleClickItem('B')}
-          votedValue={votedValue}>
-          B
-        </ItemButtonB>
-      </ItemButtonsContainer>
       <Form onSubmit={handleSubmit}>
+        <ItemButtonsContainer>
+          <Button
+            type="button"
+            onClick={() => handleClickItem('A')}
+            style={{
+              width: '80px',
+              height: '50%',
+              paddingTop: '24px',
+              borderRadius: '40px 40px 0 0',
+              borderBottom: 'none',
+              color:
+                votedValue === 'A'
+                  ? ANGOLA_STYLES.color.text
+                  : ANGOLA_STYLES.color.dark,
+            }}>
+            A
+          </Button>
+          <Button
+            type="button"
+            onClick={() => handleClickItem('B')}
+            style={{
+              width: '80px',
+              height: '50%',
+              borderRadius: '0 0 40px 40px',
+              color:
+                votedValue === 'B'
+                  ? ANGOLA_STYLES.color.text
+                  : ANGOLA_STYLES.color.dark,
+            }}>
+            B
+          </Button>
+        </ItemButtonsContainer>
         <Comment
-          placeholder="댓글 입력창"
+          placeholder="의견을 작성해주세요!&#13;&#10;투표만 하고 싶다면, 오른쪽 버튼을 클릭해주세요."
           onChange={handleChangeComment}
         />
-        <SubmitButton disabled={votedValue ? false : true}>
-          <p>submit</p>
-          <p>또는</p>
-          <p>skip</p>
+        <SubmitButton
+          size="md"
+          disabled={votedValue ? false : true}
+          votedValue={votedValue}>
+          참여하기
         </SubmitButton>
       </Form>
     </MakeCommentContainer>
@@ -54,79 +77,58 @@ const MakeComment = ({
 export default MakeComment;
 
 const MakeCommentContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 1rem;
-  border: 1px solid black;
+  padding: 16px;
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 24px 24px 0 0;
   z-index: 10;
-  gap: 1rem;
-`;
-
-const ItemButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid black;
-  border-radius: 40px;
-  overflow: hidden;
-  width: 3rem;
-  height: 6rem;
-`;
-
-const ItemButtonA = styled.button<{ votedValue: string }>`
-  width: 100%;
-  height: 100%;
-  border: none;
-  background-color: white;
-  font-size: 1.5rem;
-  border-bottom: solid;
-  cursor: pointer;
-  background-color: ${(props) =>
-    props.votedValue === 'A' ? 'orangered' : 'none'};
-
-  &:hover {
-    background-color: #80808030;
-  }
-`;
-
-const ItemButtonB = styled.button<{ votedValue: string }>`
-  width: 100%;
-  height: 100%;
-  border: none;
-  background-color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  background-color: ${(props) =>
-    props.votedValue === 'B' ? 'orangered' : 'none'};
-
-  &:hover {
-    background-color: #80808030;
-  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap: 1rem;
+  gap: 16px;
 `;
 
-const Comment = styled.input`
-  border: 1px solid black;
-  border-radius: 3rem;
-  padding: 1rem;
-  width: 100%;
+const ItemButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 120px;
 `;
 
-const SubmitButton = styled.button`
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 2rem;
-  cursor: pointer;
+const Comment = styled.textarea`
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px;
+  align-items: flex-start;
+  flex: 1 0 0;
+  border-radius: 40px;
+  border: ${ANGOLA_STYLES.border.default};
+  background-color: ${ANGOLA_STYLES.color.gray};
+  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+  resize: none;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  letter-spacing: -0.352px;
+
+  &:focus {
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
+  ::placeholder {
+    font-size: ${ANGOLA_STYLES.textSize.text};
+  }
+`;
+
+const SubmitButton = styled(ButtonStyled)<{ votedValue: string }>`
+  width: 120px;
+  height: 120px;
+  padding: 16px 0;
+
+  color: ${(props) =>
+    props.votedValue ? ANGOLA_STYLES.color.text : ANGOLA_STYLES.color.dark};
 
   &:hover {
-    background-color: #80808030;
-  }
-  &:disabled {
-    background-color: #999da020;
+    ${(props) =>
+      !props.votedValue &&
+      `${ANGOLA_STYLES.shadow.buttonSm.hover}; ${ANGOLA_STYLES.border.default};`};
   }
 `;

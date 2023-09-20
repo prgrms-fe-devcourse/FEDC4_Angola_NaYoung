@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import Spinner from '@components/Spinner';
 import UserListItem from '@components/UserListItem';
@@ -28,7 +29,7 @@ const UserList = ({ keyword, sort }: UserListProps) => {
 
   return (
     <>
-      <ul>
+      <UserListItems>
         {resultData?.map((user) => (
           <UserListItem
             key={user._id}
@@ -38,13 +39,20 @@ const UserList = ({ keyword, sort }: UserListProps) => {
             level={calculateLevel(user)}
             followers={user.followers.length}
             userEmoji={getUserLevelInfo(calculateLevel(user)).userEmoji}
-            userColor={getUserLevelInfo(calculateLevel(user)).userColor}
           />
         ))}
-      </ul>
+      </UserListItems>
       {(isUsersLoading || isSearchUsersLoading) && <Spinner />}
     </>
   );
 };
 
 export default UserList;
+
+const UserListItems = styled.ul`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+`;
