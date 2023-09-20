@@ -47,6 +47,10 @@ const MyInfo = ({
     newFullName,
     handleChangeFullName,
     handleClickUpdateFullName,
+    invalidFullNameMsg,
+    validFullNameMsg,
+    isDuplicatedFullNameChecked,
+    handleClickDuplicatedFullNameCheckBtn,
   } = useUpdateFullName({ name });
   const {
     isEditingPassWord,
@@ -83,45 +87,96 @@ const MyInfo = ({
       </MyProfileContainer>
       <MyFullNameContainer>
         {isEditingFullName ? (
-          <Input
-            type="text"
-            value={newFullName}
-            placeholder={PLACEHOLDER.FULL_NAME}
-            onChange={handleChangeFullName}
-          />
+          <MyFullNameBox>
+            <InputBox>
+              <Input
+                type="text"
+                value={newFullName}
+                placeholder={PLACEHOLDER.FULL_NAME}
+                onChange={handleChangeFullName}
+              />
+              {isDuplicatedFullNameChecked && (
+                <DoubleCheckIcon>
+                  <Icon
+                    name={'double_check'}
+                    color={'#78D968'}
+                  />
+                </DoubleCheckIcon>
+              )}
+            </InputBox>
+            <Button
+              type="button"
+              onClick={handleClickDuplicatedFullNameCheckBtn}
+              style={{
+                width: '100px',
+                height: '48px',
+                padding: '0',
+                fontSize: ANGOLA_STYLES.textSize.titleSm,
+              }}>
+              중복 확인
+            </Button>
+            <Button
+              onClick={handleClickUpdateFullName}
+              size="sm"
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                padding: '0px',
+              }}
+              disabled={!validFullNameMsg}>
+              <Icon
+                name="check"
+                size="20"
+              />
+            </Button>
+          </MyFullNameBox>
         ) : (
-          <NameTag
-            level={myLevel}
-            userName={newFullName}
-            userId={id}
-            userLevel={myLevel}
-            isNav={false}
-            showLevel={false}
-          />
+          <NameTagContainer>
+            <NameTag
+              level={myLevel}
+              userName={newFullName}
+              userId={id}
+              userLevel={myLevel}
+              isNav={false}
+              showLevel={false}
+            />
+            <Button
+              onClick={handleClickUpdateFullName}
+              size="sm"
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                padding: '0px',
+              }}>
+              <Icon
+                name="edit"
+                size="20"
+              />
+            </Button>
+          </NameTagContainer>
         )}
-
-        <Button
-          onClick={handleClickUpdateFullName}
-          size="sm"
-          style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            padding: '0px',
-          }}
-          toggle={isEditingFullName}>
-          {isEditingFullName ? (
-            <Icon
-              name="check"
-              size="20"
-            />
-          ) : (
-            <Icon
-              name="edit"
-              size="20"
-            />
+        <div>
+          {isEditingFullName && (
+            <>
+              {invalidFullNameMsg && (
+                <InputWarning>
+                  <Icon
+                    name={'warn'}
+                    color={'#F66'}
+                  />
+                  {invalidFullNameMsg}
+                </InputWarning>
+              )}
+              {validFullNameMsg && (
+                <InputWarning style={{ color: '#78D968' }}>
+                  {validFullNameMsg}
+                </InputWarning>
+              )}
+            </>
           )}
-        </Button>
+        </div>
       </MyFullNameContainer>
       <MyInfoContainer>
         {isEditingPassWord ? (
@@ -241,16 +296,27 @@ const ProfileInput = styled.input`
 
 const MyFullNameContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const MyFullNameBox = styled.div`
+  display: flex;
   gap: 20px;
+`;
+
+const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
 `;
 
 const Input = styled.input`
   display: flex;
   padding: 8px 32px;
+  height: 100%;
   align-items: center;
-  gap: 10px;
   border-radius: 27px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
@@ -315,4 +381,26 @@ const PassWordBox = styled.div`
 
 const InputLabel = styled.label`
   font-size: ${ANGOLA_STYLES.textSize.text};
+`;
+
+const InputWarning = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: #f66;
+  gap: 8px;
+`;
+
+const NameTagContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+
+const DoubleCheckIcon = styled.div`
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translate(0, -50%);
 `;
