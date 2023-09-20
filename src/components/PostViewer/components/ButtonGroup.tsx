@@ -47,7 +47,7 @@ const ButtonGroup = ({
         className={commentClassName}>
         <Icon name={commentIcon} />
         <Number>{numberOfComments}</Number>
-        {isShow || <Text>{BUTTON_GROUP.PARTICIPATE}</Text>}
+        {isShow || <Text>{BUTTON_GROUP.COMMENT_BUTTON_TEXT}</Text>}
       </ActionButton>
     </ActionButtonContainer>
   );

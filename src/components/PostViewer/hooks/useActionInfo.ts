@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { IconName } from '@components/Icon';
-import { ACTIONED } from '../constants';
+import { BUTTON_GROUP } from '../constants';
 
 const getCommentIcon = (isVoted: boolean, isShow: boolean): IconName => {
   if (isVoted) {
@@ -17,7 +17,7 @@ const getLikeIcon = (isLiked: boolean): IconName => {
 };
 
 const getActionClassName = (action: boolean) => {
-  return action ? ACTIONED : '';
+  return action ? BUTTON_GROUP.BUTTON_ACTIONED_CLASS : '';
 };
 
 interface ActionInfoProps {

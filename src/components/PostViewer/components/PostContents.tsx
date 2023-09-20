@@ -44,18 +44,18 @@ const PostContents = ({
       <Selection
         voteColor={voteColor}
         canVote={!isVoted}
-        className={getContentClassName(POST_CONTENTS.VOTE.A)}
-        onClick={() => handleClickContent(POST_CONTENTS.VOTE.A)}>
-        <Type>{POST_CONTENTS.VOTE.A}</Type>
+        className={getContentClassName(POST_CONTENTS.VOTE_TEXT.A)}
+        onClick={() => handleClickContent(POST_CONTENTS.VOTE_TEXT.A)}>
+        <Type>{POST_CONTENTS.VOTE_TEXT.A}</Type>
         <Content>{contentA}</Content>
       </Selection>
-      <VsSymbol>{POST_CONTENTS.SYMBOL}</VsSymbol>
+      <VsSymbol>{POST_CONTENTS.SYMBOL_TEXT}</VsSymbol>
       <Selection
         voteColor={voteColor}
         canVote={!isVoted}
-        className={getContentClassName(POST_CONTENTS.VOTE.B)}
-        onClick={() => handleClickContent(POST_CONTENTS.VOTE.B)}>
-        <Type>{POST_CONTENTS.VOTE.B}</Type>
+        className={getContentClassName(POST_CONTENTS.VOTE_TEXT.B)}
+        onClick={() => handleClickContent(POST_CONTENTS.VOTE_TEXT.B)}>
+        <Type>{POST_CONTENTS.VOTE_TEXT.B}</Type>
         <Content>{contentB}</Content>
       </Selection>
     </SelectionContainer>
