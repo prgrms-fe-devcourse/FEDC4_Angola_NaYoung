@@ -84,6 +84,7 @@ const Container = styled.div`
   width: 100%;
   border-radius: 55px 55px 0px 0px;
   background: ${ANGOLA_STYLES.color.dark};
+  border-bottom: ${ANGOLA_STYLES.border.default};
 `;
 
 const SelectContainer = styled.div`
