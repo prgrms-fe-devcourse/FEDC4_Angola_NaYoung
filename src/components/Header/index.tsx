@@ -1,8 +1,8 @@
+import { PARAM_VALUES, SEARCH_VALUES } from '@constants';
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { PARAM_VALUES, SEARCH_VALUES } from '@constants/index';
-import useSort from './Hooks/useSort';
+import useSelect from './Hooks/useSelect';
 import TabBarList from './TabBarList';
 import { SELECT_OPTION } from './constants';
 
@@ -19,7 +19,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
   const TARGET_VALUE = sortProps?.target;
   const SORT_VALUE = sortProps?.sort;
 
-  const { selectValue, handleChangeSelect } = useSort({ SORT_VALUE });
+  const { selectValue, handleChangeSelect } = useSelect({ SORT_VALUE });
 
   return (
     <Container>
@@ -91,10 +91,9 @@ const Container = styled.div`
   position: relative;
   align-items: center;
   width: 100%;
-  overflow: hidden;
   border-radius: 55px 55px 0px 0px;
-  border: ${ANGOLA_STYLES.border.default};
-  background: var(--dark, #9a9a9a);
+  background: ${ANGOLA_STYLES.color.dark};
+  border-bottom: ${ANGOLA_STYLES.border.default};
 `;
 
 const SelectContainer = styled.div`

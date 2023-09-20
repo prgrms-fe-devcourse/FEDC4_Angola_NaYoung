@@ -10,7 +10,7 @@ interface UseSortReturnProps {
   handleChangeSelect: (sort: string) => void;
 }
 
-const useSort = ({ SORT_VALUE }: UseSortProps): UseSortReturnProps => {
+const useSelect = ({ SORT_VALUE }: UseSortProps): UseSortReturnProps => {
   const [selectValue, setSelectValue] = useState(SORT_VALUE);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -23,4 +23,4 @@ const useSort = ({ SORT_VALUE }: UseSortProps): UseSortReturnProps => {
   return { selectValue, handleChangeSelect };
 };
 
-export default useSort;
+export default useSelect;
