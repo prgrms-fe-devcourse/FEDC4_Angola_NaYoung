@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFetchAllPosts } from '@apis/post';
 import { useFetchSearchPosts } from '@apis/search';
-import { getSortPostList } from '../utils';
+import { getSortPostList } from '../../../components/PostList/utils';
 
 interface useSortProps {
   keyword?: string;

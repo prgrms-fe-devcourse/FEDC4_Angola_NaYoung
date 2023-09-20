@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import usePostSort from '@pages/SearchPage/hooks/usePostSort';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
-import usePostSort from './hooks/usePostSort';
 
 interface PostListProps {
   keyword?: string;

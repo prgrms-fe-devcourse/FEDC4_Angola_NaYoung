@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
-import useUserSort from '@components/PostList/hooks/useUserSort';
+import useUserSort from '@pages/SearchPage/hooks/useUserSort';
 import Spinner from '@components/Spinner';
 import UserListItem from '@components/UserListItem';
 
