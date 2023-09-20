@@ -105,7 +105,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
       createNotificationMutate({
         notificationType: 'COMMENT',
         notificationTypeId: userComment._id,
-        userId: myId,
+        userId: postData.author._id,
         postId: postData._id,
       });
     }
