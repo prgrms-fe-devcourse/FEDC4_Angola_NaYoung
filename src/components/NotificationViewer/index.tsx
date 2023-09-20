@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Notification } from '@type';
+import Icon from '@components/Icon';
 import Spinner from '@components/Spinner';
 import {
   useFetchGetNotifications,
@@ -11,17 +12,12 @@ import CommentNotificationItem from './CommentNotificationItem';
 import FollowNotificationItem from './FollowNotificationItem';
 import LikeNotificationItem from './LikeNotificationItem';
 
-// TODO:MinwooP - 유틸함수 구현해서 LikeNotificationItem or FollowItem or CommentItem 중 하나를 리턴
-// TODO:MinwooP - 컴포넌트 밖으로 빼기 ?
 const decideNotificationType = ({
+  // noficiation 객체가 like, comment, follow 알림 중 무엇인지 판단해서 각 컴포넌트 return 해주는 함수
   notification,
 }: {
   notification: Notification;
 }) => {
-  console.log(
-    `notification의 seen: ${notification.seen ? '읽음' : '아직 안 읽음'}`,
-  );
-
   if (Object.prototype.hasOwnProperty.call(notification, 'like')) {
     return (
       <LikeNotificationItem notification={notification}></LikeNotificationItem>
@@ -51,7 +47,6 @@ const NotificationViewer = ({
   handleClickCloseViewer,
 }: NotificationViewePropsType) => {
   const viewerBackGroundRef = useRef(null);
-
   useEffect(() => {
     // Viewer 바깥 영역 클릭 시, 뷰어 닫아지도록
     const handleClickViewerBackGround = (e: MouseEvent) => {
@@ -59,7 +54,6 @@ const NotificationViewer = ({
         viewerBackGroundRef.current &&
         e.target === viewerBackGroundRef.current
       ) {
-        console.log('배경 클릭 시에만 viewer 닫기');
         handleClickCloseViewer();
       }
     };
@@ -71,6 +65,9 @@ const NotificationViewer = ({
     };
   });
 
+  // 모든 알림 볼건지
+  const [isShowAllNotifications, setIsShowAllNotifications] = useState(false);
+
   // 알림 목록 조회 data
   const {
     getNotificationsData,
@@ -79,7 +76,8 @@ const NotificationViewer = ({
   } = useFetchGetNotifications();
 
   // 알림 읽음 처리 API
-  const { readNotificationsMutate } = useFetchReadNotifications();
+  const { readNotificationsMutate, isReadNotificationsLoading } =
+    useFetchReadNotifications();
 
   const handleClickReadNotifications = () => {
     readNotificationsMutate(undefined, {
@@ -90,6 +88,46 @@ const NotificationViewer = ({
     // TODO:MinwooP - 이후 Notification data 업데이트 안된 상태면 refetch 혹은 invalidQueries 써서 다시 불러오기
   };
 
+  const showNewNotificationList = () => {
+    const NewNotifications = getNotificationsData!.filter((notification) => {
+      return notification.seen === false;
+    });
+
+    if (NewNotifications.length === 0) {
+      return (
+        <EmptyNotificationList>새 알림 목록이 없습니다.</EmptyNotificationList>
+      );
+    }
+
+    return NewNotifications.map((notification) => {
+      return (
+        <NotificationListItem
+          key={notification._id}
+          onClick={handleClickCloseViewer}>
+          {decideNotificationType({ notification })}
+        </NotificationListItem>
+      );
+    });
+  };
+
+  const showAllNotificationList = () => {
+    if (getNotificationsData?.length === 0) {
+      return (
+        <EmptyNotificationList>알림 목록이 없습니다.</EmptyNotificationList>
+      );
+    }
+
+    return getNotificationsData!.map((notification) => {
+      return (
+        <NotificationListItem
+          key={notification._id}
+          onClick={handleClickCloseViewer}>
+          {decideNotificationType({ notification })}
+        </NotificationListItem>
+      );
+    });
+  };
+
   if (isGetNotificationsLoading) return <Spinner />;
 
   return (
@@ -97,23 +135,27 @@ const NotificationViewer = ({
       <NotificationViewerContainer>
         <NotificationHeader>
           <NotificationHeaderTitle>알림 목록</NotificationHeaderTitle>
-          <ShowAllNotificationsCheckBox>
-            지난 알림 보기
+          <ShowAllNotificationsCheckBox
+            onClick={() => {
+              setIsShowAllNotifications((prev) => !prev);
+            }}>
+            <ShowAllNotificationsText>지난 알림 보기</ShowAllNotificationsText>
+            <Icon
+              name={
+                isShowAllNotifications
+                  ? 'notification_check'
+                  : 'notification_uncheck'
+              }
+              size={'24'}></Icon>
           </ShowAllNotificationsCheckBox>
         </NotificationHeader>
-        {getNotificationsData?.length === 0 ? (
-          <EmptyNotificationList>알림 목록이 없습니다.</EmptyNotificationList>
+        {isReadNotificationsLoading ? (
+          <Spinner />
         ) : (
           <NotificationList>
-            {getNotificationsData!.map((notification) => {
-              return (
-                <NotificationListItem
-                  key={notification._id}
-                  onClick={handleClickCloseViewer}>
-                  {decideNotificationType({ notification })}
-                </NotificationListItem>
-              );
-            })}
+            {isShowAllNotifications
+              ? showAllNotificationList()
+              : showNewNotificationList()}
           </NotificationList>
         )}
         <NotificationBottomBar>
@@ -142,15 +184,12 @@ const NotificationViewerContainer = styled.div`
   position: absolute;
   top: 100px;
   right: 80px;
-  z-index: 100; // TODO: 나중에 z-index 기준 컴포넌트 별로 설정 필요
+  z-index: 1000; // TODO: 나중에 z-index 기준 컴포넌트 별로 설정 필요
   padding: 24px 0px 24px 12px;
-
-  height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
   border-radius: 48px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
@@ -159,7 +198,6 @@ const NotificationViewerContainer = styled.div`
 
 const NotificationHeader = styled.div`
   display: flex;
-
   padding: 0px 24px 0px 12px;
   height: 20px;
   justify-content: space-between;
@@ -171,16 +209,33 @@ const NotificationHeaderTitle = styled.p`
   font-size: ${ANGOLA_STYLES.textSize.title};
 `;
 
-const ShowAllNotificationsCheckBox = styled.button`
+const ShowAllNotificationsCheckBox = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: center;
   color: ${ANGOLA_STYLES.color.text};
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  text-align: center;
 `;
 
-const EmptyNotificationList = styled.div``;
+const ShowAllNotificationsText = styled.p`
+  margin-right: 4px;
+  font-size: ${ANGOLA_STYLES.textSize.text};
+`;
+
+const EmptyNotificationList = styled.div`
+  width: 368px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const NotificationList = styled.ul`
-  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 380px;
   overflow-y: scroll;
 `;
 
@@ -191,13 +246,22 @@ const NotificationListItem = styled.li`
 `;
 
 const NotificationBottomBar = styled.div`
-  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const ReadNotificationButton = styled.button`
-  width: 200px;
-  height: 50px;
+  display: flex;
+  padding: 12px 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: ${ANGOLA_STYLES.textSize.text};
+  border-radius: 50px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+  &:hover {
+    box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
+  }
 `;
