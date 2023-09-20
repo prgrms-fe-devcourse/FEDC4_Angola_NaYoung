@@ -6,6 +6,7 @@ import NameTag from '@components/NameTag';
 import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
+import { LABEL, LOG_OUT_TEXT, PASSWORD_BUTTON, PLACEHOLDER } from './constants';
 import {
   useLogOut,
   useUpdateFullName,
@@ -13,7 +14,7 @@ import {
   useUpdateProfile,
 } from './hooks';
 
-// TODO: return에서 isUpdateFullNameError 발생 시, 모달 보여주고 함수 실행시키고, 이전 값
+// TODO: 모달 사용, 눈 이모티콘 사용, 닉네임 변경 성공, 실패, 중복시 메세지 생성
 interface MyInfoProps {
   id: string;
   image: string;
@@ -46,7 +47,7 @@ const MyInfo = ({
     newFullName,
     handleChangeFullName,
     handleClickUpdateFullName,
-  } = useUpdateFullName({ name, id });
+  } = useUpdateFullName({ name });
   const {
     isEditingPassWord,
     newPassWord,
@@ -85,7 +86,7 @@ const MyInfo = ({
           <Input
             type="text"
             value={newFullName}
-            placeholder="닉네임 입력"
+            placeholder={PLACEHOLDER.FULL_NAME}
             onChange={handleChangeFullName}
           />
         ) : (
@@ -98,6 +99,7 @@ const MyInfo = ({
             showLevel={false}
           />
         )}
+
         <Button
           onClick={handleClickUpdateFullName}
           size="sm"
@@ -125,19 +127,19 @@ const MyInfo = ({
         {isEditingPassWord ? (
           <PassWordContainer>
             <PassWordBox>
-              <InputLabel>변경할 비밀번호</InputLabel>
+              <InputLabel>{LABEL.NEW_PASSWORD}</InputLabel>
               <Input
                 type="text"
-                placeholder="새 비밀번호 입력"
+                placeholder={PLACEHOLDER.NEW_PASSWORD}
                 value={newPassWord}
                 onChange={handleChangePassWord}
               />
             </PassWordBox>
             <PassWordBox>
-              <InputLabel>비밀번호 확인</InputLabel>
+              <InputLabel>{LABEL.NEW_PASSWORD_CONFIRM}</InputLabel>
               <Input
                 type="password"
-                placeholder="새 비밀번호 확인"
+                placeholder={PLACEHOLDER.NEW_PASSWORD_CONFIRM}
                 value={confirmNewPassWord}
                 onChange={handleChangeConfirmPassWord}
               />
@@ -164,12 +166,16 @@ const MyInfo = ({
           </MyInfoBox>
         )}
         {isEditingPassWord ? (
-          <Button onClick={handleClickUpdatePassWord}>수정 완료</Button>
+          <Button onClick={handleClickUpdatePassWord}>
+            {PASSWORD_BUTTON.DONE_MSG}
+          </Button>
         ) : (
-          <Button onClick={handleClickUpdatePassWord}>비밀번호 수정하기</Button>
+          <Button onClick={handleClickUpdatePassWord}>
+            {PASSWORD_BUTTON.EDIT_MSG}
+          </Button>
         )}
         {isEditingPassWord ? null : (
-          <Button onClick={handleClickLogOut}>로그 아웃</Button>
+          <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
         )}
       </MyInfoContainer>
     </MyInfoWrapper>
