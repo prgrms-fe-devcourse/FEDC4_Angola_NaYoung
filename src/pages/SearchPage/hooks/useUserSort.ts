@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { getSortUserList } from '@components/UserList/utils';
 import { useFetchSearchUsers } from '@apis/search';
 import { useFetchUsers } from '@apis/user';
+import { getSortUserList } from '../utils';
 
 interface useSortProps {
   keyword?: string;
