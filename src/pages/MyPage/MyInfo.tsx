@@ -201,8 +201,6 @@ const Emoji = styled.div`
   color: ${ANGOLA_STYLES.color.text};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.symbol};
-  font-style: normal;
-  font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.924px;
 `;
@@ -216,7 +214,7 @@ const EditProfile = styled.label`
   position: relative;
   &:hover img {
     opacity: 0.5;
-    box-shadow: 0px 6px 0px 0px #404040;
+    box-shadow: ${ANGOLA_STYLES.shadow.button.default};
   }
   &:hover::after {
     content: '클릭하여 수정하기';
@@ -239,7 +237,7 @@ const MyFullNameContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 `;
 
 const Input = styled.input`
@@ -248,9 +246,9 @@ const Input = styled.input`
   align-items: center;
   gap: 10px;
   border-radius: 27px;
-  border: 2px solid var(--text, #404040);
-  background: var(--white, #fff);
-  box-shadow: 0px 6px 0px 0px rgba(64, 64, 64, 0.5) inset;
+  border: ${ANGOLA_STYLES.border.default};
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
   &:focus {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
@@ -271,7 +269,6 @@ const MyInfoText = styled.div`
   color: ${ANGOLA_STYLES.color.text};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  font-style: normal;
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.396px;
@@ -281,7 +278,6 @@ const Bar = styled.div`
   color: ${ANGOLA_STYLES.color.dark};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  font-style: normal;
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.396px;
@@ -298,17 +294,19 @@ const MyInfoBox = styled.div`
 
 const PassWordContainer = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
 `;
 
 const PassWordBox = styled.div`
   display: flex;
-  justify-content: center;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 `;
 
 const InputLabel = styled.label`
-  font-size: 16px;
+  font-size: ${ANGOLA_STYLES.textSize.text};
 `;
