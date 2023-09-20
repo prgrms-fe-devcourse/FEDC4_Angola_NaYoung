@@ -5,7 +5,7 @@ import Image from '@components/Image';
 import NameTag from '@components/NameTag';
 import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { MY_INFO, MY_PROFILE_IMAGE } from './constants';
+import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
 import {
   useLogOut,
   useUpdateFullName,
@@ -46,7 +46,7 @@ const MyInfo = ({
     newFullName,
     handleChangeFullName,
     handleClickUpdateFullName,
-  } = useUpdateFullName({ name });
+  } = useUpdateFullName({ name, id });
   const {
     isEditingPassWord,
     newPassWord,
@@ -67,9 +67,9 @@ const MyInfo = ({
             src={
               profileImageUrl
                 ? profileImageUrl
-                : `${MY_PROFILE_IMAGE.DEFAULT_SRC}`
+                : `${USER_PROFILE_IMAGE.DEFAULT_SRC}`
             }
-            alt={MY_PROFILE_IMAGE.ALT}
+            alt={USER_PROFILE_IMAGE.ALT}
           />
         </EditProfile>
         <ProfileInput
@@ -146,19 +146,19 @@ const MyInfo = ({
         ) : (
           <MyInfoBox>
             <MyInfoText>
-              {MY_INFO.LEVEL}&nbsp;&nbsp;{myLevel}
+              {USER_INFO.LEVEL}&nbsp;&nbsp;{myLevel}
             </MyInfoText>
             <Bar>|</Bar>
             <MyInfoText>
-              {MY_INFO.FOLLOWER}&nbsp;&nbsp;{followers}
+              {USER_INFO.FOLLOWER}&nbsp;&nbsp;{followers}
             </MyInfoText>
             <Bar>|</Bar>
             <MyInfoText>
-              {MY_INFO.FOLLOWING}&nbsp;&nbsp;{following}
+              {USER_INFO.FOLLOWING}&nbsp;&nbsp;{following}
             </MyInfoText>
             <Bar>|</Bar>
             <MyInfoText>
-              {MY_INFO.GET_LIKES}&nbsp;&nbsp;{likes}
+              {USER_INFO.GET_LIKES}&nbsp;&nbsp;{likes}
             </MyInfoText>
             <Bar>|</Bar>
           </MyInfoBox>
@@ -207,7 +207,7 @@ const Emoji = styled.div`
   letter-spacing: -0.924px;
 `;
 
-// TODO: 줄바꿈, 편집 중에는 DISABLED 효과 처리
+// TODO: 편집 중에는 DISABLED 효과 처리
 const EditProfile = styled.label`
   display: flex;
   justify-content: center;

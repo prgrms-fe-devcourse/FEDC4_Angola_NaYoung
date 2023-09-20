@@ -7,8 +7,9 @@ import { useFetchUser } from '@apis/user';
 import useCurrentPage from '@hooks/useCurrentPage';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { USER_POSTS_TITLE } from '@constants/index';
 import MyInfo from './MyInfo';
-import { MY_PAGE, MY_POSTS_TITLE } from './constants';
+import { MY_PAGE } from './constants';
 
 const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
@@ -38,8 +39,8 @@ const MyPage = () => {
         <PostsListUl>
           <PostsListTitle>
             {userData?.posts.length === 0
-              ? MY_POSTS_TITLE.NO_POSTS
-              : MY_POSTS_TITLE.POSTS}
+              ? USER_POSTS_TITLE.NO_POSTS
+              : USER_POSTS_TITLE.POSTS}
           </PostsListTitle>
           {userData?.posts?.map((post) => (
             <PostListItem
@@ -77,7 +78,11 @@ const PostsListContainer = styled.div`
 `;
 
 const PostsListUl = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+  gap: 32px;
 `;
 
 const PostsListTitle = styled.div`
