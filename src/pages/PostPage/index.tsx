@@ -15,9 +15,9 @@ import { useFetchCreateNotification } from '@apis/notifications';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
-import CommentList from './CommentList';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
+import CommentList from './components/CommentList';
 
 interface PostPageProps {
   postId?: string;
