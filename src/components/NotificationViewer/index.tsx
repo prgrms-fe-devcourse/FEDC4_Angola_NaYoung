@@ -71,12 +71,14 @@ const NotificationViewer = ({
     };
   });
 
+  // 알림 목록 조회 data
   const {
     getNotificationsData,
     isGetNotificationsLoading,
     getNotificationRefetch,
   } = useFetchGetNotifications();
 
+  // 알림 읽음 처리 API
   const { readNotificationsMutate } = useFetchReadNotifications();
 
   const handleClickReadNotifications = () => {
