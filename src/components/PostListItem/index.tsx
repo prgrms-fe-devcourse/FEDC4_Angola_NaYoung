@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from 'react-query';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
-import { useRecoilValue } from 'recoil';
+import { AxiosResponse } from 'axios';
 import Icon from '@components/Icon';
 import Image from '@components/Image';
 import LinkButton from '@components/LinkButton';
 import Modal from '@components/Modal';
-import { useFetchDeletePost, useFetchUserPosts } from '@apis/post';
-import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { User } from '@type/index';
 import { USER_PROFILE_IMAGE } from '@constants/index';
 
 interface PostListItemProps {
@@ -19,6 +23,11 @@ interface PostListItemProps {
   likes?: number;
   comments?: number;
   canDeletePost?: boolean;
+  deletePostMutate?: ({ id }: { id: string }) => void;
+  isDeletePostSuccess?: boolean;
+  userDataRefetch?: <T>(
+    options?: (RefetchOptions & RefetchQueryFilters<T>) | undefined,
+  ) => Promise<QueryObserverResult<AxiosResponse<User>>>;
 }
 
 const PostListItem = ({
@@ -28,11 +37,11 @@ const PostListItem = ({
   likes,
   comments,
   canDeletePost,
+  deletePostMutate,
+  isDeletePostSuccess,
+  userDataRefetch,
 }: PostListItemProps) => {
-  const auth = useRecoilValue(authInfoState);
   const { title: postTitle } = splitPostBySeparator(title);
-  const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
-  const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
   const [toggleModal, setToggleModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -44,15 +53,19 @@ const PostListItem = ({
   };
 
   const handleDeletedPost = () => {
-    deletePostMutate({ id });
+    if (deletePostMutate) {
+      deletePostMutate({ id });
+    }
     handleCloseModal();
   };
 
   useEffect(() => {
     if (isDeletePostSuccess) {
-      userPostsRefetch();
+      if (userDataRefetch) {
+        userDataRefetch();
+      }
     }
-  }, [userPostsRefetch, isDeletePostSuccess]);
+  }, [userDataRefetch, isDeletePostSuccess]);
 
   return (
     <ListItemContainer>
