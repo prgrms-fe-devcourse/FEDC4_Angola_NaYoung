@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
+import { useActionInfo, usePostLike } from '@components/PostViewer/hooks';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { useActionInfo, usePostLike } from './hooks';
 
 interface ButtonGroupProps {
   numberOfLikes: number;

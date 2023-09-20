@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { rgba } from 'emotion-rgba';
 import NameTag from '@components/NameTag';
+import { useElementWidth } from '@components/PostViewer/hooks';
 import { getUserLevelInfo } from '@utils/calculateUserLevel';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { useElementWidth } from './hooks';
 
 interface PostTitleProps {
   title: string;

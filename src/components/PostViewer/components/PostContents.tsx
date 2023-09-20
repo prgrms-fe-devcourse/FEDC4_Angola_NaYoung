@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
+import { useContentClassName } from '@components/PostViewer/hooks';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { useContentClassName } from './hooks';
 
 interface PostContentsProps {
   contentA: string;
