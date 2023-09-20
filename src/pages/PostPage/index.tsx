@@ -37,8 +37,12 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     isCreateCommentSuccess,
     isCreateCommentLoading,
   } = useFetchCreateComment();
-  const { deleteCommentMutate, isDeleteCommentError, isDeleteCommentSuccess } =
-    useFetchDeleteComment();
+  const {
+    deleteCommentMutate,
+    isDeleteCommentError,
+    isDeleteCommentSuccess,
+    isDeleteCommentLoading,
+  } = useFetchDeleteComment();
   const { createNotificationMutate } = useFetchCreateNotification();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -142,39 +146,45 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
               authorLevel={calculateLevel(postData.author)}
             />
           )}
-          {show && (
-            <CommentsContainer>
-              {submitValue && postData?.comments ? (
-                isCreateCommentLoading ? (
-                  <Spinner />
-                ) : (
-                  <Turnout
-                    comments={postData?.comments}
-                    authorLevel={calculateLevel(postData.author)}
-                  />
-                )
-              ) : (
-                <MakeComment
-                  votedValue={votedValue}
-                  handleClickItem={handleClickItem}
-                  handleSubmitComment={handleSubmitComment}
-                />
+          {isDeleteCommentLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              {show && (
+                <CommentsContainer>
+                  {submitValue && postData?.comments ? (
+                    isCreateCommentLoading ? (
+                      <Spinner />
+                    ) : (
+                      <Turnout
+                        comments={postData?.comments}
+                        authorLevel={calculateLevel(postData.author)}
+                      />
+                    )
+                  ) : (
+                    <MakeComment
+                      votedValue={votedValue}
+                      handleClickItem={handleClickItem}
+                      handleSubmitComment={handleSubmitComment}
+                    />
+                  )}
+                  {postData && !isDeleteCommentError && (
+                    <CommentList
+                      comments={postData.comments}
+                      deleteComment={deleteComment}
+                      myId={myId}
+                    />
+                  )}
+                  {isDeleteCommentError && (
+                    <Modal onClose={() => window.location.reload()}>
+                      <CommentDeletionFailModal>
+                        댓글 삭제에 실패했습니다.
+                      </CommentDeletionFailModal>
+                    </Modal>
+                  )}
+                </CommentsContainer>
               )}
-              {postData && !isDeleteCommentError && (
-                <CommentList
-                  comments={postData.comments}
-                  deleteComment={deleteComment}
-                  myId={myId}
-                />
-              )}
-              {isDeleteCommentError && (
-                <Modal onClose={() => window.location.reload()}>
-                  <CommentDeletionFailModal>
-                    댓글 삭제에 실패했습니다.
-                  </CommentDeletionFailModal>
-                </Modal>
-              )}
-            </CommentsContainer>
+            </>
           )}
         </>
       )}

@@ -1,12 +1,15 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
-import { splitCommentBySeparator } from '@utils';
+import {
+  calculateLevel,
+  getUserLevelInfo,
+  splitCommentBySeparator,
+} from '@utils';
 import Button, { ButtonStyled } from '@components/Button';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
-import { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import useDeleteComment from './Hooks/useDeleteComment';
 
 interface CommentListProps {
   comments: Comment[];
@@ -15,26 +18,13 @@ interface CommentListProps {
 }
 
 const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
-  const [isClickedDeleteBtn, setIsClickedDeleteBtn] = useState<boolean>(false);
-  const [commentId, setCommentId] = useState<string>('');
-  const deleteButtonRef = useRef<HTMLButtonElement>(null);
-
-  const handleClickDeleteComment = (e: MouseEvent) => {
-    setCommentId(e.currentTarget.classList[0]);
-    setIsClickedDeleteBtn(true);
-    deleteButtonRef.current && deleteButtonRef.current.blur();
-  };
-
-  const handleClickDeleteCommentModalBtn = () => {
-    deleteComment(commentId);
-    setIsClickedDeleteBtn(false);
-  };
-
-  const [commentsData, setCommentsData] = useState(comments);
-
-  useEffect(() => {
-    setCommentsData(comments);
-  }, [comments.length, comments]);
+  const {
+    commentsData,
+    isClickedDeleteBtn,
+    setIsClickedDeleteBtn,
+    handleClickDeleteComment,
+    handleClickDeleteCommentModalBtn,
+  } = useDeleteComment({ deleteComment, comments });
 
   return (
     <>
@@ -62,8 +52,7 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
                 <DeleteButton
                   size="sm"
                   className={commentItem._id}
-                  onClick={handleClickDeleteComment}
-                  ref={deleteButtonRef}>
+                  onClick={handleClickDeleteComment}>
                   <Icon name={'close'} />
                 </DeleteButton>
               )}
