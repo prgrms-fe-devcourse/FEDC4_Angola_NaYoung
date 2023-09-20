@@ -5,21 +5,22 @@ import { ANGOLA_STYLES } from '@styles/commonStyles';
 interface ButtonProps
   extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
   size?: 'sm' | 'md';
-  isFollowed?: boolean;
+  toggle?: boolean;
+
 }
 
 const Button = ({
   children,
   size = 'sm',
   type = 'submit',
-  isFollowed,
+  toggle,
   ...props
 }: ButtonProps) => {
   return (
     <ButtonStyled
       type={type}
+      toggle={toggle}
       size={size}
-      isFollowed={isFollowed}
       {...props}>
       {children}
     </ButtonStyled>
@@ -40,10 +41,8 @@ export const ButtonStyled = styled.button<ButtonProps>`
   border: ${ANGOLA_STYLES.border.default};
   cursor: pointer;
 
-  background-color: ${({ isFollowed }) =>
-    isFollowed
-      ? `${ANGOLA_STYLES.color.gray}`
-      : `${ANGOLA_STYLES.color.white}`};
+  background-color: ${({ toggle }) =>
+    toggle ? `${ANGOLA_STYLES.color.gray}` : `${ANGOLA_STYLES.color.white}`};
 
   ${(props) =>
     props.size === 'sm'
