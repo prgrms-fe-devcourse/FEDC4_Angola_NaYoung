@@ -89,7 +89,5 @@ const PostsListTitle = styled.div`
   color: ${ANGOLA_STYLES.color.dark};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.title};
-  font-style: normal;
-  font-weight: 400;
   line-height: 100%;
 `;

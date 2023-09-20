@@ -103,8 +103,6 @@ const Emoji = styled.div`
   color: ${ANGOLA_STYLES.color.text};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.symbol};
-  font-style: normal;
-  font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.924px;
 `;
@@ -132,7 +130,6 @@ const UserInfoText = styled.div`
   color: ${ANGOLA_STYLES.color.text};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  font-style: normal;
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.396px;
@@ -142,7 +139,6 @@ const Bar = styled.div`
   color: ${ANGOLA_STYLES.color.dark};
   text-align: center;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  font-style: normal;
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.396px;
