@@ -23,7 +23,7 @@ const Main = () => {
         sortProps={name === 'search' ? objectForSort : undefined}
         keyword={
           name === 'search'
-            ? search.keyword ||
+            ? (search.keyword && decodeURIComponent(search.keyword)) ||
               (params.target === 'user' ? '전체 유저' : '전체 포스트')
             : undefined
         }
