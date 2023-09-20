@@ -80,8 +80,8 @@ const StyledForm = styled.form`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
-
-  &:focus {
+  
+  &:focus-within{
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
 `;
