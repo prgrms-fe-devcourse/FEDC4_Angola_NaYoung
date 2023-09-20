@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { joinDataBySeparator, splitCommentBySeparator } from '@utils';
-import { calculateLevel } from '@utils';
+import {
+  calculateLevel,
+  joinDataBySeparator,
+  splitCommentBySeparator,
+} from '@utils';
 import { useRecoilValue } from 'recoil';
 import Modal from '@components/Modal';
 import PostViewer from '@components/PostViewer';
@@ -11,6 +14,7 @@ import { useFetchCreateComment, useFetchDeleteComment } from '@apis/comment';
 import { useFetchCreateNotification } from '@apis/notifications';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
+import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import CommentList from './CommentList';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
@@ -27,7 +31,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const [votedValue, setVotedValue] = useState<string>('');
   const [submitValue, setSubmitValue] = useState<string | undefined>('');
   const [isVoted, setIsVoted] = useState(false);
-  const { postData, postRefetch } = useFetchPost(postId);
+  const { postData, postRefetch, isPostLoading } = useFetchPost(postId);
   const {
     createCommentMutate,
     isCreateCommentSuccess,
@@ -94,6 +98,10 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
       if (!userComment) return;
       setIsVoted(false);
+
+      if (myId === postData.author._id) {
+        return;
+      }
       createNotificationMutate({
         notificationType: 'COMMENT',
         notificationTypeId: userComment._id,
@@ -116,49 +124,59 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   return (
     <PostPageContainer>
-      {postData && (
-        <PostViewer
-          postId={postId}
-          authorName={postData.author.fullName}
-          authorId={postData.author._id}
-          postTitle={postData.title}
-          numberOfComments={postData.comments.length}
-          numberOfLikes={postData.likes.length}
-          likeId={postData.likes.find((like) => like.user === myId)?._id}
-          voteValue={votedValue}
-          onVote={(value: string) => handleClickItem(value)}
-          authorLevel={calculateLevel(postData.author)}
-        />
-      )}
-      {show && (
-        <CommentsContainer>
-          {submitValue && postData?.comments ? (
-            isCreateCommentLoading ? (
-              <Spinner />
-            ) : (
-              <Turnout comments={postData?.comments} />
-            )
-          ) : (
-            <MakeComment
-              votedValue={votedValue}
-              handleClickItem={handleClickItem}
-              handleSubmitComment={handleSubmitComment}
+      {isPostLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          {postData && (
+            <PostViewer
+              postId={postId}
+              authorName={postData.author.fullName}
+              authorId={postData.author._id}
+              postTitle={postData.title}
+              numberOfComments={postData.comments.length}
+              numberOfLikes={postData.likes.length}
+              likeId={postData.likes.find((like) => like.user === myId)?._id}
+              voteValue={votedValue}
+              onVote={(value: string) => handleClickItem(value)}
+              authorLevel={calculateLevel(postData.author)}
             />
           )}
-          {postData && !isDeleteCommentError && (
-            <CommentList
-              comments={postData.comments}
-              deleteComment={deleteComment}
-            />
+          {show && (
+            <CommentsContainer>
+              {submitValue && postData?.comments ? (
+                isCreateCommentLoading ? (
+                  <Spinner />
+                ) : (
+                  <Turnout
+                    comments={postData?.comments}
+                    authorLevel={calculateLevel(postData.author)}
+                  />
+                )
+              ) : (
+                <MakeComment
+                  votedValue={votedValue}
+                  handleClickItem={handleClickItem}
+                  handleSubmitComment={handleSubmitComment}
+                />
+              )}
+              {postData && !isDeleteCommentError && (
+                <CommentList
+                  comments={postData.comments}
+                  deleteComment={deleteComment}
+                  myId={myId}
+                />
+              )}
+              {isDeleteCommentError && (
+                <Modal onClose={() => window.location.reload()}>
+                  <CommentDeletionFailModal>
+                    댓글 삭제에 실패했습니다.
+                  </CommentDeletionFailModal>
+                </Modal>
+              )}
+            </CommentsContainer>
           )}
-          {isDeleteCommentError && (
-            <Modal onClose={() => window.location.reload()}>
-              <CommentDeletionFailModal>
-                댓글 삭제에 실패했습니다. ㅋ
-              </CommentDeletionFailModal>
-            </Modal>
-          )}
-        </CommentsContainer>
+        </>
       )}
     </PostPageContainer>
   );
@@ -169,20 +187,17 @@ export default PostPage;
 const PostPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 60px;
   width: 100%;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
-  border: 2px solid black;
-  border-radius: 45px;
-  overflow: hidden;
+  width: 100%;
 `;
 
 const CommentDeletionFailModal = styled.div`
@@ -191,6 +206,5 @@ const CommentDeletionFailModal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
-  font-weight: 1rem;
+  font-size: ${ANGOLA_STYLES.textSize.titleLg};
 `;
