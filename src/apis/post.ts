@@ -3,7 +3,7 @@ import { Post } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
 import useAxiosInstance from './instance';
 
-const CHANNEL_ID = '64fab06721f5351a7dd21a66'; // todo : env 파일에 추가
+const CHANNEL_ID = '650be15e89b54040ee691c0c'; // todo : env 파일에 추가
 
 export const useFetchAllPosts = () => {
   const { baseInstance } = useAxiosInstance();
