@@ -83,7 +83,7 @@ const StyledForm = styled.form`
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
 
-  @media (max-width: 660px) {
+  @media (max-width: 680px) {
     display: none;
   }
 `;
