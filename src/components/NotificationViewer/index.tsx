@@ -211,8 +211,9 @@ const NotificationViewer = ({
               size={'24'}></Icon>
           </ShowAllNotificationsCheckBox>
         </NotificationHeader>
+
         {isReadNotificationsLoading ? (
-          <Spinner />
+            <LoadingNotificationList>로딩중입니다.</LoadingNotificationList>
         ) : (
           <NotificationList>
             {isShowAllNotifications
@@ -220,6 +221,7 @@ const NotificationViewer = ({
               : showNewNotificationList()}
           </NotificationList>
         )}
+        
         <NotificationBottomBar>
           <ReadNotificationButton onClick={handleClickReadNotifications}>
             모든 알림 확인
@@ -249,7 +251,6 @@ const NotificationViewerContainer = styled.div`
   padding: 24px 0px 24px 12px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
   border-radius: 48px;
   border: ${ANGOLA_STYLES.border.default};
@@ -257,17 +258,22 @@ const NotificationViewerContainer = styled.div`
   box-shadow: ${ANGOLA_STYLES.shadow.button.default};
 `;
 
+// Header
 const NotificationHeader = styled.div`
   display: flex;
   padding: 0px 24px 0px 12px;
-  height: 20px;
   justify-content: space-between;
   align-items: center;
-  align-self: stretch;
+  align-self: stretch; // 최대로 늘리면 25px로 늘어남
 `;
 
 const NotificationHeaderTitle = styled.p`
   font-size: ${ANGOLA_STYLES.textSize.title};
+`;
+
+const ShowAllNotificationsText = styled.p`
+  margin-right: 4px;
+  font-size: ${ANGOLA_STYLES.textSize.text};
 `;
 
 const ShowAllNotificationsCheckBox = styled.div`
@@ -278,14 +284,18 @@ const ShowAllNotificationsCheckBox = styled.div`
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
 `;
 
-const ShowAllNotificationsText = styled.p`
-  margin-right: 4px;
-  font-size: ${ANGOLA_STYLES.textSize.text};
+// List
+const LoadingNotificationList = styled.div`
+  width: 361px;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const EmptyNotificationList = styled.div`
-  width: 368px;
-  height: 100%;
+  width: 344px;
+  height: 380px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -306,6 +316,7 @@ const NotificationListItem = styled.li`
   border-radius: 50px;
 `;
 
+// Bottom
 const NotificationBottomBar = styled.div`
   display: flex;
   justify-content: center;

@@ -37,9 +37,8 @@ export default FollowNotificationItem;
 
 const FollowListItemContainer = styled.div<{ seen: boolean }>`
   display: flex;
-  padding: 6px 8px 6px 8px;
+  padding: 6px 12px 6px 8px;
   align-items: center;
-  gap: 8px;
   align-self: stretch;
   border-radius: 50px;
   border: ${({ seen }) =>
@@ -63,10 +62,13 @@ const FollowListItemIcon = styled.div`
 `;
 
 const FollowListItemText = styled.p<{ seen: boolean }>`
-  width: 300px;
+  width: 280px;
   font-size: ${ANGOLA_STYLES.textSize.text};
   color: ${({ seen }) =>
     seen ? ANGOLA_STYLES.color.dark : ANGOLA_STYLES.color.text};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const UserFullNameSpan = styled.span<{ seen: boolean }>`
