@@ -1,3 +1,4 @@
+import { PARAM_VALUES, SEARCH_VALUES } from '@constants';
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
@@ -29,15 +30,23 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             onChange={(e) => {
               handleChangeSelect(e.target.value);
             }}>
-            {TARGET_VALUE === 'user' ? (
+            {TARGET_VALUE === PARAM_VALUES.TARGET.USER ? (
               <>
-                <option value="follower">{SELECT_OPTION.FOLLOWER}</option>
-                <option value="level">{SELECT_OPTION.LEVEL}</option>
+                <option value={SEARCH_VALUES.SORT.FOLLOWER}>
+                  {SELECT_OPTION.FOLLOWER}
+                </option>
+                <option value={SEARCH_VALUES.SORT.LEVEL}>
+                  {SELECT_OPTION.LEVEL}
+                </option>
               </>
             ) : (
               <>
-                <option value="recent">{SELECT_OPTION.RECENT}</option>
-                <option value="like">{SELECT_OPTION.LIKE}</option>
+                <option value={SEARCH_VALUES.SORT.RECENT}>
+                  {SELECT_OPTION.RECENT}
+                </option>
+                <option value={SEARCH_VALUES.SORT.LIKE}>
+                  {SELECT_OPTION.LIKE}
+                </option>
               </>
             )}
           </SortSelect>
@@ -58,12 +67,12 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       {keyword && (
         <TabBar>
           <TabBarList
-            name="user"
+            name={PARAM_VALUES.TARGET.USER}
             TARGET_VALUE={TARGET_VALUE}
           />
           |
           <TabBarList
-            name="post"
+            name={PARAM_VALUES.TARGET.POST}
             TARGET_VALUE={TARGET_VALUE}
           />
         </TabBar>

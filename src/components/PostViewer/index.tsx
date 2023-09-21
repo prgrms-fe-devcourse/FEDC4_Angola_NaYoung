@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@store/auth';
 import { getUserLevelInfo } from '@utils/calculateUserLevel';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import ButtonGroup from './ButtonGroup';
-import NonAuthModal from './NonAuthModal';
-import PostContents from './PostContents';
-import PostTitle from './PostTitle';
+import {
+  ButtonGroup,
+  NonAuthModal,
+  PostContents,
+  PostTitle,
+} from './components';
+import { useControlRouteByPost } from './hooks';
 
 interface PostViewerProps {
   postId: string;
@@ -38,24 +40,12 @@ const PostViewer = ({
 }: PostViewerProps) => {
   const { a, b, title } = splitPostBySeparator(postTitle);
   const auth = useRecoilValue(authInfoState);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-
   const [isModalShow, setIsModalShow] = useState(false);
   const isPostPage = onVote !== undefined;
-  const isVoted = searchParams.get('voted') ? true : false;
-  const isShow = searchParams.get('show') ? true : false;
-  const goDetailPage = () => {
-    if (isPostPage) {
-      if (!searchParams.get('show')) {
-        searchParams.set('show', 'true');
-        setSearchParams(searchParams);
-      }
-    } else {
-      navigate(`/post/${postId}?show=true`);
-    }
-  };
+  const { isVoted, isShow, goDetailPage } = useControlRouteByPost({
+    postId,
+    isPostPage,
+  });
 
   return (
     <PostContainer>

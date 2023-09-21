@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
+import { useContentClassName } from '@components/PostViewer/hooks';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { POST_CONTENTS } from '../constants';
 
 interface PostContentsProps {
   contentA: string;
@@ -27,6 +29,7 @@ const PostContents = ({
   voteColor,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
+  const getContentClassName = useContentClassName({ isPostPage, voteValue });
   const handleClickContent = (value: string) => {
     if (!auth) {
       showNonAuthModal();
@@ -35,26 +38,24 @@ const PostContents = ({
     onVote && onVote(value);
     goDetailPage();
   };
-  const getContentClassName = (value: string) => {
-    return isPostPage && voteValue === value ? 'active' : '';
-  };
+
   return (
     <SelectionContainer>
       <Selection
         voteColor={voteColor}
         canVote={!isVoted}
-        className={getContentClassName('A')}
-        onClick={() => handleClickContent('A')}>
-        <Type>A</Type>
+        className={getContentClassName(POST_CONTENTS.VOTE_TEXT.A)}
+        onClick={() => handleClickContent(POST_CONTENTS.VOTE_TEXT.A)}>
+        <Type>{POST_CONTENTS.VOTE_TEXT.A}</Type>
         <Content>{contentA}</Content>
       </Selection>
-      <VsSymbol>VS</VsSymbol>
+      <VsSymbol>{POST_CONTENTS.SYMBOL_TEXT}</VsSymbol>
       <Selection
         voteColor={voteColor}
         canVote={!isVoted}
-        className={getContentClassName('B')}
-        onClick={() => handleClickContent('B')}>
-        <Type>B</Type>
+        className={getContentClassName(POST_CONTENTS.VOTE_TEXT.B)}
+        onClick={() => handleClickContent(POST_CONTENTS.VOTE_TEXT.B)}>
+        <Type>{POST_CONTENTS.VOTE_TEXT.B}</Type>
         <Content>{contentB}</Content>
       </Selection>
     </SelectionContainer>
@@ -77,7 +78,7 @@ const Selection = styled.div<{ voteColor: string; canVote: boolean }>`
   height: 100%;
   min-height: 160px;
   max-height: 256px;
-  line-height: 200%;
+  line-height: 150%;
   flex: 1 0 0;
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.button.default};
