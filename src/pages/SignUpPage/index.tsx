@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
-import { ANGOLA_STYLES } from '../../styles/commonStyles';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import {
   CheckEmailModal,
   CheckFullNameModal,
@@ -11,6 +11,7 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
+import { InputEmail } from './components';
 import {
   useAllValidationPass,
   useClickEye,
@@ -90,32 +91,13 @@ const SignUpPage = () => {
         <Form onSubmit={handleSubmit}>
           <Wrapper>
             <Label>1. 이메일을 입력하세요.</Label>
-            <InputContainer>
-              <InputWrapper>
-                <Input
-                  onChange={handleChangeEmail}
-                  placeholder="angola@gmail.com"
-                />
-                {isDuplicatedEmailChecked && (
-                  <DoubleCheckIcon>
-                    <Icon
-                      name={'double_check'}
-                      color={'#78d968'}
-                    />
-                  </DoubleCheckIcon>
-                )}
-              </InputWrapper>
-              <Button
-                type="button"
-                onClick={handleClickDuplicatedEmailCheckBtn}
-                style={{
-                  width: '100px',
-                  padding: '0',
-                  fontSize: ANGOLA_STYLES.textSize.titleSm,
-                }}>
-                중복 검사
-              </Button>
-            </InputContainer>
+            <InputEmail
+              handleChangeEmail={handleChangeEmail}
+              handleClickDuplicatedEmailCheckBtn={
+                handleClickDuplicatedEmailCheckBtn
+              }
+              isDuplicatedEmailChecked={isDuplicatedEmailChecked}
+            />
             {invalidEmailMsg && (
               <InputWarning>
                 <Icon
