@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent } from 'react';
 import styled from '@emotion/styled';
 import Button, { ButtonStyled } from '@components/Button';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { CREATE_COMMENT, VOTED_VALUES } from '../constants';
 
 interface MakeCommentProps {
   votedValue: string;
@@ -15,56 +16,54 @@ const MakeComment = ({
   handleClickItem,
   handleSubmitComment,
   handleChangeComment,
-}: MakeCommentProps) => {
-  return (
-    <MakeCommentContainer>
-      <Form onSubmit={handleSubmitComment}>
-        <ItemButtonsContainer>
-          <Button
-            type="button"
-            onClick={() => handleClickItem('A')}
-            style={{
-              width: '80px',
-              height: '50%',
-              paddingTop: '24px',
-              borderRadius: '40px 40px 0 0',
-              borderBottom: 'none',
-              color:
-                votedValue === 'A'
-                  ? ANGOLA_STYLES.color.text
-                  : ANGOLA_STYLES.color.dark,
-            }}>
-            A
-          </Button>
-          <Button
-            type="button"
-            onClick={() => handleClickItem('B')}
-            style={{
-              width: '80px',
-              height: '50%',
-              borderRadius: '0 0 40px 40px',
-              color:
-                votedValue === 'B'
-                  ? ANGOLA_STYLES.color.text
-                  : ANGOLA_STYLES.color.dark,
-            }}>
-            B
-          </Button>
-        </ItemButtonsContainer>
-        <Comment
-          placeholder="의견을 작성해주세요!&#13;&#10;투표만 하고 싶다면, 오른쪽 버튼을 클릭해주세요."
-          onChange={handleChangeComment}
-        />
-        <SubmitButton
-          size="md"
-          disabled={votedValue ? false : true}
-          votedValue={votedValue}>
-          참여하기
-        </SubmitButton>
-      </Form>
-    </MakeCommentContainer>
-  );
-};
+}: MakeCommentProps) => (
+  <MakeCommentContainer>
+    <Form onSubmit={handleSubmitComment}>
+      <ItemButtonsContainer>
+        <Button
+          type="button"
+          onClick={() => handleClickItem(VOTED_VALUES.A)}
+          style={{
+            width: '80px',
+            height: '50%',
+            paddingTop: '24px',
+            borderRadius: '40px 40px 0 0',
+            borderBottom: 'none',
+            color:
+              votedValue === VOTED_VALUES.A
+                ? ANGOLA_STYLES.color.text
+                : ANGOLA_STYLES.color.dark,
+          }}>
+          {VOTED_VALUES.A}
+        </Button>
+        <Button
+          type="button"
+          onClick={() => handleClickItem(VOTED_VALUES.B)}
+          style={{
+            width: '80px',
+            height: '50%',
+            borderRadius: '0 0 40px 40px',
+            color:
+              votedValue === VOTED_VALUES.B
+                ? ANGOLA_STYLES.color.text
+                : ANGOLA_STYLES.color.dark,
+          }}>
+          {VOTED_VALUES.B}
+        </Button>
+      </ItemButtonsContainer>
+      <Comment
+        placeholder={CREATE_COMMENT.INPUT.PLACEHOLDER_MSG}
+        onChange={handleChangeComment}
+      />
+      <SubmitButton
+        size="md"
+        disabled={votedValue ? false : true}
+        votedValue={votedValue}>
+        {CREATE_COMMENT.SUBMIT.BUTTON_MSG}
+      </SubmitButton>
+    </Form>
+  </MakeCommentContainer>
+);
 
 export default MakeComment;
 

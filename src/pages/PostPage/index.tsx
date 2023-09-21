@@ -10,9 +10,12 @@ import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import useCommentNotification from './Hooks/useCommentNotification';
 import useCreateComment from './Hooks/useCreateComment';
-import MakeComment from './MakeComment';
-import Turnout from './Turnout';
-import { CommentDeletionFailModal, CommentList } from './components';
+import {
+  CommentDeletionFailModal,
+  CommentList,
+  MakeComment,
+  Turnout,
+} from './components';
 
 interface PostPageProps {
   postId?: string;
@@ -36,8 +39,17 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   } = useFetchDeleteComment();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // 댓글 알림
+  // 댓글 알림 hook
   useCommentNotification({ postData, isVoted, myId, setIsVoted });
+
+  // 댓글 생성 hook
+  const { handleSubmitComment, handleChangeComment, isCreateCommentSuccess } =
+    useCreateComment({
+      votedValue,
+      postId,
+      setSubmitValue,
+      setIsVoted,
+    });
 
   useEffect(() => {
     setSubmitValue(voted);
@@ -72,15 +84,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     votedValue === value ? setVotedValue('') : setVotedValue(value);
     setSubmitValue('');
   };
-
-  // 댓글 생성
-  const { handleSubmitComment, handleChangeComment, isCreateCommentSuccess } =
-    useCreateComment({
-      votedValue,
-      postId,
-      setSubmitValue,
-      setIsVoted,
-    });
 
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
