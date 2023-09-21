@@ -1,11 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import {
-  checkEmailPattern,
-  checkFullNamePattern,
-  checkPassWordPattern,
-} from '@utils';
+import { checkFullNamePattern, checkPassWordPattern } from '@utils';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { useFetchSignUp } from '@apis/auth';
@@ -18,24 +14,20 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
+import { useEmailCheck } from './hooks';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('init');
   const [password, setPassword] = useState('init');
   const [passwordConfirm, setPasswordConfirm] = useState('init');
   const [fullName, setFullName] = useState('in');
-  const [isDuplicatedEmailChecked, setIsDuplicatedEmailChecked] =
-    useState(false);
+  useState(false);
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
     useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isPasswordConfirmShown, setIsPasswordConfirmShown] = useState(false);
   const { signUpMutate, isSignUpSuccess, isSignUpError } = useFetchSignUp();
   const { usersData, isUsersError } = useFetchUsers();
-
-  const [invalidEmailMsg, setInvalidEmailMsg] = useState<string>('');
-  const [validEmailMsg, setValidEmailMsg] = useState<string>('');
   const [invalidPasswordMsg, setInvalidPasswordMsg] = useState<string>('');
   const [invalidPasswordConfirmMsg, setInvalidPasswordConfirmMsg] =
     useState<string>('');
@@ -46,16 +38,16 @@ const SignUpPage = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    setIsDuplicatedEmailChecked(false);
-    setValidEmailMsg('');
-    setIsSubmitted(false);
+  // email 이벤트 & 유효성 검사 hook
+  const {
+    email,
+    isDuplicatedEmailChecked,
+    validEmailMsg,
+    invalidEmailMsg,
+    handleChangeEmail,
+    handleClickDuplicatedEmailCheckBtn,
+  } = useEmailCheck({ setIsSubmitted });
 
-    if (!e.target.value) {
-      setInvalidEmailMsg('이메일을 입력해주세요.');
-    }
-  };
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       passwordMsg,
@@ -107,22 +99,6 @@ const SignUpPage = () => {
 
     if (!e.target.value) {
       setInvalidFullNameMsg('닉네임을 입력해주세요.');
-    }
-  };
-
-  const handleClickDuplicatedEmailCheckBtn = () => {
-    const { isValidEmail, msg } = checkEmailPattern({ email, usersData });
-
-    if (isUsersError || !usersData) {
-      console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
-      return;
-    }
-    if (!isValidEmail) {
-      setInvalidEmailMsg(msg);
-    } else {
-      setValidEmailMsg(msg);
-      setInvalidEmailMsg('');
-      setIsDuplicatedEmailChecked(true);
     }
   };
 
@@ -247,6 +223,7 @@ const SignUpPage = () => {
                 type={isPasswordShown ? 'text' : 'password'}
                 onChange={handleChangePassword}
                 placeholder="5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요."
+                autoComplete="on"
               />
               {isPasswordShown ? (
                 <EyeIcon onClick={handleClickPasswordShown}>
@@ -272,6 +249,7 @@ const SignUpPage = () => {
                 type={isPasswordConfirmShown ? 'text' : 'password'}
                 onChange={handleChangePasswordConfirm}
                 placeholder="동일한 비밀번호를 다시 입력해주세요."
+                autoComplete="on"
               />
               {isPasswordConfirmShown ? (
                 <EyeIcon onClick={handleClickPasswordConfirmShown}>
