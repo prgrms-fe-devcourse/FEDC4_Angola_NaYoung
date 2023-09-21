@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import Button from '@components/Button';
 import Image from '@components/Image';
+import Modal from '@components/Modal';
 import NameTag from '@components/NameTag';
+import Spinner from '@components/Spinner';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
@@ -33,7 +35,18 @@ const UserInfo = ({
   userEmoji,
 }: UserInfoProps) => {
   const auth = useRecoilValue(authInfoState);
-  const { countFollowers, handleClickFollowButton, isFollowed } = useFollow({
+  const {
+    countFollowers,
+    handleClickFollowButton,
+    isFollowed,
+    isFollowLoading,
+    isUnFollowLoading,
+    isFollowModalOpen,
+    isUnFollowModalOpen,
+    setIsFollowModalOpen,
+    setIsUnFollowModalOpen,
+    changeButton,
+  } = useFollow({
     userId,
     followers,
     followerId,
@@ -72,15 +85,27 @@ const UserInfo = ({
         <UserInfoText>
           {USER_INFO.GET_LIKES}&nbsp;&nbsp;{likes}
         </UserInfoText>
+        {(isFollowLoading || isUnFollowLoading) ?? <Spinner />}
         {auth && (
           <Button
             toggle={isFollowed}
             size="md"
-            onClick={handleClickFollowButton}>
+            onClick={handleClickFollowButton}
+            disabled={changeButton()}>
             {isFollowed
               ? `${FOLLOW_MESSAGE.UN_FOLLOW}`
               : `${FOLLOW_MESSAGE.FOLLOW}`}
           </Button>
+        )}
+        {isFollowModalOpen && (
+          <Modal onClose={() => setIsFollowModalOpen(false)}>
+            팔로우 신청에 실패했습니다.
+          </Modal>
+        )}
+        {isUnFollowModalOpen && (
+          <Modal onClose={() => setIsUnFollowModalOpen(false)}>
+            팔로우 취소에 실패했습니다.
+          </Modal>
         )}
       </UserInfoContainer>
     </UserInfoWrapper>
