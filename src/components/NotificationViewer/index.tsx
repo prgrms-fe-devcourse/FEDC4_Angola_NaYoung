@@ -87,8 +87,7 @@ const NotificationViewer = ({
         getNotificationRefetch();
       },
     }); // TODO:MinwooP - 에러 처리
-    // TODO:MinwooP - 이후 Notification data 업데이트 안된 상태면 refetch 혹은 invalidQueries 써서 다시 불러오기
-  };
+   };
 
   // notification Item 클릭 시 페이지 이동 로직
   const handleClickListItem = (
@@ -96,7 +95,7 @@ const NotificationViewer = ({
     notification: Notification,
   ) => {
     if (e.target instanceof HTMLSpanElement && e.target.id === 'userName') {
-      // Item내 userName 클릭 시 해당 유저페이지로 이동,
+      // Item내 userName 클릭 시 해당 유저페이지로 이동
       navigate(`/user/${notification.author._id}`);
     } else {
       if (notification.post === null) {
@@ -248,7 +247,7 @@ const NotificationViewerContainer = styled.div`
   position: absolute;
   top: 100px;
   right: 80px;
-  padding: 24px 0px 24px 12px;
+  padding: 24px 12px 24px 12px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -258,13 +257,12 @@ const NotificationViewerContainer = styled.div`
   box-shadow: ${ANGOLA_STYLES.shadow.button.default};
 `;
 
-// Header
 const NotificationHeader = styled.div`
   display: flex;
   padding: 0px 24px 0px 12px;
   justify-content: space-between;
   align-items: center;
-  align-self: stretch; // 최대로 늘리면 25px로 늘어남
+  align-self: stretch;
 `;
 
 const NotificationHeaderTitle = styled.p`
@@ -284,21 +282,28 @@ const ShowAllNotificationsCheckBox = styled.div`
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
 `;
 
-// List
 const LoadingNotificationList = styled.div`
-  width: 361px;
+  width: 352px;
   height: 380px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 112px;
+  }
 `;
 
 const EmptyNotificationList = styled.div`
-  width: 344px;
+  width: 352px;
   height: 380px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 112px;
+  }
 `;
 
 const NotificationList = styled.ul`
@@ -307,7 +312,7 @@ const NotificationList = styled.ul`
   justify-content: flex-start;
   align-items: center;
   height: 380px;
-  overflow-y: scroll;
+  overflow: auto;
 `;
 
 const NotificationListItem = styled.li`
@@ -316,7 +321,6 @@ const NotificationListItem = styled.li`
   border-radius: 50px;
 `;
 
-// Bottom
 const NotificationBottomBar = styled.div`
   display: flex;
   justify-content: center;

@@ -41,6 +41,7 @@ const LikeListItemContainer = styled.div<{ seen: boolean }>`
   align-items: center;
   align-self: stretch;
   border-radius: 50px;
+  gap: 8px;
   border: ${({ seen }) =>
     seen
       ? ANGOLA_STYLES.border.notification_seen
@@ -69,6 +70,10 @@ const LikeListItemText = styled.p<{ seen: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 768px) {
+    width: 140px;
+  }
 `;
 
 const UserFullNameSpan = styled.span<{ seen: boolean }>`
