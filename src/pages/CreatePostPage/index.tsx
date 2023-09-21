@@ -49,7 +49,7 @@ const CreatePostPage = () => {
         ...inputValues,
         [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
       });
-    } 
+    }
   };
 
   const handleClickCreatePost = () => {
@@ -193,11 +193,19 @@ const TitleInput = styled.input`
   outline: none;
   text-align: center;
   width: 70%;
+  vertical-align: center;
   color: ${ANGOLA_STYLES.color.text};
-  line-height: 20%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &::placeholder {
     color: ${ANGOLA_STYLES.color.dark};
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 800px) {
+    width: 30%;
   }
 `;
 
@@ -209,8 +217,8 @@ const TitleLengthLimit = styled.span`
   color: ${ANGOLA_STYLES.color.text};
   line-height: 100%;
 
-  &::placeholder {
-    color: ${ANGOLA_STYLES.color.dark};
+  @media (max-width: 800px) {
+    visibility: hidden; 
   }
 `;
 
@@ -240,6 +248,7 @@ const OptionName = styled.p`
 
 const OptionInput = styled.textarea`
   box-sizing: border-box;
+  width: auto;
   display: flex;
   min-height: 256px;
   resize: none;
@@ -251,7 +260,7 @@ const OptionInput = styled.textarea`
   text-align: center;
   outline: none;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  line-height: 42px; 
+  line-height: 42px;
   border-radius: 24px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.gray};
@@ -281,6 +290,10 @@ const VsContainer = styled.p`
   text-align: center;
   color: ${ANGOLA_STYLES.color.black};
   font-size: ${ANGOLA_STYLES.textSize.symbol};
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const SubmitButton = styled.button`
