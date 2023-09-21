@@ -17,7 +17,7 @@ import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
-import CommentList from './components/CommentList';
+import { CommentList } from './components';
 
 interface PostPageProps {
   postId?: string;
@@ -32,11 +32,8 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const [submitValue, setSubmitValue] = useState<string | undefined>('');
   const [isVoted, setIsVoted] = useState(false);
   const { postData, postRefetch, isPostLoading } = useFetchPost(postId);
-  const {
-    createCommentMutate,
-    isCreateCommentSuccess,
-    isCreateCommentLoading,
-  } = useFetchCreateComment();
+  const { createCommentMutate, isCreateCommentSuccess } =
+    useFetchCreateComment();
   const {
     deleteCommentMutate,
     isDeleteCommentError,
@@ -115,7 +112,10 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     }
   }, [isVoted, postData, myId, createNotificationMutate]);
 
+  let loading;
+
   const deleteComment = (id: string) => {
+    loading = false;
     deleteCommentMutate({ id });
     searchParams.delete('voted');
     setSearchParams(searchParams);
@@ -146,21 +146,17 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
               authorLevel={calculateLevel(postData.author)}
             />
           )}
-          {isDeleteCommentLoading ? (
+          {isDeleteCommentLoading || loading ? (
             <Spinner />
           ) : (
             <>
               {show && (
                 <CommentsContainer>
                   {submitValue && postData?.comments ? (
-                    isCreateCommentLoading ? (
-                      <Spinner />
-                    ) : (
-                      <Turnout
-                        comments={postData?.comments}
-                        authorLevel={calculateLevel(postData.author)}
-                      />
-                    )
+                    <Turnout
+                      comments={postData?.comments}
+                      authorLevel={calculateLevel(postData.author)}
+                    />
                   ) : (
                     <MakeComment
                       votedValue={votedValue}

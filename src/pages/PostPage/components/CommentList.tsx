@@ -3,8 +3,8 @@ import { Comment } from '@type';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import useDeleteComment from '../Hooks/useDeleteComment';
-import CommentItem from './Comment';
 import CommentDeletionModal from './CommentDeletionModal';
+import CommentItem from './CommentItem';
 
 interface CommentListProps {
   comments: Comment[];
