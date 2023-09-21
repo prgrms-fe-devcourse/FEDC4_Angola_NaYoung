@@ -6,8 +6,7 @@ import {
   PostPage,
   SearchPage,
   SignUpPage,
-UserPage,
-
+  UserPage,
 } from '@pages';
 import type { Params, SearchParams } from '@hooks/useCurrentPage';
 
