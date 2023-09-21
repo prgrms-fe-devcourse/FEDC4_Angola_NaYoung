@@ -1,34 +1,21 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@components/Button';
-import { useFetchLogin } from '@apis/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { useLogin } from './hooks';
+import { isLoginButtonActive } from './utils';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('init');
-  const [password, setPassword] = useState('init');
-  const { loginMutate, isLoginError, isLoginSuccess } = useFetchLogin();
+  const {
+    email,
+    password,
+    isLoginError,
+    isLoginSuccess,
+    handleSubmit,
+    handleChangeEmail,
+    handleChangePassword,
+  } = useLogin({ isLoginButtonActive });
 
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (!email || email === 'init' || !password || password === 'init') {
-      return;
-    }
-
-    loginMutate({
-      email,
-      password,
-    });
-  };
   return (
     <>
       <LoginContainer>
@@ -61,11 +48,7 @@ const LoginPage = () => {
               width: '150px',
               fontSize: ANGOLA_STYLES.textSize.title,
             }}
-            disabled={
-              email && password && email !== 'init' && password !== 'init'
-                ? false
-                : true
-            }>
+            disabled={isLoginButtonActive({ email, password }) ? false : true}>
             로그인 하기
           </Button>
         </Form>
