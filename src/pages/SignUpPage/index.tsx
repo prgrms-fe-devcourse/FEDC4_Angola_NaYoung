@@ -1,9 +1,8 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
-import { useFetchSignUp } from '@apis/auth';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import {
   CheckEmailModal,
@@ -18,12 +17,11 @@ import {
   useEmailCheck,
   useFullNameCheck,
   usePasswordCheck,
+  useSubmit,
 } from './hooks';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const { signUpMutate, isSignUpSuccess, isSignUpError } = useFetchSignUp();
-
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // email 이벤트 & 유효성 검사 hook
@@ -75,26 +73,14 @@ const SignUpPage = () => {
     passwordConfirm,
   });
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-
-    if (isSignUpError) {
-      window.location.reload();
-      return;
-    }
-    if (isSignUpSuccess) {
-      navigate('/login');
-      return;
-    }
-
-    isAllPassed &&
-      signUpMutate({
-        email,
-        password,
-        fullName,
-      });
-  };
+  // SignUp 처리 hook
+  const { handleSubmit, isSignUpError, isSignUpSuccess } = useSubmit({
+    email,
+    password,
+    fullName,
+    isAllPassed,
+    setIsSubmitted,
+  });
 
   const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
   useEffect(() => {
