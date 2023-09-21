@@ -1,13 +1,14 @@
 import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Modal from '@components/Modal';
 import Spinner from '@components/Spinner';
 import { useFetchCreatePost } from '@apis/post';
 import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import Modal from '@components/Modal';
 
 const MAX_TITLE_OPTION_LENGTH = 100;
+const MAX_OPTION_SCROLL_HEIGHT = 252;
 
 const CreatePostPage = () => {
   const [inputValues, setInputValues] = useState({
@@ -31,15 +32,24 @@ const CreatePostPage = () => {
     inputValues.optionA.length > 0 &&
     inputValues.optionB.length > 0;
 
-  const handleChangeInputValues = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
-  ) => {
+  const handleChangeTitleValue = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
 
     setInputValues({
       ...inputValues,
       [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
     });
+  };
+
+  const handleChangeOptionValues = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    if (e.target.scrollHeight === MAX_OPTION_SCROLL_HEIGHT) {
+      console.log(`e.target.scrollHeight: ${e.target.scrollHeight}`);
+      setInputValues({
+        ...inputValues,
+        [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
+      });
+    } 
   };
 
   const handleClickCreatePost = () => {
@@ -65,17 +75,17 @@ const CreatePostPage = () => {
   };
 
   const navigate = useNavigate();
-  useEffect(() => { // 포스트 작성 성공 시, 포스트 하나씩 보기로 이동 
+  useEffect(() => {
     if (isCreatePostSuccess) {
       navigate(`/post/${createPostData}`);
     }
   }, [isCreatePostSuccess]);
 
-  useEffect(()=>{ // 포스트 작성 실패 => 모달 open
-    if(isCreatePostError){
-      setIsModalOpen(()=>true);
+  useEffect(() => {
+    if (isCreatePostError) {
+      setIsModalOpen(() => true);
     }
-  }, [isCreatePostError])
+  }, [isCreatePostError]);
 
   return (
     <>
@@ -88,7 +98,7 @@ const CreatePostPage = () => {
               id="title"
               placeholder="밸런스 포스트에 대한 한 줄 설명을 써주세요"
               value={inputValues.title}
-              onChange={handleChangeInputValues}
+              onChange={handleChangeTitleValue}
               onBlur={handleBlurTrim}
             />
             <TitleLengthLimit>
@@ -102,7 +112,7 @@ const CreatePostPage = () => {
               <OptionInput
                 id="optionA"
                 value={inputValues.optionA}
-                onChange={handleChangeInputValues}
+                onChange={handleChangeOptionValues}
                 onBlur={handleBlurTrim}
                 placeholder="A 항목에 대한 설명을 작성해주세요"
               />
@@ -118,7 +128,7 @@ const CreatePostPage = () => {
               <OptionInput
                 id="optionB"
                 value={inputValues.optionB}
-                onChange={handleChangeInputValues}
+                onChange={handleChangeOptionValues}
                 onBlur={handleBlurTrim}
                 placeholder="B 항목에 대한 설명을 작성해주세요"
               />
@@ -138,10 +148,10 @@ const CreatePostPage = () => {
 
       {isModalOpen && (
         <Modal
-          onClose={()=>{
-            setIsModalOpen(()=>false)}}
-        >
-          포스트 작성에 실패했습니다. 
+          onClose={() => {
+            setIsModalOpen(() => false);
+          }}>
+          포스트 작성에 실패했습니다.
         </Modal>
       )}
     </>
@@ -172,7 +182,7 @@ const TitleContainer = styled.div`
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
 
-  &:focus-within{
+  &:focus-within {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
 `;
@@ -182,7 +192,7 @@ const TitleInput = styled.input`
   border: none;
   outline: none;
   text-align: center;
-  width: 80%;
+  width: 70%;
   color: ${ANGOLA_STYLES.color.text};
   line-height: 20%;
 
@@ -231,10 +241,9 @@ const OptionName = styled.p`
 const OptionInput = styled.textarea`
   box-sizing: border-box;
   display: flex;
-  height: 256px;
   min-height: 256px;
   resize: none;
-  padding: 30px;
+  padding: 20px;
   justify-content: center;
   align-items: center;
   align-self: stretch;
@@ -242,11 +251,13 @@ const OptionInput = styled.textarea`
   text-align: center;
   outline: none;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  line-height: 38px; // TODO:MinwooP - 조정하기
+  line-height: 42px; 
   border-radius: 24px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.gray};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+  word-break: break-all;
+  overflow: hidden;
 
   &::placeholder {
     color: ${ANGOLA_STYLES.color.dark};
