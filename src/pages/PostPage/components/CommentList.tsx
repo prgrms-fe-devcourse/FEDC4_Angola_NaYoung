@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Comment } from '@type';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import useDeleteComment from '../Hooks/useDeleteComment';
+import { useDeleteComment } from '../Hooks';
 import CommentDeletionModal from './CommentDeletionModal';
 import CommentItem from './CommentItem';
 

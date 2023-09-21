@@ -8,8 +8,7 @@ import Spinner from '@components/Spinner';
 import { useFetchDeleteComment } from '@apis/comment';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
-import useCommentNotification from './Hooks/useCommentNotification';
-import useCreateComment from './Hooks/useCreateComment';
+import { useCommentNotification, useCreateComment } from './Hooks';
 import {
   CommentDeletionFailModal,
   CommentList,

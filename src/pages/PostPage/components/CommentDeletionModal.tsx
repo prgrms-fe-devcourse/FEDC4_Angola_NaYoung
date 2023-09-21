@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Button from '@components/Button';
 import Modal from '@components/Modal';
-import { DELETE_COMMENT } from '../constants/index';
+import { DELETE_COMMENT } from '../constants';
 
 interface CommentDeletionModalProps {
   setIsClickedDeleteBtn: React.Dispatch<React.SetStateAction<boolean>>;
