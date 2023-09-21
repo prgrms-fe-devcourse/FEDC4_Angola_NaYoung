@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
+import { NOTIFICATION_TYPE } from '@constants';
 import { Post } from '@type';
 import { useFetchCreateNotification } from '@apis/notifications';
 

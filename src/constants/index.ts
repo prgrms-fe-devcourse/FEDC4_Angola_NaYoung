@@ -50,10 +50,3 @@ export const PARAM_VALUES = {
     POST: 'post',
   },
 };
-
-export const NOTIFICATION_TYPE = {
-  COMMENT: 'COMMENT',
-  FOLLOW: 'FOLLOW',
-  LIKE: 'LIKE',
-  MESSAGE: 'MESSAGE',
-};
