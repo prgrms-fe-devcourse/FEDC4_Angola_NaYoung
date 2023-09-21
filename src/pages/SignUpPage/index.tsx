@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@components/Button';
@@ -74,23 +74,15 @@ const SignUpPage = () => {
   });
 
   // SignUp 처리 hook
-  const { handleSubmit, isSignUpError, isSignUpSuccess } = useSubmit({
-    email,
-    password,
-    fullName,
-    isAllPassed,
-    setIsSubmitted,
-  });
-
-  const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
-  useEffect(() => {
-    email.length > 4 &&
-    password.length > 4 &&
-    passwordConfirm.length > 4 &&
-    fullName.length > 2
-      ? setIsSignUpDisabled(false)
-      : setIsSignUpDisabled(true);
-  }, [email, password, passwordConfirm, fullName]);
+  const { isSignUpDisabled, handleSubmit, isSignUpError, isSignUpSuccess } =
+    useSubmit({
+      email,
+      password,
+      passwordConfirm,
+      fullName,
+      isAllPassed,
+      setIsSubmitted,
+    });
 
   return (
     <>
