@@ -5,3 +5,4 @@ export { default as useVotingResult } from './useVotingResult';
 export { default as useCheckVoted } from './useCheckVoted';
 export { default as useControlRouteByComment } from './useControlRouteByComment';
 export { default as useSelectItem } from './useSelectItem';
+export { default as useGetDeleteCommentState } from './useGetDeleteCommentState';

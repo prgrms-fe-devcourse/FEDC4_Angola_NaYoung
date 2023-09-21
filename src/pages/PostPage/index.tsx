@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { calculateLevel } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
-import { useFetchDeleteComment } from '@apis/comment';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import {
@@ -13,6 +11,7 @@ import {
   useCommentNotification,
   useControlRouteByComment,
   useCreateComment,
+  useGetDeleteCommentState,
   useSelectItem,
 } from './Hooks';
 import {
@@ -35,14 +34,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const [isVoted, setIsVoted] = useState(false);
   const { postData, postRefetch, isPostLoading } = useFetchPost(postId);
 
-  const {
-    deleteCommentMutate,
-    isDeleteCommentError,
-    isDeleteCommentSuccess,
-    isDeleteCommentLoading,
-  } = useFetchDeleteComment();
-  const [searchParams, setSearchParams] = useSearchParams();
-
   // 투표 선택하는 hook
   const { handleClickItem } = useSelectItem({
     votedValue,
@@ -62,6 +53,14 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
       setIsVoted,
     });
 
+  // 댓글 삭제 hook
+  const {
+    isDeleteCommentError,
+    isDeleteCommentLoading,
+    isDeleteCommentSuccess,
+    deleteComment,
+  } = useGetDeleteCommentState({ setSubmitValue });
+
   // 투표 여부 확인 hook
   useCheckVoted({
     postData,
@@ -80,13 +79,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     isCreateCommentSuccess,
     isDeleteCommentSuccess,
   });
-
-  const deleteComment = (id: string) => {
-    deleteCommentMutate({ id });
-    searchParams.delete('voted');
-    setSearchParams(searchParams);
-    setSubmitValue('');
-  };
 
   return (
     <PostPageContainer>
