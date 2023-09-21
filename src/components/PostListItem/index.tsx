@@ -1,19 +1,12 @@
-import { useEffect, useState } from 'react';
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-} from 'react-query';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
-import { AxiosResponse } from 'axios';
 import Icon from '@components/Icon';
 import Image from '@components/Image';
 import LinkButton from '@components/LinkButton';
 import Modal from '@components/Modal';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { User } from '@type/index';
 import { USER_PROFILE_IMAGE } from '@constants/index';
 
 interface PostListItemProps {
@@ -24,10 +17,6 @@ interface PostListItemProps {
   comments?: number;
   canDeletePost?: boolean;
   deletePostMutate?: ({ id }: { id: string }) => void;
-  isDeletePostSuccess?: boolean;
-  userDataRefetch?: <T>(
-    options?: (RefetchOptions & RefetchQueryFilters<T>) | undefined,
-  ) => Promise<QueryObserverResult<AxiosResponse<User>>>;
 }
 
 const PostListItem = ({
@@ -38,8 +27,6 @@ const PostListItem = ({
   comments,
   canDeletePost,
   deletePostMutate,
-  isDeletePostSuccess,
-  userDataRefetch,
 }: PostListItemProps) => {
   const { title: postTitle } = splitPostBySeparator(title);
   const [toggleModal, setToggleModal] = useState(false);
@@ -58,14 +45,6 @@ const PostListItem = ({
     }
     handleCloseModal();
   };
-
-  useEffect(() => {
-    if (isDeletePostSuccess) {
-      if (userDataRefetch) {
-        userDataRefetch();
-      }
-    }
-  }, [userDataRefetch, isDeletePostSuccess]);
 
   return (
     <ListItemContainer>

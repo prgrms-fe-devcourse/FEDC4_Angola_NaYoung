@@ -62,8 +62,6 @@ const MyPage = () => {
               title={post.title}
               canDeletePost={name === MY_PAGE}
               deletePostMutate={deletePostMutate}
-              userDataRefetch={userDataRefetch}
-              isDeletePostSuccess={isDeletePostSuccess}
             />
           ))}
         </PostsListUl>
