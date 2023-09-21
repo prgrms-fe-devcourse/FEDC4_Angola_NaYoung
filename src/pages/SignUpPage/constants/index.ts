@@ -22,10 +22,6 @@ export const BUTTON = {
   SIGN_UP: '가입 완료하기',
 };
 
-export const PLACEHOLDER = {
-  EMAIL: 'angola@gmail.com',
-};
-
 export const COLOR = {
   ICON: {
     WARN: '#F66',
@@ -35,4 +31,16 @@ export const COLOR = {
     INVALID: '#F66',
     VALID: '#78D968',
   },
+};
+
+export const INPUT = {
+  TYPE: {
+    TEXT: 'text',
+    PASSWORD: 'password',
+  },
+  PLACEHOLDER: {
+    EMAIL: 'angola@gmail.com',
+    PASSWORD: '5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요.',
+  },
+  AUTO_COMPLETE: 'on',
 };

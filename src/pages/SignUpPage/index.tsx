@@ -11,7 +11,7 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
-import { InputEmail, InputEmailMsg } from './components';
+import { InputEmail, InputEmailMsg, InputPassword } from './components';
 import {
   useAllValidationPass,
   useClickEye,
@@ -105,32 +105,12 @@ const SignUpPage = () => {
           </Wrapper>
           <Wrapper>
             <Label>2. 비밀번호를 입력하세요.</Label>
-            <InputWrapper>
-              <Input
-                type={isPasswordShown ? 'text' : 'password'}
-                onChange={handleChangePassword}
-                placeholder="5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요."
-                autoComplete="on"
-              />
-              {isPasswordShown ? (
-                <EyeIcon onClick={handleClickPasswordShown}>
-                  <Icon name={'eye'} />
-                </EyeIcon>
-              ) : (
-                <EyeIcon onClick={handleClickPasswordShown}>
-                  <Icon name={'eye_slash'} />
-                </EyeIcon>
-              )}
-            </InputWrapper>
-            {invalidPasswordMsg && (
-              <InputWarning style={{ marginBottom: '1rem' }}>
-                <Icon
-                  name={'warn'}
-                  color={'#F66'}
-                />
-                {invalidPasswordMsg}
-              </InputWarning>
-            )}
+            <InputPassword
+              isPasswordShown={isPasswordShown}
+              handleChangePassword={handleChangePassword}
+              handleClickPasswordShown={handleClickPasswordShown}
+              invalidPasswordMsg={invalidPasswordMsg}
+            />
             <InputWrapper>
               <Input
                 type={isPasswordConfirmShown ? 'text' : 'password'}

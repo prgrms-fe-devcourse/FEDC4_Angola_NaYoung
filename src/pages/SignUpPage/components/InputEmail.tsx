@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { BUTTON, COLOR, PLACEHOLDER } from '../constants';
+import { BUTTON, COLOR, INPUT } from '../constants';
 
 interface InputEmailProps {
   handleChangeEmail: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -22,7 +22,7 @@ const InputEmail = ({
         <InputWrapper>
           <Input
             onChange={handleChangeEmail}
-            placeholder={PLACEHOLDER.EMAIL}
+            placeholder={INPUT.PLACEHOLDER.EMAIL}
           />
           {isDuplicatedEmailChecked && (
             <DoubleCheckIcon>
