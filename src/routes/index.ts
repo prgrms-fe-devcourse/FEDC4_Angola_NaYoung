@@ -19,7 +19,12 @@ export const routes: {
   title: string;
   component: RouteComponent<SearchParams & Params>;
 }[] = [
-  { path: '*', name: 'notFound', title: '404 페이지', component: NotFoundPage },
+  {
+    path: '*',
+    name: 'notFound',
+    title: '알 수 없는 페이지',
+    component: NotFoundPage,
+  },
   { path: '/', name: 'home', title: 'ANGOLA', component: HomePage },
   {
     path: '/search/:target',
