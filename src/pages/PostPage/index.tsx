@@ -13,6 +13,7 @@ import {
   useCommentNotification,
   useControlRouteByComment,
   useCreateComment,
+  useSelectItem,
 } from './Hooks';
 import {
   CommentDeletionFailModal,
@@ -42,6 +43,13 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   } = useFetchDeleteComment();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // 투표 선택하는 hook
+  const { handleClickItem } = useSelectItem({
+    votedValue,
+    setVotedValue,
+    setSubmitValue,
+  });
+
   // 댓글 알림 hook
   useCommentNotification({ postData, isVoted, myId, setIsVoted });
 
@@ -64,7 +72,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     setSubmitValue,
   });
 
-  // 댓글 작성 및 삭제 시, postData refetch 및 url 업데이트
+  // 댓글 작성 및 삭제 시, postData refetch 및 url 업데이트 hook
   useControlRouteByComment({
     show,
     submitValue,
@@ -72,13 +80,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     isCreateCommentSuccess,
     isDeleteCommentSuccess,
   });
-
-  const handleClickItem = (value: string) => {
-    if (votedValue !== value) {
-      setVotedValue(value);
-      setSubmitValue('');
-    }
-  };
 
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
