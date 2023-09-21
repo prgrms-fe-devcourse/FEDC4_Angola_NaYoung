@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Post } from '@type';
 import { splitCommentBySeparator } from '@utils';
 
-interface useUpdateComponentProps {
+interface useCheckVotedProps {
   postData: Post;
   myId: string | undefined;
   submitValue: string | undefined;
@@ -11,14 +11,14 @@ interface useUpdateComponentProps {
   setSubmitValue: Dispatch<SetStateAction<string | undefined>>;
 }
 
-const useUpdateComponent = ({
+const useCheckVoted = ({
   postData,
   myId,
   submitValue,
   voted,
   setVotedValue,
   setSubmitValue,
-}: useUpdateComponentProps) => {
+}: useCheckVotedProps) => {
   useEffect(() => {
     setSubmitValue(voted);
   }, [voted, setSubmitValue]);
@@ -40,4 +40,4 @@ const useUpdateComponent = ({
   }, [myId, postData, submitValue, setSubmitValue, setVotedValue]);
 };
 
-export default useUpdateComponent;
+export default useCheckVoted;

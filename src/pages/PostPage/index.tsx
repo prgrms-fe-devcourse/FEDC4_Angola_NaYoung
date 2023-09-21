@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { calculateLevel, splitCommentBySeparator } from '@utils';
+import { calculateLevel } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
@@ -9,9 +9,9 @@ import { useFetchDeleteComment } from '@apis/comment';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import {
+  useCheckVoted,
   useCommentNotification,
   useCreateComment,
-  useUpdateComponent,
 } from './Hooks';
 import {
   CommentDeletionFailModal,
@@ -54,7 +54,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     });
 
   // 투표 여부 확인 hook
-  useUpdateComponent({
+  useCheckVoted({
     postData,
     myId,
     submitValue,
@@ -80,22 +80,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     votedValue === value ? setVotedValue('') : setVotedValue(value);
     setSubmitValue('');
   };
-
-  useEffect(() => {
-    if (postData) {
-      const userComment = postData?.comments.find(
-        (comment) => comment.author._id === myId,
-      );
-      if (!userComment) {
-        setVotedValue('');
-        setSubmitValue('');
-        return;
-      }
-      const userVote = splitCommentBySeparator(userComment.comment).vote;
-      setVotedValue(userVote);
-      setSubmitValue(userVote);
-    }
-  }, [myId, postData, submitValue]);
 
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
