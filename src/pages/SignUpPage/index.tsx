@@ -1,11 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { checkFullNamePattern, checkPassWordPattern } from '@utils';
+import { checkPassWordPattern } from '@utils';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { useFetchSignUp } from '@apis/auth';
-import { useFetchUsers } from '@apis/user';
 import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import {
   CheckEmailModal,
@@ -14,27 +13,20 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
-import { useEmailCheck } from './hooks';
+import { useEmailCheck, useFullNameCheck } from './hooks';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('init');
   const [passwordConfirm, setPasswordConfirm] = useState('init');
-  const [fullName, setFullName] = useState('in');
-  useState(false);
-  const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
-    useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isPasswordConfirmShown, setIsPasswordConfirmShown] = useState(false);
   const { signUpMutate, isSignUpSuccess, isSignUpError } = useFetchSignUp();
-  const { usersData, isUsersError } = useFetchUsers();
   const [invalidPasswordMsg, setInvalidPasswordMsg] = useState<string>('');
   const [invalidPasswordConfirmMsg, setInvalidPasswordConfirmMsg] =
     useState<string>('');
   const [validPasswordConfirmMsg, setValidPasswordConfirmMsg] =
     useState<string>('');
-  const [invalidFullNameMsg, setInvalidFullNameMsg] = useState<string>('');
-  const [validFullNameMsg, setValidFullNameMsg] = useState<string>('');
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -47,6 +39,16 @@ const SignUpPage = () => {
     handleChangeEmail,
     handleClickDuplicatedEmailCheckBtn,
   } = useEmailCheck({ setIsSubmitted });
+
+  // fullName 이벤트 & 유효성 검사 hook
+  const {
+    fullName,
+    isDuplicatedFullNameChecked,
+    validFullNameMsg,
+    invalidFullNameMsg,
+    handleChangeFullName,
+    handleClickDuplicatedFullNameCheckBtn,
+  } = useFullNameCheck({ setIsSubmitted });
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -89,35 +91,6 @@ const SignUpPage = () => {
     } else {
       setValidPasswordConfirmMsg(msg);
       setInvalidPasswordConfirmMsg('');
-    }
-  };
-  const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
-    setFullName(e.target.value);
-    setIsDuplicatedFullNameChecked(false);
-    setValidFullNameMsg('');
-    setIsSubmitted(false);
-
-    if (!e.target.value) {
-      setInvalidFullNameMsg('닉네임을 입력해주세요.');
-    }
-  };
-
-  const handleClickDuplicatedFullNameCheckBtn = () => {
-    const { isValidFullName, msg } = checkFullNamePattern({
-      fullName,
-      usersData,
-    });
-
-    if (isUsersError || !usersData) {
-      console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
-      return;
-    }
-    if (!isValidFullName) {
-      setInvalidFullNameMsg(msg);
-    } else {
-      setValidFullNameMsg(msg);
-      setInvalidFullNameMsg('');
-      setIsDuplicatedFullNameChecked(true);
     }
   };
 

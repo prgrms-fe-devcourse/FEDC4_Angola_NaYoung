@@ -8,7 +8,7 @@ interface useEmailCheckProps {
 }
 
 const useEmailCheck = ({ setIsSubmitted }: useEmailCheckProps) => {
-  const [email, setEmail] = useState(SIGNUP_INITIAL_VALUE);
+  const [email, setEmail] = useState(SIGNUP_INITIAL_VALUE.EMAIL);
   const [isDuplicatedEmailChecked, setIsDuplicatedEmailChecked] =
     useState<boolean>(false);
   const [validEmailMsg, setValidEmailMsg] = useState<string>('');
