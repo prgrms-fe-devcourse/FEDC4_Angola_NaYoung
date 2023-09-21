@@ -1,7 +1,6 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { checkPassWordPattern } from '@utils';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { useFetchSignUp } from '@apis/auth';
@@ -13,20 +12,16 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
-import { useEmailCheck, useFullNameCheck } from './hooks';
+import {
+  useClickEye,
+  useEmailCheck,
+  useFullNameCheck,
+  usePasswordCheck,
+} from './hooks';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const [password, setPassword] = useState('init');
-  const [passwordConfirm, setPasswordConfirm] = useState('init');
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [isPasswordConfirmShown, setIsPasswordConfirmShown] = useState(false);
   const { signUpMutate, isSignUpSuccess, isSignUpError } = useFetchSignUp();
-  const [invalidPasswordMsg, setInvalidPasswordMsg] = useState<string>('');
-  const [invalidPasswordConfirmMsg, setInvalidPasswordConfirmMsg] =
-    useState<string>('');
-  const [validPasswordConfirmMsg, setValidPasswordConfirmMsg] =
-    useState<string>('');
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -50,56 +45,24 @@ const SignUpPage = () => {
     handleClickDuplicatedFullNameCheckBtn,
   } = useFullNameCheck({ setIsSubmitted });
 
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    const {
-      passwordMsg,
-      passwordConfirmMsg,
-      isValidPassword,
-      isValidPasswordConfirm,
-    } = checkPassWordPattern({
-      newPassWord: e.target.value,
-      confirmNewPassWord: passwordConfirm,
-    });
-    setPassword(e.target.value);
+  // password 이벤트 & 유효성 검사 hook
+  const {
+    password,
+    passwordConfirm,
+    invalidPasswordMsg,
+    invalidPasswordConfirmMsg,
+    validPasswordConfirmMsg,
+    handleChangePassword,
+    handleChangePasswordConfirm,
+  } = usePasswordCheck();
 
-    if (!e.target.value) {
-      setInvalidPasswordMsg('비밀번호를 입력해주세요.');
-    } else if (!isValidPassword) {
-      setInvalidPasswordMsg(passwordMsg);
-    } else {
-      setInvalidPasswordMsg('');
-    }
-    if (!isValidPasswordConfirm) {
-      setInvalidPasswordConfirmMsg(passwordConfirmMsg);
-      setValidPasswordConfirmMsg('');
-    } else {
-      setValidPasswordConfirmMsg(passwordConfirmMsg);
-      setInvalidPasswordConfirmMsg('');
-    }
-  };
-  const handleChangePasswordConfirm = (e: ChangeEvent<HTMLInputElement>) => {
-    const { passwordConfirmMsg: msg, isValidPasswordConfirm } =
-      checkPassWordPattern({
-        newPassWord: password,
-        confirmNewPassWord: e.target.value,
-      });
-    setPasswordConfirm(e.target.value);
-    setValidPasswordConfirmMsg('');
-
-    if (!isValidPasswordConfirm) {
-      setInvalidPasswordConfirmMsg(msg);
-    } else {
-      setValidPasswordConfirmMsg(msg);
-      setInvalidPasswordConfirmMsg('');
-    }
-  };
-
-  const handleClickPasswordShown = () => {
-    setIsPasswordShown(!isPasswordShown);
-  };
-  const handleClickPasswordConfirmShown = () => {
-    setIsPasswordConfirmShown(!isPasswordConfirmShown);
-  };
+  // password 보이기/안보이기 hook
+  const {
+    isPasswordShown,
+    isPasswordConfirmShown,
+    handleClickPasswordShown,
+    handleClickPasswordConfirmShown,
+  } = useClickEye();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
