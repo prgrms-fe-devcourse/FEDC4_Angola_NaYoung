@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { calculateLevel } from '@utils';
@@ -12,6 +12,7 @@ import {
   useCheckVoted,
   useCommentNotification,
   useCreateComment,
+  useUpdateRouter,
 } from './Hooks';
 import {
   CommentDeletionFailModal,
@@ -63,22 +64,20 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     setSubmitValue,
   });
 
-  useEffect(() => {
-    postRefetch();
-  }, [postRefetch, isCreateCommentSuccess, isDeleteCommentSuccess]);
-
-  useEffect(() => {
-    if (show) {
-      submitValue
-        ? searchParams.set('voted', submitValue)
-        : searchParams.delete('voted');
-      setSearchParams(searchParams);
-    }
-  }, [searchParams, setSearchParams, submitValue, show]);
+  // 댓글 작성 및 삭제 시, postData refetch 및 url 업데이트
+  useUpdateRouter({
+    show,
+    submitValue,
+    postRefetch,
+    isCreateCommentSuccess,
+    isDeleteCommentSuccess,
+  });
 
   const handleClickItem = (value: string) => {
-    votedValue === value ? setVotedValue('') : setVotedValue(value);
-    setSubmitValue('');
+    if (votedValue !== value) {
+      setVotedValue(value);
+      setSubmitValue('');
+    }
   };
 
   const deleteComment = (id: string) => {
