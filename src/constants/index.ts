@@ -1,6 +1,6 @@
 export const USER_PROFILE_IMAGE = {
   ALT: '프로필 이미지',
-  DEFAULT_SRC: '/public/images/default.png',
+  DEFAULT_SRC: '/images/default.png',
 };
 
 export const USER_INFO = {

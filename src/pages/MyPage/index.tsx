@@ -27,7 +27,10 @@ const MyPage = () => {
           id={userData._id}
           image={userData.image}
           name={userData.fullName}
-          likes={userData.likes?.length}
+          likes={userData.posts.reduce(
+            (likes, post) => likes + post.likes.length,
+            0,
+          )}
           followers={userData.followers?.length}
           following={userData.following?.length}
           myLevel={calculateLevel(userData)}
