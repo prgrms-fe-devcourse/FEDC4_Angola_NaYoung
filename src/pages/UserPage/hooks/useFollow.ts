@@ -54,7 +54,7 @@ const useFollow = ({ userId, followers, followerId }: useFollowProps) => {
     }
   }, [isFollowError, isUnFollowError]);
 
-  const changeButton = () => {
+  const disabledFollowButton = () => {
     if (isFollowError || isUnFollowError) {
       return true;
     } else {
@@ -72,7 +72,7 @@ const useFollow = ({ userId, followers, followerId }: useFollowProps) => {
     isUnFollowModalOpen,
     setIsFollowModalOpen,
     setIsUnFollowModalOpen,
-    changeButton,
+    disabledFollowButton,
   };
 };
 

@@ -45,7 +45,7 @@ const UserInfo = ({
     isUnFollowModalOpen,
     setIsFollowModalOpen,
     setIsUnFollowModalOpen,
-    changeButton,
+    disabledFollowButton,
   } = useFollow({
     userId,
     followers,
@@ -91,7 +91,7 @@ const UserInfo = ({
             toggle={isFollowed}
             size="md"
             onClick={handleClickFollowButton}
-            disabled={changeButton()}>
+            disabled={disabledFollowButton()}>
             {isFollowed
               ? `${FOLLOW_MESSAGE.UN_FOLLOW}`
               : `${FOLLOW_MESSAGE.FOLLOW}`}
