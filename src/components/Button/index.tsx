@@ -6,7 +6,6 @@ interface ButtonProps
   extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
   size?: 'sm' | 'md';
   toggle?: boolean;
-
 }
 
 const Button = ({
