@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import Image from '@components/Image';
+import Modal from '@components/Modal';
 import NameTag from '@components/NameTag';
 import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
@@ -69,7 +70,7 @@ const MyInfo = ({
     validPasswordConfirmMsg,
     handleAcceptPassWordButton,
   } = useUpdatePassWord();
-  const { handleClickLogOut } = useLogOut();
+  const { handleClickLogOut, isModalOpen, setIsModalOpen } = useLogOut();
 
   return (
     <MyInfoWrapper>
@@ -267,7 +268,12 @@ const MyInfo = ({
           </Button>
         )}
         {isEditingPassWord ? null : (
-          <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
+          <>
+            <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
+            {isModalOpen && (
+              <Modal onClose={() => setIsModalOpen(false)}>로그아웃 실패</Modal>
+            )}
+          </>
         )}
       </MyInfoContainer>
     </MyInfoWrapper>
