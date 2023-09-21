@@ -11,7 +11,7 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
-import { InputEmail } from './components';
+import { InputEmail, InputEmailMsg } from './components';
 import {
   useAllValidationPass,
   useClickEye,
@@ -98,20 +98,10 @@ const SignUpPage = () => {
               }
               isDuplicatedEmailChecked={isDuplicatedEmailChecked}
             />
-            {invalidEmailMsg && (
-              <InputWarning>
-                <Icon
-                  name={'warn'}
-                  color={'#F66'}
-                />
-                {invalidEmailMsg}
-              </InputWarning>
-            )}
-            {validEmailMsg && (
-              <InputWarning style={{ color: '#78D968' }}>
-                {validEmailMsg}
-              </InputWarning>
-            )}
+            <InputEmailMsg
+              invalidEmailMsg={invalidEmailMsg}
+              validEmailMsg={validEmailMsg}
+            />
           </Wrapper>
           <Wrapper>
             <Label>2. 비밀번호를 입력하세요.</Label>
