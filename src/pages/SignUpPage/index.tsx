@@ -11,7 +11,7 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
-import { InputEmail, InputEmailMsg, InputPassword } from './components';
+import { InputEmail, InputPassword } from './components';
 import {
   useAllValidationPass,
   useClickEye,
@@ -97,8 +97,6 @@ const SignUpPage = () => {
                 handleClickDuplicatedEmailCheckBtn
               }
               isDuplicatedEmailChecked={isDuplicatedEmailChecked}
-            />
-            <InputEmailMsg
               invalidEmailMsg={invalidEmailMsg}
               validEmailMsg={validEmailMsg}
             />

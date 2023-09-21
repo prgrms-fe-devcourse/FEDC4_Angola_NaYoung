@@ -9,12 +9,16 @@ interface InputEmailProps {
   handleChangeEmail: (e: ChangeEvent<HTMLInputElement>) => void;
   handleClickDuplicatedEmailCheckBtn: () => void;
   isDuplicatedEmailChecked: boolean;
+  invalidEmailMsg: string;
+  validEmailMsg: string;
 }
 
 const InputEmail = ({
   handleChangeEmail,
   handleClickDuplicatedEmailCheckBtn,
   isDuplicatedEmailChecked,
+  invalidEmailMsg,
+  validEmailMsg,
 }: InputEmailProps) => {
   return (
     <>
@@ -44,6 +48,20 @@ const InputEmail = ({
           {BUTTON.DUPLICATE_CHECK}
         </Button>
       </InputContainer>
+      {invalidEmailMsg && (
+        <InputWarning>
+          <Icon
+            name={'warn'}
+            color={COLOR.ICON.WARN}
+          />
+          {invalidEmailMsg}
+        </InputWarning>
+      )}
+      {validEmailMsg && (
+        <InputWarning style={{ color: COLOR.MSG.VALID }}>
+          {validEmailMsg}
+        </InputWarning>
+      )}
     </>
   );
 };
@@ -85,4 +103,13 @@ const DoubleCheckIcon = styled.div`
   right: 1.5rem;
   top: 50%;
   transform: translate(0, -50%);
+`;
+
+const InputWarning = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: ${COLOR.MSG.INVALID};
+  padding-left: 1rem;
+  gap: 8px;
 `;
