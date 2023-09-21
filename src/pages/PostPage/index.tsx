@@ -7,17 +7,15 @@ import {
   splitCommentBySeparator,
 } from '@utils';
 import { useRecoilValue } from 'recoil';
-import Modal from '@components/Modal';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
 import { useFetchCreateComment, useFetchDeleteComment } from '@apis/comment';
 import { useFetchCreateNotification } from '@apis/notifications';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
-import { ANGOLA_STYLES } from '../../styles/commonStyles';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
-import { CommentList } from './components';
+import { CommentDeletionFailModal, CommentList } from './components';
 
 interface PostPageProps {
   postId?: string;
@@ -112,10 +110,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     }
   }, [isVoted, postData, myId, createNotificationMutate]);
 
-  let loading;
-
   const deleteComment = (id: string) => {
-    loading = false;
     deleteCommentMutate({ id });
     searchParams.delete('voted');
     setSearchParams(searchParams);
@@ -146,7 +141,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
               authorLevel={calculateLevel(postData.author)}
             />
           )}
-          {isDeleteCommentLoading || loading ? (
+          {isDeleteCommentLoading ? (
             <Spinner />
           ) : (
             <>
@@ -171,13 +166,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
                       myId={myId}
                     />
                   )}
-                  {isDeleteCommentError && (
-                    <Modal onClose={() => window.location.reload()}>
-                      <CommentDeletionFailModal>
-                        댓글 삭제에 실패했습니다.
-                      </CommentDeletionFailModal>
-                    </Modal>
-                  )}
+                  {isDeleteCommentError && <CommentDeletionFailModal />}
                 </CommentsContainer>
               )}
             </>
@@ -204,13 +193,4 @@ const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
-
-const CommentDeletionFailModal = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: ${ANGOLA_STYLES.textSize.titleLg};
 `;
