@@ -9,7 +9,7 @@ export const useContentClassName = ({
   voteValue,
 }: useContentClassNameProps) => {
   const getClassName = (value: string) => {
-    return isPostPage && voteValue === value ? POST_CONTENTS.ACTIVE : '';
+    return isPostPage && voteValue === value ? POST_CONTENTS.ACTIVE_CLASS : '';
   };
 
   return getClassName;
