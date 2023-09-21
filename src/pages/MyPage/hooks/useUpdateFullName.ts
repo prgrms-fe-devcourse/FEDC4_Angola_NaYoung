@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useFetchUpdateFullName } from '@apis/profile';
 import { useFetchUsers } from '@apis/user';
 import { checkFullNamePattern } from '@utils/userAuthentication';
+import { CHECK_MSG } from '@constants/index';
 
 interface useUpdateFullNameProps {
   name: string;
@@ -35,7 +36,7 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
 
   const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
-      setInvalidFullNameMsg('닉네임을 입력해주세요.');
+      setInvalidFullNameMsg(`${CHECK_MSG.FULL_NAME}`);
     }
     setNewFullName(e.target.value);
     setIsDuplicatedFullNameChecked(false);
@@ -49,7 +50,7 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
     });
 
     if (!usersData) {
-      console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
+      console.error(`${CHECK_MSG.ERROR}`);
       return;
     }
     if (!isValidFullName) {

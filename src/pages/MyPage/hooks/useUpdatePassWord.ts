@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useFetchUpdatePassword } from '@apis/profile';
 import { checkPassWordPattern } from '@utils/userAuthentication';
+import { CHECK_MSG } from '@constants/index';
 
 const useUpdatePassWord = () => {
   const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
@@ -45,7 +46,7 @@ const useUpdatePassWord = () => {
     setNewPassWord(e.target.value);
 
     if (!e.target.value) {
-      setInvalidPasswordMsg('비밀번호를 입력해주세요.');
+      setInvalidPasswordMsg(`${CHECK_MSG.PASSWORD}`);
     } else if (!isValidPassword) {
       setInvalidPasswordMsg(passwordMsg);
     } else {
