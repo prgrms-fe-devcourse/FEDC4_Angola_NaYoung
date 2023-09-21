@@ -8,7 +8,7 @@ import Spinner from '@components/Spinner';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
-import { FOLLOW_MESSAGE } from './constants';
+import { FOLLOW_ERROR_MESSAGE, FOLLOW_MESSAGE } from './constants';
 import useFollow from './hooks/useFollow';
 
 interface UserInfoProps {
@@ -99,12 +99,12 @@ const UserInfo = ({
         )}
         {isFollowModalOpen && (
           <Modal onClose={() => setIsFollowModalOpen(false)}>
-            팔로우 신청에 실패했습니다.
+            {FOLLOW_ERROR_MESSAGE.FOLLOW}
           </Modal>
         )}
         {isUnFollowModalOpen && (
           <Modal onClose={() => setIsUnFollowModalOpen(false)}>
-            팔로우 취소에 실패했습니다.
+            {FOLLOW_ERROR_MESSAGE.UN_FOLLOW}
           </Modal>
         )}
       </UserInfoContainer>
