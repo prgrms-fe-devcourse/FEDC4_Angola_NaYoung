@@ -20,6 +20,7 @@ const useLogin = ({ isLoginButtonActive }: useLoginProps) => {
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
+
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
