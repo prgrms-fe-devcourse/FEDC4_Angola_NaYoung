@@ -5,6 +5,7 @@ import {
   faHeart as faEmptyHeart,
 } from '@fortawesome/free-regular-svg-icons';
 import {
+  faArrowRight,
   faArrowUp,
   faBell,
   faCheck,
@@ -49,7 +50,8 @@ export type IconName =
   | 'eye'
   | 'eye_slash'
   | 'double_check'
-  | 'arrow_up';
+  | 'arrow_up'
+  | 'arrow_right';
 
 const iconMap = {
   alert: faBell,
@@ -73,6 +75,7 @@ const iconMap = {
   eye_slash: faEyeSlash,
   double_check: faCheckDouble,
   arrow_up: faArrowUp,
+  arrow_right: faArrowRight,
 };
 
 interface IconProps {

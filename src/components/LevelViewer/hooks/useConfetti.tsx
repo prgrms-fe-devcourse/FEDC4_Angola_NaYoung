@@ -4,7 +4,7 @@ import { CreateTypes, Options } from 'canvas-confetti';
 export const useConfetti = () => {
   const refAnimationInstance = useRef<CreateTypes | null>(null);
 
-  const getInstance = useCallback((instance: CreateTypes | null) => {
+  const getConfetti = useCallback((instance: CreateTypes | null) => {
     refAnimationInstance.current = instance;
   }, []);
 
@@ -17,7 +17,7 @@ export const useConfetti = () => {
       });
   }, []);
 
-  const fire = useCallback(() => {
+  const makeConfetti = useCallback(() => {
     makeShot(0.25, {
       spread: 26,
       startVelocity: 55,
@@ -46,5 +46,5 @@ export const useConfetti = () => {
     });
   }, [makeShot]);
 
-  return { getInstance, fire };
+  return { getConfetti, makeConfetti };
 };

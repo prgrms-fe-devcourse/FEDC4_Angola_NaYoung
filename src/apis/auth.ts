@@ -50,6 +50,7 @@ export const useFetchLogin = () => {
       setAuth({
         userId: data.user._id,
         token: data.token,
+        userFullName: data.user.fullName,
       });
       setUserArchives({
         commentsLength: data.user.comments.length,
