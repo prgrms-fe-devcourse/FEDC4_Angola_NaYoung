@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 const NotFoundPage = () => {
   return (
@@ -48,7 +49,7 @@ const NotFoundMsg = styled.div`
 `;
 
 const NouFoundSubMsg = styled.div`
-  font-size: 16px;
+  font-size: ${ANGOLA_STYLES.textSize.text};
   display: flex;
   flex-direction: column;
   gap: 8px;
