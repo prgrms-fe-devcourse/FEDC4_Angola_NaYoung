@@ -8,7 +8,11 @@ import Spinner from '@components/Spinner';
 import { useFetchDeleteComment } from '@apis/comment';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
-import { useCommentNotification, useCreateComment } from './Hooks';
+import {
+  useCommentNotification,
+  useCreateComment,
+  useUpdateComponent,
+} from './Hooks';
 import {
   CommentDeletionFailModal,
   CommentList,
@@ -23,8 +27,7 @@ interface PostPageProps {
 }
 
 const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
-  const auth = useRecoilValue(authInfoState);
-  const myId = auth?.userId;
+  const myId = useRecoilValue(authInfoState)?.userId;
   const [votedValue, setVotedValue] = useState<string>('');
   const [submitValue, setSubmitValue] = useState<string | undefined>('');
   const [isVoted, setIsVoted] = useState(false);
@@ -50,25 +53,19 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
       setIsVoted,
     });
 
-  useEffect(() => {
-    setSubmitValue(voted);
-  }, [voted]);
+  // 투표 여부 확인 hook
+  useUpdateComponent({
+    postData,
+    myId,
+    submitValue,
+    voted,
+    setVotedValue,
+    setSubmitValue,
+  });
 
   useEffect(() => {
-    if (postData) {
-      const userComment = postData?.comments.find(
-        (comment) => comment.author._id === myId,
-      );
-      if (!userComment) {
-        setVotedValue('');
-        setSubmitValue('');
-        return;
-      }
-      const userVote = splitCommentBySeparator(userComment.comment).vote;
-      setVotedValue(userVote);
-      setSubmitValue(userVote);
-    }
-  }, [postData?.comments, myId, postData, submitValue]);
+    postRefetch();
+  }, [postRefetch, isCreateCommentSuccess, isDeleteCommentSuccess]);
 
   useEffect(() => {
     if (show) {
@@ -84,16 +81,28 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     setSubmitValue('');
   };
 
+  useEffect(() => {
+    if (postData) {
+      const userComment = postData?.comments.find(
+        (comment) => comment.author._id === myId,
+      );
+      if (!userComment) {
+        setVotedValue('');
+        setSubmitValue('');
+        return;
+      }
+      const userVote = splitCommentBySeparator(userComment.comment).vote;
+      setVotedValue(userVote);
+      setSubmitValue(userVote);
+    }
+  }, [myId, postData, submitValue]);
+
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
     searchParams.delete('voted');
     setSearchParams(searchParams);
     setSubmitValue('');
   };
-
-  useEffect(() => {
-    postRefetch();
-  }, [postRefetch, isCreateCommentSuccess, isDeleteCommentSuccess]);
 
   return (
     <PostPageContainer>
