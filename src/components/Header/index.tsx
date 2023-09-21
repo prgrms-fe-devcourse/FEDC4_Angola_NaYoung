@@ -2,9 +2,9 @@ import { PARAM_VALUES, SEARCH_VALUES } from '@constants';
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import useSelect from './Hooks/useSelect';
 import TabBarList from './TabBarList';
 import { SELECT_OPTION } from './constants';
+import useSelect from './hooks/useSelect';
 
 interface HeaderProps {
   title: string;
