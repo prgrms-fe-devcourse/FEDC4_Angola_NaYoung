@@ -6,7 +6,8 @@ import LinkButton from '@components/LinkButton';
 import Modal from '@components/Modal';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { USER_PROFILE_IMAGE } from '@constants/index';
+import { BUTTON_VALUES, USER_PROFILE_IMAGE } from '@constants/index';
+import { DELETE_POST_MODAL } from './constants';
 import useDeletePost from './hooks/useDeletePost';
 
 interface PostListItemProps {
@@ -64,7 +65,7 @@ const PostListItem = ({
         <LinkButton
           to={`/post/${id}`}
           style={MORE_LINK_BUTTON_STYLES}>
-          More
+          {BUTTON_VALUES.MORE_TEXT}
         </LinkButton>
       </More>
 
@@ -72,7 +73,7 @@ const PostListItem = ({
         <Modal
           onClose={() => setToggleModal(false)}
           onConfirm={handleDeletedPost}>
-          <div>정말로 삭제하시겠습니까?</div>
+          <div>{DELETE_POST_MODAL.MODAL_TEXT}</div>
         </Modal>
       )}
     </ListItemContainer>

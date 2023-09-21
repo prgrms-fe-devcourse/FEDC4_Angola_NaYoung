@@ -5,7 +5,7 @@ import LinkButton from '@components/LinkButton';
 import NameTag from '@components/NameTag';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
-import { USER_PROFILE_IMAGE } from '@constants/index';
+import { BUTTON_VALUES, USER_PROFILE_IMAGE } from '@constants/index';
 
 interface UserListItemProps {
   id: string;
@@ -58,7 +58,7 @@ const UserListItem = ({
         <LinkButton
           to={`/user/${id}`}
           style={MORE_LINK_BUTTON_STYLES}>
-          More
+          {BUTTON_VALUES.MORE_TEXT}
         </LinkButton>
       </More>
     </ListItemContainer>
