@@ -19,14 +19,14 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
   const TARGET_VALUE = sortProps?.target;
   const SORT_VALUE = sortProps?.sort;
 
-  const { selectValue, handleChangeSelect } = useSelect({ SORT_VALUE });
+  const { handleChangeSelect } = useSelect({ SORT_VALUE });
 
   return (
     <Container>
       {sortProps && (
         <SelectContainer>
           <SortSelect
-            value={selectValue}
+            value={SORT_VALUE}
             onChange={(e) => {
               handleChangeSelect(e.target.value);
             }}>

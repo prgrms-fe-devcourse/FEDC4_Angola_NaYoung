@@ -6,12 +6,11 @@ interface UseSortProps {
 }
 
 interface UseSortReturnProps {
-  selectValue: string | undefined;
   handleChangeSelect: (sort: string) => void;
 }
 
 const useSelect = ({ SORT_VALUE }: UseSortProps): UseSortReturnProps => {
-  const [selectValue, setSelectValue] = useState(SORT_VALUE);
+  const [, setSelectValue] = useState(SORT_VALUE);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChangeSelect = (value: string) => {
@@ -20,7 +19,7 @@ const useSelect = ({ SORT_VALUE }: UseSortProps): UseSortReturnProps => {
     setSearchParams(searchParams);
   };
 
-  return { selectValue, handleChangeSelect };
+  return { handleChangeSelect };
 };
 
 export default useSelect;
