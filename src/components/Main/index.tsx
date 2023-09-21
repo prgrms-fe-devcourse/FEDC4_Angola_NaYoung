@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { redirects, routes } from '@routes';
 import Header from '@components/Header';
+import LevelViewer from '@components/LevelViewer';
 import { useFetchUserArchives } from '@apis/level';
 import useCurrentPage from '@hooks/useCurrentPage';
 import { useScrollToTop } from '@hooks/useScrollToTop';
@@ -30,6 +31,7 @@ const Main = () => {
 
   return (
     <MainContainer>
+      <LevelViewer />
       <Header
         title={title}
         sortProps={name === 'search' ? objectForSort : undefined}
