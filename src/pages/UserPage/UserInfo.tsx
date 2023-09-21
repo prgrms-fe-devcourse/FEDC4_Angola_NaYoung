@@ -149,6 +149,11 @@ const UserInfoContainer = styled.div`
   padding: 12px 0px;
   gap: 24px;
   align-self: stretch;
+
+  @media (max-width: 1024px) {
+    gap: 20px;
+    flex-direction: column;
+  }
 `;
 
 const UserInfoText = styled.div`
@@ -168,4 +173,8 @@ const Bar = styled.div`
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.396px;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
