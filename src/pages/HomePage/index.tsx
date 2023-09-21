@@ -1,73 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
-import { useFetchPartPosts } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import { calculateLevel } from '@utils/calculateUserLevel';
-import { Post } from '@type/index';
-
-const INTERACTION_OPTION = {
-  root: null,
-  rootMargin: '0px',
-  threshold: 1.0,
-};
-
-const LIMIT = 5;
+import useInfiniteScroll from './hooks/useInfiniteScroll';
 
 const HomePage = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const auth = useRecoilValue(authInfoState);
-  const [offset, setOffset] = useState(0);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const { partPostsData, isPartPostsLoading, partPostsRefetch } =
-    useFetchPartPosts(offset, LIMIT);
-  const [addPostData, setAddPostData] = useState<Post[]>([]);
-
-  useEffect(() => {
-    setOffset(5);
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container || !partPostsData || partPostsData.length < 5) return;
-
-    const handleIntersection = async (
-      [entry]: IntersectionObserverEntry[],
-      io: IntersectionObserver,
-    ) => {
-      if (isLoading) return;
-      if (entry.isIntersecting) {
-        setIsLoading(true);
-        setOffset((prev) => prev + 5);
-        await partPostsRefetch();
-        io.unobserve(entry.target);
-        setIsLoading(false);
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      handleIntersection,
-      INTERACTION_OPTION,
-    );
-    observer.observe(container);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [partPostsData, partPostsRefetch, isLoading]);
-
-  useEffect(() => {
-    if (partPostsData) {
-      setAddPostData((prev) => [...prev, ...partPostsData]);
-    }
-  }, [partPostsData]);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const { PostsData, isLoading, isPartPostsLoading } = useInfiniteScroll({
+    containerRef,
+  });
 
   return (
     <Container>
-      {addPostData?.map((post, index) => (
+      {PostsData?.map((post, index) => (
         <PostViewer
           key={index}
           postId={post._id}
