@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
 import Icon from '@components/Icon';
@@ -8,6 +7,7 @@ import Modal from '@components/Modal';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { USER_PROFILE_IMAGE } from '@constants/index';
+import useDeletePost from './hooks/useDeletePost';
 
 interface PostListItemProps {
   id: string;
@@ -29,22 +29,10 @@ const PostListItem = ({
   deletePostMutate,
 }: PostListItemProps) => {
   const { title: postTitle } = splitPostBySeparator(title);
-  const [toggleModal, setToggleModal] = useState(false);
-
-  const handleOpenModal = () => {
-    setToggleModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setToggleModal(false);
-  };
-
-  const handleDeletedPost = () => {
-    if (deletePostMutate) {
-      deletePostMutate({ id });
-    }
-    handleCloseModal();
-  };
+  const { toggleModal, setToggleModal, handleDeletedPost } = useDeletePost({
+    id,
+    deletePostMutate,
+  });
 
   return (
     <ListItemContainer>
@@ -58,7 +46,7 @@ const PostListItem = ({
         <Title>{postTitle}</Title>
       </TitleContainer>
       {canDeletePost ? (
-        <DeleteButton onClick={handleOpenModal}>
+        <DeleteButton onClick={() => setToggleModal(true)}>
           <Icon name="trash" />
         </DeleteButton>
       ) : (
@@ -82,7 +70,7 @@ const PostListItem = ({
 
       {toggleModal && (
         <Modal
-          onClose={handleCloseModal}
+          onClose={() => setToggleModal(false)}
           onConfirm={handleDeletedPost}>
           <div>정말로 삭제하시겠습니까?</div>
         </Modal>
