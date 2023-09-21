@@ -44,7 +44,6 @@ const CreatePostPage = () => {
   const handleChangeOptionValues = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     if (e.target.scrollHeight === MAX_OPTION_SCROLL_HEIGHT) {
-      console.log(`e.target.scrollHeight: ${e.target.scrollHeight}`);
       setInputValues({
         ...inputValues,
         [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),

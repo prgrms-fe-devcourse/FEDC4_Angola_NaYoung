@@ -35,7 +35,7 @@ const LinkStyled = styled(Link)`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};
-
+  transition: 0.2s;
   &:hover {
     box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};
   }

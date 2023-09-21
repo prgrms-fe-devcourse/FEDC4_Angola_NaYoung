@@ -77,6 +77,7 @@ const StyledForm = styled.form`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+  transition: box-shadow 0.2s;
 
   &:focus-within {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
@@ -93,6 +94,7 @@ const SubmitButton = styled.button`
   padding: 0;
   background: ${ANGOLA_STYLES.color.white};
   border: none;
+  cursor: pointer;
 `;
 
 const StyledInput = styled.input`
@@ -117,4 +119,5 @@ const ClearTextButton = styled.button`
   padding: 0;
   background: ${ANGOLA_STYLES.color.white};
   border: none;
+  cursor: pointer;
 `;
