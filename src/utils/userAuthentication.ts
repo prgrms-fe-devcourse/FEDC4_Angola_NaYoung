@@ -90,18 +90,12 @@ export const checkPassWordPattern = ({
     passwordMsg =
       '비밀번호는 5자리 이상 15자 이하 문자, 숫자, 특수문자로 구성하여야 합니다.';
     isValidPassword = false;
-  } else if (trimmedPassWord === '') {
-    passwordMsg = '비밀번호를 입력해주세요';
-    isValidPassword = false;
   } else {
     isValidPassword = true;
   }
 
   if (newPassWord !== confirmNewPassWord) {
     passwordConfirmMsg = '비밀번호가 일치하지 않습니다.';
-    isValidPasswordConfirm = false;
-  } else if (confirmNewPassWord === '') {
-    passwordConfirmMsg = '비밀번호를 입력해주세요';
     isValidPasswordConfirm = false;
   } else {
     passwordConfirmMsg = '비밀번호가 일치합니다.';
