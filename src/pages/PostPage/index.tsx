@@ -11,8 +11,8 @@ import { authInfoState } from '@store/auth';
 import {
   useCheckVoted,
   useCommentNotification,
+  useControlRouteByComment,
   useCreateComment,
-  useUpdateRouter,
 } from './Hooks';
 import {
   CommentDeletionFailModal,
@@ -65,7 +65,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   });
 
   // 댓글 작성 및 삭제 시, postData refetch 및 url 업데이트
-  useUpdateRouter({
+  useControlRouteByComment({
     show,
     submitValue,
     postRefetch,

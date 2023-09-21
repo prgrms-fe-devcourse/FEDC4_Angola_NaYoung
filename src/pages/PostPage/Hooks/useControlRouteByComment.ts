@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SEARCH_KEYS } from '@constants';
 
-interface useUpdateRouterProps {
+interface useControlRouteByCommentProps {
   show?: 'true';
   submitValue: string | undefined;
   postRefetch: VoidFunction;
@@ -10,13 +10,13 @@ interface useUpdateRouterProps {
   isDeleteCommentSuccess: boolean;
 }
 
-const useUpdateRouter = ({
+const useControlRouteByComment = ({
   show,
   submitValue,
   postRefetch,
   isCreateCommentSuccess,
   isDeleteCommentSuccess,
-}: useUpdateRouterProps) => {
+}: useControlRouteByCommentProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -33,4 +33,4 @@ const useUpdateRouter = ({
   }, [searchParams, setSearchParams, submitValue, show]);
 };
 
-export default useUpdateRouter;
+export default useControlRouteByComment;
