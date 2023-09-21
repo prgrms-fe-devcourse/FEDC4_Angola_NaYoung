@@ -33,7 +33,12 @@ const useUpdatePassWord = () => {
   };
 
   const handleChangePassWord = (e: ChangeEvent<HTMLInputElement>) => {
-    const { passwordMsg, isValidPassword } = checkPassWordPattern({
+    const {
+      passwordMsg,
+      passwordConfirmMsg,
+      isValidPasswordConfirm,
+      isValidPassword,
+    } = checkPassWordPattern({
       newPassWord: e.target.value,
       confirmNewPassWord,
     });
@@ -45,6 +50,13 @@ const useUpdatePassWord = () => {
       setInvalidPasswordMsg(passwordMsg);
     } else {
       setInvalidPasswordMsg('');
+    }
+    if (!isValidPasswordConfirm) {
+      setInvalidPasswordConfirmMsg(passwordConfirmMsg);
+      setValidPasswordConfirmMsg('');
+    } else {
+      setValidPasswordConfirmMsg(passwordConfirmMsg);
+      setInvalidPasswordConfirmMsg('');
     }
   };
 
@@ -67,7 +79,7 @@ const useUpdatePassWord = () => {
   };
 
   const handleAcceptPassWordButton = () => {
-    if (!validPasswordConfirmMsg || invalidPasswordMsg) {
+    if (invalidPasswordConfirmMsg || invalidPasswordMsg) {
       return true;
     } else {
       return false;
