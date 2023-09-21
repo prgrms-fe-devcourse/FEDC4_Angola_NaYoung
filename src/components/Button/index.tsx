@@ -59,7 +59,7 @@ export const ButtonStyled = styled.button<ButtonProps>`
 
   &:disabled {
     border: ${ANGOLA_STYLES.border.default};
-    background-color: ${ANGOLA_STYLES.color.gray};
+    background-color: ${ANGOLA_STYLES.color.dark};
     box-shadow: ${ANGOLA_STYLES.shadow.button.default};
     cursor: default;
   }
