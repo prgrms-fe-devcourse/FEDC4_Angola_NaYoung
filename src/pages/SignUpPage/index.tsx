@@ -13,6 +13,7 @@ import {
   SignUpSuccessModal,
 } from './Modals';
 import {
+  useAllValidationPass,
   useClickEye,
   useEmailCheck,
   useFullNameCheck,
@@ -64,6 +65,16 @@ const SignUpPage = () => {
     handleClickPasswordConfirmShown,
   } = useClickEye();
 
+  // 모든 유효성 검사 통과 여부 hook
+  const { isAllPassed } = useAllValidationPass({
+    isDuplicatedEmailChecked,
+    isDuplicatedFullNameChecked,
+    invalidPasswordMsg,
+    invalidPasswordConfirmMsg,
+    password,
+    passwordConfirm,
+  });
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
@@ -77,22 +88,12 @@ const SignUpPage = () => {
       return;
     }
 
-    if (
-      !isDuplicatedEmailChecked ||
-      invalidPasswordMsg ||
-      invalidPasswordConfirmMsg ||
-      password === 'init' ||
-      passwordConfirm === 'init' ||
-      !isDuplicatedFullNameChecked
-    ) {
-      return;
-    }
-
-    signUpMutate({
-      email,
-      password,
-      fullName,
-    });
+    isAllPassed &&
+      signUpMutate({
+        email,
+        password,
+        fullName,
+      });
   };
 
   const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
@@ -100,7 +101,7 @@ const SignUpPage = () => {
     email.length > 4 &&
     password.length > 4 &&
     passwordConfirm.length > 4 &&
-    fullName.length > 3
+    fullName.length > 2
       ? setIsSignUpDisabled(false)
       : setIsSignUpDisabled(true);
   }, [email, password, passwordConfirm, fullName]);
