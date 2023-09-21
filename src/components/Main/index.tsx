@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { redirects, routes } from '@routes';
 import Header from '@components/Header';
+import { useFetchUserArchives } from '@apis/level';
 import useCurrentPage from '@hooks/useCurrentPage';
 import { useScrollToTop } from '@hooks/useScrollToTop';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
@@ -12,6 +13,7 @@ const Main = () => {
   const { title, name, params, search } = useCurrentPage();
   const location = useLocation();
   const [scrollTargetRef, scrollToTop] = useScrollToTop<HTMLDivElement>();
+  useFetchUserArchives();
 
   useEffect(() => {
     scrollToTop();
