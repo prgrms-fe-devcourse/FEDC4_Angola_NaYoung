@@ -20,23 +20,15 @@ const decideNotificationType = ({
   notification: Notification;
 }) => {
   if (Object.prototype.hasOwnProperty.call(notification, 'like')) {
-    return (
-      <LikeNotificationItem notification={notification}></LikeNotificationItem>
-    );
+    return <LikeNotificationItem notification={notification} />;
   }
 
   if (Object.prototype.hasOwnProperty.call(notification, 'comment')) {
-    return (
-      <CommentNotificationItem
-        notification={notification}></CommentNotificationItem>
-    );
+    return <CommentNotificationItem notification={notification} />;
   }
 
   if (Object.prototype.hasOwnProperty.call(notification, 'follow')) {
-    return (
-      <FollowNotificationItem
-        notification={notification}></FollowNotificationItem>
-    );
+    return <FollowNotificationItem notification={notification} />;
   }
 };
 
@@ -87,7 +79,7 @@ const NotificationViewer = ({
         getNotificationRefetch();
       },
     }); // TODO:MinwooP - 에러 처리
-   };
+  };
 
   // notification Item 클릭 시 페이지 이동 로직
   const handleClickListItem = (
@@ -189,7 +181,9 @@ const NotificationViewer = ({
     });
   };
 
-  if (isGetNotificationsLoading) return <Spinner />;
+  if (isGetNotificationsLoading) {
+    return <Spinner />;
+  }
 
   return (
     <NotificationViewerBackGround ref={viewerBackGroundRef}>
@@ -207,12 +201,13 @@ const NotificationViewer = ({
                   ? 'notification_check'
                   : 'notification_uncheck'
               }
-              size={'24'}></Icon>
+              size={'24'}
+            />
           </ShowAllNotificationsCheckBox>
         </NotificationHeader>
 
         {isReadNotificationsLoading ? (
-            <LoadingNotificationList>로딩중입니다.</LoadingNotificationList>
+          <LoadingNotificationList>로딩중입니다.</LoadingNotificationList>
         ) : (
           <NotificationList>
             {isShowAllNotifications
@@ -220,7 +215,7 @@ const NotificationViewer = ({
               : showNewNotificationList()}
           </NotificationList>
         )}
-        
+
         <NotificationBottomBar>
           <ReadNotificationButton onClick={handleClickReadNotifications}>
             모든 알림 확인
