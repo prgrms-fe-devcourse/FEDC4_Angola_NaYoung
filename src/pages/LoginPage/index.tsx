@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@components/Button';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { LABEL, LOGIN_BUTTON_MSG, MSG } from './constants';
 import { useLogin } from './hooks';
 import { isLoginButtonActive } from './utils';
 
@@ -26,21 +27,19 @@ const LoginPage = () => {
             width={'200px'}
           />
           <Wrapper>
-            <Label>이메일</Label>
+            <Label>{LABEL.EMAIL}</Label>
             <InputStyled onChange={handleChangeEmail} />
-            {!email && <InputWarning>이메일을 입력하세요.</InputWarning>}
+            {!email && <InputWarning>{MSG.WARNING.EMAIL}</InputWarning>}
           </Wrapper>
           <Wrapper>
-            <Label>비밀번호</Label>
+            <Label>{LABEL.PASSWORD}</Label>
             <InputStyled
               onChange={handleChangePassword}
               type={'password'}
             />
-            {!password && <InputWarning>비밀번호를 입력하세요.</InputWarning>}
+            {!password && <InputWarning>{MSG.WARNING.PASSWORD}</InputWarning>}
           </Wrapper>
-          <LoginErrorMsg style={{ display: isLoginError ? `block` : 'none' }}>
-            아이디 또는 비밀번호를 확인하세요.
-          </LoginErrorMsg>
+          <LoginErrorMsg isLoginError={isLoginError}>{MSG.ERROR}</LoginErrorMsg>
           <Button
             type="submit"
             size="md"
@@ -49,7 +48,7 @@ const LoginPage = () => {
               fontSize: ANGOLA_STYLES.textSize.title,
             }}
             disabled={isLoginButtonActive({ email, password }) ? false : true}>
-            로그인 하기
+            {LOGIN_BUTTON_MSG}
           </Button>
         </Form>
         {isLoginSuccess && <Navigate to="/" />}
@@ -112,7 +111,9 @@ const InputWarning = styled.div`
   gap: 8px;
 `;
 
-const LoginErrorMsg = styled.div`
+const LoginErrorMsg = styled.div<{ isLoginError: boolean }>`
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
   color: #f66;
+
+  display: ${({ isLoginError }) => (isLoginError ? 'block' : 'none')};
 `;
