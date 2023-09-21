@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import {
-  calculateLevel,
-  joinDataBySeparator,
-  splitCommentBySeparator,
-} from '@utils';
+import { calculateLevel, splitCommentBySeparator } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
-import { useFetchCreateComment, useFetchDeleteComment } from '@apis/comment';
+import { useFetchDeleteComment } from '@apis/comment';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import useCommentNotification from './Hooks/useCommentNotification';
+import useCreateComment from './Hooks/useCreateComment';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
 import { CommentDeletionFailModal, CommentList } from './components';
@@ -30,8 +27,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const [submitValue, setSubmitValue] = useState<string | undefined>('');
   const [isVoted, setIsVoted] = useState(false);
   const { postData, postRefetch, isPostLoading } = useFetchPost(postId);
-  const { createCommentMutate, isCreateCommentSuccess } =
-    useFetchCreateComment();
+
   const {
     deleteCommentMutate,
     isDeleteCommentError,
@@ -40,6 +36,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   } = useFetchDeleteComment();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // 댓글 알림
   useCommentNotification({ postData, isVoted, myId, setIsVoted });
 
   useEffect(() => {
@@ -76,39 +73,14 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     setSubmitValue('');
   };
 
-  const handleSubmitComment = (voteValue: string, comment: string) => {
-    if (voteValue) {
-      createCommentMutate({
-        comment: joinDataBySeparator(voteValue, comment),
-        postId,
-      });
-    }
-    searchParams.set('voted', voteValue);
-    setSearchParams(searchParams);
-    setSubmitValue('');
-    setIsVoted(true);
-  };
-
-  // useEffect(() => {
-  //   if (postData && isVoted && myId) {
-  //     const userComment = postData.comments.find(
-  //       (comment) => comment.author._id === myId,
-  //     );
-
-  //     if (!userComment) return;
-  //     setIsVoted(false);
-
-  //     if (myId === postData.author._id) {
-  //       return;
-  //     }
-  //     createNotificationMutate({
-  //       notificationType: 'COMMENT',
-  //       notificationTypeId: userComment._id,
-  //       userId: postData.author._id,
-  //       postId: postData._id,
-  //     });
-  //   }
-  // }, [isVoted, postData, myId, createNotificationMutate]);
+  // 댓글 생성
+  const { handleSubmitComment, handleChangeComment, isCreateCommentSuccess } =
+    useCreateComment({
+      votedValue,
+      postId,
+      setSubmitValue,
+      setIsVoted,
+    });
 
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
@@ -157,6 +129,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
                       votedValue={votedValue}
                       handleClickItem={handleClickItem}
                       handleSubmitComment={handleSubmitComment}
+                      handleChangeComment={handleChangeComment}
                     />
                   )}
                   {postData && !isDeleteCommentError && (

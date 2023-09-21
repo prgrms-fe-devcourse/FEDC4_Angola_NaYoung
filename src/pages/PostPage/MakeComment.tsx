@@ -1,32 +1,24 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import styled from '@emotion/styled';
 import Button, { ButtonStyled } from '@components/Button';
-import { ANGOLA_STYLES } from '../../styles/commonStyles';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface MakeCommentProps {
   votedValue: string;
   handleClickItem: (value: string) => void;
-  handleSubmitComment: (voteValue: string, comment: string) => void;
+  handleSubmitComment: (e: FormEvent) => void;
+  handleChangeComment: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const MakeComment = ({
   votedValue,
   handleClickItem,
   handleSubmitComment,
+  handleChangeComment,
 }: MakeCommentProps) => {
-  const [comment, setComment] = useState<string>('');
-  const handleChangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value);
-  };
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    handleSubmitComment(votedValue, comment);
-  };
-
   return (
     <MakeCommentContainer>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmitComment}>
         <ItemButtonsContainer>
           <Button
             type="button"
