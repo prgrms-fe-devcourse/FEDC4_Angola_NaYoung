@@ -65,7 +65,6 @@ const PostViewer = ({
         voteValue={voteValue}
         onGoDetailPage={goDetailPage}
         onShowNonAuthModal={() => setIsModalShow(true)}
-        isPostPage={isPostPage}
         isVoted={isVoted}
       />
       {auth && (
