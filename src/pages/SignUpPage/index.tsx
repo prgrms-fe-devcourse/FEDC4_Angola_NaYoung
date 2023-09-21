@@ -11,7 +11,7 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
-import { InputEmail, InputPassword } from './components';
+import { InputEmail, InputPassword, InputPasswordConfirm } from './components';
 import {
   useAllValidationPass,
   useClickEye,
@@ -109,37 +109,13 @@ const SignUpPage = () => {
               handleClickPasswordShown={handleClickPasswordShown}
               invalidPasswordMsg={invalidPasswordMsg}
             />
-            <InputWrapper>
-              <Input
-                type={isPasswordConfirmShown ? 'text' : 'password'}
-                onChange={handleChangePasswordConfirm}
-                placeholder="동일한 비밀번호를 다시 입력해주세요."
-                autoComplete="on"
-              />
-              {isPasswordConfirmShown ? (
-                <EyeIcon onClick={handleClickPasswordConfirmShown}>
-                  <Icon name={'eye'} />
-                </EyeIcon>
-              ) : (
-                <EyeIcon onClick={handleClickPasswordConfirmShown}>
-                  <Icon name={'eye_slash'} />
-                </EyeIcon>
-              )}
-            </InputWrapper>
-            {invalidPasswordConfirmMsg && (
-              <InputWarning>
-                <Icon
-                  name={'warn'}
-                  color={'#F66'}
-                />
-                {invalidPasswordConfirmMsg}
-              </InputWarning>
-            )}
-            {validPasswordConfirmMsg && (
-              <InputWarning style={{ color: '#78D968' }}>
-                {validPasswordConfirmMsg}
-              </InputWarning>
-            )}
+            <InputPasswordConfirm
+              isPasswordConfirmShown={isPasswordConfirmShown}
+              handleChangePasswordConfirm={handleChangePasswordConfirm}
+              handleClickPasswordConfirmShown={handleClickPasswordConfirmShown}
+              invalidPasswordConfirmMsg={invalidPasswordConfirmMsg}
+              validPasswordConfirmMsg={validPasswordConfirmMsg}
+            />
           </Wrapper>
           <Wrapper>
             <Label>3. 닉네임을 입력하세요.</Label>
@@ -300,12 +276,4 @@ const DoubleCheckIcon = styled.div`
   right: 1.5rem;
   top: 50%;
   transform: translate(0, -50%);
-`;
-
-const EyeIcon = styled.div`
-  position: absolute;
-  right: 1.5rem;
-  top: 50%;
-  transform: translate(0, -50%);
-  cursor: pointer;
 `;

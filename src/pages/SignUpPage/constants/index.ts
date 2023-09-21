@@ -41,6 +41,7 @@ export const INPUT = {
   PLACEHOLDER: {
     EMAIL: 'angola@gmail.com',
     PASSWORD: '5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요.',
+    PASSWORD_CONFIRM: '동일한 비밀번호를 다시 입력해주세요.',
   },
   AUTO_COMPLETE: 'on',
 };
