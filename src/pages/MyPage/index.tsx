@@ -18,7 +18,7 @@ const MyPage = () => {
   const { name } = useCurrentPage();
   const { userData, isUserLoading, userDataRefetch } = useFetchUser(
     auth?.userId as string,
-  );
+  ); // TODO: refetch 할 때마다 데이터 로딩 처리하기
   const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
 
   useEffect(() => {
