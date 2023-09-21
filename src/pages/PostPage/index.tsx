@@ -10,9 +10,9 @@ import { useRecoilValue } from 'recoil';
 import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
 import { useFetchCreateComment, useFetchDeleteComment } from '@apis/comment';
-import { useFetchCreateNotification } from '@apis/notifications';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
+import useCommentNotification from './Hooks/useCommentNotification';
 import MakeComment from './MakeComment';
 import Turnout from './Turnout';
 import { CommentDeletionFailModal, CommentList } from './components';
@@ -38,8 +38,9 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     isDeleteCommentSuccess,
     isDeleteCommentLoading,
   } = useFetchDeleteComment();
-  const { createNotificationMutate } = useFetchCreateNotification();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useCommentNotification({ postData, isVoted, myId, setIsVoted });
 
   useEffect(() => {
     setSubmitValue(voted);
@@ -88,27 +89,26 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     setIsVoted(true);
   };
 
-  // 투표 완료시, 알림 보내주기.
-  useEffect(() => {
-    if (postData && isVoted && myId) {
-      const userComment = postData.comments.find(
-        (comment) => comment.author._id === myId,
-      );
+  // useEffect(() => {
+  //   if (postData && isVoted && myId) {
+  //     const userComment = postData.comments.find(
+  //       (comment) => comment.author._id === myId,
+  //     );
 
-      if (!userComment) return;
-      setIsVoted(false);
+  //     if (!userComment) return;
+  //     setIsVoted(false);
 
-      if (myId === postData.author._id) {
-        return;
-      }
-      createNotificationMutate({
-        notificationType: 'COMMENT',
-        notificationTypeId: userComment._id,
-        userId: postData.author._id,
-        postId: postData._id,
-      });
-    }
-  }, [isVoted, postData, myId, createNotificationMutate]);
+  //     if (myId === postData.author._id) {
+  //       return;
+  //     }
+  //     createNotificationMutate({
+  //       notificationType: 'COMMENT',
+  //       notificationTypeId: userComment._id,
+  //       userId: postData.author._id,
+  //       postId: postData._id,
+  //     });
+  //   }
+  // }, [isVoted, postData, myId, createNotificationMutate]);
 
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
