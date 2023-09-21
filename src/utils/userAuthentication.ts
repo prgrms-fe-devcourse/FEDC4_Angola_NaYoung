@@ -6,6 +6,8 @@ const SPECIAL_CHARACTER = /[~!@#$%^&*()_+|<>?:{}]/;
 const EMAIL_REGEXP = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
 const MIN_LENGTH = 3;
 const MAX_LENGTH = 8;
+const PASSWORD_MIN_LENGTH = 5;
+const PASSWORD_MAX_LENGTH = 15;
 
 interface checkEmailPatternProps {
   email: string;
@@ -53,8 +55,8 @@ export const checkFullNamePattern = ({
 
   if (
     SPECIAL_CHARACTER.test(trimmedFullName) ||
-    trimmedFullName.length > MAX_LENGTH ||
-    trimmedFullName.length < MIN_LENGTH
+    trimmedFullName.length >= MAX_LENGTH ||
+    trimmedFullName.length <= MIN_LENGTH
   ) {
     msg = '닉네임은 3자리 이상 8자리 이하 문자 또는 숫자로 구성하여야 합니다.';
     isValidFullName = false;
@@ -82,8 +84,8 @@ export const checkPassWordPattern = ({
     !NUMBER.test(trimmedPassWord) ||
     !CHARACTER.test(trimmedPassWord) ||
     !SPECIAL_CHARACTER.test(trimmedPassWord) ||
-    trimmedPassWord.length < MIN_LENGTH ||
-    trimmedPassWord.length > MAX_LENGTH
+    trimmedPassWord.length <= PASSWORD_MIN_LENGTH ||
+    trimmedPassWord.length >= PASSWORD_MAX_LENGTH
   ) {
     passwordMsg =
       '비밀번호는 5자리 이상 15자 이하 문자, 숫자, 특수문자로 구성하여야 합니다.';

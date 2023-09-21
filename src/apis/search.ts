@@ -32,7 +32,7 @@ export const useFetchSearchUsers = ({ query }: SearchRequestQuery) => {
     AxiosError
   >('searchUsers', () => baseInstance.get(`/search/users/${query}`));
   return {
-    searchUsersData: data?.data.filter((user) => user.role !== 'SuperAdmin'),
+    searchUsersData: data?.data.filter((user) => user.role !== 'SuperAdmin'), // Todo : Admin 거르기
     isSearchUsersSuccess: isSuccess,
     isSearchUsersError: isError,
     isSearchUsersLoading: isLoading,

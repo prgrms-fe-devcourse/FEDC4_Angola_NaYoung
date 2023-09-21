@@ -1,13 +1,22 @@
-import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { redirects, routes } from '@routes';
 import Header from '@components/Header';
 import useCurrentPage from '@hooks/useCurrentPage';
+import { useScrollToTop } from '@hooks/useScrollToTop';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import ToTopButton from './ToTopButton';
 
 const Main = () => {
   const { title, name, params, search } = useCurrentPage();
+  const location = useLocation();
+  const [scrollTargetRef, scrollToTop] = useScrollToTop<HTMLDivElement>();
+
+  useEffect(() => {
+    scrollToTop();
+  }, [location.pathname, scrollToTop]);
+
   const objectForSort = {
     target: params.target || 'post',
     sort: search.sort
@@ -16,6 +25,7 @@ const Main = () => {
       ? 'recent'
       : 'follower',
   };
+
   return (
     <MainContainer>
       <Header
@@ -28,8 +38,7 @@ const Main = () => {
             : undefined
         }
       />
-
-      <PageContainer>
+      <PageContainer ref={scrollTargetRef}>
         <Routes>
           {routes.map(({ path, name, component }) => (
             <Route
@@ -49,6 +58,7 @@ const Main = () => {
           ))}
         </Routes>
       </PageContainer>
+      <ToTopButton onScrollToTop={scrollToTop} />
     </MainContainer>
   );
 };
@@ -56,6 +66,7 @@ const Main = () => {
 export default Main;
 
 const MainContainer = styled.div`
+  position: relative;
   box-sizing: border-box;
   height: calc(100vh - 100px);
   display: flex;

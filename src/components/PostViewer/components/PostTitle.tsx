@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { rgba } from 'emotion-rgba';
 import NameTag from '@components/NameTag';
+import { useElementWidth } from '@components/PostViewer/hooks';
 import { getUserLevelInfo } from '@utils/calculateUserLevel';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { POST_TITLE } from '../constants';
 
 interface PostTitleProps {
   title: string;
@@ -22,20 +23,13 @@ const PostTitle = ({
   isPostPage,
   onGoDetailPage: goDetailPage,
 }: PostTitleProps) => {
-  const levelColor = getUserLevelInfo(authorLevel).userColor;
-  const tagRef = useRef<HTMLDivElement | null>(null);
-  const [tagWidth, setTagWidth] = useState<number>(120);
+  const { userColor: levelColor } = getUserLevelInfo(authorLevel);
+  const [tagRef, tagWidth] = useElementWidth(POST_TITLE.DEFAULT_TAG_WIDTH);
   const handleClickTitleText = () => {
     if (isPostPage) return;
     goDetailPage();
   };
-  useEffect(() => {
-    if (tagRef.current) {
-      setTagWidth(tagRef.current.offsetWidth);
-    } else {
-      setTagWidth(120);
-    }
-  }, []);
+
   return (
     <TitleContainer>
       <TitleShadow
@@ -55,7 +49,11 @@ const PostTitle = ({
           />
         </Tag>
         <Text
-          className={isPostPage ? 'inPost' : 'inHome'}
+          className={
+            isPostPage
+              ? POST_TITLE.LOCATION_CLASS.POST
+              : POST_TITLE.LOCATION_CLASS.HOME
+          }
           tagWidth={tagWidth}
           onClick={handleClickTitleText}>
           {title}

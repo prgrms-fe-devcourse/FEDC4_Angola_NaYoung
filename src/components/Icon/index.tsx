@@ -6,6 +6,7 @@ import {
   faSquare as faEmptySquare,
 } from '@fortawesome/free-regular-svg-icons';
 import {
+  faArrowUp,
   faBell,
   faCheck,
   faCheckDouble,
@@ -29,7 +30,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
-type IconName =
+export type IconName =
   | 'alert'
   | 'check'
   | 'warn'
@@ -52,6 +53,7 @@ type IconName =
   | 'eye'
   | 'eye_slash'
   | 'double_check'
+  | 'arrow_up';
 
 const iconMap = {
   alert: faBell,
@@ -76,6 +78,7 @@ const iconMap = {
   eye: faEye,
   eye_slash: faEyeSlash,
   double_check: faCheckDouble,
+  arrow_up: faArrowUp,
 };
 
 interface IconProps {

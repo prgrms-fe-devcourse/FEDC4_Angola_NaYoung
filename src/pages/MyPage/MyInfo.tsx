@@ -1,19 +1,25 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Button from '@components/Button';
+import Icon from '@components/Icon';
+import Image from '@components/Image';
+import NameTag from '@components/NameTag';
 import Spinner from '@components/Spinner';
-import { useFetchLogOut } from '@apis/auth';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
 import {
-  useFetchUpdateFullName,
-  useFetchUpdatePassword,
-  useFetchUpdateProfileImage,
-} from '@apis/profile';
+  CHECK_DUPLICATE_BUTTON,
+  LABEL,
+  LOG_OUT_TEXT,
+  PASSWORD_BUTTON,
+  PLACEHOLDER,
+} from './constants';
 import {
-  checkFullNamePattern,
-  checkPassWordPattern,
-} from '@utils/userAuthentication';
+  useLogOut,
+  useUpdateFullName,
+  useUpdatePassWord,
+  useUpdateProfile,
+} from './hooks';
 
-// TODO: return에서 isUpdateFullNameError 발생 시, 모달 보여주고 함수 실행시키고, 이전 값
 interface MyInfoProps {
   id: string;
   image: string;
@@ -27,133 +33,59 @@ interface MyInfoProps {
 }
 
 const MyInfo = ({
-  //id,
+  id,
   image,
   name,
   likes,
   followers,
   following,
   myLevel,
-  myColor,
   myEmoji,
 }: MyInfoProps) => {
-  const navigate = useNavigate();
-  const { updateFullNameMutate } = useFetchUpdateFullName();
-  const [newFullName, setNewFullName] = useState(name);
-  const [isEditingFullName, setIsEditingFullName] = useState(false);
-  const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
-  const [newPassWord, setNewPassWord] = useState(updatePasswordData.password);
-  const [confirmNewPassWord, setConfirmNewPassWord] = useState('');
-  const [isEditingPassWord, setIsEditingPassWord] = useState(false);
-  const [profileImageUrl, setProfileImageUrl] = useState(image);
   const {
-    updateProfileImageMutate,
-    updateProfileImageData,
-    isUpdateProfileImageSuccess,
     isUpdateProfileImageLoading,
-  } = useFetchUpdateProfileImage();
-  const { logOutMutate } = useFetchLogOut();
-
-  useEffect(() => {
-    setNewFullName(name);
-    setProfileImageUrl(image);
-  }, [name, image]);
-
-  const handleClickChangeFullName = () => {
-    if (isEditingFullName) {
-      if (checkFullNamePattern(newFullName)) {
-        updateFullNameMutate({ fullName: newFullName });
-      } else {
-        setNewFullName('');
-        return;
-      }
-    }
-    setIsEditingFullName(!isEditingFullName);
-  };
-
-  const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewFullName(e.target.value);
-  };
-
-  const resetPassWordFields = () => {
-    setNewPassWord('');
-    setConfirmNewPassWord('');
-  };
-
-  const handleClickChangePassWord = () => {
-    if (isEditingPassWord && newPassWord) {
-      if (checkPassWordPattern({ newPassWord, confirmNewPassWord })) {
-        updatePasswordMutate({ password: newPassWord });
-        resetPassWordFields();
-      } else {
-        resetPassWordFields();
-        return;
-      }
-    }
-    setIsEditingPassWord(!isEditingPassWord);
-  };
-
-  const handleChangePassWord = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPassWord(e.target.value);
-  };
-
-  const handleChangeConfirmPassWord = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setConfirmNewPassWord(e.target.value);
-  };
-
-  const handleChangeProfileImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const imageFile = e.target.files?.[0];
-    if (imageFile) {
-      const imageUrl = URL.createObjectURL(imageFile);
-      setProfileImageUrl(imageUrl);
-      updateProfileImageMutate({ image: imageFile, isCover: false });
-    }
-  };
-
-  useEffect(() => {
-    if (isUpdateProfileImageSuccess && updateProfileImageData.image) {
-      setProfileImageUrl(updateProfileImageData.image); // 이미지 URL 업데이트
-    }
-  }, [updateProfileImageData, isUpdateProfileImageSuccess]);
-
-  useEffect(() => {
-    return () => {
-      if (profileImageUrl) {
-        URL.revokeObjectURL(profileImageUrl);
-      }
-    };
-  }, [profileImageUrl]);
-
-  const handleClickLogOutButton = () => {
-    logOutMutate();
-    navigate('/');
-  };
+    profileImageUrl,
+    handleChangeProfileImage,
+  } = useUpdateProfile({ image });
+  const {
+    isEditingFullName,
+    newFullName,
+    handleChangeFullName,
+    handleClickUpdateFullName,
+    invalidFullNameMsg,
+    validFullNameMsg,
+    isDuplicatedFullNameChecked,
+    handleClickDuplicatedFullNameCheckBtn,
+  } = useUpdateFullName({ name });
+  const {
+    isEditingPassWord,
+    newPassWord,
+    handleChangePassWord,
+    handleClickUpdatePassWord,
+    confirmNewPassWord,
+    handleChangeConfirmPassWord,
+    invalidPasswordMsg,
+    invalidPasswordConfirmMsg,
+    validPasswordConfirmMsg,
+    handleAcceptPassWordButton,
+  } = useUpdatePassWord();
+  const { handleClickLogOut } = useLogOut();
 
   return (
-    <MyInfoContainer>
-      <div>
+    <MyInfoWrapper>
+      <MyProfileContainer>
         {isUpdateProfileImageLoading && <Spinner />}
-        {profileImageUrl && (
-          <img
+        <Emoji>{myEmoji}</Emoji>
+        <EditProfile htmlFor="profile">
+          <Image
             src={
               profileImageUrl
                 ? profileImageUrl
-                : 'https://cdn.icon-icons.com/icons2/2645/PNG/512/person_circle_icon_159926.png'
+                : `${USER_PROFILE_IMAGE.DEFAULT_SRC}`
             }
-            alt="프로필 이미지"
-            style={{
-              objectFit: 'cover',
-              width: '70px',
-              height: '70px',
-              borderRadius: '50%',
-            }}
+            alt={USER_PROFILE_IMAGE.ALT}
           />
-        )}
-        <FileUploadButton htmlFor="profile">
-          <div>프로필 업로드</div>
-        </FileUploadButton>
+        </EditProfile>
         <ProfileInput
           type="file"
           id="profile"
@@ -161,185 +93,360 @@ const MyInfo = ({
           onChange={handleChangeProfileImage}
           disabled={isUpdateProfileImageLoading}
         />
-      </div>
-      <NamesLevelLikes>
+      </MyProfileContainer>
+      <MyFullNameContainer>
         {isEditingFullName ? (
-          <Input
-            type="text"
-            value={newFullName}
-            placeholder="닉네임 입력"
-            onChange={handleChangeFullName}
-          />
+          <MyFullNameBox>
+            <InputBox>
+              <Input
+                type="text"
+                value={newFullName}
+                placeholder={PLACEHOLDER.FULL_NAME}
+                onChange={handleChangeFullName}
+              />
+              {isDuplicatedFullNameChecked && (
+                <DoubleCheckIcon>
+                  <Icon
+                    name={'double_check'}
+                    color={'#78D968'}
+                  />
+                </DoubleCheckIcon>
+              )}
+            </InputBox>
+            <Button
+              type="button"
+              onClick={handleClickDuplicatedFullNameCheckBtn}
+              style={{
+                width: '100px',
+                height: '48px',
+                padding: '0',
+                fontSize: ANGOLA_STYLES.textSize.titleSm,
+              }}>
+              {CHECK_DUPLICATE_BUTTON}
+            </Button>
+            <Button
+              onClick={handleClickUpdateFullName}
+              size="sm"
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                padding: '0px',
+              }}
+              disabled={!validFullNameMsg}>
+              <Icon
+                name="check"
+                size="20"
+              />
+            </Button>
+          </MyFullNameBox>
         ) : (
-          <Container>
-            <Name>유저 이름</Name>
-            <MyName color={myColor}>{newFullName}</MyName>
-          </Container>
+          <NameTagContainer>
+            <NameTag
+              level={myLevel}
+              userName={newFullName}
+              userId={id}
+              userLevel={myLevel}
+              isNav={false}
+              showLevel={false}
+            />
+            <Button
+              onClick={handleClickUpdateFullName}
+              size="sm"
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                padding: '0px',
+              }}>
+              <Icon
+                name="edit"
+                size="20"
+              />
+            </Button>
+          </NameTagContainer>
         )}
-        <Button onClick={handleClickChangeFullName}>
-          {isEditingFullName ? '제출 하기' : '편집 하기'}
-        </Button>
-        <Container>
-          <Level color={myColor}>
-            {myEmoji}Level {myLevel}
-          </Level>
-        </Container>
-        <Container>
-          <Likes>👍 받은 좋아요 {likes} </Likes>
-        </Container>
-      </NamesLevelLikes>
-      <FollowerAndFollowing>
-        <Container>
-          <Follower>🙍 follower</Follower> <MyInfoText>{followers}</MyInfoText>
-        </Container>
-        <Container>
-          <Following>🙍 following</Following>
-          <MyInfoText>{following}</MyInfoText>
-        </Container>
-      </FollowerAndFollowing>
-      {isEditingPassWord ? (
-        <PassWordInput>
-          <PassWord>비밀번호</PassWord>
-          <Input
-            type="text"
-            placeholder="새 비밀번호 입력"
-            value={newPassWord}
-            onChange={handleChangePassWord}
-          />
-          <PassWord>비밀번호 확인</PassWord>
-          <Input
-            type="password"
-            placeholder="새 비밀번호 확인"
-            value={confirmNewPassWord}
-            onChange={handleChangeConfirmPassWord}
-          />
-        </PassWordInput>
-      ) : null}
-      <Button onClick={handleClickChangePassWord}>
-        {isEditingPassWord ? '변경 하기' : '비밀번호 변경'}
-      </Button>
-      <div>
-        <Button onClick={handleClickLogOutButton}>로그 아웃</Button>
-      </div>
-    </MyInfoContainer>
+        <>
+          {isEditingFullName && (
+            <>
+              {invalidFullNameMsg && (
+                <InputWarning>
+                  <Icon
+                    name={'warn'}
+                    color={'#F66'}
+                  />
+                  {invalidFullNameMsg}
+                </InputWarning>
+              )}
+              {validFullNameMsg && (
+                <InputWarning style={{ color: '#78D968' }}>
+                  {validFullNameMsg}
+                </InputWarning>
+              )}
+            </>
+          )}
+        </>
+      </MyFullNameContainer>
+      <MyInfoContainer>
+        {isEditingPassWord ? (
+          <PassWordContainer>
+            <PassWordBox>
+              <PassWordInput>
+                <InputLabel>{LABEL.NEW_PASSWORD}</InputLabel>
+                <Input
+                  type="password"
+                  placeholder={PLACEHOLDER.NEW_PASSWORD}
+                  value={newPassWord}
+                  onChange={handleChangePassWord}
+                  style={{ width: '400px' }}
+                />
+              </PassWordInput>
+              {invalidPasswordMsg && (
+                <InputWarning>
+                  <Icon
+                    name={'warn'}
+                    color={'#F66'}
+                  />
+                  {invalidPasswordMsg}
+                </InputWarning>
+              )}
+            </PassWordBox>
+            <PassWordBox>
+              <PassWordInput>
+                <InputLabel>{LABEL.NEW_PASSWORD_CONFIRM}</InputLabel>
+                <Input
+                  type="password"
+                  placeholder={PLACEHOLDER.NEW_PASSWORD_CONFIRM}
+                  value={confirmNewPassWord}
+                  onChange={handleChangeConfirmPassWord}
+                  style={{ width: '400px' }}
+                />
+              </PassWordInput>
+              {invalidPasswordConfirmMsg && (
+                <InputWarning>
+                  <Icon
+                    name={'warn'}
+                    color={'#F66'}
+                  />
+                  {invalidPasswordConfirmMsg}
+                </InputWarning>
+              )}
+              {validPasswordConfirmMsg && (
+                <InputWarning style={{ color: '#78D968' }}>
+                  {validPasswordConfirmMsg}
+                </InputWarning>
+              )}
+            </PassWordBox>
+          </PassWordContainer>
+        ) : (
+          <MyInfoBox>
+            <MyInfoText>
+              {USER_INFO.LEVEL}&nbsp;&nbsp;{myLevel}
+            </MyInfoText>
+            <Bar>|</Bar>
+            <MyInfoText>
+              {USER_INFO.FOLLOWER}&nbsp;&nbsp;{followers}
+            </MyInfoText>
+            <Bar>|</Bar>
+            <MyInfoText>
+              {USER_INFO.FOLLOWING}&nbsp;&nbsp;{following}
+            </MyInfoText>
+            <Bar>|</Bar>
+            <MyInfoText>
+              {USER_INFO.GET_LIKES}&nbsp;&nbsp;{likes}
+            </MyInfoText>
+            <Bar>|</Bar>
+          </MyInfoBox>
+        )}
+        {isEditingPassWord ? (
+          <Button
+            onClick={handleClickUpdatePassWord}
+            disabled={handleAcceptPassWordButton()}>
+            {PASSWORD_BUTTON.DONE_MSG}
+          </Button>
+        ) : (
+          <Button onClick={handleClickUpdatePassWord}>
+            {PASSWORD_BUTTON.EDIT_MSG}
+          </Button>
+        )}
+        {isEditingPassWord ? null : (
+          <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
+        )}
+      </MyInfoContainer>
+    </MyInfoWrapper>
   );
 };
 
 export default MyInfo;
 
-const MyInfoContainer = styled.div`
+const MyInfoWrapper = styled.div`
   display: flex;
-  width: 80%;
-  height: 100%;
-  border: 1px solid black;
+  padding: 0px 24px;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 30px 10px;
-  gap: 30px;
+  gap: 24px;
+  align-self: stretch;
+  background-color: ${ANGOLA_STYLES.color.white};
 `;
 
-const FileUploadButton = styled.label`
+const MyProfileContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  border: 1px solid rgb(77, 77, 77);
-  width: 120px;
-  height: 35px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
+  align-items: center;
+  gap: 10px;
+`;
+
+const Emoji = styled.div`
+  color: ${ANGOLA_STYLES.color.text};
+  text-align: center;
+  font-size: ${ANGOLA_STYLES.textSize.symbol};
+  line-height: 100%;
+  letter-spacing: -0.924px;
+`;
+
+const EditProfile = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  position: relative;
+  &:hover img {
+    opacity: 0.5;
+    box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+  }
+  &:hover::after {
+    content: '클릭하여 수정하기';
+    white-space: pre;
+    text-align: center;
+    top: 50%;
+    position: absolute;
+    opacity: 1;
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+  }
 `;
 
 const ProfileInput = styled.input`
   display: none;
 `;
 
-const NamesLevelLikes = styled.div`
+const MyFullNameContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 10px;
 `;
 
-const Container = styled.div`
+const MyFullNameBox = styled.div`
   display: flex;
+  gap: 20px;
+`;
+
+const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-`;
-
-const Name = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const MyName = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${(props) => props.color};
-`;
-
-const Level = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${(props) => props.color};
-`;
-
-const MyInfoText = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  margin-left: auto;
+  position: relative;
 `;
 
 const Input = styled.input`
-  width: 150px;
-  height: 30px;
-  border-radius: 20px;
-  padding: 3px 3px 0px 10px;
-`;
-
-const Button = styled.button`
-  width: 120px;
-  height: 35px;
-  border-radius: 20px;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  &:hover {
-    background-color: #c2c2c2;
-    color: white;
+  display: flex;
+  padding: 8px 32px;
+  height: 100%;
+  align-items: center;
+  border-radius: 27px;
+  border: ${ANGOLA_STYLES.border.default};
+  background: ${ANGOLA_STYLES.color.white};
+  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+  &:focus {
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
 `;
 
-const Likes = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const FollowerAndFollowing = styled.div`
+const MyInfoContainer = styled.div`
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 12px 0px;
+  gap: 24px;
+  align-self: stretch;
+`;
+
+const MyInfoText = styled.div`
+  display: flex;
+  color: ${ANGOLA_STYLES.color.text};
+  text-align: center;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.396px;
+`;
+
+const Bar = styled.div`
+  color: ${ANGOLA_STYLES.color.dark};
+  text-align: center;
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.396px;
+`;
+
+const MyInfoBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  gap: 24px;
+  align-self: stretch;
+`;
+
+const PassWordContainer = styled.div`
+  display: flex;
+  /* display: flex;
+  align-items: center;*/
   flex-direction: column;
+  gap: 20px;
 `;
 
-const Follower = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const Following = styled.div`
-  font-size: 18px;
-  font-weight: 600;
+const PassWordBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const PassWordInput = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
+  gap: 20px;
 `;
 
-const PassWord = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  margin: 10px 0px;
+const InputLabel = styled.label`
+  font-size: ${ANGOLA_STYLES.textSize.text};
+`;
+
+const InputWarning = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: #f66;
+  gap: 8px;
+`;
+
+const NameTagContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+
+const DoubleCheckIcon = styled.div`
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translate(0, -50%);
 `;
