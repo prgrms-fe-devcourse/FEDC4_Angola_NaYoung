@@ -60,11 +60,11 @@ const NotificationButton = styled.button`
   padding: 0px 20px;
   justify-content: center;
   align-items: center;
-
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};
+  cursor: pointer;
 
   &:hover {
     box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};

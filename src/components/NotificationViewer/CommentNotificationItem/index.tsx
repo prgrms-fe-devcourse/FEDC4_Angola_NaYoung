@@ -42,12 +42,18 @@ const CommentListItemContainer = styled.div<{ seen: boolean }>`
   align-self: stretch;
   border-radius: 50px;
   gap: 8px;
+  cursor: pointer;
+  transition: 0.2s;
   border: ${({ seen }) =>
     seen
       ? ANGOLA_STYLES.border.notification_seen
       : ANGOLA_STYLES.border.default};
   background: ${({ seen }) =>
     seen ? ANGOLA_STYLES.color.gray : ANGOLA_STYLES.color.white};
+
+  &:hover {
+    background: ${ANGOLA_STYLES.color.gray};
+  }
 `;
 
 const CommentListItemIcon = styled.div`
@@ -71,7 +77,6 @@ const CommentListItemText = styled.p<{ seen: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  
   @media (max-width: 768px) {
     width: 140px;
   }

@@ -41,6 +41,7 @@ const NotificationViewer = ({
 }: NotificationViewePropsType) => {
   const navigate = useNavigate();
   const viewerBackGroundRef = useRef(null);
+
   useEffect(() => {
     // Viewer 바깥 영역 클릭 시, 뷰어 닫아지도록
     const handleClickViewerBackGround = (e: Event) => {
@@ -207,7 +208,7 @@ const NotificationViewer = ({
         </NotificationHeader>
 
         {isReadNotificationsLoading ? (
-          <LoadingNotificationList>로딩중입니다.</LoadingNotificationList>
+          <EmptyNotificationList>로딩중입니다.</EmptyNotificationList>
         ) : (
           <NotificationList>
             {isShowAllNotifications
@@ -277,18 +278,6 @@ const ShowAllNotificationsCheckBox = styled.div`
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
 `;
 
-const LoadingNotificationList = styled.div`
-  width: 352px;
-  height: 380px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 768px) {
-    width: 112px;
-  }
-`;
-
 const EmptyNotificationList = styled.div`
   width: 352px;
   height: 380px;
@@ -332,6 +321,7 @@ const ReadNotificationButton = styled.button`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.button.default};
+  cursor: pointer;
   &:hover {
     box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
   }
