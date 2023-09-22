@@ -5,17 +5,9 @@ import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
 import { authInfoState } from '@store/auth';
 import { calculateLevel } from '@utils/calculateUserLevel';
-import useInfiniteScroll from './hooks/useInfiniteScroll';
 import { splitCommentBySeparator } from '@utils/parseDataBySeparator';
-import { Comment, Post } from '@type/index';
-
-const INTERACTION_OPTION = {
-  root: null,
-  rootMargin: '0px',
-  threshold: 1.0,
-};
-
-const LIMIT = 5;
+import { Comment } from '@type/index';
+import useInfiniteScroll from './hooks/useInfiniteScroll';
 
 const HomePage = () => {
   const auth = useRecoilValue(authInfoState);
