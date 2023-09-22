@@ -20,7 +20,7 @@ const useInfiniteScroll = ({ containerRef }: useInfinityScroll) => {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || !partPostsData || partPostsData.length < 5) return;
+    if (!container || !partPostsData || partPostsData.length < LIMIT) return;
 
     const handleIntersection = async (
       [entry]: IntersectionObserverEntry[],
@@ -29,7 +29,7 @@ const useInfiniteScroll = ({ containerRef }: useInfinityScroll) => {
       if (isLoading) return;
       if (entry.isIntersecting) {
         setIsLoading(true);
-        setOffset((prev) => prev + 5);
+        setOffset((prev) => prev + LIMIT);
         await partPostsRefetch();
         io.unobserve(entry.target);
         setIsLoading(false);
