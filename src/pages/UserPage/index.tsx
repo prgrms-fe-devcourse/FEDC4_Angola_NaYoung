@@ -19,7 +19,11 @@ interface UserPageProps {
 const UserPage = ({ userId = '' }: UserPageProps) => {
   const auth = useRecoilValue(authInfoState);
   const navigate = useNavigate();
-  const { userData, isUserLoading, userDataRefetch } = useFetchUser(userId);
+  const { userData, userDataRefetch } = useFetchUser(userId);
+
+  const isSameId = () => {
+    return userData?._id === userId;
+  };
 
   useEffect(() => {
     userDataRefetch();
@@ -29,48 +33,50 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
     navigate('/mypage', { replace: true });
   }
 
-  if (isUserLoading) {
-    return <Spinner />;
-  }
-
   return (
     <UserPageWrapper>
-      {userData && (
-        <UserInfo
-          userId={userId}
-          image={userData.image}
-          name={userData.fullName}
-          likes={userData.posts.reduce(
-            (likes, post) => likes + post.likes.length,
-            0,
-          )}
-          followers={userData.followers?.length}
-          following={userData.following?.length}
-          followerId={
-            userData.followers.find(
-              (follower) => follower.follower === auth?.userId,
-            )?._id
-          }
-          userLevel={calculateLevel(userData)}
-          userEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
-        />
-      )}
-      <PostsListContainer>
-        <PostsListTitle>
-          {userData?.posts?.length === 0
-            ? USER_POSTS_TITLE.NO_POSTS
-            : USER_POSTS_TITLE.POSTS}
-        </PostsListTitle>
-        <PostsListUl>
-          {userData?.posts.map((post) => (
-            <PostListItem
-              key={post._id}
-              id={post._id}
-              title={post.title}
+      {isSameId() ? (
+        <>
+          {userData && (
+            <UserInfo
+              userId={userId}
+              image={userData.image}
+              name={userData.fullName}
+              likes={userData.posts.reduce(
+                (likes, post) => likes + post.likes.length,
+                0,
+              )}
+              followers={userData.followers?.length}
+              following={userData.following?.length}
+              followerId={
+                userData.followers.find(
+                  (follower) => follower.follower === auth?.userId,
+                )?._id
+              }
+              userLevel={calculateLevel(userData)}
+              userEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
             />
-          ))}
-        </PostsListUl>
-      </PostsListContainer>
+          )}
+          <PostsListContainer>
+            <PostsListTitle>
+              {userData?.posts?.length === 0
+                ? USER_POSTS_TITLE.NO_POSTS
+                : USER_POSTS_TITLE.POSTS}
+            </PostsListTitle>
+            <PostsListUl>
+              {userData?.posts.map((post) => (
+                <PostListItem
+                  key={post._id}
+                  id={post._id}
+                  title={post.title}
+                />
+              ))}
+            </PostsListUl>
+          </PostsListContainer>
+        </>
+      ) : (
+        <Spinner />
+      )}
     </UserPageWrapper>
   );
 };
