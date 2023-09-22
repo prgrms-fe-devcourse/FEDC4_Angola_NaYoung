@@ -233,7 +233,6 @@ const SubmitButton = styled.button`
   padding: 20px 36px;
   justify-content: center;
   align-items: center;
-
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
