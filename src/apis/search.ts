@@ -29,10 +29,15 @@ export const useFetchSearchUsers = ({ query }: SearchRequestQuery) => {
   const { baseInstance } = useAxiosInstance();
   const { data, isSuccess, isError, isLoading, refetch } = useQuery<
     AxiosResponse<User[]>,
-    AxiosError
-  >('searchUsers', () => baseInstance.get(`/search/users/${query}`));
+    AxiosError,
+    User[]
+  >('searchUsers', () => baseInstance.get(`/search/users/${query}`), {
+    select: ({ data }) => {
+      return data.filter((user) => user.role !== 'SuperAdmin');
+    },
+  });
   return {
-    searchUsersData: data?.data.filter((user) => user.role !== 'SuperAdmin'), // Todo : Admin 거르기
+    searchUsersData: data,
     isSearchUsersSuccess: isSuccess,
     isSearchUsersError: isError,
     isSearchUsersLoading: isLoading,

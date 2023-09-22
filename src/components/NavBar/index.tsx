@@ -30,6 +30,7 @@ const NavBarContainer = styled.div`
 `;
 
 const MenuBarContainer = styled.div`
+  position: relative; // NotificationViewer를 absolute로 보여주기 위해 
   box-sizing: border-box;
   height: 100px;
   display: flex;

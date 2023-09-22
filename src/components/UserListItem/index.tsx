@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
-import { useRecoilValue } from 'recoil';
 import Icon from '@components/Icon';
 import Image from '@components/Image';
 import LinkButton from '@components/LinkButton';
 import NameTag from '@components/NameTag';
-import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { MORE_LINK_BUTTON_STYLES } from '@styles/index';
-import { USER_PROFILE_IMAGE } from '@constants/index';
+import { BUTTON_VALUES, USER_PROFILE_IMAGE } from '@constants/index';
 
 interface UserListItemProps {
   id: string;
@@ -26,9 +24,6 @@ const UserListItem = ({
   followers,
   userEmoji,
 }: UserListItemProps) => {
-  const auth = useRecoilValue(authInfoState);
-  const myId = auth?.userId;
-
   return (
     <ListItemContainer>
       <Image
@@ -37,6 +32,7 @@ const UserListItem = ({
         size={60}
         style={{ margin: '0 20px' }}
       />
+
       <UserInfo>
         <div className="user_name">
           <NameTag
@@ -57,20 +53,13 @@ const UserListItem = ({
           </div>
         </LevelAndFollowers>
       </UserInfo>
+
       <More className="more">
-        {myId === id ? (
-          <LinkButton
-            to={`/mypage`}
-            style={MORE_LINK_BUTTON_STYLES}>
-            More
-          </LinkButton>
-        ) : (
-          <LinkButton
-            to={`/user/${id}`}
-            style={MORE_LINK_BUTTON_STYLES}>
-            More
-          </LinkButton>
-        )}
+        <LinkButton
+          to={`/user/${id}`}
+          style={MORE_LINK_BUTTON_STYLES}>
+          {BUTTON_VALUES.MORE_TEXT}
+        </LinkButton>
       </More>
     </ListItemContainer>
   );

@@ -28,7 +28,7 @@ const SearchBar = () => {
 
     if (keyword.length) {
       addKeywordToQueryString({ keyword: keyword.trim() });
-      setKeyword(keyword.trim());
+      setKeyword('');
     } else {
       removeKeywordFromQueryString();
     }
@@ -55,7 +55,6 @@ const SearchBar = () => {
         onChange={handleChangeKeyword}></StyledInput>
 
       <ClearTextButton type="reset">
-        {' '}
         <Icon
           name="close"
           size={'30'}
@@ -70,8 +69,6 @@ export default SearchBar;
 const StyledForm = styled.form`
   box-sizing: border-box;
   position: relative;
-  max-width: 600px;
-  width: 600px;
   height: 60px;
   display: flex;
   padding: 0px 20px;
@@ -80,9 +77,14 @@ const StyledForm = styled.form`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
-  
-  &:focus-within{
+  transition: box-shadow 0.2s;
+
+  &:focus-within {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
+
+  @media (max-width: 680px) {
+    display: none;
   }
 `;
 
@@ -92,6 +94,7 @@ const SubmitButton = styled.button`
   padding: 0;
   background: ${ANGOLA_STYLES.color.white};
   border: none;
+  cursor: pointer;
 `;
 
 const StyledInput = styled.input`
@@ -101,7 +104,11 @@ const StyledInput = styled.input`
   margin: 0 0 0 12px;
   padding: 0;
   height: 30px;
-  width: 300px; // calc하기
+  width: calc((100vw - 514px) * 0.65);
+
+  @media (max-width: 780px) {
+    width: calc((100vw - 514px) * 0.4);
+  }
 `;
 
 const ClearTextButton = styled.button`
@@ -112,4 +119,5 @@ const ClearTextButton = styled.button`
   padding: 0;
   background: ${ANGOLA_STYLES.color.white};
   border: none;
+  cursor: pointer;
 `;

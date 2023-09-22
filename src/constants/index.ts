@@ -50,3 +50,7 @@ export const PARAM_VALUES = {
     POST: 'post',
   },
 };
+
+export const BUTTON_VALUES = {
+  MORE_TEXT: 'more',
+};

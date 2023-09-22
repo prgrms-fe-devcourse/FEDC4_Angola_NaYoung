@@ -6,7 +6,8 @@ import Spinner from '@components/Spinner';
 import { useFetchPartPosts } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import { calculateLevel } from '@utils/calculateUserLevel';
-import { Post } from '@type/index';
+import { splitCommentBySeparator } from '@utils/parseDataBySeparator';
+import { Comment, Post } from '@type/index';
 
 const INTERACTION_OPTION = {
   root: null,
@@ -65,6 +66,14 @@ const HomePage = () => {
     }
   }, [partPostsData]);
 
+  const getUserVoteValue = (comments: Comment[]) => {
+    if (!auth) return;
+    const userComment = comments.find(
+      (comment) => comment.author._id === auth.userId,
+    )?.comment;
+    return userComment ? splitCommentBySeparator(userComment).vote : undefined;
+  };
+
   return (
     <Container>
       {addPostData?.map((post, index) => (
@@ -76,6 +85,7 @@ const HomePage = () => {
           authorLevel={calculateLevel(post.author)}
           postTitle={post.title}
           likeId={post.likes.find((like) => like.user === auth?.userId)?._id}
+          voteValue={getUserVoteValue(post.comments)}
           numberOfComments={post.comments.length}
           numberOfLikes={post.likes.length}></PostViewer>
       ))}

@@ -2,9 +2,9 @@ import { PARAM_VALUES, SEARCH_VALUES } from '@constants';
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import useSelect from './Hooks/useSelect';
 import TabBarList from './TabBarList';
 import { SELECT_OPTION } from './constants';
+import useSelect from './hooks/useSelect';
 
 interface HeaderProps {
   title: string;
@@ -19,14 +19,14 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
   const TARGET_VALUE = sortProps?.target;
   const SORT_VALUE = sortProps?.sort;
 
-  const { selectValue, handleChangeSelect } = useSelect({ SORT_VALUE });
+  const { handleChangeSelect } = useSelect({ SORT_VALUE });
 
   return (
     <Container>
       {sortProps && (
         <SelectContainer>
           <SortSelect
-            value={selectValue}
+            value={SORT_VALUE}
             onChange={(e) => {
               handleChangeSelect(e.target.value);
             }}>
