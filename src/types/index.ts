@@ -1,31 +1,31 @@
-export interface User{
-    coverImage: string;
-    image: string;
-    role: string;
-    emailVerified: boolean;
-    banned: boolean;
-    isOnline: boolean;
-    posts: Post[];
-    likes: Like[];
-    comments: string[];
-    followers: Follow[];
-    following: [
-      {
-        _id: string;
-        user: string;
-        follower: string;
-        createdAt: string;
-        updatedAt: string;
-        __v: number;
-      }
-    ];
-    notifications: Notification[];
-    messages: Message[];
-    _id: string;
-    fullName: string;
-    email: string;
-    createdAt: string;
-    updatedAt: string;
+export interface User {
+  coverImage: string;
+  image: string;
+  role: string;
+  emailVerified: boolean;
+  banned: boolean;
+  isOnline: boolean;
+  posts: Post[];
+  likes: Like[];
+  comments: string[];
+  followers: Follow[];
+  following: [
+    {
+      _id: string;
+      user: string;
+      follower: string;
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+    },
+  ];
+  notifications: Notification[];
+  messages: Message[];
+  _id: string;
+  fullName: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Channel {
@@ -42,19 +42,19 @@ export interface Post {
   likes: Like[];
   comments: Comment[];
   _id: string;
-  image?: string;  
-	imagePublicId?: string;  
+  image?: string;
+  imagePublicId?: string;
   title: string;
   channel: Channel;
   author: User;
-  createdAt: string;  
-  updatedAt: string; 
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Like {
-  _id: string; 
+  _id: string;
   user: string;
-  post: string, 
+  post: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -67,14 +67,15 @@ export interface Follow {
   updatedAt: string;
 }
 export interface Notification {
-  seen : boolean;
+  seen: boolean;
   _id: string;
   author: User;
   user: User | string;
   post: null | string;
-  follow?: string;
+  like?: Like;
+  follow?: Follow;
   comment?: Comment;
-  message?: string;
+  message?: Message;
   createdAt: string;
   updatedAt: string;
 }

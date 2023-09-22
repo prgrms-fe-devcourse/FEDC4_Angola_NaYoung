@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
+import { useFetchDeletePost } from '@apis/post';
 import { useFetchUser } from '@apis/user';
 import useCurrentPage from '@hooks/useCurrentPage';
 import { authInfoState } from '@store/auth';
@@ -14,12 +16,20 @@ import { MY_PAGE } from './constants';
 const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
   const { name } = useCurrentPage();
-  const { userData, isUserLoading } = useFetchUser(auth?.userId as string);
+  const { userData, isUserLoading, userDataRefetch } = useFetchUser(
+    auth?.userId as string,
+  ); // TODO: refetch 할 때마다 데이터 로딩 처리하기
+  const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
+
+  useEffect(() => {
+    if (isDeletePostSuccess) {
+      userDataRefetch();
+    }
+  }, [isDeletePostSuccess, userDataRefetch]);
 
   if (isUserLoading) {
     return <Spinner />;
   }
-
   return (
     <MyPageWrapper>
       {userData && (
@@ -51,6 +61,7 @@ const MyPage = () => {
               id={post._id}
               title={post.title}
               canDeletePost={name === MY_PAGE}
+              deletePostMutate={deletePostMutate}
             />
           ))}
         </PostsListUl>

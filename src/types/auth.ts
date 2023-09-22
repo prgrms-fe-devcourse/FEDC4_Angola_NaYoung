@@ -1,4 +1,5 @@
 export interface AuthInfo {
-	token: string;
-	userId: string;
+  userFullName: string;
+  token: string;
+  userId: string;
 }

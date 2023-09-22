@@ -2,13 +2,15 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useFetchUpdateFullName } from '@apis/profile';
 import { useFetchUsers } from '@apis/user';
 import { checkFullNamePattern } from '@utils/userAuthentication';
+import { CHECK_MSG } from '@constants/index';
 
 interface useUpdateFullNameProps {
   name: string;
 }
 
 const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
-  const { updateFullNameMutate } = useFetchUpdateFullName();
+  const { updateFullNameMutate, isUpdateFullNameError } =
+    useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
   const [isEditingFullName, setIsEditingFullName] = useState(false);
   const { usersData } = useFetchUsers();
@@ -16,6 +18,7 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
   const [validFullNameMsg, setValidFullNameMsg] = useState('');
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
     useState(false);
+  const [isFullNameModalOpen, setIsFullNameModalOpen] = useState(false);
 
   useEffect(() => {
     setNewFullName(name);
@@ -35,21 +38,21 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
 
   const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
-      setInvalidFullNameMsg('닉네임을 입력해주세요.');
+      setInvalidFullNameMsg(`${CHECK_MSG.FULL_NAME}`);
     }
     setNewFullName(e.target.value);
     setIsDuplicatedFullNameChecked(false);
     setValidFullNameMsg('');
   };
 
-  const handleClickDuplicatedFullNameCheckBtn = () => {
+  const handleClickDuplicatedFullNameCheckButton = () => {
     const { isValidFullName, msg } = checkFullNamePattern({
       fullName: newFullName,
       usersData,
     });
 
     if (!usersData) {
-      console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
+      console.error(`${CHECK_MSG.ERROR}`);
       return;
     }
     if (!isValidFullName) {
@@ -61,6 +64,13 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
     }
   };
 
+  useEffect(() => {
+    if (isUpdateFullNameError) {
+      setIsFullNameModalOpen(true);
+      setNewFullName(name);
+    }
+  }, [isUpdateFullNameError, setNewFullName, name]);
+
   return {
     newFullName,
     isEditingFullName,
@@ -69,7 +79,9 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
     invalidFullNameMsg,
     validFullNameMsg,
     isDuplicatedFullNameChecked,
-    handleClickDuplicatedFullNameCheckBtn,
+    handleClickDuplicatedFullNameCheckButton,
+    isFullNameModalOpen,
+    setIsFullNameModalOpen,
   };
 };
 

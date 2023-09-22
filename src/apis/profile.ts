@@ -1,6 +1,8 @@
 import { useMutation } from 'react-query';
 import { User } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
+import { useRecoilState } from 'recoil';
+import { authInfoState } from '@store/auth';
 import useAxiosInstance from './instance';
 
 interface UpdateFullNameRequestBody {
@@ -9,12 +11,20 @@ interface UpdateFullNameRequestBody {
 
 export const useFetchUpdateFullName = () => {
   const { authInstance } = useAxiosInstance();
+  const [auth, setAuth] = useRecoilState(authInfoState);
   const { mutate, data, isLoading, isError, isSuccess } = useMutation<
     AxiosResponse<User>,
     AxiosError,
     UpdateFullNameRequestBody
-  >('updateFullNameMutation', (body: UpdateFullNameRequestBody) =>
-    authInstance.put('/settings/update-user', { ...body, username: '' }),
+  >(
+    'updateFullNameMutation',
+    (body: UpdateFullNameRequestBody) =>
+      authInstance.put('/settings/update-user', { ...body, username: '' }),
+    {
+      onSuccess: ({ data }) => {
+        auth && setAuth({ ...auth, userFullName: data.fullName });
+      },
+    },
   );
   return {
     updateFullNameMutate: mutate,

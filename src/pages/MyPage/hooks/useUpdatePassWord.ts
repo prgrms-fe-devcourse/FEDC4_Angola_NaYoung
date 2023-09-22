@@ -1,9 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useFetchUpdatePassword } from '@apis/profile';
 import { checkPassWordPattern } from '@utils/userAuthentication';
+import { CHECK_MSG } from '@constants/index';
 
 const useUpdatePassWord = () => {
-  const { updatePasswordMutate, updatePasswordData } = useFetchUpdatePassword();
+  const { updatePasswordMutate, updatePasswordData, isUpdatePasswordError } =
+    useFetchUpdatePassword();
   const [newPassWord, setNewPassWord] = useState(
     updatePasswordData.password as string,
   );
@@ -13,6 +15,7 @@ const useUpdatePassWord = () => {
   const [invalidPasswordConfirmMsg, setInvalidPasswordConfirmMsg] =
     useState('');
   const [validPasswordConfirmMsg, setValidPasswordConfirmMsg] = useState('');
+  const [isPassWordModalOpen, setIsPassWordModalOpen] = useState(false);
 
   const resetPassWordFields = () => {
     setNewPassWord('');
@@ -45,7 +48,7 @@ const useUpdatePassWord = () => {
     setNewPassWord(e.target.value);
 
     if (!e.target.value) {
-      setInvalidPasswordMsg('비밀번호를 입력해주세요.');
+      setInvalidPasswordMsg(`${CHECK_MSG.PASSWORD}`);
     } else if (!isValidPassword) {
       setInvalidPasswordMsg(passwordMsg);
     } else {
@@ -86,6 +89,12 @@ const useUpdatePassWord = () => {
     }
   };
 
+  useEffect(() => {
+    if (isUpdatePasswordError) {
+      setIsPassWordModalOpen(true);
+    }
+  }, [isUpdatePasswordError]);
+
   return {
     isEditingPassWord,
     newPassWord,
@@ -97,6 +106,8 @@ const useUpdatePassWord = () => {
     invalidPasswordConfirmMsg,
     validPasswordConfirmMsg,
     handleAcceptPassWordButton,
+    setIsPassWordModalOpen,
+    isPassWordModalOpen,
   };
 };
 

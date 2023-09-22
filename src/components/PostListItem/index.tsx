@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
-import { useRecoilValue } from 'recoil';
 import Icon from '@components/Icon';
 import Image from '@components/Image';
 import LinkButton from '@components/LinkButton';
 import Modal from '@components/Modal';
-import { useFetchDeletePost, useFetchUserPosts } from '@apis/post';
-import { authInfoState } from '@store/auth';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { BUTTON_VALUES, USER_PROFILE_IMAGE } from '@constants/index';
+import { DELETE_POST_MODAL } from './constants';
+import useDeletePost from './hooks/useDeletePost';
 
 interface PostListItemProps {
   id: string;
@@ -18,6 +17,7 @@ interface PostListItemProps {
   likes?: number;
   comments?: number;
   canDeletePost?: boolean;
+  deletePostMutate?: ({ id }: { id: string }) => void;
 }
 
 const PostListItem = ({
@@ -27,40 +27,18 @@ const PostListItem = ({
   likes,
   comments,
   canDeletePost,
+  deletePostMutate,
 }: PostListItemProps) => {
-  const auth = useRecoilValue(authInfoState);
   const { title: postTitle } = splitPostBySeparator(title);
-  const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
-  const { userPostsRefetch } = useFetchUserPosts(auth?.userId as string);
-  const [toggleModal, setToggleModal] = useState(false);
-
-  const handleOpenModal = () => {
-    setToggleModal(() => true);
-  };
-
-  const handleCloseModal = () => {
-    setToggleModal(() => false);
-  };
-
-  const handleDeletedPost = () => {
-    deletePostMutate({ id });
-    handleCloseModal();
-  };
-
-  useEffect(() => {
-    if (isDeletePostSuccess) {
-      userPostsRefetch();
-    }
-  }, [userPostsRefetch, isDeletePostSuccess]);
+  const { toggleModal, setToggleModal, handleDeletedPost } = useDeletePost({
+    id,
+    deletePostMutate,
+  });
 
   return (
     <ListItemContainer>
       <Image
-        src={
-          image
-            ? image
-            : 'https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.667xw:1.00xh;0.128xw,0&resize=980:*'
-        }
+        src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
         alt="프로필"
         size={60}
         style={{ margin: '0 20px' }}
@@ -69,7 +47,7 @@ const PostListItem = ({
         <Title>{postTitle}</Title>
       </TitleContainer>
       {canDeletePost ? (
-        <DeleteButton onClick={handleOpenModal}>
+        <DeleteButton onClick={() => setToggleModal(true)}>
           <Icon name="trash" />
         </DeleteButton>
       ) : (
@@ -87,21 +65,15 @@ const PostListItem = ({
         <LinkButton
           to={`/post/${id}`}
           style={MORE_LINK_BUTTON_STYLES}>
-          More
+          {BUTTON_VALUES.MORE_TEXT}
         </LinkButton>
       </More>
-      {/* {canDeletePost ? (
-        <button onClick={handleOpenModal}>
-          <Icon name="trash" />
-        </button>
-      ) : null} */}
+
       {toggleModal && (
         <Modal
-          onClose={handleCloseModal}
+          onClose={() => setToggleModal(false)}
           onConfirm={handleDeletedPost}>
-          <div>정말로 삭제하시겠습니까?</div>
-          <button onClick={handleDeletedPost}>확인</button>
-          <button onClick={handleCloseModal}>취소</button>
+          <div>{DELETE_POST_MODAL.MODAL_TEXT}</div>
         </Modal>
       )}
     </ListItemContainer>

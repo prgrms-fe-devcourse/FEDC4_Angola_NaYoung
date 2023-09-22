@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import Image from '@components/Image';
+import Modal from '@components/Modal';
 import NameTag from '@components/NameTag';
 import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
@@ -10,6 +11,7 @@ import {
   CHECK_DUPLICATE_BUTTON,
   LABEL,
   LOG_OUT_TEXT,
+  MODAL_ERROR_MESSAGE,
   PASSWORD_BUTTON,
   PLACEHOLDER,
 } from './constants';
@@ -46,6 +48,8 @@ const MyInfo = ({
     isUpdateProfileImageLoading,
     profileImageUrl,
     handleChangeProfileImage,
+    setIsProfileImageModalOpen,
+    isProfileImageModalOpen,
   } = useUpdateProfile({ image });
   const {
     isEditingFullName,
@@ -55,7 +59,9 @@ const MyInfo = ({
     invalidFullNameMsg,
     validFullNameMsg,
     isDuplicatedFullNameChecked,
-    handleClickDuplicatedFullNameCheckBtn,
+    handleClickDuplicatedFullNameCheckButton,
+    isFullNameModalOpen,
+    setIsFullNameModalOpen,
   } = useUpdateFullName({ name });
   const {
     isEditingPassWord,
@@ -68,13 +74,16 @@ const MyInfo = ({
     invalidPasswordConfirmMsg,
     validPasswordConfirmMsg,
     handleAcceptPassWordButton,
+    setIsPassWordModalOpen,
+    isPassWordModalOpen,
   } = useUpdatePassWord();
-  const { handleClickLogOut } = useLogOut();
+  const { handleClickLogOut, isLogOutModalOpen, setIsLogOutModalOpen } =
+    useLogOut();
 
   return (
     <MyInfoWrapper>
+      {isUpdateProfileImageLoading && <Spinner />}
       <MyProfileContainer>
-        {isUpdateProfileImageLoading && <Spinner />}
         <Emoji>{myEmoji}</Emoji>
         <EditProfile htmlFor="profile">
           <Image
@@ -93,6 +102,11 @@ const MyInfo = ({
           onChange={handleChangeProfileImage}
           disabled={isUpdateProfileImageLoading}
         />
+        {isProfileImageModalOpen && (
+          <Modal onClose={() => setIsProfileImageModalOpen(false)}>
+            {MODAL_ERROR_MESSAGE.PROFILE_IMAGE}
+          </Modal>
+        )}
       </MyProfileContainer>
       <MyFullNameContainer>
         {isEditingFullName ? (
@@ -103,6 +117,7 @@ const MyInfo = ({
                 value={newFullName}
                 placeholder={PLACEHOLDER.FULL_NAME}
                 onChange={handleChangeFullName}
+                style={{ width: '300px' }}
               />
               {isDuplicatedFullNameChecked && (
                 <DoubleCheckIcon>
@@ -112,10 +127,28 @@ const MyInfo = ({
                   />
                 </DoubleCheckIcon>
               )}
+              {isEditingFullName && (
+                <>
+                  {invalidFullNameMsg && (
+                    <InputWarning>
+                      <Icon
+                        name={'warn'}
+                        color={'#F66'}
+                      />
+                      {invalidFullNameMsg}
+                    </InputWarning>
+                  )}
+                  {validFullNameMsg && (
+                    <InputWarning style={{ color: '#78D968' }}>
+                      {validFullNameMsg}
+                    </InputWarning>
+                  )}
+                </>
+              )}
             </InputBox>
             <Button
               type="button"
-              onClick={handleClickDuplicatedFullNameCheckBtn}
+              onClick={handleClickDuplicatedFullNameCheckButton}
               style={{
                 width: '100px',
                 height: '48px',
@@ -166,26 +199,11 @@ const MyInfo = ({
             </Button>
           </NameTagContainer>
         )}
-        <>
-          {isEditingFullName && (
-            <>
-              {invalidFullNameMsg && (
-                <InputWarning>
-                  <Icon
-                    name={'warn'}
-                    color={'#F66'}
-                  />
-                  {invalidFullNameMsg}
-                </InputWarning>
-              )}
-              {validFullNameMsg && (
-                <InputWarning style={{ color: '#78D968' }}>
-                  {validFullNameMsg}
-                </InputWarning>
-              )}
-            </>
-          )}
-        </>
+        {isFullNameModalOpen && (
+          <Modal onClose={() => setIsFullNameModalOpen(false)}>
+            {MODAL_ERROR_MESSAGE.FULL_NAME}
+          </Modal>
+        )}
       </MyFullNameContainer>
       <MyInfoContainer>
         {isEditingPassWord ? (
@@ -198,7 +216,6 @@ const MyInfo = ({
                   placeholder={PLACEHOLDER.NEW_PASSWORD}
                   value={newPassWord}
                   onChange={handleChangePassWord}
-                  style={{ width: '400px' }}
                 />
               </PassWordInput>
               {invalidPasswordMsg && (
@@ -219,7 +236,6 @@ const MyInfo = ({
                   placeholder={PLACEHOLDER.NEW_PASSWORD_CONFIRM}
                   value={confirmNewPassWord}
                   onChange={handleChangeConfirmPassWord}
-                  style={{ width: '400px' }}
                 />
               </PassWordInput>
               {invalidPasswordConfirmMsg && (
@@ -269,8 +285,20 @@ const MyInfo = ({
             {PASSWORD_BUTTON.EDIT_MSG}
           </Button>
         )}
+        {isPassWordModalOpen && (
+          <Modal onClose={() => setIsPassWordModalOpen(false)}>
+            {MODAL_ERROR_MESSAGE.PASSWORD}
+          </Modal>
+        )}
         {isEditingPassWord ? null : (
-          <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
+          <>
+            <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
+            {isLogOutModalOpen && (
+              <Modal onClose={() => setIsLogOutModalOpen(false)}>
+                {MODAL_ERROR_MESSAGE.LOG_OUT}
+              </Modal>
+            )}
+          </>
         )}
       </MyInfoContainer>
     </MyInfoWrapper>
@@ -342,6 +370,11 @@ const MyFullNameContainer = styled.div`
 const MyFullNameBox = styled.div`
   display: flex;
   gap: 20px;
+  @media (max-width: 735px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const InputBox = styled.div`
@@ -354,6 +387,7 @@ const InputBox = styled.div`
 const Input = styled.input`
   display: flex;
   padding: 8px 32px;
+  width: 400px;
   height: 100%;
   align-items: center;
   border-radius: 27px;
@@ -362,6 +396,10 @@ const Input = styled.input`
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
   &:focus {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
+
+  @media (max-width: 735px) {
+    width: 100%;
   }
 `;
 
@@ -373,6 +411,11 @@ const MyInfoContainer = styled.div`
   padding: 12px 0px;
   gap: 24px;
   align-self: stretch;
+
+  @media (max-width: 1194px) {
+    gap: 20px;
+    flex-direction: column;
+  }
 `;
 
 const MyInfoText = styled.div`
@@ -392,6 +435,10 @@ const Bar = styled.div`
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.396px;
+
+  @media (max-width: 1194px) {
+    display: none;
+  }
 `;
 
 const MyInfoBox = styled.div`
@@ -401,14 +448,21 @@ const MyInfoBox = styled.div`
   padding: 12px 0px;
   gap: 24px;
   align-self: stretch;
+
+  @media (max-width: 1194px) {
+    gap: 20px;
+    flex-direction: column;
+  }
 `;
 
 const PassWordContainer = styled.div`
   display: flex;
-  /* display: flex;
-  align-items: center;*/
   flex-direction: column;
   gap: 20px;
+
+  @media (max-width: 735px) {
+    width: 210px;
+  }
 `;
 
 const PassWordBox = styled.div`
@@ -423,10 +477,18 @@ const PassWordInput = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  @media (max-width: 735px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 const InputLabel = styled.label`
   font-size: ${ANGOLA_STYLES.textSize.text};
+  @media (max-width: 735px) {
+    text-align: center;
+    width: 100%;
+  }
 `;
 
 const InputWarning = styled.div`
@@ -435,6 +497,10 @@ const InputWarning = styled.div`
   font-size: 15px;
   color: #f66;
   gap: 8px;
+  @media (max-width: 735px) {
+    font-size: 12px;
+    line-height: 120%;
+  }
 `;
 
 const NameTagContainer = styled.div`
@@ -447,6 +513,6 @@ const NameTagContainer = styled.div`
 const DoubleCheckIcon = styled.div`
   position: absolute;
   right: 15px;
-  top: 50%;
+  top: 35%;
   transform: translate(0, -50%);
 `;

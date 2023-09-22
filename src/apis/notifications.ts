@@ -8,7 +8,7 @@ export const useFetchGetNotifications = () => {
 
   const fetcher = () => authInstance.get('/notifications');
 
-  const { data, isLoading, isError, isSuccess } = useQuery<
+  const { data, isLoading, isError, isSuccess, refetch } = useQuery<
     AxiosResponse<Notification[]>,
     AxiosError
   >('getNotifications', fetcher);
@@ -18,8 +18,34 @@ export const useFetchGetNotifications = () => {
     isGetNotificationsLoading: isLoading,
     isGetNotificationsError: isError,
     isGetNotificationsSuccess: isSuccess,
+    getNotificationRefetch: refetch
   };
 };
+
+interface getPartNotificationsQueryParams{
+  offset: number;
+  limit: number;
+}
+
+export const useFetchGetPartNotifications = ({offset, limit} : getPartNotificationsQueryParams) => {
+  const { authInstance } = useAxiosInstance();
+
+  const fetcher = () => authInstance.get(`/notifications?offset=${offset}&limit=${limit}`);
+
+  const { data, isLoading, isError, isSuccess, refetch } = useQuery<
+    AxiosResponse<Notification[]>,
+    AxiosError
+  >('getPartNotifications', fetcher);
+
+  return {
+    getPartNotificationsData: data?.data,
+    isGetPartNotificationsLoading: isLoading,
+    isGetPartNotificationsError: isError,
+    isGetPartNotificationsSuccess: isSuccess,
+    getPartNotificationRefetch: refetch
+  };
+};
+
 
 export const useFetchReadNotifications = () => {
   const { authInstance } = useAxiosInstance();
