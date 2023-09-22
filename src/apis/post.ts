@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { Post } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
+import { useArchives } from '@hooks/useArchives';
 import useAxiosInstance from './instance';
 
 const CHANNEL_ID = '650be15e89b54040ee691c0c'; // todo : env 파일에 추가
@@ -86,18 +87,27 @@ interface CreatePostRequestBody {
 export const useFetchCreatePost = () => {
   const { authInstance } = useAxiosInstance();
   const path = `/posts/create`;
+  const { addPostArchive } = useArchives();
 
   const { mutate, data, isLoading, isSuccess, isError } = useMutation<
     AxiosResponse<Post>,
     AxiosError,
     CreatePostRequestBody
-  >('createPostMutation', (body: CreatePostRequestBody) => {
-    const formData = new FormData();
-    formData.append('title', body.title);
-    formData.append('image', '');
-    formData.append('channelId', CHANNEL_ID);
-    return authInstance.post(path, formData);
-  });
+  >(
+    'createPostMutation',
+    (body: CreatePostRequestBody) => {
+      const formData = new FormData();
+      formData.append('title', body.title);
+      formData.append('image', '');
+      formData.append('channelId', CHANNEL_ID);
+      return authInstance.post(path, formData);
+    },
+    {
+      onSuccess: () => {
+        addPostArchive();
+      },
+    },
+  );
   return {
     createPostMutate: mutate,
     createPostData: data?.data._id,
@@ -114,10 +124,16 @@ interface DeletePostRequestBody {
 export const useFetchDeletePost = () => {
   const { authInstance } = useAxiosInstance();
   const path = `/posts/delete`;
+  const { removePostArchive } = useArchives();
 
   const { mutate, isLoading, isSuccess, isError } = useMutation(
     'deletePostMutation',
     (body: DeletePostRequestBody) => authInstance.delete(path, { data: body }),
+    {
+      onSuccess: () => {
+        removePostArchive();
+      },
+    },
   );
   return {
     deletePostMutate: mutate,

@@ -3,6 +3,7 @@ import { User } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { authInfoState } from '@store/auth';
+import { userArchives } from '@store/level';
 import useAxiosInstance from './instance';
 
 interface SignUpRequestBody {
@@ -38,6 +39,7 @@ interface LoginResponse {
 export const useFetchLogin = () => {
   const { baseInstance } = useAxiosInstance();
   const setAuth = useSetRecoilState(authInfoState);
+  const setUserArchives = useSetRecoilState(userArchives);
 
   const { mutate, data, isSuccess, isError, isLoading } = useMutation<
     AxiosResponse<LoginResponse>,
@@ -48,6 +50,11 @@ export const useFetchLogin = () => {
       setAuth({
         userId: data.user._id,
         token: data.token,
+        userFullName: data.user.fullName,
+      });
+      setUserArchives({
+        commentsLength: data.user.comments.length,
+        postsLength: data.user.posts.length,
       });
     },
   });
