@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
@@ -18,7 +19,11 @@ interface UserPageProps {
 const UserPage = ({ userId = '' }: UserPageProps) => {
   const auth = useRecoilValue(authInfoState);
   const navigate = useNavigate();
-  const { userData, isUserLoading } = useFetchUser(userId);
+  const { userData, isUserLoading, userDataRefetch } = useFetchUser(userId);
+
+  useEffect(() => {
+    userDataRefetch();
+  }, [userId]);
 
   if (userId === auth?.userId) {
     navigate('/mypage', { replace: true });
