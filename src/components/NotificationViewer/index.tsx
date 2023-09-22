@@ -9,12 +9,13 @@ import {
   useFetchReadNotifications,
 } from '@apis/notifications';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import CommentNotificationItem from './CommentNotificationItem';
-import FollowNotificationItem from './FollowNotificationItem';
-import LikeNotificationItem from './LikeNotificationItem';
+import {
+  CommentNotificationItem,
+  FollowNotificationItem,
+  LikeNotificationItem,
+} from './components';
 
 const decideNotificationType = ({
-  // noficiation 객체가 like, comment, follow 알림 중 무엇인지 판단해서 각 컴포넌트 return 해주는 함수
   notification,
 }: {
   notification: Notification;
