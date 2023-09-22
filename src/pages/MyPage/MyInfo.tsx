@@ -82,8 +82,8 @@ const MyInfo = ({
 
   return (
     <MyInfoWrapper>
+      {isUpdateProfileImageLoading && <Spinner />}
       <MyProfileContainer>
-        {isUpdateProfileImageLoading && <Spinner />}
         <Emoji>{myEmoji}</Emoji>
         <EditProfile htmlFor="profile">
           <Image
