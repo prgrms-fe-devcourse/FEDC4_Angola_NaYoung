@@ -1,10 +1,7 @@
-import { useEffect } from 'react';
 import styled from '@emotion/styled';
+import usePostSort from '@pages/SearchPage/hooks/usePostSort';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
-import { useFetchAllPosts } from '@apis/post';
-import { useFetchSearchPosts } from '@apis/search';
-import { getSortPostList } from './utils';
 
 interface PostListProps {
   keyword?: string;
@@ -12,19 +9,10 @@ interface PostListProps {
 }
 
 const PostList = ({ keyword, sort }: PostListProps) => {
-  const { allPostsData, isAllPostsLoading } = useFetchAllPosts();
-  const { searchPostsData, isSearchPostsLoading, searchPostsDataRefetch } =
-    useFetchSearchPosts({
-      query: keyword,
-    });
-
-  const resultData = keyword
-    ? getSortPostList(searchPostsData, sort)
-    : getSortPostList(allPostsData, sort);
-
-  useEffect(() => {
-    searchPostsDataRefetch();
-  }, [keyword, searchPostsDataRefetch]);
+  const { resultData, isAllPostsLoading, isSearchPostsLoading } = usePostSort({
+    keyword,
+    sort,
+  });
 
   return (
     <>

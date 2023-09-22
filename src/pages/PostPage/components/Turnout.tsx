@@ -1,37 +1,30 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Comment } from '@type';
-import { voteRatio } from '@utils';
-import { ANGOLA_STYLES } from '../../styles/commonStyles';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { useVotingResult } from '../Hooks';
+import { VOTED_VALUES } from '../constants';
 
 interface TurnoutProps {
   comments: Comment[];
   authorLevel: number;
 }
 const Turnout = ({ comments, authorLevel }: TurnoutProps) => {
-  const [searchParams] = useSearchParams();
-  const votedValue = searchParams.get('voted');
-  const [ratios, setRatio] = useState([0, 0]);
-
-  useEffect(() => {
-    comments && comments.length > 0 && setRatio(voteRatio(comments));
-  }, [comments]);
+  const { votedValue, ratios } = useVotingResult({ comments });
 
   return (
     <TurnoutContainer>
       <TurnoutBar>
         <ARatio
-          ratio={ratios[0]}
+          ratio={ratios.aRatio}
           votedValue={votedValue}
           level={authorLevel}>
-          A: {ratios[0]}%
+          {VOTED_VALUES.A}: {ratios.aRatio}%
         </ARatio>
         <BRatio
-          ratio={ratios[1]}
+          ratio={ratios.bRatio}
           votedValue={votedValue}
           level={authorLevel}>
-          B: {ratios[1]}%
+          {VOTED_VALUES.B}: {ratios.bRatio}%
         </BRatio>
       </TurnoutBar>
     </TurnoutContainer>
@@ -72,7 +65,7 @@ const ARatio = styled.div<{
   width: ${({ ratio }) => ratio}%;
   display: ${({ ratio }) => (ratio == 0 ? 'none' : 'flex')};
   background: ${({ votedValue, level }) =>
-    votedValue === 'A'
+    votedValue === VOTED_VALUES.A
       ? ANGOLA_STYLES.color.levels[level].fill
       : ANGOLA_STYLES.color.gray};
 `;
@@ -92,7 +85,7 @@ const BRatio = styled.div<{
   width: ${({ ratio }) => ratio}%;
   display: ${({ ratio }) => (ratio == 0 ? 'none' : 'flex')};
   background: ${({ votedValue, level }) =>
-    votedValue === 'B'
+    votedValue === VOTED_VALUES.B
       ? ANGOLA_STYLES.color.levels[level].fill
       : ANGOLA_STYLES.color.gray};
 `;

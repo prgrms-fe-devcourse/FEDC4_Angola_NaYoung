@@ -12,7 +12,7 @@ const App = () => {
     <BrowserRouter>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          <PageContainer>
+          <PageContainer id="app">
             <NavBar />
             <Main />
           </PageContainer>
@@ -30,7 +30,7 @@ const PageContainer = styled.div`
   padding: 0 80px;
   flex-direction: column;
   align-items: center;
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 `;

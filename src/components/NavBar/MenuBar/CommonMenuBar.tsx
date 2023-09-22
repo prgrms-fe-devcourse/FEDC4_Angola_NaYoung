@@ -10,7 +10,11 @@ const CommonMenuBar = () => {
 
   return (
     <>
-      <LinkButton to="/">홈</LinkButton>
+      <LinkButton to="/"><img
+            src="/images/LOGO_SMALL.svg"
+            alt="logo"
+            width={'54px'}
+          /></LinkButton>
       {name === SEARCH ? (
         <SearchBar />
       ) : (

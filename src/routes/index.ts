@@ -3,11 +3,11 @@ import {
   HomePage,
   LoginPage,
   MyPage,
+  NotFoundPage,
   PostPage,
   SearchPage,
   SignUpPage,
-UserPage,
-
+  UserPage,
 } from '@pages';
 import type { Params, SearchParams } from '@hooks/useCurrentPage';
 
@@ -19,6 +19,12 @@ export const routes: {
   title: string;
   component: RouteComponent<SearchParams & Params>;
 }[] = [
+  {
+    path: '*',
+    name: 'notFound',
+    title: '알 수 없는 페이지',
+    component: NotFoundPage,
+  },
   { path: '/', name: 'home', title: 'ANGOLA', component: HomePage },
   {
     path: '/search/:target',

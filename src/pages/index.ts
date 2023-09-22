@@ -6,3 +6,4 @@ export { default as CreatePostPage } from '@pages/CreatePostPage';
 export { default as MyPage } from '@pages/MyPage';
 export { default as UserPage } from '@pages/UserPage';
 export { default as PostPage } from '@pages/PostPage';
+export { default as NotFoundPage } from '@pages/NotFoundPage';

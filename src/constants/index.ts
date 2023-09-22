@@ -56,3 +56,7 @@ export const CHECK_MSG = {
   PASSWORD: '비밀번호를 입력해주세요.',
   ERROR: '중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.',
 };
+
+export const BUTTON_VALUES = {
+  MORE_TEXT: 'more',
+};
