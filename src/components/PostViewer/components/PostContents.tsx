@@ -12,7 +12,6 @@ interface PostContentsProps {
   voteValue?: string;
   onGoDetailPage: () => void;
   onShowNonAuthModal: () => void;
-  isPostPage: boolean;
   isVoted: boolean;
   voteColor: string;
 }
@@ -24,12 +23,11 @@ const PostContents = ({
   voteValue,
   onGoDetailPage: goDetailPage,
   onShowNonAuthModal: showNonAuthModal,
-  isPostPage,
   isVoted,
   voteColor,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
-  const getContentClassName = useContentClassName({ isPostPage, voteValue });
+  const getContentClassName = useContentClassName(voteValue);
   const handleClickContent = (value: string) => {
     if (!auth) {
       showNonAuthModal();
