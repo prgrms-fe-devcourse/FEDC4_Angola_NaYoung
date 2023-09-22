@@ -11,6 +11,7 @@ import {
   CHECK_DUPLICATE_BUTTON,
   LABEL,
   LOG_OUT_TEXT,
+  MODAL_ERROR_MESSAGE,
   PASSWORD_BUTTON,
   PLACEHOLDER,
 } from './constants';
@@ -103,7 +104,7 @@ const MyInfo = ({
         />
         {isProfileImageModalOpen && (
           <Modal onClose={() => setIsProfileImageModalOpen(false)}>
-            프로필 변경 실패
+            {MODAL_ERROR_MESSAGE.PROFILE_IMAGE}
           </Modal>
         )}
       </MyProfileContainer>
@@ -200,7 +201,7 @@ const MyInfo = ({
         )}
         {isFullNameModalOpen && (
           <Modal onClose={() => setIsFullNameModalOpen(false)}>
-            닉네임 변경 실패
+            {MODAL_ERROR_MESSAGE.FULL_NAME}
           </Modal>
         )}
       </MyFullNameContainer>
@@ -286,7 +287,7 @@ const MyInfo = ({
         )}
         {isPassWordModalOpen && (
           <Modal onClose={() => setIsPassWordModalOpen(false)}>
-            비밀번호 변경 실패
+            {MODAL_ERROR_MESSAGE.PASSWORD}
           </Modal>
         )}
         {isEditingPassWord ? null : (
@@ -294,7 +295,7 @@ const MyInfo = ({
             <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
             {isLogOutModalOpen && (
               <Modal onClose={() => setIsLogOutModalOpen(false)}>
-                로그아웃 실패
+                {MODAL_ERROR_MESSAGE.LOG_OUT}
               </Modal>
             )}
           </>
