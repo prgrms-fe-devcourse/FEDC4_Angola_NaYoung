@@ -13,4 +13,6 @@ export const MSG = {
   ERROR: '아이디 또는 비밀번호를 확인하세요.',
 };
 
+export const INPUT_AUTO_COMPLETE = 'on';
+
 export const LOGIN_BUTTON_MSG = '로그인 하기';
