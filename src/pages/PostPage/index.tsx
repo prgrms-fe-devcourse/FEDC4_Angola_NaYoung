@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { calculateLevel } from '@utils';
 import { useRecoilValue } from 'recoil';
@@ -33,6 +33,10 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const [submitValue, setSubmitValue] = useState<string | undefined>('');
   const [isVoted, setIsVoted] = useState(false);
   const { postData, postRefetch, isPostLoading } = useFetchPost(postId);
+
+  useEffect(() => {
+    postRefetch();
+  }, [postId, postRefetch]);
 
   // 투표 선택하는 hook
   const { handleClickItem } = useSelectItem({
