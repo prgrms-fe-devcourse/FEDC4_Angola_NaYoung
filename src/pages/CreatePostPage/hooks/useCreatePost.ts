@@ -71,7 +71,7 @@ const useCreatePost = () => {
     if (isCreatePostSuccess) {
       navigate(`/post/${createPostData}`);
     }
-  }, [isCreatePostSuccess]);
+  }, [createPostData, isCreatePostSuccess, navigate]);
 
   useEffect(() => {
     if (isCreatePostError) {

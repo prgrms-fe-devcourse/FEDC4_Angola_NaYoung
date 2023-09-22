@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import Modal from '@components/Modal';
 import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { MAX_INPUT_LENGTH, PLACEHOLDER, TEXT } from './constants';
+import { ID, MAX_INPUT_LENGTH, PLACEHOLDER, TEXT } from './constants';
 import { useCreatePost } from './hooks';
 
 const CreatePostPage = () => {
@@ -21,7 +21,7 @@ const CreatePostPage = () => {
   if (isCreatePostLoading) {
     return <Spinner size={100} />;
   }
-  
+
   return (
     <>
       <PageContainer>
@@ -41,6 +41,7 @@ const CreatePostPage = () => {
           <OptionContent>
             <OptionName>{TEXT.OPTION_A}</OptionName>
             <OptionInput
+              id={ID.OPTION_A}
               value={inputValues.optionA}
               onChange={handleChangeOptionValues}
               onBlur={handleBlurTrim}
@@ -56,6 +57,7 @@ const CreatePostPage = () => {
           <OptionContent>
             <OptionName>{TEXT.OPTION_B}</OptionName>
             <OptionInput
+              id={ID.OPTION_B}
               value={inputValues.optionB}
               onChange={handleChangeOptionValues}
               onBlur={handleBlurTrim}

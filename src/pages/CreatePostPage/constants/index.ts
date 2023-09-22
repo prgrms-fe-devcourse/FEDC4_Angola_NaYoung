@@ -13,3 +13,8 @@ export const TEXT = {
   SUBMIT: '작성 완료하기',
   CREATE_POST_FAIL: '포스트 작성에 실패했습니다.',
 };
+
+export const ID = {
+  OPTION_A: 'optionA',
+  OPTION_B: 'optionB'
+}
