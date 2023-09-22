@@ -113,6 +113,7 @@ const SubmitButton = styled(ButtonStyled)<{ votedValue: string }>`
   width: 120px;
   height: 120px;
   padding: 16px 0;
+  background-color: ${(props) => (props.votedValue ? 'none' : 'white')}
 
   color: ${(props) =>
     props.votedValue ? ANGOLA_STYLES.color.text : ANGOLA_STYLES.color.dark};
