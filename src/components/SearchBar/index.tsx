@@ -1,42 +1,15 @@
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { useKeyword } from './hooks';
 
 const SearchBar = () => {
-  const [keyword, setKeyword] = useState<string>('');
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const addKeywordToQueryString = ({ keyword }: { keyword: string }) => {
-    searchParams.set('keyword', keyword);
-    setSearchParams(searchParams);
-  };
-
-  const removeKeywordFromQueryString = () => {
-    searchParams.delete('keyword');
-    setSearchParams(searchParams);
-  };
-
-  const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setKeyword(value);
-  };
-
-  const handleSubmitKeyword = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (keyword.length) {
-      addKeywordToQueryString({ keyword: keyword.trim() });
-      setKeyword('');
-    } else {
-      removeKeywordFromQueryString();
-    }
-  };
-
-  const handleResetKeyword = () => {
-    setKeyword('');
-  };
+  const {
+    keyword,
+    handleChangeKeyword,
+    handleResetKeyword,
+    handleSubmitKeyword,
+  } = useKeyword();
 
   return (
     <StyledForm
