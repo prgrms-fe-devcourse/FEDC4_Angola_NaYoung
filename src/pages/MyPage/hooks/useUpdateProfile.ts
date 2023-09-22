@@ -46,8 +46,9 @@ const useUpdateProfile = ({ image }: useUpdateProfileProps) => {
   useEffect(() => {
     if (isUpdateProfileImageError) {
       setIsProfileImageModalOpen(true);
+      setProfileImageUrl(image);
     }
-  }, [isUpdateProfileImageError]);
+  }, [isUpdateProfileImageError, setProfileImageUrl, image]);
 
   return {
     profileImageUrl,
