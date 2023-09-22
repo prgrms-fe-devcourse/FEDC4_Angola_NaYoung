@@ -2,8 +2,7 @@ import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFetchCreatePost } from '@apis/post';
 import { joinDataBySeparator } from '@utils/parseDataBySeparator';
-
-const MAX_TITLE_OPTION_LENGTH = 100;
+import { MAX_INPUT_LENGTH } from '../constants';
 
 const useCreatePost = () => {
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ const useCreatePost = () => {
     const { value } = e.target;
     setInputValues({
       ...inputValues,
-      title: value.substring(0, MAX_TITLE_OPTION_LENGTH),
+      title: value.substring(0, MAX_INPUT_LENGTH),
     });
   };
 
@@ -41,7 +40,7 @@ const useCreatePost = () => {
     if (e.target.scrollHeight === e.target.clientHeight) {
       setInputValues({
         ...inputValues,
-        [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
+        [id]: value.substring(0, MAX_INPUT_LENGTH),
       });
     }
   };
