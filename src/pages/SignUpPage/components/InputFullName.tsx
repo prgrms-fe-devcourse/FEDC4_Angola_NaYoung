@@ -42,7 +42,7 @@ const InputFullName = ({
           onClick={handleClickDuplicatedFullNameCheckBtn}
           style={{
             width: '100px',
-            padding: '0',
+            padding: '8px 0',
             fontSize: ANGOLA_STYLES.textSize.titleSm,
           }}>
           중복 검사
@@ -73,6 +73,13 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1rem;
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -108,4 +115,10 @@ const InputWarning = styled.div`
   color: ${COLOR.MSG.INVALID};
   padding-left: 1rem;
   gap: 8px;
+
+  @media screen and (max-width: 700px) {
+    justify-content: center;
+    font-size: 13px;
+    padding-top: 10px;
+  }
 `;

@@ -19,23 +19,26 @@ const InputPassword = ({
 }: InputPasswordProps) => {
   return (
     <>
-      <InputWrapper>
-        <Input
-          type={isPasswordShown ? INPUT.TYPE.TEXT : INPUT.TYPE.PASSWORD}
-          onChange={handleChangePassword}
-          placeholder={INPUT.PLACEHOLDER.PASSWORD}
-          autoComplete={INPUT.AUTO_COMPLETE}
-        />
-        {isPasswordShown ? (
-          <EyeIcon onClick={handleClickPasswordShown}>
-            <Icon name={'eye'} />
-          </EyeIcon>
-        ) : (
-          <EyeIcon onClick={handleClickPasswordShown}>
-            <Icon name={'eye_slash'} />
-          </EyeIcon>
-        )}
-      </InputWrapper>
+      <InputContainer>
+        <InputWrapper>
+          <Input
+            type={isPasswordShown ? INPUT.TYPE.TEXT : INPUT.TYPE.PASSWORD}
+            onChange={handleChangePassword}
+            placeholder={INPUT.PLACEHOLDER.PASSWORD}
+            autoComplete={INPUT.AUTO_COMPLETE}
+          />
+          {isPasswordShown ? (
+            <EyeIcon onClick={handleClickPasswordShown}>
+              <Icon name={'eye'} />
+            </EyeIcon>
+          ) : (
+            <EyeIcon onClick={handleClickPasswordShown}>
+              <Icon name={'eye_slash'} />
+            </EyeIcon>
+          )}
+        </InputWrapper>
+        <div style={{ width: '100px' }}></div>
+      </InputContainer>
       {invalidPasswordMsg && (
         <InputWarning style={{ marginBottom: '1rem' }}>
           <Icon
@@ -50,6 +53,20 @@ const InputPassword = ({
 };
 
 export default InputPassword;
+
+const InputContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+`;
 
 const InputWrapper = styled.div`
   width: 80%;
@@ -89,4 +106,9 @@ const InputWarning = styled.div`
   color: ${COLOR.MSG.INVALID};
   padding-left: 1rem;
   gap: 8px;
+
+  @media screen and (max-width: 700px) {
+    justify-content: center;
+    font-size: 13px;
+  }
 `;

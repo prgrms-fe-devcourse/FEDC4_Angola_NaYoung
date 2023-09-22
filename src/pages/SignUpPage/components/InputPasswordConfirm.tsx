@@ -21,23 +21,28 @@ const InputPasswordConfirm = ({
 }: InputPasswordConfirmProps) => {
   return (
     <>
-      <InputWrapper>
-        <Input
-          type={isPasswordConfirmShown ? INPUT.TYPE.TEXT : INPUT.TYPE.PASSWORD}
-          onChange={handleChangePasswordConfirm}
-          placeholder={INPUT.PLACEHOLDER.PASSWORD_CONFIRM}
-          autoComplete={INPUT.AUTO_COMPLETE}
-        />
-        {isPasswordConfirmShown ? (
-          <EyeIcon onClick={handleClickPasswordConfirmShown}>
-            <Icon name={'eye'} />
-          </EyeIcon>
-        ) : (
-          <EyeIcon onClick={handleClickPasswordConfirmShown}>
-            <Icon name={'eye_slash'} />
-          </EyeIcon>
-        )}
-      </InputWrapper>
+      <InputContainer>
+        <InputWrapper>
+          <Input
+            type={
+              isPasswordConfirmShown ? INPUT.TYPE.TEXT : INPUT.TYPE.PASSWORD
+            }
+            onChange={handleChangePasswordConfirm}
+            placeholder={INPUT.PLACEHOLDER.PASSWORD_CONFIRM}
+            autoComplete={INPUT.AUTO_COMPLETE}
+          />
+          {isPasswordConfirmShown ? (
+            <EyeIcon onClick={handleClickPasswordConfirmShown}>
+              <Icon name={'eye'} />
+            </EyeIcon>
+          ) : (
+            <EyeIcon onClick={handleClickPasswordConfirmShown}>
+              <Icon name={'eye_slash'} />
+            </EyeIcon>
+          )}
+        </InputWrapper>
+        <div style={{ width: '100px' }}></div>
+      </InputContainer>
       {invalidPasswordConfirmMsg && (
         <InputWarning>
           <Icon
@@ -57,6 +62,20 @@ const InputPasswordConfirm = ({
 };
 
 export default InputPasswordConfirm;
+
+const InputContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+`;
 
 const InputWrapper = styled.div`
   width: 80%;
@@ -96,4 +115,9 @@ const InputWarning = styled.div`
   color: ${COLOR.MSG.INVALID};
   padding-left: 1rem;
   gap: 8px;
+
+  @media screen and (max-width: 700px) {
+    justify-content: center;
+    font-size: 13px;
+  }
 `;

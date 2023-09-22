@@ -177,6 +177,10 @@ const SignUpContainer = styled.div`
   height: 100%;
   padding: 80px;
   padding-right: 0px;
+
+  @media only screen and (max-width: 1024px) {
+    padding: 0px;
+  }
 `;
 
 const Form = styled.form`
@@ -194,10 +198,23 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media screen and (max-width: 1024px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 700px) {
+    width: 90%;
+  }
 `;
 
 const Label = styled.label`
   font-size: ${ANGOLA_STYLES.textSize.title};
   line-height: 150%;
   padding-left: 1rem;
+
+  @media screen and (max-width: 700px) {
+    text-align: center;
+    padding-left: 0px;
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  }
 `;
