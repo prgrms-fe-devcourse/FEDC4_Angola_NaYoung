@@ -4,7 +4,7 @@ import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import TabBarList from './TabBarList';
 import { SELECT_OPTION } from './constants';
-import useSelect from './hooks/useSelect';
+import { useSelect } from './hooks';
 
 interface HeaderProps {
   title: string;
