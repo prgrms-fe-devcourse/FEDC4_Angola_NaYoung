@@ -19,3 +19,10 @@ export const PASSWORD_BUTTON = {
 };
 
 export const LOG_OUT_TEXT = '로그 아웃';
+
+export const MODAL_ERROR_MESSAGE = {
+  PROFILE_IMAGE: '프로필 변경 실패',
+  FULL_NAME: '닉네임 변경 실패',
+  PASSWORD: '비밀번호 변경 실패',
+  LOG_OUT: '로그아웃 실패',
+};

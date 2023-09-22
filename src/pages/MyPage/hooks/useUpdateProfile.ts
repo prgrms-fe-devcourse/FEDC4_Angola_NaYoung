@@ -12,7 +12,9 @@ const useUpdateProfile = ({ image }: useUpdateProfileProps) => {
     updateProfileImageData,
     isUpdateProfileImageSuccess,
     isUpdateProfileImageLoading,
+    isUpdateProfileImageError,
   } = useFetchUpdateProfileImage();
+  const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false);
 
   useEffect(() => {
     setProfileImageUrl(image);
@@ -41,10 +43,19 @@ const useUpdateProfile = ({ image }: useUpdateProfileProps) => {
     };
   }, [profileImageUrl]);
 
+  useEffect(() => {
+    if (isUpdateProfileImageError) {
+      setIsProfileImageModalOpen(true);
+      setProfileImageUrl(image);
+    }
+  }, [isUpdateProfileImageError, setProfileImageUrl, image]);
+
   return {
     profileImageUrl,
     isUpdateProfileImageLoading,
     handleChangeProfileImage,
+    setIsProfileImageModalOpen,
+    isProfileImageModalOpen,
   };
 };
 
