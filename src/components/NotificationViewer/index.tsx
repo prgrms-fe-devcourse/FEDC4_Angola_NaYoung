@@ -1,35 +1,12 @@
 import { MouseEvent } from 'react';
 import styled from '@emotion/styled';
-import { Notification } from '@type';
 import Icon from '@components/Icon';
 import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import {
-  CommentNotificationItem,
-  FollowNotificationItem,
-  LikeNotificationItem,
-} from './components';
+import DecideNotificationType from './components/DecideNotificationType';
 import { TEXT } from './constants';
 import useNotification from './hooks/useNotification';
 import { filterSameFollowerNotifications } from './utils';
-
-const decideNotificationType = ({
-  notification,
-}: {
-  notification: Notification;
-}) => {
-  if (Object.prototype.hasOwnProperty.call(notification, 'like')) {
-    return <LikeNotificationItem notification={notification} />;
-  }
-
-  if (Object.prototype.hasOwnProperty.call(notification, 'comment')) {
-    return <CommentNotificationItem notification={notification} />;
-  }
-
-  if (Object.prototype.hasOwnProperty.call(notification, 'follow')) {
-    return <FollowNotificationItem notification={notification} />;
-  }
-};
 
 interface NotificationViewerPropsType {
   handleClickCloseViewer: VoidFunction;
@@ -70,7 +47,7 @@ const NotificationViewer = ({
           onClick={(e: MouseEvent<HTMLLIElement>) => {
             handleClickListItem(e, notification);
           }}>
-          {decideNotificationType({ notification })}
+          <DecideNotificationType notification={notification} />
         </NotificationListItem>
       );
     });
@@ -107,7 +84,7 @@ const NotificationViewer = ({
           onClick={(e) => {
             handleClickListItem(e, notification);
           }}>
-          {decideNotificationType({ notification })}
+          <DecideNotificationType notification={notification} />
         </NotificationListItem>
       );
     });
@@ -121,12 +98,16 @@ const NotificationViewer = ({
     <NotificationViewerBackGround ref={viewerBackGroundRef}>
       <NotificationViewerContainer>
         <NotificationHeader>
-          <NotificationHeaderTitle>{TEXT.NOTIFICATION_LIST}</NotificationHeaderTitle>
+          <NotificationHeaderTitle>
+            {TEXT.NOTIFICATION_LIST}
+          </NotificationHeaderTitle>
           <ShowAllNotificationsCheckBox
             onClick={() => {
               setIsShowAllNotifications((prev) => !prev);
             }}>
-            <ShowAllNotificationsText>{TEXT.SEE_PREVIOUS_NOTIFICATION}</ShowAllNotificationsText>
+            <ShowAllNotificationsText>
+              {TEXT.SEE_PREVIOUS_NOTIFICATION}
+            </ShowAllNotificationsText>
             <Icon
               name={
                 isShowAllNotifications
