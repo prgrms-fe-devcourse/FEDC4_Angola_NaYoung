@@ -5,7 +5,6 @@ export const ANGOLA_STYLES = {
     gray: '#e5e5e5',
     dark: '#9a9a9a',
     text: '#404040',
-    black: '#000000',
     levels: [
       { fill: '#ff6666', text: '#ffffff' },
       { fill: '#f78e61', text: '#ffffff' },
