@@ -1,90 +1,21 @@
-import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Modal from '@components/Modal';
 import Spinner from '@components/Spinner';
-import { useFetchCreatePost } from '@apis/post';
-import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-
-const MAX_TITLE_OPTION_LENGTH = 100;
+import { useCreatePost } from './hooks';
 
 const CreatePostPage = () => {
-  const [inputValues, setInputValues] = useState({
-    title: '',
-    optionA: '',
-    optionB: '',
-  });
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const {
-    createPostMutate,
-    createPostData,
+    inputValues,
+    isModalOpen,
+    setIsModalOpen,
     isCreatePostLoading,
-    isCreatePostSuccess,
-    isCreatePostError,
-  } = useFetchCreatePost();
-
-  const isCreatePostPossible: boolean =
-    inputValues.title.length > 0 &&
-    inputValues.optionA.length > 0 &&
-    inputValues.optionB.length > 0;
-
-  const handleChangeTitleValue = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-
-    setInputValues({
-      ...inputValues,
-      [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
-    });
-  };
-
-  const handleChangeOptionValues = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
-    if (e.target.scrollHeight === e.target.clientHeight) {
-      setInputValues({
-        ...inputValues,
-        [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
-      });
-    }
-  };
-
-
-  const handleClickCreatePost = () => {
-    if (!isCreatePostPossible) return;
-
-    const postTitle = joinDataBySeparator(
-      inputValues.title,
-      inputValues.optionA,
-      inputValues.optionB,
-    );
-
-    createPostMutate({ title: postTitle });
-  };
-
-  const handleBlurTrim = (
-    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { id, value } = e.target;
-    setInputValues({
-      ...inputValues,
-      [id]: value.trim(),
-    });
-  };
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (isCreatePostSuccess) {
-      navigate(`/post/${createPostData}`);
-    }
-  }, [isCreatePostSuccess]);
-
-  useEffect(() => {
-    if (isCreatePostError) {
-      setIsModalOpen(() => true);
-    }
-  }, [isCreatePostError]);
+    isCreatePostPossible,
+    handleChangeTitleValue,
+    handleChangeOptionValues,
+    handleClickCreatePost,
+    handleBlurTrim,
+  } = useCreatePost();
 
   return (
     <>
@@ -217,7 +148,7 @@ const TitleLengthLimit = styled.span`
   line-height: 100%;
 
   @media (max-width: 800px) {
-    visibility: hidden; 
+    visibility: hidden;
   }
 `;
 
