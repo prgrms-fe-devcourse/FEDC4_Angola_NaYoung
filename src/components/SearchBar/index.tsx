@@ -56,10 +56,6 @@ const StyledForm = styled.form`
   &:focus-within {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
-
-  @media (max-width: 680px) {
-    display: none;
-  }
 `;
 
 const SubmitButton = styled.button`
@@ -69,6 +65,10 @@ const SubmitButton = styled.button`
   background: ${ANGOLA_STYLES.color.white};
   border: none;
   cursor: pointer;
+
+  @media (max-width: 680px) {
+    display: none;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -94,4 +94,8 @@ const ClearTextButton = styled.button`
   background: ${ANGOLA_STYLES.color.white};
   border: none;
   cursor: pointer;
+
+  @media (max-width: 680px) {
+    display: none;
+  }
 `;
