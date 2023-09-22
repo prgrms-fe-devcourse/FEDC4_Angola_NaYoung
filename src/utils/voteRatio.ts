@@ -10,5 +10,5 @@ export const voteRatio = (comments: Comment[]) => {
   const aRatio = Math.round((aCounts / size) * 1000) / 10;
   const bRatio = Math.round((100 - aRatio) * 10) / 10;
 
-  return [aRatio, bRatio];
+  return { aRatio, bRatio };
 };
