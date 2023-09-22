@@ -9,7 +9,8 @@ interface useUpdateFullNameProps {
 }
 
 const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
-  const { updateFullNameMutate } = useFetchUpdateFullName();
+  const { updateFullNameMutate, isUpdateFullNameError } =
+    useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
   const [isEditingFullName, setIsEditingFullName] = useState(false);
   const { usersData } = useFetchUsers();
@@ -17,6 +18,7 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
   const [validFullNameMsg, setValidFullNameMsg] = useState('');
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
     useState(false);
+  const [isFullNameModalOpen, setIsFullNameModalOpen] = useState(false);
 
   useEffect(() => {
     setNewFullName(name);
@@ -43,7 +45,7 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
     setValidFullNameMsg('');
   };
 
-  const handleClickDuplicatedFullNameCheckBtn = () => {
+  const handleClickDuplicatedFullNameCheckButton = () => {
     const { isValidFullName, msg } = checkFullNamePattern({
       fullName: newFullName,
       usersData,
@@ -62,6 +64,12 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
     }
   };
 
+  useEffect(() => {
+    if (isUpdateFullNameError) {
+      setIsFullNameModalOpen(true);
+    }
+  }, [isUpdateFullNameError]);
+
   return {
     newFullName,
     isEditingFullName,
@@ -70,7 +78,10 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
     invalidFullNameMsg,
     validFullNameMsg,
     isDuplicatedFullNameChecked,
-    handleClickDuplicatedFullNameCheckBtn,
+    handleClickDuplicatedFullNameCheckButton,
+    isFullNameModalOpen,
+    setIsFullNameModalOpen,
+    isUpdateFullNameError,
   };
 };
 
