@@ -61,7 +61,6 @@ const MyInfo = ({
     handleClickDuplicatedFullNameCheckButton,
     isFullNameModalOpen,
     setIsFullNameModalOpen,
-    isUpdateFullNameError,
   } = useUpdateFullName({ name });
   const {
     isEditingPassWord,
@@ -144,11 +143,6 @@ const MyInfo = ({
                 </>
               )}
             </InputBox>
-            {isFullNameModalOpen && (
-              <Modal onClose={() => setIsFullNameModalOpen(false)}>
-                닉네임 변경 실패
-              </Modal>
-            )}
             <Button
               type="button"
               onClick={handleClickDuplicatedFullNameCheckButton}
@@ -169,7 +163,7 @@ const MyInfo = ({
                 borderRadius: '50%',
                 padding: '0px',
               }}
-              disabled={!validFullNameMsg || isUpdateFullNameError}>
+              disabled={!validFullNameMsg}>
               <Icon
                 name="check"
                 size="20"
@@ -201,6 +195,11 @@ const MyInfo = ({
               />
             </Button>
           </NameTagContainer>
+        )}
+        {isFullNameModalOpen && (
+          <Modal onClose={() => setIsFullNameModalOpen(false)}>
+            닉네임 변경 실패
+          </Modal>
         )}
       </MyFullNameContainer>
       <MyInfoContainer>

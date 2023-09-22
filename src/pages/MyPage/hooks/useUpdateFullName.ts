@@ -67,8 +67,9 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
   useEffect(() => {
     if (isUpdateFullNameError) {
       setIsFullNameModalOpen(true);
+      setNewFullName(name);
     }
-  }, [isUpdateFullNameError]);
+  }, [isUpdateFullNameError, setNewFullName, name]);
 
   return {
     newFullName,
@@ -81,7 +82,6 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
     handleClickDuplicatedFullNameCheckButton,
     isFullNameModalOpen,
     setIsFullNameModalOpen,
-    isUpdateFullNameError,
   };
 };
 
