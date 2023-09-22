@@ -29,7 +29,7 @@ const useCurrentPage = (): CurrentPage => {
 
   let result: CurrentPage = {
     name: '404',
-    title: 'not found',
+    title: '알 수 없는 페이지',
     params: {},
     search: {},
   };
