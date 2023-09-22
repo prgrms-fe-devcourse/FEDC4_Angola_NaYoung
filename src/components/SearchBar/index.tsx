@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { useKeyword } from './hooks';
+import { PLACEHOLDER } from './constants';
 
 const SearchBar = () => {
   const {
@@ -24,7 +25,7 @@ const SearchBar = () => {
       <StyledInput
         type="text"
         value={keyword}
-        placeholder="유저 또는 포스트를 검색하세요"
+        placeholder={PLACEHOLDER.SEARCH_INPUT}
         onChange={handleChangeKeyword}></StyledInput>
 
       <ClearTextButton type="reset">

@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { SEARCH_KEYS } from '@constants/index';
 
 const useKeyword = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const addKeywordToQueryString = ({ keyword }: { keyword: string }) => {
-    searchParams.set('keyword', keyword);
+    searchParams.set(SEARCH_KEYS.KEYWORD, keyword);
     setSearchParams(searchParams);
   };
 
   const removeKeywordFromQueryString = () => {
-    searchParams.delete('keyword');
+    searchParams.delete(SEARCH_KEYS.KEYWORD);
     setSearchParams(searchParams);
   };
 
