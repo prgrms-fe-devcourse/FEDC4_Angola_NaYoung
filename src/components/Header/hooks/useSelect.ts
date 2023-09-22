@@ -1,26 +1,26 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { SEARCH_KEYS } from '@constants/index';
 
 interface UseSortProps {
   SORT_VALUE?: string;
 }
 
 interface UseSortReturnProps {
-  selectValue: string | undefined;
-  handleChangeSelect: (sort: string) => void;
+  handleChangeSelect: (value: string) => void;
 }
 
 const useSelect = ({ SORT_VALUE }: UseSortProps): UseSortReturnProps => {
-  const [selectValue, setSelectValue] = useState(SORT_VALUE);
+  const [, setSelectValue] = useState(SORT_VALUE);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChangeSelect = (value: string) => {
-    searchParams.set('sort', value);
+    searchParams.set(SEARCH_KEYS.SORT, value);
     setSelectValue(value);
     setSearchParams(searchParams);
   };
 
-  return { selectValue, handleChangeSelect };
+  return { handleChangeSelect };
 };
 
 export default useSelect;
