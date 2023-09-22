@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Notification } from '@type';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { ID, NOTIFICATION_MESSAGE } from '../constants';
 
 const FollowNotificationItem = ({
   notification,
@@ -23,11 +24,11 @@ const FollowNotificationItem = ({
       </FollowListItemIcon>
       <FollowListItemText seen={notification.seen}>
         <UserFullNameSpan
-          id="userName"
+          id={ID.USER_NAME_SPAN_ELEMENT}
           seen={notification.seen}>
           {notification.author.fullName}
         </UserFullNameSpan>
-        님이 나를 팔로우합니다.
+        {NOTIFICATION_MESSAGE.FOLLOW}
       </FollowListItemText>
     </FollowListItemContainer>
   );

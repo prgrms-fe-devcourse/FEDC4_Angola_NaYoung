@@ -9,6 +9,7 @@ import {
   FollowNotificationItem,
   LikeNotificationItem,
 } from './components';
+import { TEXT } from './constants';
 import useNotification from './hooks/useNotification';
 import { filterSameFollowerNotifications } from './utils';
 
@@ -51,7 +52,9 @@ const NotificationViewer = ({
   const showAllNotificationList = () => {
     if (getNotificationsData?.length === 0) {
       return (
-        <EmptyNotificationList>알림 목록이 없습니다.</EmptyNotificationList>
+        <EmptyNotificationList>
+          {TEXT.EMPTY_NOTIFICATION_LIST}
+        </EmptyNotificationList>
       );
     }
 
@@ -76,7 +79,9 @@ const NotificationViewer = ({
   const showNewNotificationList = () => {
     if (getNotificationsData?.length === 0) {
       return (
-        <EmptyNotificationList>새 알림 목록이 없습니다.</EmptyNotificationList>
+        <EmptyNotificationList>
+          {TEXT.EMPTY_NEW_NOTIFICATION_LIST}
+        </EmptyNotificationList>
       );
     }
 
@@ -86,7 +91,9 @@ const NotificationViewer = ({
 
     if (newNotificationList?.length === 0) {
       return (
-        <EmptyNotificationList>새 알림 목록이 없습니다.</EmptyNotificationList>
+        <EmptyNotificationList>
+          {TEXT.EMPTY_NEW_NOTIFICATION_LIST}
+        </EmptyNotificationList>
       );
     }
 
@@ -114,12 +121,12 @@ const NotificationViewer = ({
     <NotificationViewerBackGround ref={viewerBackGroundRef}>
       <NotificationViewerContainer>
         <NotificationHeader>
-          <NotificationHeaderTitle>알림 목록</NotificationHeaderTitle>
+          <NotificationHeaderTitle>{TEXT.NOTIFICATION_LIST}</NotificationHeaderTitle>
           <ShowAllNotificationsCheckBox
             onClick={() => {
               setIsShowAllNotifications((prev) => !prev);
             }}>
-            <ShowAllNotificationsText>지난 알림 보기</ShowAllNotificationsText>
+            <ShowAllNotificationsText>{TEXT.SEE_PREVIOUS_NOTIFICATION}</ShowAllNotificationsText>
             <Icon
               name={
                 isShowAllNotifications
@@ -132,7 +139,7 @@ const NotificationViewer = ({
         </NotificationHeader>
 
         {isReadNotificationsLoading ? (
-          <EmptyNotificationList>로딩중입니다.</EmptyNotificationList>
+          <EmptyNotificationList>{TEXT.IS_LOADING}</EmptyNotificationList>
         ) : (
           <NotificationList>
             {isShowAllNotifications
@@ -143,7 +150,7 @@ const NotificationViewer = ({
 
         <NotificationBottomBar>
           <ReadNotificationButton onClick={handleClickReadNotifications}>
-            모든 알림 확인
+            {TEXT.READ_ALL_NOTIFICATION}
           </ReadNotificationButton>
         </NotificationBottomBar>
       </NotificationViewerContainer>

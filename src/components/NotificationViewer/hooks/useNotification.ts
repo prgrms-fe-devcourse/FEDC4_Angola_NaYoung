@@ -5,6 +5,7 @@ import {
   useFetchGetNotifications,
   useFetchReadNotifications,
 } from '@apis/notifications';
+import { ID } from '../constants';
 
 interface useNotificationPropsType {
   handleClickCloseViewer: VoidFunction;
@@ -36,7 +37,7 @@ const useNotification = ({
     e: MouseEvent<HTMLLIElement>,
     notification: Notification,
   ) => {
-    if (e.target instanceof HTMLSpanElement && e.target.id === 'userName') {
+    if (e.target instanceof HTMLSpanElement && e.target.id === ID.USER_NAME_SPAN_ELEMENT) {
       navigate(`/user/${notification.author._id}`);
     } else {
       if (notification.post === null) {
