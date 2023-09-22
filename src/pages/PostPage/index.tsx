@@ -32,11 +32,15 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const [votedValue, setVotedValue] = useState<string>('');
   const [submitValue, setSubmitValue] = useState<string | undefined>('');
   const [isVoted, setIsVoted] = useState(false);
-  const { postData, postRefetch, isPostLoading } = useFetchPost(postId);
+  const { postData, postRefetch } = useFetchPost(postId);
 
   useEffect(() => {
     postRefetch();
   }, [postId, postRefetch]);
+
+  const isSamePostId = () => {
+    return postId === postData._id;
+  };
 
   // 투표 선택하는 hook
   const { handleClickItem } = useSelectItem({
@@ -85,11 +89,11 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   });
 
   return (
-    <PostPageContainer>
-      {isPostLoading ? (
+    <>
+      {!isSamePostId() ? (
         <Spinner />
       ) : (
-        <>
+        <PostPageContainer>
           {postData && (
             <PostViewer
               postId={postId}
@@ -135,9 +139,9 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
               )}
             </>
           )}
-        </>
+        </PostPageContainer>
       )}
-    </PostPageContainer>
+    </>
   );
 };
 
