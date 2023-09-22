@@ -4,18 +4,19 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import {
-  CheckEmailModal,
-  CheckFullNameModal,
-  CheckPasswordModal,
-  SignUpFailModal,
-  SignUpSuccessModal,
-} from './Modals';
-import {
   InputEmail,
   InputFullName,
   InputPassword,
   InputPasswordConfirm,
 } from './components';
+import {
+  CheckEmailModal,
+  CheckFullNameModal,
+  CheckPasswordModal,
+  SignUpFailModal,
+  SignUpSuccessModal,
+} from './components/Modals';
+import { BUTTON, INPUT } from './constants';
 import {
   useAllValidationPass,
   useClickEye,
@@ -29,7 +30,6 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // email 이벤트 & 유효성 검사 hook
   const {
     email,
     isDuplicatedEmailChecked,
@@ -39,7 +39,6 @@ const SignUpPage = () => {
     handleClickDuplicatedEmailCheckBtn,
   } = useEmailCheck({ setIsSubmitted });
 
-  // fullName 이벤트 & 유효성 검사 hook
   const {
     fullName,
     isDuplicatedFullNameChecked,
@@ -49,7 +48,6 @@ const SignUpPage = () => {
     handleClickDuplicatedFullNameCheckBtn,
   } = useFullNameCheck({ setIsSubmitted });
 
-  // password 이벤트 & 유효성 검사 hook
   const {
     password,
     passwordConfirm,
@@ -60,7 +58,6 @@ const SignUpPage = () => {
     handleChangePasswordConfirm,
   } = usePasswordCheck();
 
-  // password 보이기/안보이기 hook
   const {
     isPasswordShown,
     isPasswordConfirmShown,
@@ -68,7 +65,6 @@ const SignUpPage = () => {
     handleClickPasswordConfirmShown,
   } = useClickEye();
 
-  // 모든 유효성 검사 통과 여부 hook
   const { isAllPassed } = useAllValidationPass({
     isDuplicatedEmailChecked,
     isDuplicatedFullNameChecked,
@@ -78,7 +74,6 @@ const SignUpPage = () => {
     passwordConfirm,
   });
 
-  // SignUp 처리 hook
   const { isSignUpDisabled, handleSubmit, isSignUpError, isSignUpSuccess } =
     useSubmit({
       email,
@@ -94,7 +89,7 @@ const SignUpPage = () => {
       <SignUpContainer>
         <Form onSubmit={handleSubmit}>
           <Wrapper>
-            <Label>1. 이메일을 입력하세요.</Label>
+            <Label>{INPUT.LABEL.EMAIL}</Label>
             <InputEmail
               handleChangeEmail={handleChangeEmail}
               handleClickDuplicatedEmailCheckBtn={
@@ -106,7 +101,7 @@ const SignUpPage = () => {
             />
           </Wrapper>
           <Wrapper>
-            <Label>2. 비밀번호를 입력하세요.</Label>
+            <Label>{INPUT.LABEL.PASSWORD}</Label>
             <InputPassword
               isPasswordShown={isPasswordShown}
               handleChangePassword={handleChangePassword}
@@ -122,7 +117,7 @@ const SignUpPage = () => {
             />
           </Wrapper>
           <Wrapper>
-            <Label>3. 닉네임을 입력하세요.</Label>
+            <Label>{INPUT.LABEL.FULLNAME}</Label>
             <InputFullName
               handleChangeFullName={handleChangeFullName}
               isDuplicatedFullNameChecked={isDuplicatedFullNameChecked}
@@ -141,7 +136,7 @@ const SignUpPage = () => {
               fontSize: ANGOLA_STYLES.textSize.title,
             }}
             disabled={isSignUpDisabled}>
-            가입 완료하기
+            {BUTTON.SIGN_UP}
           </Button>
         </Form>
         {isSignUpSuccess && (
@@ -150,20 +145,23 @@ const SignUpPage = () => {
         {isSignUpError && (
           <SignUpFailModal onClick={() => window.location.reload()} />
         )}
-        {isSubmitted && !isDuplicatedEmailChecked && (
-          <CheckEmailModal onClick={() => setIsSubmitted(false)} />
+        {isSubmitted && (
+          <>
+            {!isDuplicatedEmailChecked ? (
+              <CheckEmailModal onClick={() => setIsSubmitted(false)} />
+            ) : (
+              <>
+                {(invalidPasswordMsg || invalidPasswordConfirmMsg) && (
+                  <CheckPasswordModal onClick={() => setIsSubmitted(false)} />
+                )}
+                {!(invalidPasswordMsg || invalidPasswordConfirmMsg) &&
+                  !isDuplicatedFullNameChecked && (
+                    <CheckFullNameModal onClick={() => setIsSubmitted(false)} />
+                  )}
+              </>
+            )}
+          </>
         )}
-        {isSubmitted &&
-          isDuplicatedEmailChecked &&
-          (invalidPasswordMsg || invalidPasswordConfirmMsg) && (
-            <CheckPasswordModal onClick={() => setIsSubmitted(false)} />
-          )}
-        {isSubmitted &&
-          isDuplicatedEmailChecked &&
-          !(invalidPasswordMsg || invalidPasswordConfirmMsg) &&
-          !isDuplicatedFullNameChecked && (
-            <CheckFullNameModal onClick={() => setIsSubmitted(false)} />
-          )}
       </SignUpContainer>
     </>
   );
@@ -179,7 +177,6 @@ const SignUpContainer = styled.div`
   height: 100%;
   padding: 80px;
   padding-right: 0px;
-  margin-left: 20px;
 `;
 
 const Form = styled.form`

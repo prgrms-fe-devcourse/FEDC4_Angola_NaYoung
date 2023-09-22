@@ -39,7 +39,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   }, [postId, postRefetch]);
 
   const isSamePostId = () => {
-    return postId === postData._id;
+    return postId === postData?._id;
   };
 
   // 투표 선택하는 hook
