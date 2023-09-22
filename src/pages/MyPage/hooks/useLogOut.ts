@@ -5,7 +5,7 @@ import { useFetchLogOut } from '@apis/auth';
 const useLogOut = () => {
   const navigate = useNavigate();
   const { logOutMutate, isLogOutError, isLogOutSuccess } = useFetchLogOut();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogOutModalOpen, setIsLogOutModalOpen] = useState(false);
 
   const handleClickLogOut = () => {
     logOutMutate();
@@ -16,11 +16,11 @@ const useLogOut = () => {
       navigate('/');
     }
     if (isLogOutError) {
-      setIsModalOpen(true);
+      setIsLogOutModalOpen(true);
     }
   }, [isLogOutError, isLogOutSuccess, navigate]);
 
-  return { handleClickLogOut, isModalOpen, setIsModalOpen };
+  return { handleClickLogOut, isLogOutModalOpen, setIsLogOutModalOpen };
 };
 
 export default useLogOut;
