@@ -227,6 +227,11 @@ const OptionContainer = styled.div`
   align-items: center;
   gap: 36px;
   align-self: stretch;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const OptionContent = styled.div`
@@ -289,10 +294,6 @@ const VsContainer = styled.p`
   text-align: center;
   color: ${ANGOLA_STYLES.color.black};
   font-size: ${ANGOLA_STYLES.textSize.symbol};
-
-  @media (max-width: 800px) {
-    display: none;
-  }
 `;
 
 const SubmitButton = styled.button`
