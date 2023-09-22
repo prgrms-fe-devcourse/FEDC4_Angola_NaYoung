@@ -73,6 +73,8 @@ const MyInfo = ({
     invalidPasswordConfirmMsg,
     validPasswordConfirmMsg,
     handleAcceptPassWordButton,
+    setIsPassWordModalOpen,
+    isPassWordModalOpen,
   } = useUpdatePassWord();
   const { handleClickLogOut, isLogOutModalOpen, setIsLogOutModalOpen } =
     useLogOut();
@@ -281,6 +283,11 @@ const MyInfo = ({
           <Button onClick={handleClickUpdatePassWord}>
             {PASSWORD_BUTTON.EDIT_MSG}
           </Button>
+        )}
+        {isPassWordModalOpen && (
+          <Modal onClose={() => setIsPassWordModalOpen(false)}>
+            비밀번호 변경 실패
+          </Modal>
         )}
         {isEditingPassWord ? null : (
           <>
