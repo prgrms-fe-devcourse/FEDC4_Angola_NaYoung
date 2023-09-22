@@ -8,11 +8,15 @@ interface useFollowProps {
 }
 
 const useFollow = ({ userId, followers, followerId }: useFollowProps) => {
-  const { followMutate, followData } = useFetchFollow();
-  const { unFollowMutate } = useFetchUnFollow();
+  const { followMutate, followData, isFollowLoading, isFollowError } =
+    useFetchFollow();
+  const { unFollowMutate, isUnFollowLoading, isUnFollowError } =
+    useFetchUnFollow();
   const [userFollowerId, setUserFollowerId] = useState(followerId);
   const [countFollowers, setCountFollowers] = useState(followers);
   const [isFollowed, setIsFollowed] = useState(followerId !== undefined);
+  const [isFollowModalOpen, setIsFollowModalOpen] = useState(false);
+  const [isUnFollowModalOpen, setIsUnFollowModalOpen] = useState(false);
 
   useEffect(() => {
     setCountFollowers(followers);
@@ -39,10 +43,36 @@ const useFollow = ({ userId, followers, followerId }: useFollowProps) => {
     }
   }, [followData.followId, isFollowed]);
 
+  useEffect(() => {
+    if (isFollowError) {
+      setCountFollowers((prev) => prev - 1);
+      setIsFollowModalOpen(true);
+    }
+    if (isUnFollowError) {
+      setCountFollowers((prev) => prev + 1);
+      setIsUnFollowModalOpen(true);
+    }
+  }, [isFollowError, isUnFollowError]);
+
+  const disabledFollowButton = () => {
+    if (isFollowError || isUnFollowError) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return {
     countFollowers,
     handleClickFollowButton,
     isFollowed,
+    isFollowLoading,
+    isUnFollowLoading,
+    isFollowModalOpen,
+    isUnFollowModalOpen,
+    setIsFollowModalOpen,
+    setIsUnFollowModalOpen,
+    disabledFollowButton,
   };
 };
 

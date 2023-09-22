@@ -2,11 +2,13 @@ import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import Button from '@components/Button';
 import Image from '@components/Image';
+import Modal from '@components/Modal';
 import NameTag from '@components/NameTag';
+import Spinner from '@components/Spinner';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
-import { FOLLOW_MESSAGE } from './constants';
+import { FOLLOW_ERROR_MESSAGE, FOLLOW_MESSAGE } from './constants';
 import useFollow from './hooks/useFollow';
 
 interface UserInfoProps {
@@ -33,7 +35,18 @@ const UserInfo = ({
   userEmoji,
 }: UserInfoProps) => {
   const auth = useRecoilValue(authInfoState);
-  const { countFollowers, handleClickFollowButton, isFollowed } = useFollow({
+  const {
+    countFollowers,
+    handleClickFollowButton,
+    isFollowed,
+    isFollowLoading,
+    isUnFollowLoading,
+    isFollowModalOpen,
+    isUnFollowModalOpen,
+    setIsFollowModalOpen,
+    setIsUnFollowModalOpen,
+    disabledFollowButton,
+  } = useFollow({
     userId,
     followers,
     followerId,
@@ -72,15 +85,27 @@ const UserInfo = ({
         <UserInfoText>
           {USER_INFO.GET_LIKES}&nbsp;&nbsp;{likes}
         </UserInfoText>
+        {(isFollowLoading || isUnFollowLoading) ?? <Spinner />}
         {auth && (
           <Button
             toggle={isFollowed}
             size="md"
-            onClick={handleClickFollowButton}>
+            onClick={handleClickFollowButton}
+            disabled={disabledFollowButton()}>
             {isFollowed
               ? `${FOLLOW_MESSAGE.UN_FOLLOW}`
               : `${FOLLOW_MESSAGE.FOLLOW}`}
           </Button>
+        )}
+        {isFollowModalOpen && (
+          <Modal onClose={() => setIsFollowModalOpen(false)}>
+            {FOLLOW_ERROR_MESSAGE.FOLLOW}
+          </Modal>
+        )}
+        {isUnFollowModalOpen && (
+          <Modal onClose={() => setIsUnFollowModalOpen(false)}>
+            {FOLLOW_ERROR_MESSAGE.UN_FOLLOW}
+          </Modal>
         )}
       </UserInfoContainer>
     </UserInfoWrapper>
@@ -124,6 +149,11 @@ const UserInfoContainer = styled.div`
   padding: 12px 0px;
   gap: 24px;
   align-self: stretch;
+
+  @media (max-width: 1024px) {
+    gap: 20px;
+    flex-direction: column;
+  }
 `;
 
 const UserInfoText = styled.div`
@@ -143,4 +173,8 @@ const Bar = styled.div`
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.396px;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
