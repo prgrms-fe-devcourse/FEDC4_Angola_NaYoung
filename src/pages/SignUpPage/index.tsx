@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@components/Button';
-import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import {
   CheckEmailModal,
@@ -11,7 +10,12 @@ import {
   SignUpFailModal,
   SignUpSuccessModal,
 } from './Modals';
-import { InputEmail, InputPassword, InputPasswordConfirm } from './components';
+import {
+  InputEmail,
+  InputFullName,
+  InputPassword,
+  InputPasswordConfirm,
+} from './components';
 import {
   useAllValidationPass,
   useClickEye,
@@ -119,46 +123,15 @@ const SignUpPage = () => {
           </Wrapper>
           <Wrapper>
             <Label>3. 닉네임을 입력하세요.</Label>
-            <InputContainer>
-              <InputWrapper>
-                <Input
-                  onChange={handleChangeFullName}
-                  placeholder="3자 이상 8자 이하의 닉네임을 지어주세요."
-                />
-                {isDuplicatedFullNameChecked && (
-                  <DoubleCheckIcon>
-                    <Icon
-                      name={'double_check'}
-                      color={'#78D968'}
-                    />
-                  </DoubleCheckIcon>
-                )}
-              </InputWrapper>
-              <Button
-                type="button"
-                onClick={handleClickDuplicatedFullNameCheckBtn}
-                style={{
-                  width: '100px',
-                  padding: '0',
-                  fontSize: ANGOLA_STYLES.textSize.titleSm,
-                }}>
-                중복 검사
-              </Button>
-            </InputContainer>
-            {invalidFullNameMsg && (
-              <InputWarning>
-                <Icon
-                  name={'warn'}
-                  color={'#F66'}
-                />
-                {invalidFullNameMsg}
-              </InputWarning>
-            )}
-            {validFullNameMsg && (
-              <InputWarning style={{ color: '#78D968' }}>
-                {validFullNameMsg}
-              </InputWarning>
-            )}
+            <InputFullName
+              handleChangeFullName={handleChangeFullName}
+              isDuplicatedFullNameChecked={isDuplicatedFullNameChecked}
+              handleClickDuplicatedFullNameCheckBtn={
+                handleClickDuplicatedFullNameCheckBtn
+              }
+              invalidFullNameMsg={invalidFullNameMsg}
+              validFullNameMsg={validFullNameMsg}
+            />
           </Wrapper>
           <Button
             type="submit"
@@ -230,50 +203,4 @@ const Label = styled.label`
   font-size: ${ANGOLA_STYLES.textSize.title};
   line-height: 150%;
   padding-left: 1rem;
-`;
-
-const InputContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-`;
-
-const InputWrapper = styled.div`
-  width: 80%;
-  position: relative;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 12px 16px 4px 16px;
-  border: ${ANGOLA_STYLES.border.default};
-  border-radius: 40px;
-  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
-  font-size: ${ANGOLA_STYLES.textSize.titleSm};
-
-  ::placeholder {
-    color: ${ANGOLA_STYLES.color.dark};
-    font-size: ${ANGOLA_STYLES.textSize.text};
-  }
-
-  &:focus {
-    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
-  }
-`;
-
-const InputWarning = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-  color: #f66;
-  padding-left: 1rem;
-  gap: 8px;
-`;
-
-const DoubleCheckIcon = styled.div`
-  position: absolute;
-  right: 1.5rem;
-  top: 50%;
-  transform: translate(0, -50%);
 `;

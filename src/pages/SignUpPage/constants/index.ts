@@ -42,6 +42,7 @@ export const INPUT = {
     EMAIL: 'angola@gmail.com',
     PASSWORD: '5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요.',
     PASSWORD_CONFIRM: '동일한 비밀번호를 다시 입력해주세요.',
+    FUllNAME: '3자 이상 8자 이하의 닉네임을 지어주세요.',
   },
   AUTO_COMPLETE: 'on',
 };
