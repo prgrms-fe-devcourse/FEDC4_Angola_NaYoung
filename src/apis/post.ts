@@ -4,7 +4,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useArchives } from '@hooks/useArchives';
 import useAxiosInstance from './instance';
 
-const CHANNEL_ID = '650be15e89b54040ee691c0c'; // todo : env 파일에 추가
+const CHANNEL_ID = import.meta.env.VITE_CHANNEL_ID;
 
 export const useFetchAllPosts = () => {
   const { baseInstance } = useAxiosInstance();
@@ -57,12 +57,11 @@ export const useFetchPost = (postId: string) => {
     isPostLoading: isLoading,
     isPostSuccess: isSuccess,
     isPostError: isError,
-    postRefetch: refetch, 
+    postRefetch: refetch,
   };
 };
 
-
-// TODO:@MinwooP - 위 useFetchPost에 key만 다르게 넣을 수 있도록 변경하고, 합치기 
+// TODO:@MinwooP - 위 useFetchPost에 key만 다르게 넣을 수 있도록 변경하고, 합치기
 export const useFetchPostNotification = (postId: string) => {
   const { baseInstance } = useAxiosInstance();
   const path = `/posts/${postId}`;

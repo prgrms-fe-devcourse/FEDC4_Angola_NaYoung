@@ -1,10 +1,10 @@
-const ANGOLA_SEPARATOR = '№ДъΨ∬ ㉿ ∛❀♭♨';
-
 interface PostData {
   title: string;
   a: string;
   b: string;
 }
+
+const ANGOLA_SEPARATOR = import.meta.env.VITE_ANGOLA_SEPARATOR
 
 interface CommentData {
   vote: string;
