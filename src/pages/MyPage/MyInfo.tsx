@@ -47,6 +47,8 @@ const MyInfo = ({
     isUpdateProfileImageLoading,
     profileImageUrl,
     handleChangeProfileImage,
+    setIsProfileImageModalOpen,
+    isProfileImageModalOpen,
   } = useUpdateProfile({ image });
   const {
     isEditingFullName,
@@ -56,7 +58,10 @@ const MyInfo = ({
     invalidFullNameMsg,
     validFullNameMsg,
     isDuplicatedFullNameChecked,
-    handleClickDuplicatedFullNameCheckBtn,
+    handleClickDuplicatedFullNameCheckButton,
+    isFullNameModalOpen,
+    setIsFullNameModalOpen,
+    isUpdateFullNameError,
   } = useUpdateFullName({ name });
   const {
     isEditingPassWord,
@@ -70,7 +75,8 @@ const MyInfo = ({
     validPasswordConfirmMsg,
     handleAcceptPassWordButton,
   } = useUpdatePassWord();
-  const { handleClickLogOut, isModalOpen, setIsModalOpen } = useLogOut();
+  const { handleClickLogOut, isLogOutModalOpen, setIsLogOutModalOpen } =
+    useLogOut();
 
   return (
     <MyInfoWrapper>
@@ -94,6 +100,11 @@ const MyInfo = ({
           onChange={handleChangeProfileImage}
           disabled={isUpdateProfileImageLoading}
         />
+        {isProfileImageModalOpen && (
+          <Modal onClose={() => setIsProfileImageModalOpen(false)}>
+            프로필 변경 실패
+          </Modal>
+        )}
       </MyProfileContainer>
       <MyFullNameContainer>
         {isEditingFullName ? (
@@ -133,9 +144,14 @@ const MyInfo = ({
                 </>
               )}
             </InputBox>
+            {isFullNameModalOpen && (
+              <Modal onClose={() => setIsFullNameModalOpen(false)}>
+                닉네임 변경 실패
+              </Modal>
+            )}
             <Button
               type="button"
-              onClick={handleClickDuplicatedFullNameCheckBtn}
+              onClick={handleClickDuplicatedFullNameCheckButton}
               style={{
                 width: '100px',
                 height: '48px',
@@ -153,7 +169,7 @@ const MyInfo = ({
                 borderRadius: '50%',
                 padding: '0px',
               }}
-              disabled={!validFullNameMsg}>
+              disabled={!validFullNameMsg || isUpdateFullNameError}>
               <Icon
                 name="check"
                 size="20"
@@ -270,8 +286,10 @@ const MyInfo = ({
         {isEditingPassWord ? null : (
           <>
             <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
-            {isModalOpen && (
-              <Modal onClose={() => setIsModalOpen(false)}>로그아웃 실패</Modal>
+            {isLogOutModalOpen && (
+              <Modal onClose={() => setIsLogOutModalOpen(false)}>
+                로그아웃 실패
+              </Modal>
             )}
           </>
         )}
