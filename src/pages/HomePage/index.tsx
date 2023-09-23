@@ -7,7 +7,7 @@ import { authInfoState } from '@store/auth';
 import { calculateLevel } from '@utils/calculateUserLevel';
 import { splitCommentBySeparator } from '@utils/parseDataBySeparator';
 import { Comment } from '@type/index';
-import useInfiniteScroll from './hooks/useInfiniteScroll';
+import { useInfiniteScroll } from './hooks';
 
 const HomePage = () => {
   const auth = useRecoilValue(authInfoState);
