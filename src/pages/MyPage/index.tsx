@@ -60,6 +60,7 @@ const MyPage = () => {
               key={post._id}
               id={post._id}
               title={post.title}
+              image={userData.image}
               canDeletePost={name === MY_PAGE}
               deletePostMutate={deletePostMutate}
             />
