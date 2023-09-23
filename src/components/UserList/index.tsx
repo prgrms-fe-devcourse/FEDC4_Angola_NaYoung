@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
-import useUserSort from '@pages/SearchPage/hooks/useUserSort';
+import { useUsersort } from '@pages/SearchPage/hooks';
 import Spinner from '@components/Spinner';
 import UserListItem from '@components/UserListItem';
 
@@ -10,7 +10,7 @@ interface UserListProps {
 }
 
 const UserList = ({ keyword, sort }: UserListProps) => {
-  const { resultData, isUsersLoading, isSearchUsersLoading } = useUserSort({
+  const { resultData, isUsersLoading, isSearchUsersLoading } = useUsersort({
     keyword,
     sort,
   });

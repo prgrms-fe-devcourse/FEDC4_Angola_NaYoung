@@ -21,7 +21,7 @@ export const routes: {
 }[] = [
   {
     path: '*',
-    name: 'notFound',
+    name: '404',
     title: '알 수 없는 페이지',
     component: NotFoundPage,
   },

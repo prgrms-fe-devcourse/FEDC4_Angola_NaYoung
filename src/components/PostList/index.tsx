@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import usePostSort from '@pages/SearchPage/hooks/usePostSort';
+import { usePostSort } from '@pages/SearchPage/hooks';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 

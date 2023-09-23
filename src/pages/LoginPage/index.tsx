@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { LABEL, LOGIN_BUTTON_MSG, MSG } from './constants';
+import { INPUT_AUTO_COMPLETE } from './constants';
 import { useLogin } from './hooks';
 import { isLoginButtonActive } from './utils';
 
@@ -36,6 +37,7 @@ const LoginPage = () => {
             <InputStyled
               onChange={handleChangePassword}
               type={'password'}
+              autoComplete={INPUT_AUTO_COMPLETE}
             />
             {!password && <InputWarning>{MSG.WARNING.PASSWORD}</InputWarning>}
           </Wrapper>
@@ -64,6 +66,10 @@ const LoginContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 80px;
+
+  @media screen and (max-width: 700px) {
+    padding: 40px;
+  }
 `;
 
 const Form = styled.form`
@@ -76,10 +82,17 @@ const Form = styled.form`
 `;
 
 const Wrapper = styled.div`
-  width: 60%;
+  width: 65%;
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media screen and (max-width: 700px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const Label = styled.label`

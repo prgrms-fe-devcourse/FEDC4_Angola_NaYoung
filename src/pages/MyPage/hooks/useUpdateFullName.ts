@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useFetchUpdateFullName } from '@apis/profile';
 import { useFetchUsers } from '@apis/user';
+import { authInfoState } from '@store/auth';
 import { checkFullNamePattern } from '@utils/userAuthentication';
 import { CHECK_MSG } from '@constants/index';
 
@@ -19,6 +21,8 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
     useState(false);
   const [isFullNameModalOpen, setIsFullNameModalOpen] = useState(false);
+  const auth = useRecoilValue(authInfoState);
+  const myFullName = auth?.userFullName || '';
 
   useEffect(() => {
     setNewFullName(name);
@@ -26,7 +30,13 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
 
   const handleClickUpdateFullName = () => {
     if (isEditingFullName) {
-      if (checkFullNamePattern({ fullName: newFullName, usersData })) {
+      if (
+        checkFullNamePattern({
+          fullName: newFullName,
+          usersData,
+          myFullName,
+        })
+      ) {
         updateFullNameMutate({ fullName: newFullName });
       } else {
         setNewFullName('');
@@ -49,6 +59,7 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
     const { isValidFullName, msg } = checkFullNamePattern({
       fullName: newFullName,
       usersData,
+      myFullName,
     });
 
     if (!usersData) {

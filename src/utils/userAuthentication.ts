@@ -4,8 +4,8 @@ const NUMBER = /[0-9]/;
 const CHARACTER = /[a-zA-Z]/;
 const SPECIAL_CHARACTER = /[~!@#$%^&*()_+|<>?:{}]/;
 const EMAIL_REGEXP = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
-const MIN_LENGTH = 3;
-const MAX_LENGTH = 8;
+const FULLNAME_MIN_LENGTH = 3;
+const FULLNAME_MAX_LENGTH = 8;
 const PASSWORD_MIN_LENGTH = 5;
 const PASSWORD_MAX_LENGTH = 15;
 
@@ -17,6 +17,7 @@ interface checkEmailPatternProps {
 interface checkFullNamePatternProps {
   fullName: string;
   usersData?: User[];
+  myFullName?: string;
 }
 
 interface checkPassWordPatternProps {
@@ -48,19 +49,24 @@ export const checkEmailPattern = ({
 export const checkFullNamePattern = ({
   fullName,
   usersData,
+  myFullName,
 }: checkFullNamePatternProps) => {
   const trimmedFullName = fullName.trim();
+
   let isValidFullName;
   let msg;
 
   if (
     SPECIAL_CHARACTER.test(trimmedFullName) ||
-    trimmedFullName.length >= MAX_LENGTH ||
-    trimmedFullName.length <= MIN_LENGTH
+    trimmedFullName.length > FULLNAME_MAX_LENGTH ||
+    trimmedFullName.length < FULLNAME_MIN_LENGTH
   ) {
     msg = '닉네임은 3자리 이상 8자리 이하 문자 또는 숫자로 구성하여야 합니다.';
     isValidFullName = false;
-  } else if (usersData?.find((user) => user.fullName === fullName)) {
+  } else if (
+    myFullName !== fullName &&
+    usersData?.find((user) => user.fullName === fullName)
+  ) {
     msg = '이미 가입된 닉네임입니다.';
     isValidFullName = false;
   } else {
