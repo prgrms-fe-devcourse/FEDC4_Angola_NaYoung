@@ -17,7 +17,7 @@ interface checkEmailPatternProps {
 interface checkFullNamePatternProps {
   fullName: string;
   usersData?: User[];
-  myFullName: string;
+  myFullName?: string;
 }
 
 interface checkPassWordPatternProps {
