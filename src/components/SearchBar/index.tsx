@@ -1,42 +1,16 @@
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { useKeyword } from './hooks';
+import { PLACEHOLDER } from './constants';
 
 const SearchBar = () => {
-  const [keyword, setKeyword] = useState<string>('');
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const addKeywordToQueryString = ({ keyword }: { keyword: string }) => {
-    searchParams.set('keyword', keyword);
-    setSearchParams(searchParams);
-  };
-
-  const removeKeywordFromQueryString = () => {
-    searchParams.delete('keyword');
-    setSearchParams(searchParams);
-  };
-
-  const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setKeyword(value);
-  };
-
-  const handleSubmitKeyword = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (keyword.length) {
-      addKeywordToQueryString({ keyword: keyword.trim() });
-      setKeyword('');
-    } else {
-      removeKeywordFromQueryString();
-    }
-  };
-
-  const handleResetKeyword = () => {
-    setKeyword('');
-  };
+  const {
+    keyword,
+    handleChangeKeyword,
+    handleResetKeyword,
+    handleSubmitKeyword,
+  } = useKeyword();
 
   return (
     <StyledForm
@@ -51,7 +25,7 @@ const SearchBar = () => {
       <StyledInput
         type="text"
         value={keyword}
-        placeholder="유저 또는 포스트를 검색하세요"
+        placeholder={PLACEHOLDER.SEARCH_INPUT}
         onChange={handleChangeKeyword}></StyledInput>
 
       <ClearTextButton type="reset">
@@ -82,10 +56,6 @@ const StyledForm = styled.form`
   &:focus-within {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
-
-  @media (max-width: 680px) {
-    display: none;
-  }
 `;
 
 const SubmitButton = styled.button`
@@ -95,6 +65,10 @@ const SubmitButton = styled.button`
   background: ${ANGOLA_STYLES.color.white};
   border: none;
   cursor: pointer;
+
+  @media (max-width: 680px) {
+    display: none;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -120,4 +94,8 @@ const ClearTextButton = styled.button`
   background: ${ANGOLA_STYLES.color.white};
   border: none;
   cursor: pointer;
+
+  @media (max-width: 680px) {
+    display: none;
+  }
 `;
