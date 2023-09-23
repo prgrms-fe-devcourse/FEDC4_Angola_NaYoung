@@ -154,8 +154,8 @@ const TitleInput = styled.input`
     text-overflow: ellipsis;
   }
 
-  @media (max-width: 800px) {
-    width: 30%;
+  @media (max-width: 900px) {
+    width: 90%;
   }
 `;
 
@@ -167,8 +167,8 @@ const TitleLengthLimit = styled.span`
   color: ${ANGOLA_STYLES.color.text};
   line-height: 100%;
 
-  @media (max-width: 800px) {
-    visibility: hidden;
+  @media (max-width: 900px) {
+    display: none;
   }
 `;
 
