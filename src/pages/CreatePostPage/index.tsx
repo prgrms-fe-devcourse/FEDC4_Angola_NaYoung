@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
+import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { ID, MAX_INPUT_LENGTH, PLACEHOLDER, TEXT } from './constants';
+import { COLOR, ID, MAX_INPUT_LENGTH, PLACEHOLDER, TEXT } from './constants';
 import { useCreatePost } from './hooks';
 
 const CreatePostPage = () => {
@@ -10,6 +11,7 @@ const CreatePostPage = () => {
     inputValues,
     isModalOpen,
     setIsModalOpen,
+    isMaxLineInput,
     isCreatePostLoading,
     isCreatePostPossible,
     handleChangeTitleValue,
@@ -47,6 +49,15 @@ const CreatePostPage = () => {
               onBlur={handleBlurTrim}
               placeholder={PLACEHOLDER.OPTION_B}
             />
+            {isMaxLineInput.optionA && (
+              <OptionInputWarning>
+                <Icon
+                  name={'warn'}
+                  color={COLOR.WARN}
+                />
+                {TEXT.WARN_MAX_LINE}
+              </OptionInputWarning>
+            )}
             <OptionLengthLimit>
               {inputValues.optionA.length} / {MAX_INPUT_LENGTH}
             </OptionLengthLimit>
@@ -63,6 +74,15 @@ const CreatePostPage = () => {
               onBlur={handleBlurTrim}
               placeholder={PLACEHOLDER.OPTION_B}
             />
+            {isMaxLineInput.optionB && (
+              <OptionInputWarning>
+                <Icon
+                  name={'warn'}
+                  color={COLOR.WARN}
+                />
+                {TEXT.WARN_MAX_LINE}
+              </OptionInputWarning>
+            )}
             <OptionLengthLimit>
               {inputValues.optionB.length} / {MAX_INPUT_LENGTH}
             </OptionLengthLimit>
@@ -156,10 +176,11 @@ const OptionContainer = styled.div`
   display: flex;
   padding: 12px 0px;
   align-items: center;
-  gap: 36px;
+  justify-content: center;
+  gap: 52px;
   align-self: stretch;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1160px) {
     flex-direction: column;
     justify-content: center;
   }
@@ -167,11 +188,10 @@ const OptionContainer = styled.div`
 
 const OptionContent = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 12px;
-  flex: 1 0 0;
 `;
 
 const OptionName = styled.p`
@@ -183,7 +203,7 @@ const OptionName = styled.p`
 
 const OptionInput = styled.textarea`
   box-sizing: border-box;
-  width: auto;
+  width: 400px;
   display: flex;
   min-height: 256px;
   resize: none;
@@ -210,6 +230,16 @@ const OptionInput = styled.textarea`
   &:focus {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
+`;
+
+const OptionInputWarning = styled.span`
+  display: inline-flex;
+  line-height: 22px;
+  gap: 8px;
+  align-items: center;
+  position: absolute;
+  bottom: -20px;
+  color: ${COLOR.WARN};
 `;
 
 const OptionLengthLimit = styled.span`
