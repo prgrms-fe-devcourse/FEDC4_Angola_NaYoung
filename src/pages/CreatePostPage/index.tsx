@@ -1,156 +1,87 @@
-import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Modal from '@components/Modal';
 import Spinner from '@components/Spinner';
-import { useFetchCreatePost } from '@apis/post';
-import { joinDataBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-
-const MAX_TITLE_OPTION_LENGTH = 100;
+import { ID, MAX_INPUT_LENGTH, PLACEHOLDER, TEXT } from './constants';
+import { useCreatePost } from './hooks';
 
 const CreatePostPage = () => {
-  const [inputValues, setInputValues] = useState({
-    title: '',
-    optionA: '',
-    optionB: '',
-  });
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const {
-    createPostMutate,
-    createPostData,
+    inputValues,
+    isModalOpen,
+    setIsModalOpen,
     isCreatePostLoading,
-    isCreatePostSuccess,
-    isCreatePostError,
-  } = useFetchCreatePost();
+    isCreatePostPossible,
+    handleChangeTitleValue,
+    handleChangeOptionValues,
+    handleClickCreatePost,
+    handleBlurTrim,
+  } = useCreatePost();
 
-  const isCreatePostPossible: boolean =
-    inputValues.title.length > 0 &&
-    inputValues.optionA.length > 0 &&
-    inputValues.optionB.length > 0;
-
-  const handleChangeTitleValue = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-
-    setInputValues({
-      ...inputValues,
-      [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
-    });
-  };
-
-  const handleChangeOptionValues = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
-    if (e.target.scrollHeight === e.target.clientHeight) {
-      setInputValues({
-        ...inputValues,
-        [id]: value.substring(0, MAX_TITLE_OPTION_LENGTH),
-      });
-    }
-  };
-
-
-  const handleClickCreatePost = () => {
-    if (!isCreatePostPossible) return;
-
-    const postTitle = joinDataBySeparator(
-      inputValues.title,
-      inputValues.optionA,
-      inputValues.optionB,
-    );
-
-    createPostMutate({ title: postTitle });
-  };
-
-  const handleBlurTrim = (
-    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { id, value } = e.target;
-    setInputValues({
-      ...inputValues,
-      [id]: value.trim(),
-    });
-  };
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (isCreatePostSuccess) {
-      navigate(`/post/${createPostData}`);
-    }
-  }, [isCreatePostSuccess]);
-
-  useEffect(() => {
-    if (isCreatePostError) {
-      setIsModalOpen(() => true);
-    }
-  }, [isCreatePostError]);
+  if (isCreatePostLoading) {
+    return <Spinner size={100} />;
+  }
 
   return (
     <>
-      {isCreatePostLoading ? (
-        <Spinner size={100} />
-      ) : (
-        <PageContainer>
-          <TitleContainer>
-            <TitleInput
-              id="title"
-              placeholder="밸런스 포스트에 대한 한 줄 설명을 써주세요"
-              value={inputValues.title}
-              onChange={handleChangeTitleValue}
+      <PageContainer>
+        <TitleContainer>
+          <TitleInput
+            placeholder={PLACEHOLDER.TITLE}
+            value={inputValues.title}
+            onChange={handleChangeTitleValue}
+            onBlur={handleBlurTrim}
+          />
+          <TitleLengthLimit>
+            {inputValues.title.length} / {MAX_INPUT_LENGTH}
+          </TitleLengthLimit>
+        </TitleContainer>
+
+        <OptionContainer>
+          <OptionContent>
+            <OptionName>{TEXT.OPTION_A}</OptionName>
+            <OptionInput
+              id={ID.OPTION_A}
+              value={inputValues.optionA}
+              onChange={handleChangeOptionValues}
               onBlur={handleBlurTrim}
+              placeholder={PLACEHOLDER.OPTION_B}
             />
-            <TitleLengthLimit>
-              {inputValues.title.length} / 100
-            </TitleLengthLimit>
-          </TitleContainer>
+            <OptionLengthLimit>
+              {inputValues.optionA.length} / {MAX_INPUT_LENGTH}
+            </OptionLengthLimit>
+          </OptionContent>
 
-          <OptionContainer>
-            <OptionContent>
-              <OptionName>A 항목</OptionName>
-              <OptionInput
-                id="optionA"
-                value={inputValues.optionA}
-                onChange={handleChangeOptionValues}
-                onBlur={handleBlurTrim}
-                placeholder="A 항목에 대한 설명을 작성해주세요"
-              />
-              <OptionLengthLimit>
-                {inputValues.optionA.length} / 100
-              </OptionLengthLimit>
-            </OptionContent>
+          <VsContainer>{TEXT.VERSUS}</VsContainer>
 
-            <VsContainer>VS</VsContainer>
+          <OptionContent>
+            <OptionName>{TEXT.OPTION_B}</OptionName>
+            <OptionInput
+              id={ID.OPTION_B}
+              value={inputValues.optionB}
+              onChange={handleChangeOptionValues}
+              onBlur={handleBlurTrim}
+              placeholder={PLACEHOLDER.OPTION_B}
+            />
+            <OptionLengthLimit>
+              {inputValues.optionB.length} / {MAX_INPUT_LENGTH}
+            </OptionLengthLimit>
+          </OptionContent>
+        </OptionContainer>
 
-            <OptionContent>
-              <OptionName>B 항목</OptionName>
-              <OptionInput
-                id="optionB"
-                value={inputValues.optionB}
-                onChange={handleChangeOptionValues}
-                onBlur={handleBlurTrim}
-                placeholder="B 항목에 대한 설명을 작성해주세요"
-              />
-              <OptionLengthLimit>
-                {inputValues.optionB.length} / 100
-              </OptionLengthLimit>
-            </OptionContent>
-          </OptionContainer>
-
-          <SubmitButton
-            disabled={!isCreatePostPossible}
-            onClick={handleClickCreatePost}>
-            작성 완료하기
-          </SubmitButton>
-        </PageContainer>
-      )}
+        <SubmitButton
+          disabled={!isCreatePostPossible}
+          onClick={handleClickCreatePost}>
+          {TEXT.SUBMIT}
+        </SubmitButton>
+      </PageContainer>
 
       {isModalOpen && (
         <Modal
           onClose={() => {
             setIsModalOpen(() => false);
           }}>
-          포스트 작성에 실패했습니다.
+          {TEXT.CREATE_POST_FAIL}
         </Modal>
       )}
     </>
@@ -217,7 +148,7 @@ const TitleLengthLimit = styled.span`
   line-height: 100%;
 
   @media (max-width: 800px) {
-    visibility: hidden; 
+    visibility: hidden;
   }
 `;
 
@@ -302,7 +233,6 @@ const SubmitButton = styled.button`
   padding: 20px 36px;
   justify-content: center;
   align-items: center;
-
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
