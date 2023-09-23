@@ -64,6 +64,10 @@ const LoginContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 80px;
+
+  @media screen and (max-width: 700px) {
+    padding: 40px;
+  }
 `;
 
 const Form = styled.form`
@@ -76,10 +80,17 @@ const Form = styled.form`
 `;
 
 const Wrapper = styled.div`
-  width: 60%;
+  width: 65%;
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media screen and (max-width: 700px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const Label = styled.label`
