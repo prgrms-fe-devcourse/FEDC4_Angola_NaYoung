@@ -8,7 +8,7 @@ import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { BUTTON_VALUES, USER_PROFILE_IMAGE } from '@constants/index';
 import { DELETE_POST_MODAL } from './constants';
-import useDeletePost from './hooks/useDeletePost';
+import { useDeletePost } from './hooks';
 
 interface PostListItemProps {
   id: string;
