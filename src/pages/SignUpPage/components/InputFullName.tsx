@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { COLOR, INPUT } from '../constants';
+import { BUTTON, COLOR, INPUT } from '../constants';
 
 interface InputFullName {
   handleChangeFullName: (e: ChangeEvent<HTMLInputElement>) => void;
   isDuplicatedFullNameChecked: boolean;
-  handleClickDuplicatedFullNameCheckBtn: () => void;
+  handleClickDuplicatedFullNameCheckBtn: VoidFunction;
   invalidFullNameMsg: string;
   validFullNameMsg: string;
 }
@@ -45,7 +45,7 @@ const InputFullName = ({
             padding: '8px 0',
             fontSize: ANGOLA_STYLES.textSize.titleSm,
           }}>
-          중복 검사
+          {BUTTON.DUPLICATE_CHECK}
         </Button>
       </InputContainer>
       {invalidFullNameMsg && (
