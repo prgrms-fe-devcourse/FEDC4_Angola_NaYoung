@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Modal from '@components/Modal';
-import { ANGOLA_STYLES } from '../../styles/commonStyles';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { MODAL } from '../constants';
 
 interface ModalsProps {
   onClick: VoidFunction;
@@ -12,8 +13,8 @@ export const SignUpSuccessModal = ({ onClick: handleClick }: ModalsProps) => {
       onClose={handleClick}
       footerShow={false}>
       <Content>
-        <Msg>회원 가입이 완료되었습니다!</Msg>
-        <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
+        <Msg>{MODAL.MSG.SIGN_UP.SUCCESS}</Msg>
+        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -25,8 +26,8 @@ export const SignUpFailModal = ({ onClick: handleClick }: ModalsProps) => {
       onClose={handleClick}
       footerShow={false}>
       <Content>
-        <Msg>회원 가입에 실패하였습니다!</Msg>
-        <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
+        <Msg>{MODAL.MSG.SIGN_UP.FAIL}</Msg>
+        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -38,8 +39,8 @@ export const CheckEmailModal = ({ onClick: handleClick }: ModalsProps) => {
       onClose={handleClick}
       footerShow={false}>
       <Content>
-        <Msg>이메일 중복 검사를 해주세요!</Msg>
-        <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
+        <Msg>{MODAL.MSG.WARN.EMAIL}</Msg>
+        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -51,8 +52,8 @@ export const CheckPasswordModal = ({ onClick: handleClick }: ModalsProps) => {
       onClose={handleClick}
       footerShow={false}>
       <Content>
-        <Msg>비밀번호를 다시 확인해주세요!</Msg>
-        <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
+        <Msg>{MODAL.MSG.WARN.PASSWORD}</Msg>
+        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -64,8 +65,8 @@ export const CheckFullNameModal = ({ onClick: handleClick }: ModalsProps) => {
       onClose={handleClick}
       footerShow={false}>
       <Content>
-        <Msg>닉네임 중복 검사를 해주세요!</Msg>
-        <SubMsg>Enter/Esc 또는 주변을 클릭하세요.</SubMsg>
+        <Msg>{MODAL.MSG.WARN.FULLNAME}</Msg>
+        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );

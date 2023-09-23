@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Button from '@components/Button';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { LABEL, LOGIN_BUTTON_MSG, MSG } from './constants';
+import { INPUT_AUTO_COMPLETE } from './constants';
 import { useLogin } from './hooks';
 import { isLoginButtonActive } from './utils';
 
@@ -36,6 +37,7 @@ const LoginPage = () => {
             <InputStyled
               onChange={handleChangePassword}
               type={'password'}
+              autoComplete={INPUT_AUTO_COMPLETE}
             />
             {!password && <InputWarning>{MSG.WARNING.PASSWORD}</InputWarning>}
           </Wrapper>

@@ -1,345 +1,132 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import {
-  checkEmailPattern,
-  checkFullNamePattern,
-  checkPassWordPattern,
-} from '@utils';
 import Button from '@components/Button';
-import Icon from '@components/Icon';
-import { useFetchSignUp } from '@apis/auth';
-import { useFetchUsers } from '@apis/user';
-import { ANGOLA_STYLES } from '../../styles/commonStyles';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
+import {
+  InputEmail,
+  InputFullName,
+  InputPassword,
+  InputPasswordConfirm,
+} from './components';
 import {
   CheckEmailModal,
   CheckFullNameModal,
   CheckPasswordModal,
   SignUpFailModal,
   SignUpSuccessModal,
-} from './Modals';
+} from './components/Modals';
+import { BUTTON, INPUT } from './constants';
+import {
+  useAllValidationPass,
+  useClickEye,
+  useEmailCheck,
+  useFullNameCheck,
+  usePasswordCheck,
+  useSubmit,
+} from './hooks';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('init');
-  const [password, setPassword] = useState('init');
-  const [passwordConfirm, setPasswordConfirm] = useState('init');
-  const [fullName, setFullName] = useState('in');
-  const [isDuplicatedEmailChecked, setIsDuplicatedEmailChecked] =
-    useState(false);
-  const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
-    useState(false);
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [isPasswordConfirmShown, setIsPasswordConfirmShown] = useState(false);
-  const { signUpMutate, isSignUpSuccess, isSignUpError } = useFetchSignUp();
-  const { usersData, isUsersError } = useFetchUsers();
-
-  const [invalidEmailMsg, setInvalidEmailMsg] = useState<string>('');
-  const [validEmailMsg, setValidEmailMsg] = useState<string>('');
-  const [invalidPasswordMsg, setInvalidPasswordMsg] = useState<string>('');
-  const [invalidPasswordConfirmMsg, setInvalidPasswordConfirmMsg] =
-    useState<string>('');
-  const [validPasswordConfirmMsg, setValidPasswordConfirmMsg] =
-    useState<string>('');
-  const [invalidFullNameMsg, setInvalidFullNameMsg] = useState<string>('');
-  const [validFullNameMsg, setValidFullNameMsg] = useState<string>('');
-
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    setIsDuplicatedEmailChecked(false);
-    setValidEmailMsg('');
-    setIsSubmitted(false);
+  const {
+    email,
+    isDuplicatedEmailChecked,
+    validEmailMsg,
+    invalidEmailMsg,
+    handleChangeEmail,
+    handleClickDuplicatedEmailCheckBtn,
+  } = useEmailCheck({ setIsSubmitted });
 
-    if (!e.target.value) {
-      setInvalidEmailMsg('이메일을 입력해주세요.');
-    }
-  };
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    const {
-      passwordMsg,
-      passwordConfirmMsg,
-      isValidPassword,
-      isValidPasswordConfirm,
-    } = checkPassWordPattern({
-      newPassWord: e.target.value,
-      confirmNewPassWord: passwordConfirm,
-    });
-    setPassword(e.target.value);
+  const {
+    fullName,
+    isDuplicatedFullNameChecked,
+    validFullNameMsg,
+    invalidFullNameMsg,
+    handleChangeFullName,
+    handleClickDuplicatedFullNameCheckBtn,
+  } = useFullNameCheck({ setIsSubmitted });
 
-    if (!e.target.value) {
-      setInvalidPasswordMsg('비밀번호를 입력해주세요.');
-    } else if (!isValidPassword) {
-      setInvalidPasswordMsg(passwordMsg);
-    } else {
-      setInvalidPasswordMsg('');
-    }
-    if (!isValidPasswordConfirm) {
-      setInvalidPasswordConfirmMsg(passwordConfirmMsg);
-      setValidPasswordConfirmMsg('');
-    } else {
-      setValidPasswordConfirmMsg(passwordConfirmMsg);
-      setInvalidPasswordConfirmMsg('');
-    }
-  };
-  const handleChangePasswordConfirm = (e: ChangeEvent<HTMLInputElement>) => {
-    const { passwordConfirmMsg: msg, isValidPasswordConfirm } =
-      checkPassWordPattern({
-        newPassWord: password,
-        confirmNewPassWord: e.target.value,
-      });
-    setPasswordConfirm(e.target.value);
-    setValidPasswordConfirmMsg('');
+  const {
+    password,
+    passwordConfirm,
+    invalidPasswordMsg,
+    invalidPasswordConfirmMsg,
+    validPasswordConfirmMsg,
+    handleChangePassword,
+    handleChangePasswordConfirm,
+  } = usePasswordCheck();
 
-    if (!isValidPasswordConfirm) {
-      setInvalidPasswordConfirmMsg(msg);
-    } else {
-      setValidPasswordConfirmMsg(msg);
-      setInvalidPasswordConfirmMsg('');
-    }
-  };
-  const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
-    setFullName(e.target.value);
-    setIsDuplicatedFullNameChecked(false);
-    setValidFullNameMsg('');
-    setIsSubmitted(false);
+  const {
+    isPasswordShown,
+    isPasswordConfirmShown,
+    handleClickPasswordShown,
+    handleClickPasswordConfirmShown,
+  } = useClickEye();
 
-    if (!e.target.value) {
-      setInvalidFullNameMsg('닉네임을 입력해주세요.');
-    }
-  };
+  const { isAllPassed } = useAllValidationPass({
+    isDuplicatedEmailChecked,
+    isDuplicatedFullNameChecked,
+    invalidPasswordMsg,
+    invalidPasswordConfirmMsg,
+    password,
+    passwordConfirm,
+  });
 
-  const handleClickDuplicatedEmailCheckBtn = () => {
-    const { isValidEmail, msg } = checkEmailPattern({ email, usersData });
-
-    if (isUsersError || !usersData) {
-      console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
-      return;
-    }
-    if (!isValidEmail) {
-      setInvalidEmailMsg(msg);
-    } else {
-      setValidEmailMsg(msg);
-      setInvalidEmailMsg('');
-      setIsDuplicatedEmailChecked(true);
-    }
-  };
-
-  const handleClickDuplicatedFullNameCheckBtn = () => {
-    const { isValidFullName, msg } = checkFullNamePattern({
-      fullName,
-      usersData,
-    });
-
-    if (isUsersError || !usersData) {
-      console.error('중복검사를 위해 유저 정보를 가져오는데 실패하였습니다.');
-      return;
-    }
-    if (!isValidFullName) {
-      setInvalidFullNameMsg(msg);
-    } else {
-      setValidFullNameMsg(msg);
-      setInvalidFullNameMsg('');
-      setIsDuplicatedFullNameChecked(true);
-    }
-  };
-
-  const handleClickPasswordShown = () => {
-    setIsPasswordShown(!isPasswordShown);
-  };
-  const handleClickPasswordConfirmShown = () => {
-    setIsPasswordConfirmShown(!isPasswordConfirmShown);
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-
-    if (isSignUpError) {
-      window.location.reload();
-      return;
-    }
-    if (isSignUpSuccess) {
-      navigate('/login');
-      return;
-    }
-
-    if (
-      !isDuplicatedEmailChecked ||
-      invalidPasswordMsg ||
-      invalidPasswordConfirmMsg ||
-      password === 'init' ||
-      passwordConfirm === 'init' ||
-      !isDuplicatedFullNameChecked
-    ) {
-      return;
-    }
-
-    signUpMutate({
+  const { isSignUpDisabled, handleSubmit, isSignUpError, isSignUpSuccess } =
+    useSubmit({
       email,
       password,
+      passwordConfirm,
       fullName,
+      isAllPassed,
+      setIsSubmitted,
     });
-  };
-
-  const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
-  useEffect(() => {
-    email.length > 4 &&
-    password.length > 4 &&
-    passwordConfirm.length > 4 &&
-    fullName.length > 3
-      ? setIsSignUpDisabled(false)
-      : setIsSignUpDisabled(true);
-  }, [email, password, passwordConfirm, fullName]);
 
   return (
     <>
       <SignUpContainer>
         <Form onSubmit={handleSubmit}>
           <Wrapper>
-            <Label>1. 이메일을 입력하세요.</Label>
-            <InputContainer>
-              <InputWrapper>
-                <Input
-                  onChange={handleChangeEmail}
-                  placeholder="angola@gmail.com"
-                />
-                {isDuplicatedEmailChecked && (
-                  <DoubleCheckIcon>
-                    <Icon
-                      name={'double_check'}
-                      color={'#78d968'}
-                    />
-                  </DoubleCheckIcon>
-                )}
-              </InputWrapper>
-              <Button
-                type="button"
-                onClick={handleClickDuplicatedEmailCheckBtn}
-                style={{
-                  width: '100px',
-                  padding: '0',
-                  fontSize: ANGOLA_STYLES.textSize.titleSm,
-                }}>
-                중복 검사
-              </Button>
-            </InputContainer>
-            {invalidEmailMsg && (
-              <InputWarning>
-                <Icon
-                  name={'warn'}
-                  color={'#F66'}
-                />
-                {invalidEmailMsg}
-              </InputWarning>
-            )}
-            {validEmailMsg && (
-              <InputWarning style={{ color: '#78D968' }}>
-                {validEmailMsg}
-              </InputWarning>
-            )}
+            <Label>{INPUT.LABEL.EMAIL}</Label>
+            <InputEmail
+              handleChangeEmail={handleChangeEmail}
+              handleClickDuplicatedEmailCheckBtn={
+                handleClickDuplicatedEmailCheckBtn
+              }
+              isDuplicatedEmailChecked={isDuplicatedEmailChecked}
+              invalidEmailMsg={invalidEmailMsg}
+              validEmailMsg={validEmailMsg}
+            />
           </Wrapper>
           <Wrapper>
-            <Label>2. 비밀번호를 입력하세요.</Label>
-            <InputWrapper>
-              <Input
-                type={isPasswordShown ? 'text' : 'password'}
-                onChange={handleChangePassword}
-                placeholder="5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요."
-              />
-              {isPasswordShown ? (
-                <EyeIcon onClick={handleClickPasswordShown}>
-                  <Icon name={'eye'} />
-                </EyeIcon>
-              ) : (
-                <EyeIcon onClick={handleClickPasswordShown}>
-                  <Icon name={'eye_slash'} />
-                </EyeIcon>
-              )}
-            </InputWrapper>
-            {invalidPasswordMsg && (
-              <InputWarning style={{ marginBottom: '1rem' }}>
-                <Icon
-                  name={'warn'}
-                  color={'#F66'}
-                />
-                {invalidPasswordMsg}
-              </InputWarning>
-            )}
-            <InputWrapper>
-              <Input
-                type={isPasswordConfirmShown ? 'text' : 'password'}
-                onChange={handleChangePasswordConfirm}
-                placeholder="동일한 비밀번호를 다시 입력해주세요."
-              />
-              {isPasswordConfirmShown ? (
-                <EyeIcon onClick={handleClickPasswordConfirmShown}>
-                  <Icon name={'eye'} />
-                </EyeIcon>
-              ) : (
-                <EyeIcon onClick={handleClickPasswordConfirmShown}>
-                  <Icon name={'eye_slash'} />
-                </EyeIcon>
-              )}
-            </InputWrapper>
-            {invalidPasswordConfirmMsg && (
-              <InputWarning>
-                <Icon
-                  name={'warn'}
-                  color={'#F66'}
-                />
-                {invalidPasswordConfirmMsg}
-              </InputWarning>
-            )}
-            {validPasswordConfirmMsg && (
-              <InputWarning style={{ color: '#78D968' }}>
-                {validPasswordConfirmMsg}
-              </InputWarning>
-            )}
+            <Label>{INPUT.LABEL.PASSWORD}</Label>
+            <InputPassword
+              isPasswordShown={isPasswordShown}
+              handleChangePassword={handleChangePassword}
+              handleClickPasswordShown={handleClickPasswordShown}
+              invalidPasswordMsg={invalidPasswordMsg}
+            />
+            <InputPasswordConfirm
+              isPasswordConfirmShown={isPasswordConfirmShown}
+              handleChangePasswordConfirm={handleChangePasswordConfirm}
+              handleClickPasswordConfirmShown={handleClickPasswordConfirmShown}
+              invalidPasswordConfirmMsg={invalidPasswordConfirmMsg}
+              validPasswordConfirmMsg={validPasswordConfirmMsg}
+            />
           </Wrapper>
           <Wrapper>
-            <Label>3. 닉네임을 입력하세요.</Label>
-            <InputContainer>
-              <InputWrapper>
-                <Input
-                  onChange={handleChangeFullName}
-                  placeholder="3자 이상 8자 이하의 닉네임을 지어주세요."
-                />
-                {isDuplicatedFullNameChecked && (
-                  <DoubleCheckIcon>
-                    <Icon
-                      name={'double_check'}
-                      color={'#78D968'}
-                    />
-                  </DoubleCheckIcon>
-                )}
-              </InputWrapper>
-              <Button
-                type="button"
-                onClick={handleClickDuplicatedFullNameCheckBtn}
-                style={{
-                  width: '100px',
-                  padding: '0',
-                  fontSize: ANGOLA_STYLES.textSize.titleSm,
-                }}>
-                중복 검사
-              </Button>
-            </InputContainer>
-            {invalidFullNameMsg && (
-              <InputWarning>
-                <Icon
-                  name={'warn'}
-                  color={'#F66'}
-                />
-                {invalidFullNameMsg}
-              </InputWarning>
-            )}
-            {validFullNameMsg && (
-              <InputWarning style={{ color: '#78D968' }}>
-                {validFullNameMsg}
-              </InputWarning>
-            )}
+            <Label>{INPUT.LABEL.FULLNAME}</Label>
+            <InputFullName
+              handleChangeFullName={handleChangeFullName}
+              isDuplicatedFullNameChecked={isDuplicatedFullNameChecked}
+              handleClickDuplicatedFullNameCheckBtn={
+                handleClickDuplicatedFullNameCheckBtn
+              }
+              invalidFullNameMsg={invalidFullNameMsg}
+              validFullNameMsg={validFullNameMsg}
+            />
           </Wrapper>
           <Button
             type="submit"
@@ -349,7 +136,7 @@ const SignUpPage = () => {
               fontSize: ANGOLA_STYLES.textSize.title,
             }}
             disabled={isSignUpDisabled}>
-            가입 완료하기
+            {BUTTON.SIGN_UP}
           </Button>
         </Form>
         {isSignUpSuccess && (
@@ -358,20 +145,23 @@ const SignUpPage = () => {
         {isSignUpError && (
           <SignUpFailModal onClick={() => window.location.reload()} />
         )}
-        {isSubmitted && !isDuplicatedEmailChecked && (
-          <CheckEmailModal onClick={() => setIsSubmitted(false)} />
+        {isSubmitted && (
+          <>
+            {!isDuplicatedEmailChecked ? (
+              <CheckEmailModal onClick={() => setIsSubmitted(false)} />
+            ) : (
+              <>
+                {(invalidPasswordMsg || invalidPasswordConfirmMsg) && (
+                  <CheckPasswordModal onClick={() => setIsSubmitted(false)} />
+                )}
+                {!(invalidPasswordMsg || invalidPasswordConfirmMsg) &&
+                  !isDuplicatedFullNameChecked && (
+                    <CheckFullNameModal onClick={() => setIsSubmitted(false)} />
+                  )}
+              </>
+            )}
+          </>
         )}
-        {isSubmitted &&
-          isDuplicatedEmailChecked &&
-          (invalidPasswordMsg || invalidPasswordConfirmMsg) && (
-            <CheckPasswordModal onClick={() => setIsSubmitted(false)} />
-          )}
-        {isSubmitted &&
-          isDuplicatedEmailChecked &&
-          !(invalidPasswordMsg || invalidPasswordConfirmMsg) &&
-          !isDuplicatedFullNameChecked && (
-            <CheckFullNameModal onClick={() => setIsSubmitted(false)} />
-          )}
       </SignUpContainer>
     </>
   );
@@ -387,7 +177,10 @@ const SignUpContainer = styled.div`
   height: 100%;
   padding: 80px;
   padding-right: 0px;
-  margin-left: 20px;
+
+  @media only screen and (max-width: 1024px) {
+    padding: 0px;
+  }
 `;
 
 const Form = styled.form`
@@ -405,64 +198,23 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media screen and (max-width: 1024px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 700px) {
+    width: 90%;
+  }
 `;
 
 const Label = styled.label`
   font-size: ${ANGOLA_STYLES.textSize.title};
   line-height: 150%;
   padding-left: 1rem;
-`;
 
-const InputContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-`;
-
-const InputWrapper = styled.div`
-  width: 80%;
-  position: relative;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 12px 16px 4px 16px;
-  border: ${ANGOLA_STYLES.border.default};
-  border-radius: 40px;
-  box-shadow: ${ANGOLA_STYLES.shadow.input.default};
-  font-size: ${ANGOLA_STYLES.textSize.titleSm};
-
-  ::placeholder {
-    color: ${ANGOLA_STYLES.color.dark};
-    font-size: ${ANGOLA_STYLES.textSize.text};
+  @media screen and (max-width: 700px) {
+    text-align: center;
+    padding-left: 0px;
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
   }
-
-  &:focus {
-    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
-  }
-`;
-
-const InputWarning = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-  color: #f66;
-  padding-left: 1rem;
-  gap: 8px;
-`;
-
-const DoubleCheckIcon = styled.div`
-  position: absolute;
-  right: 1.5rem;
-  top: 50%;
-  transform: translate(0, -50%);
-`;
-
-const EyeIcon = styled.div`
-  position: absolute;
-  right: 1.5rem;
-  top: 50%;
-  transform: translate(0, -50%);
-  cursor: pointer;
 `;
