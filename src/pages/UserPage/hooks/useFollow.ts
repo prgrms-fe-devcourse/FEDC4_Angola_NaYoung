@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFetchFollow, useFetchUnFollow } from '@apis/follow';
+import { useFetchCreateNotification } from '@apis/notifications';
 
 interface useFollowProps {
   userId: string;
@@ -8,8 +9,13 @@ interface useFollowProps {
 }
 
 const useFollow = ({ userId, followers, followerId }: useFollowProps) => {
-  const { followMutate, followData, isFollowLoading, isFollowError } =
-    useFetchFollow();
+  const {
+    followMutate,
+    followData,
+    isFollowLoading,
+    isFollowError,
+    isFollowSuccess,
+  } = useFetchFollow();
   const { unFollowMutate, isUnFollowLoading, isUnFollowError } =
     useFetchUnFollow();
   const [userFollowerId, setUserFollowerId] = useState(followerId);
@@ -17,6 +23,7 @@ const useFollow = ({ userId, followers, followerId }: useFollowProps) => {
   const [isFollowed, setIsFollowed] = useState(followerId !== undefined);
   const [isFollowModalOpen, setIsFollowModalOpen] = useState(false);
   const [isUnFollowModalOpen, setIsUnFollowModalOpen] = useState(false);
+  const { createNotificationMutate } = useFetchCreateNotification();
 
   useEffect(() => {
     setCountFollowers(followers);
@@ -38,10 +45,24 @@ const useFollow = ({ userId, followers, followerId }: useFollowProps) => {
   useEffect(() => {
     if (isFollowed) {
       followData.followId && setUserFollowerId(followData.followId);
+      if (isFollowSuccess) {
+        createNotificationMutate({
+          notificationType: 'FOLLOW',
+          notificationTypeId: followData.followId || '',
+          userId,
+          postId: null,
+        });
+      }
     } else {
       setUserFollowerId(undefined);
     }
-  }, [followData.followId, isFollowed]);
+  }, [
+    followData.followId,
+    isFollowed,
+    createNotificationMutate,
+    isFollowSuccess,
+    userId,
+  ]);
 
   useEffect(() => {
     if (isFollowError) {
