@@ -38,8 +38,6 @@ const useKeyword = () => {
   };
 
   return {
-    addKeywordToQueryString,
-    removeKeywordFromQueryString,
     keyword,
     handleChangeKeyword,
     handleResetKeyword,
