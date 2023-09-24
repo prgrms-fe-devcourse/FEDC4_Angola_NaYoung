@@ -9,6 +9,7 @@ interface MakeCommentProps {
   handleClickItem: (value: string) => void;
   handleSubmitComment: (e: FormEvent) => void;
   handleChangeComment: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  authorLevel: number;
 }
 
 const MakeComment = ({
@@ -16,6 +17,7 @@ const MakeComment = ({
   handleClickItem,
   handleSubmitComment,
   handleChangeComment,
+  authorLevel,
 }: MakeCommentProps) => (
   <MakeCommentContainer>
     <Form onSubmit={handleSubmitComment}>
@@ -33,6 +35,10 @@ const MakeComment = ({
               votedValue === VOTED_VALUES.A
                 ? ANGOLA_STYLES.color.text
                 : ANGOLA_STYLES.color.dark,
+            background:
+              votedValue === VOTED_VALUES.A
+                ? ANGOLA_STYLES.color.levels[authorLevel].fill
+                : 'white',
           }}>
           {VOTED_VALUES.A}
         </Button>
@@ -47,6 +53,10 @@ const MakeComment = ({
               votedValue === VOTED_VALUES.B
                 ? ANGOLA_STYLES.color.text
                 : ANGOLA_STYLES.color.dark,
+            background:
+              votedValue === VOTED_VALUES.B
+                ? ANGOLA_STYLES.color.levels[authorLevel].fill
+                : 'white',
           }}>
           {VOTED_VALUES.B}
         </Button>

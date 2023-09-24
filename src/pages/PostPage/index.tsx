@@ -125,6 +125,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
                       handleClickItem={handleClickItem}
                       handleSubmitComment={handleSubmitComment}
                       handleChangeComment={handleChangeComment}
+                      authorLevel={calculateLevel(postData.author)}
                     />
                   )}
                   {postData && !isDeleteCommentError && (
