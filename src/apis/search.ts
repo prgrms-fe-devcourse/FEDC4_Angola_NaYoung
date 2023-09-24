@@ -11,13 +11,18 @@ export const useFetchSearchPosts = ({ query }: SearchRequestQuery) => {
   const { baseInstance } = useAxiosInstance();
   const { data, isSuccess, isError, isLoading, refetch } = useQuery<
     AxiosResponse<(User | Post)[]>,
-    AxiosError
-  >('searchPosts', () => baseInstance.get(`/search/all/${query}`));
+    AxiosError,
+    Post[]
+  >('searchPosts', () => baseInstance.get(`/search/all/${query}`), {
+    select: ({ data }) => {
+      return data.filter((resData) => {
+        return 'title' in resData;
+      }) as Post[];
+    },
+  });
 
   return {
-    searchPostsData: data?.data.filter((resData) => {
-      return 'title' in resData;
-    }) as Post[],
+    searchPostsData: data,
     isSearchPostsSuccess: isSuccess,
     isSearchPostsError: isError,
     isSearchPostsLoading: isLoading,
