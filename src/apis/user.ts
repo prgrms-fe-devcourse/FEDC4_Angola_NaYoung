@@ -5,7 +5,7 @@ import useAxiosInstance from './instance';
 
 export const useFetchUsers = () => {
   const { baseInstance } = useAxiosInstance();
-  const { data, isError, isSuccess, isLoading } = useQuery<
+  const { data, isError, isSuccess, isLoading, refetch } = useQuery<
     AxiosResponse<User[]>,
     AxiosError,
     User[]
@@ -19,6 +19,7 @@ export const useFetchUsers = () => {
     isUsersError: isError,
     isUsersSuccess: isSuccess,
     isUsersLoading: isLoading,
+    usersDataRefetch: refetch,
   };
 };
 
