@@ -1,7 +1,7 @@
+import { useCurrentPage } from '@hooks';
 import Icon from '@components/Icon';
 import LinkButton from '@components/LinkButton';
 import SearchBar from '@components/SearchBar';
-import useCurrentPage from '@hooks/useCurrentPage';
 
 const SEARCH = 'search';
 
@@ -10,11 +10,13 @@ const CommonMenuBar = () => {
 
   return (
     <>
-      <LinkButton to="/"><img
-            src="/images/LOGO_SMALL.svg"
-            alt="logo"
-            width={'54px'}
-          /></LinkButton>
+      <LinkButton to="/">
+        <img
+          src="/images/LOGO_SMALL.svg"
+          alt="logo"
+          width={'54px'}
+        />
+      </LinkButton>
       {name === SEARCH ? (
         <SearchBar />
       ) : (

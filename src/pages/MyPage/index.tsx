@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { useCurrentPage } from '@hooks';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostListItem from '@components/PostListItem';
 import Spinner from '@components/Spinner';
 import { useFetchDeletePost } from '@apis/post';
 import { useFetchUser } from '@apis/user';
-import useCurrentPage from '@hooks/useCurrentPage';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { USER_POSTS_TITLE } from '@constants/index';
