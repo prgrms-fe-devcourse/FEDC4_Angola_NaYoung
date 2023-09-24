@@ -15,20 +15,17 @@ const CommentDeletionModal = ({
     <Modal
       onClose={() => setIsClickedDeleteBtn(false)}
       onConfirm={handleClickDeleteCommentModalBtn}>
-      <ModalWrapper onClick={(e) => e.stopPropagation()}>
-        <div>{DELETE_COMMENT.TITLE}</div>
-      </ModalWrapper>
+      <Msg>{DELETE_COMMENT.TITLE}</Msg>
     </Modal>
   );
 };
 
 export default CommentDeletionModal;
 
-const ModalWrapper = styled.div`
+const Msg = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100px;
   justify-content: space-around;
   align-items: center;
+  height: 100px;
 `;
