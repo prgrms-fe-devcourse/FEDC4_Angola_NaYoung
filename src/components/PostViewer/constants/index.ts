@@ -16,8 +16,9 @@ export const POST_CONTENTS = {
 };
 
 export const BUTTON_GROUP = {
-  COMMENT_BUTTON_TEXT: '참여 하기',
+  COMMENT_BUTTON_TEXT: '투표 하기',
   BUTTON_ACTIONED_CLASS: 'actioned',
+  COMMENT_BUTTON_SHOW_CLASS: 'show',
 };
 
 export const NON_AUTH_MODAL = {

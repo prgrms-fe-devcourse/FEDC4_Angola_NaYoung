@@ -12,7 +12,7 @@ interface PostTitleProps {
   authorId: string;
   authorLevel: number;
   isPostPage: boolean;
-  onGoDetailPage: VoidFunction;
+  onGoPostPage: VoidFunction;
 }
 
 const PostTitle = ({
@@ -21,13 +21,13 @@ const PostTitle = ({
   authorId,
   authorLevel,
   isPostPage,
-  onGoDetailPage: goDetailPage,
+  onGoPostPage: goPostPage,
 }: PostTitleProps) => {
   const { userColor: levelColor } = getUserLevelInfo(authorLevel);
   const [tagRef, tagWidth] = useElementWidth(POST_TITLE.DEFAULT_TAG_WIDTH);
   const handleClickTitleText = () => {
     if (isPostPage) return;
-    goDetailPage();
+    goPostPage();
   };
 
   return (
@@ -131,7 +131,6 @@ const Text = styled.div<{ tagWidth: number; isDetail: boolean }>`
   height: 100%;
   border-radius: 24px;
   padding: 4px 8px;
-  line-height: 24px;
   @media (max-width: 800px) {
     font-size: ${ANGOLA_STYLES.textSize.titleSm};
   }

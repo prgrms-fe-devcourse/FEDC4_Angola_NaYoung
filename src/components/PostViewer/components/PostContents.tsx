@@ -10,31 +10,43 @@ interface PostContentsProps {
   contentB: string;
   onVote?: (value: string) => void;
   voteValue?: string;
-  onGoDetailPage: () => void;
-  onShowNonAuthModal: () => void;
+  onGoDetailPage: VoidFunction;
+  onGoPostPage: VoidFunction;
+  onShowNonAuthModal: VoidFunction;
   isVoted: boolean;
   voteColor: string;
+  isPostPage: boolean;
+  isShow: boolean;
 }
 
 const PostContents = ({
   contentA,
   contentB,
-  onVote,
+  onVote: vote,
   voteValue,
   onGoDetailPage: goDetailPage,
+  onGoPostPage: goPostPage,
   onShowNonAuthModal: showNonAuthModal,
   isVoted,
   voteColor,
+  isPostPage,
+  isShow,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
   const getContentClassName = useContentClassName(voteValue);
   const handleClickContent = (value: string) => {
-    if (!auth) {
-      showNonAuthModal();
-      return;
+    if (isPostPage) {
+      if (!auth) {
+        showNonAuthModal();
+        return;
+      }
+      if (!isShow) {
+        goDetailPage();
+      }
+      vote && vote(value);
+    } else {
+      goPostPage();
     }
-    onVote && onVote(value);
-    goDetailPage();
   };
 
   return (

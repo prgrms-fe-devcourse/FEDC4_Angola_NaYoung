@@ -44,7 +44,8 @@ const ButtonGroup = ({
       </ActionButton>
       <ActionButton
         onClick={goDetailPage}
-        className={commentClassName}>
+        className={commentClassName}
+        isDetail={isShow}>
         <Icon name={commentIcon} />
         <Number>{numberOfComments}</Number>
         {isShow || <Text>{BUTTON_GROUP.COMMENT_BUTTON_TEXT}</Text>}
@@ -61,7 +62,7 @@ const ActionButtonContainer = styled.div`
   gap: 24px;
 `;
 
-const ActionButton = styled.div`
+const ActionButton = styled.div<{ isDetail?: boolean }>`
   display: flex;
   padding: 12px;
   min-width: 64px;
@@ -72,14 +73,16 @@ const ActionButton = styled.div`
   border: ${ANGOLA_STYLES.border.default};
   box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};
   border-radius: 56px;
-  cursor: pointer;
   transition: 0.2s;
   &:hover:not(:active) {
     box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};
   }
-  &.actioned {
+  &.${BUTTON_GROUP.BUTTON_ACTIONED_CLASS} {
     background-color: ${ANGOLA_STYLES.color.gray};
   }
+  opacity: ${({ isDetail }) => (isDetail ? 0.5 : 1)};
+  cursor: ${({ isDetail }) => (isDetail ? 'default' : 'pointer')};
+  pointer-events: ${({ isDetail }) => (isDetail ? 'none' : 'all')};
 `;
 
 const Number = styled.div`
