@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import { checkFullNamePattern } from '@utils';
+import { checkDuplicatedFullName, checkFullNamePattern } from '@utils';
 import { useFetchUsers } from '@apis/user';
 import { MSG, SIGNUP_INITIAL_VALUE } from '../constants';
 
@@ -18,6 +18,10 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
   const { usersData, isUsersError } = useFetchUsers();
 
   const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
+    const { isValidFullName, msg } = checkFullNamePattern({
+      fullName: e.target.value,
+      usersData,
+    });
     setFullName(e.target.value);
     setIsDuplicatedFullNameChecked(false);
     setValidFullNameMsg('');
@@ -25,13 +29,18 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
 
     if (!e.target.value) {
       setInvalidFullNameMsg(MSG.WARNING.EMPTY.FULLNAME);
+    } else if (msg === '이미 가입된 닉네임입니다.') {
+      setValidFullNameMsg('닉네임 형식이 올바릅니다.');
+    } else if (!isValidFullName) {
+      setInvalidFullNameMsg(msg);
     } else {
       setInvalidFullNameMsg('');
+      setValidFullNameMsg('닉네임 형식이 올바릅니다.');
     }
   };
 
   const handleClickDuplicatedFullNameCheckBtn = () => {
-    const { isValidFullName, msg } = checkFullNamePattern({
+    const { isValidFullName, msg } = checkDuplicatedFullName({
       fullName,
       usersData,
     });
@@ -41,10 +50,10 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
       return;
     }
     if (!isValidFullName) {
+      setValidFullNameMsg('');
       setInvalidFullNameMsg(msg);
     } else {
       setValidFullNameMsg(msg);
-      setInvalidFullNameMsg('');
       setIsDuplicatedFullNameChecked(true);
     }
   };

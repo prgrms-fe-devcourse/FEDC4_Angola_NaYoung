@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 import Button from '@components/Button';
+import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import {
   InputEmail,
@@ -27,6 +30,7 @@ import {
 } from './hooks';
 
 const SignUpPage = () => {
+  const myId = useRecoilValue(authInfoState)?.userId;
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -85,85 +89,84 @@ const SignUpPage = () => {
     });
 
   return (
-    <>
-      <SignUpContainer>
-        <Form onSubmit={handleSubmit}>
-          <Wrapper>
-            <Label>{INPUT.LABEL.EMAIL}</Label>
-            <InputEmail
-              handleChangeEmail={handleChangeEmail}
-              handleClickDuplicatedEmailCheckBtn={
-                handleClickDuplicatedEmailCheckBtn
-              }
-              isDuplicatedEmailChecked={isDuplicatedEmailChecked}
-              invalidEmailMsg={invalidEmailMsg}
-              validEmailMsg={validEmailMsg}
-            />
-          </Wrapper>
-          <Wrapper>
-            <Label>{INPUT.LABEL.PASSWORD}</Label>
-            <InputPassword
-              isPasswordShown={isPasswordShown}
-              handleChangePassword={handleChangePassword}
-              handleClickPasswordShown={handleClickPasswordShown}
-              invalidPasswordMsg={invalidPasswordMsg}
-            />
-            <InputPasswordConfirm
-              isPasswordConfirmShown={isPasswordConfirmShown}
-              handleChangePasswordConfirm={handleChangePasswordConfirm}
-              handleClickPasswordConfirmShown={handleClickPasswordConfirmShown}
-              invalidPasswordConfirmMsg={invalidPasswordConfirmMsg}
-              validPasswordConfirmMsg={validPasswordConfirmMsg}
-            />
-          </Wrapper>
-          <Wrapper>
-            <Label>{INPUT.LABEL.FULLNAME}</Label>
-            <InputFullName
-              handleChangeFullName={handleChangeFullName}
-              isDuplicatedFullNameChecked={isDuplicatedFullNameChecked}
-              handleClickDuplicatedFullNameCheckBtn={
-                handleClickDuplicatedFullNameCheckBtn
-              }
-              invalidFullNameMsg={invalidFullNameMsg}
-              validFullNameMsg={validFullNameMsg}
-            />
-          </Wrapper>
-          <Button
-            type="submit"
-            size="md"
-            style={{
-              width: '150px',
-              fontSize: ANGOLA_STYLES.textSize.title,
-            }}
-            disabled={isSignUpDisabled}>
-            {BUTTON.SIGN_UP}
-          </Button>
-        </Form>
-        {isSignUpSuccess && (
-          <SignUpSuccessModal onClick={() => navigate('/login')} />
-        )}
-        {isSignUpError && (
-          <SignUpFailModal onClick={() => window.location.reload()} />
-        )}
-        {isSubmitted && (
-          <>
-            {!isDuplicatedEmailChecked ? (
-              <CheckEmailModal onClick={() => setIsSubmitted(false)} />
-            ) : (
-              <>
-                {(invalidPasswordMsg || invalidPasswordConfirmMsg) && (
-                  <CheckPasswordModal onClick={() => setIsSubmitted(false)} />
+    <SignUpContainer>
+      <Form onSubmit={handleSubmit}>
+        <Wrapper>
+          <Label>{INPUT.LABEL.EMAIL}</Label>
+          <InputEmail
+            handleChangeEmail={handleChangeEmail}
+            handleClickDuplicatedEmailCheckBtn={
+              handleClickDuplicatedEmailCheckBtn
+            }
+            isDuplicatedEmailChecked={isDuplicatedEmailChecked}
+            invalidEmailMsg={invalidEmailMsg}
+            validEmailMsg={validEmailMsg}
+          />
+        </Wrapper>
+        <Wrapper>
+          <Label>{INPUT.LABEL.PASSWORD}</Label>
+          <InputPassword
+            isPasswordShown={isPasswordShown}
+            handleChangePassword={handleChangePassword}
+            handleClickPasswordShown={handleClickPasswordShown}
+            invalidPasswordMsg={invalidPasswordMsg}
+          />
+          <InputPasswordConfirm
+            isPasswordConfirmShown={isPasswordConfirmShown}
+            handleChangePasswordConfirm={handleChangePasswordConfirm}
+            handleClickPasswordConfirmShown={handleClickPasswordConfirmShown}
+            invalidPasswordConfirmMsg={invalidPasswordConfirmMsg}
+            validPasswordConfirmMsg={validPasswordConfirmMsg}
+          />
+        </Wrapper>
+        <Wrapper>
+          <Label>{INPUT.LABEL.FULLNAME}</Label>
+          <InputFullName
+            handleChangeFullName={handleChangeFullName}
+            isDuplicatedFullNameChecked={isDuplicatedFullNameChecked}
+            handleClickDuplicatedFullNameCheckBtn={
+              handleClickDuplicatedFullNameCheckBtn
+            }
+            invalidFullNameMsg={invalidFullNameMsg}
+            validFullNameMsg={validFullNameMsg}
+          />
+        </Wrapper>
+        <Button
+          type="submit"
+          size="md"
+          style={{
+            width: '150px',
+            fontSize: ANGOLA_STYLES.textSize.title,
+          }}
+          disabled={isSignUpDisabled}>
+          {BUTTON.SIGN_UP}
+        </Button>
+      </Form>
+      {isSignUpSuccess && (
+        <SignUpSuccessModal onClick={() => navigate('/login')} />
+      )}
+      {isSignUpError && (
+        <SignUpFailModal onClick={() => window.location.reload()} />
+      )}
+      {isSubmitted && (
+        <>
+          {!isDuplicatedEmailChecked ? (
+            <CheckEmailModal onClick={() => setIsSubmitted(false)} />
+          ) : (
+            <>
+              {(invalidPasswordMsg || invalidPasswordConfirmMsg) && (
+                <CheckPasswordModal onClick={() => setIsSubmitted(false)} />
+              )}
+              {!(invalidPasswordMsg || invalidPasswordConfirmMsg) &&
+                !isDuplicatedFullNameChecked && (
+                  <CheckFullNameModal onClick={() => setIsSubmitted(false)} />
                 )}
-                {!(invalidPasswordMsg || invalidPasswordConfirmMsg) &&
-                  !isDuplicatedFullNameChecked && (
-                    <CheckFullNameModal onClick={() => setIsSubmitted(false)} />
-                  )}
-              </>
-            )}
-          </>
-        )}
-      </SignUpContainer>
-    </>
+            </>
+          )}
+        </>
+      )}
+      {myId && !isSignUpSuccess && <Navigate to="/" />}
+    </SignUpContainer>
   );
 };
 

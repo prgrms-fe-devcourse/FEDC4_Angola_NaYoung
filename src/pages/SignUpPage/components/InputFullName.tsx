@@ -38,10 +38,12 @@ const InputFullName = ({
           )}
         </InputWrapper>
         <Button
+          disabled={invalidFullNameMsg || validFullNameMsg == '' ? true : false}
           type="button"
           onClick={handleClickDuplicatedFullNameCheckBtn}
           style={{
             width: '100px',
+            height: '36px',
             padding: '8px 0',
             fontSize: ANGOLA_STYLES.textSize.titleSm,
           }}>
@@ -98,6 +100,13 @@ const Input = styled.input`
   ::placeholder {
     color: ${ANGOLA_STYLES.color.dark};
     font-size: ${ANGOLA_STYLES.textSize.text};
+
+    @media (max-width: 1024px) {
+      font-size: 10px;
+    }
+    @media (max-width: 700px) {
+      font-size: 8px;
+    }
   }
 `;
 

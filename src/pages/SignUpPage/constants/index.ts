@@ -64,5 +64,4 @@ export const MODAL = {
       FULLNAME: '닉네임 중복 검사를 해주세요!',
     },
   },
-  SUB_MSG: 'Enter/Esc 또는 주변을 클릭하세요.',
 };

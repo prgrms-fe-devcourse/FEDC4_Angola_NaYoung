@@ -30,8 +30,11 @@ const useSubmit = ({
   useEffect(() => {
     email.length > 5 &&
     password.length > 4 &&
+    password.length < 16 &&
     passwordConfirm.length > 4 &&
-    fullName.length > 2
+    passwordConfirm.length < 16 &&
+    fullName.length > 2 &&
+    fullName.length < 9
       ? setIsSignUpDisabled(false)
       : setIsSignUpDisabled(true);
   }, [email, password, passwordConfirm, fullName]);
