@@ -74,6 +74,7 @@ export const useFetchLogin = () => {
 export const useFetchLogOut = () => {
   const { authInstance } = useAxiosInstance();
   const setAuth = useSetRecoilState(authInfoState);
+  const setUserArchives = useSetRecoilState(userArchives);
 
   const { mutate, isSuccess, isError, isLoading } = useMutation(
     'logOut',
@@ -81,6 +82,7 @@ export const useFetchLogOut = () => {
     {
       onSuccess: () => {
         setAuth(null);
+        setUserArchives(null);
       },
     },
   );

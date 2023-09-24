@@ -23,7 +23,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
 
   return (
     <Container>
-      {sortProps && (
+      {sortProps ? (
         <SelectContainer>
           <SortSelect
             value={SORT_VALUE}
@@ -57,6 +57,8 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             />
           </SortIcon>
         </SelectContainer>
+      ) : (
+        <div />
       )}
 
       <Title>
@@ -64,7 +66,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
         {title}
       </Title>
 
-      {keyword && (
+      {keyword ? (
         <TabBar>
           <TabBarList
             name={PARAM_VALUES.TARGET.USER}
@@ -76,6 +78,8 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             TARGET_VALUE={TARGET_VALUE}
           />
         </TabBar>
+      ) : (
+        <div />
       )}
     </Container>
   );
@@ -86,9 +90,11 @@ export default Header;
 const Container = styled.div`
   box-sizing: border-box;
   display: flex;
+  gap: 20px;
   height: 48px;
   padding: 0px 60px;
   position: relative;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   border-radius: 55px 55px 0px 0px;
@@ -98,10 +104,6 @@ const Container = styled.div`
 
 const SelectContainer = styled.div`
   position: relative;
-  position: absolute;
-  top: 50%;
-  left: 160px;
-  transform: translate(-50%, -50%);
 `;
 
 const SortSelect = styled.select`
@@ -112,9 +114,16 @@ const SortSelect = styled.select`
   border-radius: 40px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
+  font-size: ${ANGOLA_STYLES.textSize.titleSm};
   appearance: none;
   outline: none;
   cursor: pointer;
+
+  @media (max-width: 1000px) {
+    width: 130px;
+    padding: 0px 20px;
+    font-size: ${ANGOLA_STYLES.textSize.text};
+  }
 `;
 
 const SortIcon = styled.div`
@@ -129,23 +138,24 @@ const SortIcon = styled.div`
 const Title = styled.div`
   color: ${ANGOLA_STYLES.color.white};
   font-size: ${ANGOLA_STYLES.textSize.title};
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
+  @media (max-width: 1000px) {
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  }
+  @media (max-width: 760px) {
+    display: none;
+  }
 `;
 
 const TabBar = styled.ul`
-  width: 200px;
-  height: 40px;
+  height: 100%;
   display: flex;
-  padding: 0px 20px;
   list-style: none;
-  justify-content: space-between;
   align-items: center;
+  gap: 40px;
   color: ${ANGOLA_STYLES.color.white};
-  position: absolute;
-  top: 50%;
-  right: -60px;
-  transform: translate(-50%, -50%);
+
+  @media (max-width: 1000px) {
+    gap: 20px;
+  }
 `;

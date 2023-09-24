@@ -11,11 +11,14 @@ interface useUpdateFullNameProps {
 }
 
 const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
-  const { updateFullNameMutate, isUpdateFullNameError } =
-    useFetchUpdateFullName();
+  const {
+    updateFullNameMutate,
+    isUpdateFullNameError,
+    isUpdateFullNameSuccess,
+  } = useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
   const [isEditingFullName, setIsEditingFullName] = useState(false);
-  const { usersData } = useFetchUsers();
+  const { usersData, usersDataRefetch } = useFetchUsers();
   const [invalidFullNameMsg, setInvalidFullNameMsg] = useState('');
   const [validFullNameMsg, setValidFullNameMsg] = useState('');
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
@@ -81,6 +84,12 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
       setNewFullName(name);
     }
   }, [isUpdateFullNameError, setNewFullName, name]);
+
+  useEffect(() => {
+    if (isUpdateFullNameSuccess) {
+      usersDataRefetch();
+    }
+  }, [isUpdateFullNameSuccess, usersDataRefetch]);
 
   return {
     newFullName,

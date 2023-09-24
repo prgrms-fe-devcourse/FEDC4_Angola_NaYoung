@@ -1,6 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 import Button from '@components/Button';
+import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { LABEL, LOGIN_BUTTON_MSG, MSG } from './constants';
 import { INPUT_AUTO_COMPLETE } from './constants';
@@ -8,6 +10,7 @@ import { useLogin } from './hooks';
 import { isLoginButtonActive } from './utils';
 
 const LoginPage = () => {
+  const myId = useRecoilValue(authInfoState)?.userId;
   const {
     email,
     password,
@@ -54,6 +57,7 @@ const LoginPage = () => {
           </Button>
         </Form>
         {isLoginSuccess && <Navigate to="/" />}
+        {!isLoginSuccess && myId && <Navigate to="/" />}
       </LoginContainer>
     </>
   );

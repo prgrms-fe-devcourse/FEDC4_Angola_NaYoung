@@ -26,3 +26,5 @@ export const MODAL_ERROR_MESSAGE = {
   PASSWORD: '비밀번호 변경 실패',
   LOG_OUT: '로그아웃 실패',
 };
+
+export const PASSWORD_CONFIRM_MESSAGE = '비밀번호 확인란을 입력하세요.';

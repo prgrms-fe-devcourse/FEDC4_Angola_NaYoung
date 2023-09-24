@@ -87,4 +87,8 @@ const UserFullNameSpan = styled.span<{ seen: boolean }>`
   color: ${({ seen }) =>
     seen ? ANGOLA_STYLES.color.dark : ANGOLA_STYLES.color.black};
   font-weight: 600;
+
+  :hover {
+    text-decoration: underline;
+  }
 `;

@@ -6,6 +6,7 @@ import PostViewer from '@components/PostViewer';
 import Spinner from '@components/Spinner';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 import {
   useCheckVoted,
   useCommentNotification,
@@ -20,6 +21,7 @@ import {
   MakeComment,
   Turnout,
 } from './components';
+import { COMMENT_HEADER } from './constants';
 
 interface PostPageProps {
   postId?: string;
@@ -111,9 +113,9 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
           {isDeleteCommentLoading ? (
             <Spinner />
           ) : (
-            <>
-              {show && (
-                <CommentsContainer>
+            <CommentsContainer>
+              {show && myId ? (
+                <>
                   {submitValue && postData?.comments ? (
                     <Turnout
                       comments={postData?.comments}
@@ -121,23 +123,29 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
                     />
                   ) : (
                     <MakeComment
+                      myId={myId}
                       votedValue={votedValue}
                       handleClickItem={handleClickItem}
                       handleSubmitComment={handleSubmitComment}
                       handleChangeComment={handleChangeComment}
+                      authorLevel={calculateLevel(postData.author)}
                     />
                   )}
-                  {postData && !isDeleteCommentError && (
-                    <CommentList
-                      comments={postData.comments}
-                      deleteComment={deleteComment}
-                      myId={myId}
-                    />
-                  )}
-                  {isDeleteCommentError && <CommentDeletionFailModal />}
-                </CommentsContainer>
+                </>
+              ) : (
+                <CommentHeader authorLevel={calculateLevel(postData.author)}>
+                  {COMMENT_HEADER}
+                </CommentHeader>
               )}
-            </>
+              {postData && !isDeleteCommentError && (
+                <CommentList
+                  comments={postData.comments}
+                  deleteComment={deleteComment}
+                  myId={myId}
+                />
+              )}
+              {isDeleteCommentError && <CommentDeletionFailModal />}
+            </CommentsContainer>
           )}
         </PostPageContainer>
       )}
@@ -161,4 +169,15 @@ const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+const CommentHeader = styled.div<{ authorLevel: number }>`
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  font-size: ${ANGOLA_STYLES.textSize.title};
+  border: ${ANGOLA_STYLES.border.default};
+  border-radius: 24px 24px 0 0;
+  background: ${({ authorLevel }) =>
+    ANGOLA_STYLES.color.levels[authorLevel].fill};
 `;

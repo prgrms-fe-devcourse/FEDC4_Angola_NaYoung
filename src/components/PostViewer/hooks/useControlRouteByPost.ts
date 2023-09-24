@@ -39,5 +39,10 @@ export const useControlRouteByPost = ({
     }
   };
 
-  return { isVoted, isShow, goDetailPage };
+  const goPostPage = () => {
+    if (isPostPage) return;
+    navigate(`/post/${postId}`);
+  };
+
+  return { isVoted, isShow, goDetailPage, goPostPage };
 };

@@ -70,6 +70,8 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
                   id={post._id}
                   image={userData.image}
                   title={post.title}
+                  likes={post.likes.length}
+                  comments={post.comments.length}
                 />
               ))}
             </PostsListUl>

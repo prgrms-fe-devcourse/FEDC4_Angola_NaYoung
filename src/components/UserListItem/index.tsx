@@ -26,12 +26,13 @@ const UserListItem = ({
 }: UserListItemProps) => {
   return (
     <ListItemContainer>
-      <Image
-        src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
-        alt="프로필"
-        size={60}
-        style={{ margin: '0 20px' }}
-      />
+      <ImageContainer>
+        <Image
+          src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
+          alt="프로필"
+          size={60}
+        />
+      </ImageContainer>
 
       <UserInfo>
         <div className="user_name">
@@ -83,6 +84,17 @@ const ListItemContainer = styled.li`
   }
 `;
 
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0 16px;
+
+  @media (max-width: 600px) {
+    margin: 0 0 0 10px;
+  }
+`;
+
 const UserInfo = styled.div`
   display: flex;
   padding: 12px 0px;
@@ -96,6 +108,10 @@ const LevelAndFollowers = styled.div`
   flex-direction: column;
   gap: 12px;
   font-size: ${ANGOLA_STYLES.textSize.title};
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const More = styled.div`
@@ -106,4 +122,12 @@ const More = styled.div`
   border-left: ${ANGOLA_STYLES.border.default};
   font-size: ${ANGOLA_STYLES.textSize.title};
   cursor: pointer;
+
+  @media (max-width: 800px) {
+    width: 80px;
+  }
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
