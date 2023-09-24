@@ -18,8 +18,12 @@ const MyPage = () => {
   const { name } = useCurrentPage();
   const { userData, isUserLoading, userDataRefetch } = useFetchUser(
     auth?.userId as string,
-  ); // TODO: refetch 할 때마다 데이터 로딩 처리하기
+  );
   const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
+
+  const isSameId = () => {
+    return userData?._id === auth?.userId;
+  };
 
   useEffect(() => {
     if (isDeletePostSuccess) {
@@ -30,43 +34,50 @@ const MyPage = () => {
   if (isUserLoading) {
     return <Spinner />;
   }
+
   return (
     <MyPageWrapper>
-      {userData && (
-        <MyInfo
-          id={userData._id}
-          image={userData.image}
-          name={userData.fullName}
-          likes={userData.posts.reduce(
-            (likes, post) => likes + post.likes.length,
-            0,
-          )}
-          followers={userData.followers?.length}
-          following={userData.following?.length}
-          myLevel={calculateLevel(userData)}
-          myColor={getUserLevelInfo(calculateLevel(userData)).userColor}
-          myEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
-        />
-      )}
-      <PostsListContainer>
-        <PostsListTitle>
-          {userData?.posts.length === 0
-            ? USER_POSTS_TITLE.NO_POSTS
-            : USER_POSTS_TITLE.POSTS}
-        </PostsListTitle>
-        <PostsListUl>
-          {userData?.posts?.map((post) => (
-            <PostListItem
-              key={post._id}
-              id={post._id}
-              title={post.title}
+      {isSameId() ? (
+        <>
+          {userData && (
+            <MyInfo
+              id={userData._id}
               image={userData.image}
-              canDeletePost={name === MY_PAGE}
-              deletePostMutate={deletePostMutate}
+              name={userData.fullName}
+              likes={userData.posts.reduce(
+                (likes, post) => likes + post.likes.length,
+                0,
+              )}
+              followers={userData.followers?.length}
+              following={userData.following?.length}
+              myLevel={calculateLevel(userData)}
+              myColor={getUserLevelInfo(calculateLevel(userData)).userColor}
+              myEmoji={getUserLevelInfo(calculateLevel(userData)).userEmoji}
             />
-          ))}
-        </PostsListUl>
-      </PostsListContainer>
+          )}
+          <PostsListContainer>
+            <PostsListTitle>
+              {userData?.posts.length === 0
+                ? USER_POSTS_TITLE.NO_POSTS
+                : USER_POSTS_TITLE.POSTS}
+            </PostsListTitle>
+            <PostsListUl>
+              {userData?.posts?.map((post) => (
+                <PostListItem
+                  key={post._id}
+                  id={post._id}
+                  title={post.title}
+                  image={userData.image}
+                  canDeletePost={name === MY_PAGE}
+                  deletePostMutate={deletePostMutate}
+                />
+              ))}
+            </PostsListUl>
+          </PostsListContainer>
+        </>
+      ) : (
+        <Spinner />
+      )}
     </MyPageWrapper>
   );
 };
