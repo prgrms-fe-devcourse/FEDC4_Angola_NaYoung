@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useCurrentPage } from '@hooks';
+import { useCurrentPage, useRedirectByAuth } from '@hooks';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
 import PostListItem from '@components/PostListItem';
@@ -17,16 +16,16 @@ import { MY_PAGE } from './constants';
 const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
   const { name } = useCurrentPage();
-  const navigate = useNavigate();
-
-  if (!auth?.userId) {
-    navigate('/login', { replace: true });
-  }
+  const redirectByAuth = useRedirectByAuth('/login');
 
   const { userData, isUserLoading, userDataRefetch } = useFetchUser(
     auth?.userId as string,
   );
   const { deletePostMutate, isDeletePostSuccess } = useFetchDeletePost();
+
+  useEffect(() => {
+    redirectByAuth();
+  }, [redirectByAuth]);
 
   const isSameId = () => {
     return userData?._id === auth?.userId;
@@ -74,7 +73,6 @@ const MyPage = () => {
                   key={post._id}
                   id={post._id}
                   title={post.title}
-                  image={userData.image}
                   canDeletePost={name === MY_PAGE}
                   deletePostMutate={deletePostMutate}
                 />
