@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query';
-import { useArchives } from '@hooks/useArchives';
+import { useArchives } from '@hooks';
 import useAxiosInstance from './instance';
 
 interface CreateCommentRequestBody {
