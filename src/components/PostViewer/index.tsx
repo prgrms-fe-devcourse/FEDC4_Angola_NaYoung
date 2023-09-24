@@ -42,7 +42,7 @@ const PostViewer = ({
   const auth = useRecoilValue(authInfoState);
   const [isModalShow, setIsModalShow] = useState(false);
   const isPostPage = onVote !== undefined;
-  const { isVoted, isShow, goDetailPage } = useControlRouteByPost({
+  const { isVoted, isShow, goDetailPage, goPostPage } = useControlRouteByPost({
     postId,
     isPostPage,
   });
@@ -54,7 +54,7 @@ const PostViewer = ({
         authorName={authorName}
         authorId={authorId}
         authorLevel={authorLevel}
-        onGoDetailPage={goDetailPage}
+        onGoPostPage={goPostPage}
         isPostPage={isPostPage}
       />
       <PostContents
@@ -64,8 +64,11 @@ const PostViewer = ({
         onVote={onVote}
         voteValue={voteValue}
         onGoDetailPage={goDetailPage}
+        onGoPostPage={goPostPage}
         onShowNonAuthModal={() => setIsModalShow(true)}
+        isPostPage={isPostPage}
         isVoted={isVoted}
+        isShow={isShow}
       />
       {auth && (
         <ButtonGroup

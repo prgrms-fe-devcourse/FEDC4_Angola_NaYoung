@@ -10,31 +10,43 @@ interface PostContentsProps {
   contentB: string;
   onVote?: (value: string) => void;
   voteValue?: string;
-  onGoDetailPage: () => void;
-  onShowNonAuthModal: () => void;
+  onGoDetailPage: VoidFunction;
+  onGoPostPage: VoidFunction;
+  onShowNonAuthModal: VoidFunction;
   isVoted: boolean;
   voteColor: string;
+  isPostPage: boolean;
+  isShow: boolean;
 }
 
 const PostContents = ({
   contentA,
   contentB,
-  onVote,
+  onVote: vote,
   voteValue,
   onGoDetailPage: goDetailPage,
+  onGoPostPage: goPostPage,
   onShowNonAuthModal: showNonAuthModal,
   isVoted,
   voteColor,
+  isPostPage,
+  isShow,
 }: PostContentsProps) => {
   const auth = useRecoilValue(authInfoState);
   const getContentClassName = useContentClassName(voteValue);
   const handleClickContent = (value: string) => {
-    if (!auth) {
-      showNonAuthModal();
-      return;
+    if (isPostPage) {
+      if (!auth) {
+        showNonAuthModal();
+        return;
+      }
+      if (!isShow) {
+        goDetailPage();
+      }
+      vote && vote(value);
+    } else {
+      goPostPage();
     }
-    onVote && onVote(value);
-    goDetailPage();
   };
 
   return (
@@ -67,15 +79,23 @@ const SelectionContainer = styled.div`
   align-items: center;
   align-self: stretch;
   gap: 36px;
+  flex-wrap: wrap;
+  @media (max-width: 800px) {
+    flex-direction: column;
+    gap: 12px;
+  }
 `;
 
 const Selection = styled.div<{ voteColor: string; canVote: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 200px;
   height: 100%;
+  @media (max-width: 800px) {
+    min-width: 100%;
+  }
   min-height: 160px;
-  max-height: 256px;
   line-height: 150%;
   flex: 1 0 0;
   background: ${ANGOLA_STYLES.color.white};
@@ -83,8 +103,8 @@ const Selection = styled.div<{ voteColor: string; canVote: boolean }>`
   border: ${ANGOLA_STYLES.border.default};
   border-radius: 24px;
   word-break: break-all;
-  padding: 16px 16px 24px 16px;
-  gap: 16px;
+  padding: 16px;
+  gap: 8px;
   white-space: pre-wrap;
   transition: transform 0.2s ease-out;
   cursor: ${({ canVote }) => (canVote ? 'pointer' : 'default')};
@@ -104,6 +124,7 @@ const VsSymbol = styled.div`
     0px 1px ${ANGOLA_STYLES.color.text},
     1px 0px ${ANGOLA_STYLES.color.text},
     0px -1px ${ANGOLA_STYLES.color.text};
+  padding-top: 18px;
 `;
 
 const Type = styled.h1`
@@ -117,4 +138,5 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 8px;
 `;
