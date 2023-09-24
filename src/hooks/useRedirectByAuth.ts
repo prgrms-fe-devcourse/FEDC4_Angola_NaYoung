@@ -8,7 +8,7 @@ export const useRedirectByAuth = (to: string) => {
 
   const redirectByAuth = () => {
     if (auth) return;
-    navigate(to);
+    navigate(to, { replace: true });
   };
 
   return redirectByAuth;
