@@ -277,11 +277,20 @@ const MyInfo = ({
         {isEditingPassWord ? (
           <Button
             onClick={handleClickUpdatePassWord}
-            disabled={handleAcceptPassWordButton()}>
+            disabled={handleAcceptPassWordButton()}
+            style={{
+              width: '150px',
+              height: '40px',
+            }}>
             {PASSWORD_BUTTON.DONE_MSG}
           </Button>
         ) : (
-          <Button onClick={handleClickUpdatePassWord}>
+          <Button
+            onClick={handleClickUpdatePassWord}
+            style={{
+              width: '180px',
+              height: '40px',
+            }}>
             {PASSWORD_BUTTON.EDIT_MSG}
           </Button>
         )}
@@ -292,7 +301,14 @@ const MyInfo = ({
         )}
         {isEditingPassWord ? null : (
           <>
-            <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
+            <Button
+              onClick={handleClickLogOut}
+              style={{
+                width: '150px',
+                height: '40px',
+              }}>
+              {LOG_OUT_TEXT}
+            </Button>
             {isLogOutModalOpen && (
               <Modal onClose={() => setIsLogOutModalOpen(false)}>
                 {MODAL_ERROR_MESSAGE.LOG_OUT}
