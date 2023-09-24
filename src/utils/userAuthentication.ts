@@ -1,13 +1,10 @@
 import { User } from '@type';
 
-const NUMBER = /[0-9]/;
-const CHARACTER = /[a-zA-Z]/;
-const SPECIAL_CHARACTER = /[~!@#$%^&*()_+|<>?:{}]/;
+const PASSWORD_REGEXP = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{5,15}$/;
 const EMAIL_REGEXP = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
-const FULLNAME_MIN_LENGTH = 3;
-const FULLNAME_MAX_LENGTH = 8;
-const PASSWORD_MIN_LENGTH = 5;
-const PASSWORD_MAX_LENGTH = 15;
+const SPECIAL_CHARACTER_REGEXP = /[~!@#$%^&*()_+|<>?:{}]/;
+const FULL_NAME_MIN_LENGTH = 3;
+const FULL_NAME_MAX_LENGTH = 8;
 
 interface checkEmailPatternProps {
   email: string;
@@ -57,9 +54,9 @@ export const checkFullNamePattern = ({
   let msg;
 
   if (
-    SPECIAL_CHARACTER.test(trimmedFullName) ||
-    trimmedFullName.length > FULLNAME_MAX_LENGTH ||
-    trimmedFullName.length < FULLNAME_MIN_LENGTH
+    SPECIAL_CHARACTER_REGEXP.test(trimmedFullName) ||
+    trimmedFullName.length < FULL_NAME_MIN_LENGTH ||
+    trimmedFullName.length > FULL_NAME_MAX_LENGTH
   ) {
     msg = '닉네임은 3자리 이상 8자리 이하 문자 또는 숫자로 구성하여야 합니다.';
     isValidFullName = false;
@@ -81,20 +78,16 @@ export const checkPassWordPattern = ({
   confirmNewPassWord,
 }: checkPassWordPatternProps) => {
   const trimmedPassWord = newPassWord.trim();
+
   let isValidPassword = false;
   let isValidPasswordConfirm = false;
   let passwordMsg = '';
   let passwordConfirmMsg = '';
+  console.log(trimmedPassWord.length);
 
-  if (
-    !NUMBER.test(trimmedPassWord) ||
-    !CHARACTER.test(trimmedPassWord) ||
-    !SPECIAL_CHARACTER.test(trimmedPassWord) ||
-    trimmedPassWord.length <= PASSWORD_MIN_LENGTH ||
-    trimmedPassWord.length >= PASSWORD_MAX_LENGTH
-  ) {
+  if (!PASSWORD_REGEXP.test(trimmedPassWord)) {
     passwordMsg =
-      '비밀번호는 5자리 이상 15자 이하 문자, 숫자, 특수문자로 구성하여야 합니다.';
+      '비밀번호는 5자리 이상 15자 이하 문자, 숫자, 특수문자를 모두 포함해야 합니다.';
     isValidPassword = false;
   } else {
     isValidPassword = true;
