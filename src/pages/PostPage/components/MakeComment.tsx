@@ -5,6 +5,7 @@ import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { CREATE_COMMENT, VOTED_VALUES } from '../constants';
 
 interface MakeCommentProps {
+  myId: string | undefined;
   votedValue: string;
   handleClickItem: (value: string) => void;
   handleSubmitComment: (e: FormEvent) => void;
@@ -13,6 +14,7 @@ interface MakeCommentProps {
 }
 
 const MakeComment = ({
+  myId,
   votedValue,
   handleClickItem,
   handleSubmitComment,
@@ -23,6 +25,7 @@ const MakeComment = ({
     <Form onSubmit={handleSubmitComment}>
       <ItemButtonsContainer>
         <Button
+          disabled={myId ? false : true}
           type="button"
           onClick={() => handleClickItem(VOTED_VALUES.A)}
           style={{
@@ -43,6 +46,7 @@ const MakeComment = ({
           {VOTED_VALUES.A}
         </Button>
         <Button
+          disabled={myId ? false : true}
           type="button"
           onClick={() => handleClickItem(VOTED_VALUES.B)}
           style={{

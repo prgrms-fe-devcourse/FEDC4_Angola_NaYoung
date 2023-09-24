@@ -62,7 +62,7 @@ const CommentWrapper = styled.div`
   padding: 15px 16px;
   gap: 8px;
   border: ${ANGOLA_STYLES.border.default};
-  border-top: none;
+  border-top: 0px;
 `;
 
 const MakerName = styled.div<{ level: number }>`
