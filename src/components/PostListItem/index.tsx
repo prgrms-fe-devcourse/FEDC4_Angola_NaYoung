@@ -37,12 +37,13 @@ const PostListItem = ({
 
   return (
     <ListItemContainer>
-      <Image
-        src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
-        alt="프로필"
-        size={60}
-        style={{ margin: '0 20px' }}
-      />
+      <ImageContainer>
+        <Image
+          src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
+          alt="프로필"
+          size={60}
+        />
+      </ImageContainer>
       <TitleContainer>
         <Title>{postTitle}</Title>
       </TitleContainer>
@@ -85,6 +86,7 @@ export default PostListItem;
 const ListItemContainer = styled.li`
   display: flex;
   height: 100px;
+  justify-content: center;
   align-items: center;
   gap: 16px;
   width: 100%;
@@ -92,9 +94,20 @@ const ListItemContainer = styled.li`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.button.default};
-  overflow: hidden;
+
   &:has(.more:hover) {
     box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
+  }
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0 16px;
+
+  @media (max-width: 800px) {
+    display: none;
   }
 `;
 
@@ -106,11 +119,27 @@ const TitleContainer = styled.div`
   flex-grow: 1;
   border-radius: 24px;
   background: #e5e5e5;
+  overflow: hidden;
+
+  @media (max-width: 800px) {
+    margin-left: 20px;
+  }
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
 `;
 
 const Title = styled.div`
   color: ${ANGOLA_STYLES.color.text};
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 2px 0;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 const LikesAndComments = styled.div`
@@ -118,6 +147,11 @@ const LikesAndComments = styled.div`
   flex-direction: column;
   gap: 12px;
   font-size: ${ANGOLA_STYLES.textSize.title};
+  flex-shrink: 0;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const DeleteButton = styled.div`
@@ -134,6 +168,7 @@ const DeleteButton = styled.div`
   &:hover {
     box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};
   }
+  flex-shrink: 0;
 `;
 
 const More = styled.div`
@@ -144,4 +179,13 @@ const More = styled.div`
   border-left: ${ANGOLA_STYLES.border.default};
   font-size: ${ANGOLA_STYLES.textSize.title};
   cursor: pointer;
+  flex-shrink: 0;
+
+  @media (max-width: 800px) {
+    width: 80px;
+  }
+
+  @media (max-width: 600px) {
+    width: 60px;
+  }
 `;
