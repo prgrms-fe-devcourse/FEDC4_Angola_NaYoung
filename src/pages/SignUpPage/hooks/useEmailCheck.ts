@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import { checkEmailPattern } from '@utils';
+import { checkDuplicatedEmail, checkEmailPattern } from '@utils';
 import { useFetchUsers } from '@apis/user';
 import { MSG, SIGNUP_INITIAL_VALUE } from '../constants';
 
@@ -16,6 +16,9 @@ const useEmailCheck = ({ setIsSubmitted }: useEmailCheckProps) => {
   const { usersData, isUsersError } = useFetchUsers();
 
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    const { isValidEmail, msg } = checkEmailPattern({
+      email: e.target.value,
+    });
     setEmail(e.target.value);
     setIsDuplicatedEmailChecked(false);
     setValidEmailMsg('');
@@ -23,23 +26,26 @@ const useEmailCheck = ({ setIsSubmitted }: useEmailCheckProps) => {
 
     if (!e.target.value) {
       setInvalidEmailMsg(MSG.WARNING.EMPTY.EMAIL);
+    } else if (!isValidEmail) {
+      setInvalidEmailMsg(msg);
     } else {
+      setValidEmailMsg(msg);
       setInvalidEmailMsg('');
     }
   };
 
   const handleClickDuplicatedEmailCheckBtn = () => {
-    const { isValidEmail, msg } = checkEmailPattern({ email, usersData });
+    const { isValidEmail, msg } = checkDuplicatedEmail({ email, usersData });
 
     if (isUsersError || !usersData) {
       console.error(MSG.ERROR.DUPLICATE_CHECK);
       return;
     }
     if (!isValidEmail) {
+      setValidEmailMsg('');
       setInvalidEmailMsg(msg);
     } else {
       setValidEmailMsg(msg);
-      setInvalidEmailMsg('');
       setIsDuplicatedEmailChecked(true);
     }
   };

@@ -38,6 +38,7 @@ const InputFullName = ({
           )}
         </InputWrapper>
         <Button
+          disabled={invalidFullNameMsg || validFullNameMsg == '' ? true : false}
           type="button"
           onClick={handleClickDuplicatedFullNameCheckBtn}
           style={{

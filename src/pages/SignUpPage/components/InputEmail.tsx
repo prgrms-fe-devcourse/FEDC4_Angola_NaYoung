@@ -38,6 +38,7 @@ const InputEmail = ({
           )}
         </InputWrapper>
         <Button
+          disabled={invalidEmailMsg || validEmailMsg == '' ? true : false}
           type="button"
           onClick={handleClickDuplicatedEmailCheckBtn}
           style={{

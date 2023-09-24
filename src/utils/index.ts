@@ -10,6 +10,8 @@ export { pxToRem } from '@utils/pxToRem';
 export { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
 export {
   checkEmailPattern,
+  checkDuplicatedEmail,
   checkFullNamePattern,
+  checkDuplicatedFullName,
   checkPassWordPattern,
 } from '@utils/userAuthentication';

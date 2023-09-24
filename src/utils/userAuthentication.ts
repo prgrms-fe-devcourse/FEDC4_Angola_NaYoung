@@ -8,10 +8,20 @@ const FULL_NAME_MAX_LENGTH = 8;
 
 interface checkEmailPatternProps {
   email: string;
+}
+
+interface checkDuplicatedEmailProps {
+  email: string;
   usersData?: User[];
 }
 
 interface checkFullNamePatternProps {
+  fullName: string;
+  usersData?: User[];
+  myFullName?: string;
+}
+
+interface checkDuplicatedFullNameProps {
   fullName: string;
   usersData?: User[];
   myFullName?: string;
@@ -22,10 +32,7 @@ interface checkPassWordPatternProps {
   confirmNewPassWord?: string;
 }
 
-export const checkEmailPattern = ({
-  email,
-  usersData,
-}: checkEmailPatternProps) => {
+export const checkEmailPattern = ({ email }: checkEmailPatternProps) => {
   const trimmedEmail = email.trim();
   let isValidEmail;
   let msg;
@@ -33,7 +40,21 @@ export const checkEmailPattern = ({
   if (!EMAIL_REGEXP.test(trimmedEmail)) {
     msg = '유효한 이메일 주소가 아닙니다.';
     isValidEmail = false;
-  } else if (usersData?.find((user) => user.email === email)) {
+  } else {
+    msg = '유효한 이메일 주소입니다.';
+    isValidEmail = true;
+  }
+  return { msg, isValidEmail };
+};
+
+export const checkDuplicatedEmail = ({
+  email,
+  usersData,
+}: checkDuplicatedEmailProps) => {
+  let isValidEmail;
+  let msg;
+
+  if (usersData?.find((user) => user.email === email)) {
     msg = '이미 가입된 이메일입니다.';
     isValidEmail = false;
   } else {
@@ -64,6 +85,23 @@ export const checkFullNamePattern = ({
     myFullName !== fullName &&
     usersData?.find((user) => user.fullName === fullName)
   ) {
+    msg = '이미 가입된 닉네임입니다.';
+    isValidFullName = false;
+  } else {
+    msg = '사용할 수 있는 닉네임입니다.';
+    isValidFullName = true;
+  }
+  return { msg, isValidFullName };
+};
+
+export const checkDuplicatedFullName = ({
+  fullName,
+  usersData,
+}: checkDuplicatedFullNameProps) => {
+  let isValidFullName;
+  let msg;
+
+  if (usersData?.find((user) => user.fullName === fullName)) {
     msg = '이미 가입된 닉네임입니다.';
     isValidFullName = false;
   } else {
