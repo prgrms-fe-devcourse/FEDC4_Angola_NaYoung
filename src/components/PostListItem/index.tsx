@@ -1,18 +1,16 @@
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
 import Icon from '@components/Icon';
-import Image from '@components/Image';
 import LinkButton from '@components/LinkButton';
 import Modal from '@components/Modal';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { BUTTON_VALUES, USER_PROFILE_IMAGE } from '@constants/index';
+import { BUTTON_VALUES } from '@constants/index';
 import { DELETE_POST_MODAL } from './constants';
 import { useDeletePost } from './hooks';
 
 interface PostListItemProps {
   id: string;
-  image?: string;
   title: string;
   likes?: number;
   comments?: number;
@@ -22,7 +20,6 @@ interface PostListItemProps {
 
 const PostListItem = ({
   id,
-  image,
   title,
   likes,
   comments,
@@ -37,13 +34,6 @@ const PostListItem = ({
 
   return (
     <ListItemContainer>
-      <ImageContainer>
-        <Image
-          src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
-          alt="프로필"
-          size={60}
-        />
-      </ImageContainer>
       <TitleContainer>
         <Title>{postTitle}</Title>
       </TitleContainer>
@@ -100,17 +90,6 @@ const ListItemContainer = styled.li`
   }
 `;
 
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 0 0 16px;
-
-  @media (max-width: 800px) {
-    display: none;
-  }
-`;
-
 const TitleContainer = styled.div`
   display: flex;
   padding: 16px 32px;
@@ -120,10 +99,8 @@ const TitleContainer = styled.div`
   border-radius: 24px;
   background: #e5e5e5;
   overflow: hidden;
+  margin-left: 16px;
 
-  @media (max-width: 800px) {
-    margin-left: 20px;
-  }
   @media (max-width: 600px) {
     padding: 16px;
   }
