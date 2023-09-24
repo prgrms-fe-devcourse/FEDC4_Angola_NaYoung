@@ -42,6 +42,7 @@ const InputFullName = ({
           onClick={handleClickDuplicatedFullNameCheckBtn}
           style={{
             width: '100px',
+            height: '36px',
             padding: '8px 0',
             fontSize: ANGOLA_STYLES.textSize.titleSm,
           }}>

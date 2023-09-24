@@ -42,6 +42,7 @@ const InputEmail = ({
           onClick={handleClickDuplicatedEmailCheckBtn}
           style={{
             width: '100px',
+            height: '36px',
             padding: '8px 0px',
             fontSize: ANGOLA_STYLES.textSize.titleSm,
           }}>
