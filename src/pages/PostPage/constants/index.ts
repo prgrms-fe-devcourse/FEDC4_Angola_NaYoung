@@ -19,3 +19,5 @@ export const CREATE_COMMENT = {
     BUTTON_MSG: '참여하기',
   },
 };
+
+export const COMMENT_HEADER = '댓글';

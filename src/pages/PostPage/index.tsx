@@ -21,6 +21,7 @@ import {
   MakeComment,
   Turnout,
 } from './components';
+import { COMMENT_HEADER } from './constants';
 
 interface PostPageProps {
   postId?: string;
@@ -133,7 +134,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
                 </>
               ) : (
                 <CommentHeader authorLevel={calculateLevel(postData.author)}>
-                  댓글
+                  {COMMENT_HEADER}
                 </CommentHeader>
               )}
               {postData && !isDeleteCommentError && (
