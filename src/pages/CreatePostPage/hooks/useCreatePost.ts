@@ -27,6 +27,11 @@ const useCreatePost = () => {
     inputValues.optionA.length > 0 &&
     inputValues.optionB.length > 0;
 
+  const [isMaxLineInput, setIsMaxLineInput] = useState({
+    optionA: false,
+    optionB: false,
+  });
+
   const handleChangeTitleValue = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setInputValues({
@@ -41,6 +46,15 @@ const useCreatePost = () => {
       setInputValues({
         ...inputValues,
         [id]: value.substring(0, MAX_INPUT_LENGTH),
+      });
+      setIsMaxLineInput({
+        ...isMaxLineInput,
+        [id]: false,
+      });
+    } else {
+      setIsMaxLineInput({
+        ...isMaxLineInput,
+        [id]: true,
       });
     }
   };
@@ -83,6 +97,7 @@ const useCreatePost = () => {
     inputValues,
     isModalOpen,
     setIsModalOpen,
+    isMaxLineInput,
     isCreatePostLoading,
     isCreatePostPossible,
     handleChangeTitleValue,
