@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
@@ -16,6 +17,7 @@ import { MY_PAGE } from './constants';
 const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
   const { name } = useCurrentPage();
+  const navigate = useNavigate();
   const { userData, isUserLoading, userDataRefetch } = useFetchUser(
     auth?.userId as string,
   );
@@ -30,6 +32,10 @@ const MyPage = () => {
       userDataRefetch();
     }
   }, [isDeletePostSuccess, userDataRefetch]);
+
+  if (!auth?.userId) {
+    navigate('/login', { replace: true });
+  }
 
   if (isUserLoading) {
     return <Spinner />;
