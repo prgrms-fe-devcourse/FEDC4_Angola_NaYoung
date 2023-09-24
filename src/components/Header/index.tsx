@@ -23,7 +23,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
 
   return (
     <Container>
-      {sortProps && (
+      {sortProps ? (
         <SelectContainer>
           <SortSelect
             value={SORT_VALUE}
@@ -57,6 +57,8 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             />
           </SortIcon>
         </SelectContainer>
+      ) : (
+        <div />
       )}
 
       <Title>
@@ -64,7 +66,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
         {title}
       </Title>
 
-      {keyword && (
+      {keyword ? (
         <TabBar>
           <TabBarList
             name={PARAM_VALUES.TARGET.USER}
@@ -76,6 +78,8 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
             TARGET_VALUE={TARGET_VALUE}
           />
         </TabBar>
+      ) : (
+        <div />
       )}
     </Container>
   );
