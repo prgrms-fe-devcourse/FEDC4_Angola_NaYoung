@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useCurrentPage } from '@hooks';
 import { calculateLevel, getUserLevelInfo } from '@utils';
@@ -17,11 +16,6 @@ import { MY_PAGE } from './constants';
 const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
   const { name } = useCurrentPage();
-  const navigate = useNavigate();
-
-  if (!auth?.userId) {
-    navigate('/login', { replace: true });
-  }
 
   const { userData, isUserLoading, userDataRefetch } = useFetchUser(
     auth?.userId as string,
@@ -74,7 +68,6 @@ const MyPage = () => {
                   key={post._id}
                   id={post._id}
                   title={post.title}
-                  image={userData.image}
                   canDeletePost={name === MY_PAGE}
                   deletePostMutate={deletePostMutate}
                 />
