@@ -1,18 +1,16 @@
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
 import Icon from '@components/Icon';
-import Image from '@components/Image';
 import LinkButton from '@components/LinkButton';
 import Modal from '@components/Modal';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { BUTTON_VALUES, USER_PROFILE_IMAGE } from '@constants/index';
+import { BUTTON_VALUES } from '@constants/index';
 import { DELETE_POST_MODAL } from './constants';
 import { useDeletePost } from './hooks';
 
 interface PostListItemProps {
   id: string;
-  image?: string;
   title: string;
   likes?: number;
   comments?: number;
@@ -22,7 +20,6 @@ interface PostListItemProps {
 
 const PostListItem = ({
   id,
-  image,
   title,
   likes,
   comments,
@@ -37,12 +34,6 @@ const PostListItem = ({
 
   return (
     <ListItemContainer>
-      <Image
-        src={image ? image : USER_PROFILE_IMAGE.DEFAULT_SRC}
-        alt="프로필"
-        size={60}
-        style={{ margin: '0 20px' }}
-      />
       <TitleContainer>
         <Title>{postTitle}</Title>
       </TitleContainer>
@@ -85,6 +76,7 @@ export default PostListItem;
 const ListItemContainer = styled.li`
   display: flex;
   height: 100px;
+  justify-content: center;
   align-items: center;
   gap: 16px;
   width: 100%;
@@ -92,7 +84,7 @@ const ListItemContainer = styled.li`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.button.default};
-  overflow: hidden;
+
   &:has(.more:hover) {
     box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
   }
@@ -106,11 +98,25 @@ const TitleContainer = styled.div`
   flex-grow: 1;
   border-radius: 24px;
   background: #e5e5e5;
+  overflow: hidden;
+  margin-left: 16px;
+
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
 `;
 
 const Title = styled.div`
   color: ${ANGOLA_STYLES.color.text};
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 2px 0;
+
+  @media (max-width: 600px) {
+    font-size: ${ANGOLA_STYLES.textSize.text};
+  }
 `;
 
 const LikesAndComments = styled.div`
@@ -118,6 +124,11 @@ const LikesAndComments = styled.div`
   flex-direction: column;
   gap: 12px;
   font-size: ${ANGOLA_STYLES.textSize.title};
+  flex-shrink: 0;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const DeleteButton = styled.div`
@@ -134,6 +145,7 @@ const DeleteButton = styled.div`
   &:hover {
     box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};
   }
+  flex-shrink: 0;
 `;
 
 const More = styled.div`
@@ -144,4 +156,13 @@ const More = styled.div`
   border-left: ${ANGOLA_STYLES.border.default};
   font-size: ${ANGOLA_STYLES.textSize.title};
   cursor: pointer;
+  flex-shrink: 0;
+
+  @media (max-width: 800px) {
+    width: 80px;
+  }
+
+  @media (max-width: 600px) {
+    width: 60px;
+  }
 `;
