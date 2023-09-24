@@ -91,7 +91,13 @@ const UserInfo = ({
             toggle={isFollowed}
             size="md"
             onClick={handleClickFollowButton}
-            disabled={disabledFollowButton()}>
+            disabled={disabledFollowButton()}
+            style={{
+              width: '120px',
+              height: '40px',
+              padding: '0',
+              fontSize: `${ANGOLA_STYLES.textSize.text}`,
+            }}>
             {isFollowed
               ? `${FOLLOW_MESSAGE.UN_FOLLOW}`
               : `${FOLLOW_MESSAGE.FOLLOW}`}

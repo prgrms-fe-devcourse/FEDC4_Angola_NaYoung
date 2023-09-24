@@ -82,7 +82,6 @@ const MyInfo = ({
 
   return (
     <MyInfoWrapper>
-      {isUpdateProfileImageLoading && <Spinner />}
       <MyProfileContainer>
         <Emoji>{myEmoji}</Emoji>
         <EditProfile htmlFor="profile">
@@ -94,6 +93,7 @@ const MyInfo = ({
             }
             alt={USER_PROFILE_IMAGE.ALT}
           />
+          {isUpdateProfileImageLoading && <Spinner />}
         </EditProfile>
         <ProfileInput
           type="file"
@@ -150,10 +150,10 @@ const MyInfo = ({
               type="button"
               onClick={handleClickDuplicatedFullNameCheckButton}
               style={{
-                width: '100px',
-                height: '48px',
+                width: '120px',
+                height: '40px',
                 padding: '0',
-                fontSize: ANGOLA_STYLES.textSize.titleSm,
+                fontSize: `${ANGOLA_STYLES.textSize.text}`,
               }}>
               {CHECK_DUPLICATE_BUTTON}
             </Button>
@@ -161,8 +161,8 @@ const MyInfo = ({
               onClick={handleClickUpdateFullName}
               size="sm"
               style={{
-                width: '48px',
-                height: '48px',
+                width: '45px',
+                height: '45px',
                 borderRadius: '50%',
                 padding: '0px',
               }}
@@ -187,10 +187,11 @@ const MyInfo = ({
               onClick={handleClickUpdateFullName}
               size="sm"
               style={{
-                width: '48px',
-                height: '48px',
+                width: '45px',
+                height: '45px',
                 borderRadius: '50%',
                 padding: '0px',
+                fontSize: `${ANGOLA_STYLES.textSize.text}`,
               }}>
               <Icon
                 name="edit"
@@ -277,11 +278,22 @@ const MyInfo = ({
         {isEditingPassWord ? (
           <Button
             onClick={handleClickUpdatePassWord}
-            disabled={handleAcceptPassWordButton()}>
+            disabled={handleAcceptPassWordButton()}
+            style={{
+              width: '120px',
+              height: '40px',
+              fontSize: `${ANGOLA_STYLES.textSize.text}`,
+            }}>
             {PASSWORD_BUTTON.DONE_MSG}
           </Button>
         ) : (
-          <Button onClick={handleClickUpdatePassWord}>
+          <Button
+            onClick={handleClickUpdatePassWord}
+            style={{
+              width: '150px',
+              height: '40px',
+              fontSize: `${ANGOLA_STYLES.textSize.text}`,
+            }}>
             {PASSWORD_BUTTON.EDIT_MSG}
           </Button>
         )}
@@ -292,7 +304,15 @@ const MyInfo = ({
         )}
         {isEditingPassWord ? null : (
           <>
-            <Button onClick={handleClickLogOut}>{LOG_OUT_TEXT}</Button>
+            <Button
+              onClick={handleClickLogOut}
+              style={{
+                width: '120px',
+                height: '40px',
+                fontSize: `${ANGOLA_STYLES.textSize.text}`,
+              }}>
+              {LOG_OUT_TEXT}
+            </Button>
             {isLogOutModalOpen && (
               <Modal onClose={() => setIsLogOutModalOpen(false)}>
                 {MODAL_ERROR_MESSAGE.LOG_OUT}
