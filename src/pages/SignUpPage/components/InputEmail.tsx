@@ -100,6 +100,13 @@ const Input = styled.input`
   ::placeholder {
     color: ${ANGOLA_STYLES.color.dark};
     font-size: ${ANGOLA_STYLES.textSize.text};
+
+    @media (max-width: 1024px) {
+      font-size: 12px;
+    }
+    @media (max-width: 700px) {
+      font-size: 10px;
+    }
   }
 
   &:focus {

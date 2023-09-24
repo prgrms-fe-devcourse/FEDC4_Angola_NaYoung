@@ -121,7 +121,6 @@ export const checkPassWordPattern = ({
   let isValidPasswordConfirm = false;
   let passwordMsg = '';
   let passwordConfirmMsg = '';
-  console.log(trimmedPassWord.length);
 
   if (!PASSWORD_REGEXP.test(trimmedPassWord)) {
     passwordMsg =
