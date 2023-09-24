@@ -27,6 +27,10 @@ export default TabBarList;
 const List = styled.li`
   color: ${ANGOLA_STYLES.color.white};
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   &.select {
     text-shadow:
@@ -34,5 +38,9 @@ const List = styled.li`
       0 2.5px black,
       2.5px 0 black,
       0 -2.5px black;
+  }
+
+  @media (max-width: 1000px) {
+    font-size: ${ANGOLA_STYLES.textSize.text};
   }
 `;
