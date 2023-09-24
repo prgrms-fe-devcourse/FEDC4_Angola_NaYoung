@@ -82,7 +82,6 @@ const MyInfo = ({
 
   return (
     <MyInfoWrapper>
-      {isUpdateProfileImageLoading && <Spinner />}
       <MyProfileContainer>
         <Emoji>{myEmoji}</Emoji>
         <EditProfile htmlFor="profile">
@@ -94,6 +93,7 @@ const MyInfo = ({
             }
             alt={USER_PROFILE_IMAGE.ALT}
           />
+          {isUpdateProfileImageLoading && <Spinner />}
         </EditProfile>
         <ProfileInput
           type="file"
