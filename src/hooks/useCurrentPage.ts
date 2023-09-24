@@ -23,7 +23,7 @@ interface CurrentPage {
   search: SearchParams;
 }
 
-const useCurrentPage = (): CurrentPage => {
+export const useCurrentPage = (): CurrentPage => {
   const location = useLocation();
   const searchParams = parseQueryString(location.search);
 
@@ -46,5 +46,3 @@ const useCurrentPage = (): CurrentPage => {
   }
   return result;
 };
-
-export default useCurrentPage;

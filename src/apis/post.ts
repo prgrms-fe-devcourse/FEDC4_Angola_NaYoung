@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
+import { useArchives } from '@hooks';
 import { Post } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
-import { useArchives } from '@hooks/useArchives';
 import useAxiosInstance from './instance';
 
 const CHANNEL_ID = import.meta.env.VITE_CHANNEL_ID;
