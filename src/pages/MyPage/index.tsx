@@ -18,6 +18,11 @@ const MyPage = () => {
   const auth = useRecoilValue(authInfoState);
   const { name } = useCurrentPage();
   const navigate = useNavigate();
+
+  if (!auth?.userId) {
+    navigate('/login', { replace: true });
+  }
+
   const { userData, isUserLoading, userDataRefetch } = useFetchUser(
     auth?.userId as string,
   );
@@ -32,10 +37,6 @@ const MyPage = () => {
       userDataRefetch();
     }
   }, [isDeletePostSuccess, userDataRefetch]);
-
-  if (!auth?.userId) {
-    navigate('/login', { replace: true });
-  }
 
   if (isUserLoading) {
     return <Spinner />;
