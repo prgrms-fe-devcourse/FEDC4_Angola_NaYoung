@@ -12,9 +12,14 @@ export const TEXT = {
   VERSUS: 'VS',
   SUBMIT: '작성 완료하기',
   CREATE_POST_FAIL: '포스트 작성에 실패했습니다.',
+  WARN_MAX_LINE: '5줄까지만 입력할 수 있습니다.',
 };
 
 export const ID = {
   OPTION_A: 'optionA',
-  OPTION_B: 'optionB'
-}
+  OPTION_B: 'optionB',
+};
+
+export const COLOR = {
+  WARN: '#F66',
+};
