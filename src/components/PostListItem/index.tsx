@@ -115,7 +115,7 @@ const Title = styled.div`
   padding: 2px 0;
 
   @media (max-width: 600px) {
-    font-size: 16px;
+    font-size: ${ANGOLA_STYLES.textSize.text};
   }
 `;
 
