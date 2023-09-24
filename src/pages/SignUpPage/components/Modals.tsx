@@ -9,12 +9,9 @@ interface ModalsProps {
 
 export const SignUpSuccessModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal
-      onClose={handleClick}
-      footerShow={false}>
+    <Modal onClose={handleClick}>
       <Content>
         <Msg>{MODAL.MSG.SIGN_UP.SUCCESS}</Msg>
-        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -22,12 +19,9 @@ export const SignUpSuccessModal = ({ onClick: handleClick }: ModalsProps) => {
 
 export const SignUpFailModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal
-      onClose={handleClick}
-      footerShow={false}>
+    <Modal onClose={handleClick}>
       <Content>
         <Msg>{MODAL.MSG.SIGN_UP.FAIL}</Msg>
-        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -35,12 +29,9 @@ export const SignUpFailModal = ({ onClick: handleClick }: ModalsProps) => {
 
 export const CheckEmailModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal
-      onClose={handleClick}
-      footerShow={false}>
+    <Modal onClose={handleClick}>
       <Content>
         <Msg>{MODAL.MSG.WARN.EMAIL}</Msg>
-        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -48,12 +39,9 @@ export const CheckEmailModal = ({ onClick: handleClick }: ModalsProps) => {
 
 export const CheckPasswordModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal
-      onClose={handleClick}
-      footerShow={false}>
+    <Modal onClose={handleClick}>
       <Content>
         <Msg>{MODAL.MSG.WARN.PASSWORD}</Msg>
-        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -61,12 +49,9 @@ export const CheckPasswordModal = ({ onClick: handleClick }: ModalsProps) => {
 
 export const CheckFullNameModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
-    <Modal
-      onClose={handleClick}
-      footerShow={false}>
+    <Modal onClose={handleClick}>
       <Content>
         <Msg>{MODAL.MSG.WARN.FULLNAME}</Msg>
-        <SubMsg>{MODAL.SUB_MSG}</SubMsg>
       </Content>
     </Modal>
   );
@@ -84,9 +69,4 @@ const Content = styled.div`
 
 const Msg = styled.div`
   font-size: ${ANGOLA_STYLES.textSize.titleLg};
-`;
-
-const SubMsg = styled.div`
-  font-size: ${ANGOLA_STYLES.textSize.text};
-  color: ${ANGOLA_STYLES.color.dark};
 `;
