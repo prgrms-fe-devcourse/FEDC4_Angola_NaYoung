@@ -150,10 +150,10 @@ const MyInfo = ({
               type="button"
               onClick={handleClickDuplicatedFullNameCheckButton}
               style={{
-                width: '100px',
-                height: '48px',
+                width: '120px',
+                height: '40px',
                 padding: '0',
-                fontSize: ANGOLA_STYLES.textSize.titleSm,
+                fontSize: `${ANGOLA_STYLES.textSize.text}`,
               }}>
               {CHECK_DUPLICATE_BUTTON}
             </Button>
@@ -161,8 +161,8 @@ const MyInfo = ({
               onClick={handleClickUpdateFullName}
               size="sm"
               style={{
-                width: '48px',
-                height: '48px',
+                width: '45px',
+                height: '45px',
                 borderRadius: '50%',
                 padding: '0px',
               }}
@@ -187,10 +187,11 @@ const MyInfo = ({
               onClick={handleClickUpdateFullName}
               size="sm"
               style={{
-                width: '48px',
-                height: '48px',
+                width: '45px',
+                height: '45px',
                 borderRadius: '50%',
                 padding: '0px',
+                fontSize: `${ANGOLA_STYLES.textSize.text}`,
               }}>
               <Icon
                 name="edit"
@@ -279,8 +280,9 @@ const MyInfo = ({
             onClick={handleClickUpdatePassWord}
             disabled={handleAcceptPassWordButton()}
             style={{
-              width: '150px',
+              width: '120px',
               height: '40px',
+              fontSize: `${ANGOLA_STYLES.textSize.text}`,
             }}>
             {PASSWORD_BUTTON.DONE_MSG}
           </Button>
@@ -288,8 +290,9 @@ const MyInfo = ({
           <Button
             onClick={handleClickUpdatePassWord}
             style={{
-              width: '180px',
+              width: '150px',
               height: '40px',
+              fontSize: `${ANGOLA_STYLES.textSize.text}`,
             }}>
             {PASSWORD_BUTTON.EDIT_MSG}
           </Button>
@@ -304,8 +307,9 @@ const MyInfo = ({
             <Button
               onClick={handleClickLogOut}
               style={{
-                width: '150px',
+                width: '120px',
                 height: '40px',
+                fontSize: `${ANGOLA_STYLES.textSize.text}`,
               }}>
               {LOG_OUT_TEXT}
             </Button>
