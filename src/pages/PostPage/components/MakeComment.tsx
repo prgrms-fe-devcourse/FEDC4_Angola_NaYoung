@@ -51,10 +51,12 @@ const MakeComment = ({
           {VOTED_VALUES.B}
         </Button>
       </ItemButtonsContainer>
-      <Comment
-        placeholder={CREATE_COMMENT.INPUT.PLACEHOLDER_MSG}
-        onChange={handleChangeComment}
-      />
+      <CommentWrapper>
+        <Comment
+          placeholder={CREATE_COMMENT.INPUT.PLACEHOLDER_MSG}
+          onChange={handleChangeComment}
+        />
+      </CommentWrapper>
       <SubmitButton
         size="md"
         disabled={votedValue ? false : true}
@@ -87,25 +89,39 @@ const ItemButtonsContainer = styled.div`
   height: 120px;
 `;
 
-const Comment = styled.textarea`
+const CommentWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  padding: 16px 24px;
-  align-items: flex-start;
-  flex: 1 0 0;
+  width: 100%;
+  overflow: hidden;
+  padding: 14px 18px;
   border-radius: 40px;
-  border: ${ANGOLA_STYLES.border.default};
   background-color: ${ANGOLA_STYLES.color.gray};
+  border: ${ANGOLA_STYLES.border.default};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
+
+  &:has(textarea:focus) {
+    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
+  }
+`;
+
+const Comment = styled.textarea`
+  flex: 1 0 0;
+  outline: none;
+  border: none;
+  background-color: transparent;
   resize: none;
   font-size: ${ANGOLA_STYLES.textSize.titleSm};
   letter-spacing: -0.352px;
 
-  &:focus {
-    box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
-  }
   ::placeholder {
     font-size: ${ANGOLA_STYLES.textSize.text};
+  }
+  ::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
   }
 `;
 
