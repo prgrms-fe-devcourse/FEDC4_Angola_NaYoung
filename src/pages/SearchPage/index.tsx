@@ -31,4 +31,5 @@ export default SearchPage;
 
 const Container = styled.div`
   width: 100%;
+  padding-bottom: 32px;
 `;
