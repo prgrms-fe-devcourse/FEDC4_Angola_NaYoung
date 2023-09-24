@@ -35,8 +35,9 @@ const PostTitle = ({
       <TitleShadow
         levelColor={levelColor}
         isGradient={authorLevel === 7}
+        isDetail={isPostPage}
       />
-      <Title>
+      <Title isDetail={isPostPage}>
         <Tag ref={tagRef}>
           <NameTag
             isNav={true}
@@ -54,6 +55,7 @@ const PostTitle = ({
               ? POST_TITLE.LOCATION_CLASS.POST
               : POST_TITLE.LOCATION_CLASS.HOME
           }
+          isDetail={isPostPage}
           tagWidth={tagWidth}
           onClick={handleClickTitleText}>
           {title}
@@ -68,20 +70,23 @@ export default PostTitle;
 const TitleContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 72px;
+  height: fit-content;
+  margin-bottom: 32px;
 `;
 
-const Title = styled.div`
-  position: absolute;
+const Title = styled.div<{ isDetail: boolean }>`
   background: ${ANGOLA_STYLES.color.white};
   border-radius: 24px;
   border: ${ANGOLA_STYLES.border.default};
-  height: 48px;
+  min-height: 48px;
+  height: ${({ isDetail }) => (isDetail ? 'fit-content' : '48px')};
   display: flex;
   gap: 8px;
   align-items: center;
   width: 100%;
   padding: 8px;
+  position: relative;
+  z-index: 10;
 
   &::after {
     content: '';
@@ -115,17 +120,21 @@ const Tag = styled.div`
   width: min-content;
 `;
 
-const Text = styled.div<{ tagWidth: number }>`
+const Text = styled.div<{ tagWidth: number; isDetail: boolean }>`
   flex-grow: 1;
   flex-shrink: 0;
   font-size: ${ANGOLA_STYLES.textSize.title};
   max-width: calc(100% - 12px - ${({ tagWidth }) => `${tagWidth}px`});
-  white-space: nowrap;
+  white-space: ${({ isDetail }) => (isDetail ? 'normal' : 'nowrap')};
   overflow: hidden;
   text-overflow: ellipsis;
   height: 100%;
   border-radius: 24px;
   padding: 4px 8px;
+  line-height: 24px;
+  @media (max-width: 800px) {
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  }
   &.inHome {
     cursor: pointer;
     transition: 0.2s;
@@ -135,9 +144,13 @@ const Text = styled.div<{ tagWidth: number }>`
   }
 `;
 
-const TitleShadow = styled(Title)<{ levelColor: string; isGradient: boolean }>`
+const TitleShadow = styled(Title)<{
+  levelColor: string;
+  isGradient: boolean;
+}>`
   position: absolute;
-  top: 4px;
+  z-index: 0;
+  bottom: -4px;
   background: ${({ levelColor }) => levelColor};
   border: none;
   &::before {
