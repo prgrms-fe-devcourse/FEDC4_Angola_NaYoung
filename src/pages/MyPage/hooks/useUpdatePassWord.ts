@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useFetchUpdatePassword } from '@apis/profile';
 import { checkPassWordPattern } from '@utils/userAuthentication';
 import { CHECK_MSG } from '@constants/index';
+import { PASSWORD_CONFIRM_MESSAGE } from '../constants';
 
 const useUpdatePassWord = () => {
   const { updatePasswordMutate, updatePasswordData, isUpdatePasswordError } =
@@ -70,10 +71,13 @@ const useUpdatePassWord = () => {
         confirmNewPassWord: e.target.value,
       },
     );
+
     setConfirmNewPassWord(e.target.value);
     setValidPasswordConfirmMsg('');
 
-    if (!isValidPasswordConfirm) {
+    if (!e.target.value) {
+      setInvalidPasswordConfirmMsg(`${PASSWORD_CONFIRM_MESSAGE}`);
+    } else if (!isValidPasswordConfirm) {
       setInvalidPasswordConfirmMsg(passwordConfirmMsg);
     } else {
       setValidPasswordConfirmMsg(passwordConfirmMsg);
