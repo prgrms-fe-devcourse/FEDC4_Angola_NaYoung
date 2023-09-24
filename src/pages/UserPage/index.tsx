@@ -68,7 +68,6 @@ const UserPage = ({ userId = '' }: UserPageProps) => {
                 <PostListItem
                   key={post._id}
                   id={post._id}
-                  image={userData.image}
                   title={post.title}
                   likes={post.likes.length}
                   comments={post.comments.length}
