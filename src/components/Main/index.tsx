@@ -20,8 +20,9 @@ const Main = () => {
   useFetchUserArchives();
 
   useEffect(() => {
+    if (name === 'post') return;
     scrollToTop();
-  }, [location.pathname, scrollToTop]);
+  }, [location.pathname, name, scrollToTop]);
 
   const objectForSort = {
     target: params.target || 'post',
