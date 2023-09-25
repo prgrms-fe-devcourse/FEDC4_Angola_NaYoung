@@ -147,13 +147,19 @@ const NotificationViewerBackGround = styled.div`
   z-index: ${ANGOLA_STYLES.zIndex.modal};
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
 `;
 
 const NotificationViewerContainer = styled.div`
   position: absolute;
   top: 100px;
-  right: 80px;
+  right: 24px;
+  @media (max-width: 600px) {
+    right: 12px;
+  }
+  @media (max-width: 400px) {
+    right: 8px;
+  }
   padding: 24px 12px 24px 12px;
   display: flex;
   flex-direction: column;

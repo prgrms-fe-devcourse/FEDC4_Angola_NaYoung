@@ -53,4 +53,7 @@ const MenuBarContainer = styled.div`
   align-items: center;
   gap: 24px;
   align-self: stretch;
+  @media (max-width: 600px) {
+    gap: 12px;
+  }
 `;
