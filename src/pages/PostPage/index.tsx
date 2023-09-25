@@ -38,7 +38,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   useEffect(() => {
     postRefetch();
-  }, [postId, postRefetch]);
+  }, [postId]);
 
   const isSamePostId = () => {
     return postId === postData?._id;
