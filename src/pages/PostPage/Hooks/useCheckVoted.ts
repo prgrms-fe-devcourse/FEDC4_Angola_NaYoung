@@ -21,7 +21,7 @@ const useCheckVoted = ({
 }: useCheckVotedProps) => {
   useEffect(() => {
     setSubmitValue(voted);
-  }, [voted, setSubmitValue]);
+  }, [voted]);
 
   useEffect(() => {
     if (postData) {
@@ -37,7 +37,7 @@ const useCheckVoted = ({
         setSubmitValue(userVote);
       }
     }
-  }, [myId, postData, submitValue, setSubmitValue, setVotedValue]);
+  }, [myId, postData, submitValue]);
 };
 
 export default useCheckVoted;

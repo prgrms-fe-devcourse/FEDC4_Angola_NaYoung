@@ -38,7 +38,7 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   useEffect(() => {
     postRefetch();
-  }, [postId, postRefetch]);
+  }, [postId]);
 
   const isSamePostId = () => {
     return postId === postData?._id;
@@ -133,9 +133,11 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
                   )}
                 </>
               ) : (
-                <CommentHeader authorLevel={calculateLevel(postData.author)}>
-                  {COMMENT_HEADER}
-                </CommentHeader>
+                postData.comments.length > 0 && (
+                  <CommentHeader authorLevel={calculateLevel(postData.author)}>
+                    {COMMENT_HEADER}
+                  </CommentHeader>
+                )
               )}
               {postData && !isDeleteCommentError && (
                 <CommentList

@@ -28,9 +28,9 @@ const useControlRouteByComment = ({
       submitValue
         ? searchParams.set(SEARCH_KEYS.VOTED, submitValue)
         : searchParams.delete(SEARCH_KEYS.VOTED);
-      setSearchParams(searchParams);
+      setSearchParams(searchParams, { replace: true });
     }
-  }, [searchParams, setSearchParams, submitValue, show]);
+  }, [submitValue, show]);
 };
 
 export default useControlRouteByComment;
