@@ -87,7 +87,6 @@ const MakeCommentContainer = styled.div`
   padding: 16px;
   border: ${ANGOLA_STYLES.border.default};
   border-radius: 24px 24px 0 0;
-  z-index: 10;
 `;
 
 const Form = styled.form`
