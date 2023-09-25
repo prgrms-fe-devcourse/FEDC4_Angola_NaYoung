@@ -63,7 +63,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       )}
 
       <Title>
-        {getTruncatedKeyword({ keyword }) || ''}
+        {keyword ? getTruncatedKeyword({ keyword }) || '' : null}
         {title}
       </Title>
 
