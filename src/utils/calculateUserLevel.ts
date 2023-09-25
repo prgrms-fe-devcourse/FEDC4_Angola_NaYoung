@@ -1,5 +1,5 @@
+import type { User } from '@type';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import type { User } from '@type/index';
 import type { Archives } from '@type/level';
 
 const LEVEL_EMOJI = ['🌱', '🥚', '🐣', '🐥', '🐔', '🕊️', '🐉', '👑'];

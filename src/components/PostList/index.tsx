@@ -1,8 +1,7 @@
+import { PostListItem, Spinner } from '@components';
 import styled from '@emotion/styled';
 import { NON_SEARCH_TEXT } from '@pages/SearchPage/constants';
 import { usePostSort } from '@pages/SearchPage/hooks';
-import PostListItem from '@components/PostListItem';
-import Spinner from '@components/Spinner';
 
 interface PostListProps {
   keyword?: string;

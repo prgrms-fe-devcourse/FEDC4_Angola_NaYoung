@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { CHECK_MSG } from '@constants';
 import { useFetchUpdatePassword } from '@apis/profile';
 import { checkPassWordPattern } from '@utils/userAuthentication';
-import { CHECK_MSG } from '@constants/index';
 import { PASSWORD_CONFIRM_MESSAGE } from '../constants';
 
 const useUpdatePassWord = () => {

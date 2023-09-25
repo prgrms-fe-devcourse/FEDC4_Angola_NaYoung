@@ -1,15 +1,14 @@
+import { Button, Image, Modal, NameTag, Spinner } from '@components';
+import { USER_INFO, USER_PROFILE_IMAGE } from '@constants';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import Button from '@components/Button';
-import Image from '@components/Image';
-import Modal from '@components/Modal';
-import NameTag from '@components/NameTag';
-import Spinner from '@components/Spinner';
+import {
+  FOLLOW_ERROR_MESSAGE,
+  FOLLOW_MESSAGE,
+} from '@pages/UserPage/constants';
+import useFollow from '@pages/UserPage/hooks/useFollow';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
-import { FOLLOW_ERROR_MESSAGE, FOLLOW_MESSAGE } from './constants';
-import useFollow from './hooks/useFollow';
 
 interface UserInfoProps {
   userId: string;

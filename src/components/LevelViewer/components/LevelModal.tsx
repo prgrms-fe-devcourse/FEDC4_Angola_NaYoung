@@ -1,8 +1,8 @@
 import { CSSProperties, useEffect } from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
+import { Icon } from '@components';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import Icon from '@components/Icon';
 import { authInfoState } from '@store/auth';
 import { getUserLevelInfo } from '@utils/calculateUserLevel';
 import { ANGOLA_STYLES } from '@styles/commonStyles';

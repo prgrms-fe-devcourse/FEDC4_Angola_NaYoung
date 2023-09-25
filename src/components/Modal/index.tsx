@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { Icon } from '@components';
 import styled from '@emotion/styled';
-import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface ModalProps {

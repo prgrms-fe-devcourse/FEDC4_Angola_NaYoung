@@ -1,5 +1,5 @@
+import { LinkButton } from '@components';
 import styled from '@emotion/styled';
-import LinkButton from '@components/LinkButton';
 
 const NonAuthMenuBar = () => {
   return (

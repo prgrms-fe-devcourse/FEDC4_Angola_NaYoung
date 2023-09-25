@@ -1,8 +1,7 @@
 import { useState } from 'react';
+import { Icon, LinkButton } from '@components';
+import { NotificationViewer } from '@components';
 import styled from '@emotion/styled';
-import Icon from '@components/Icon';
-import LinkButton from '@components/LinkButton';
-import NotificationViewer from '@components/NotificationViewer';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 const AuthMenuBar = () => {

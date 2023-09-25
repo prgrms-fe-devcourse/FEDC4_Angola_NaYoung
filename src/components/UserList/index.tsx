@@ -1,9 +1,8 @@
+import { Spinner, UserListItem } from '@components';
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { NON_SEARCH_TEXT } from '@pages/SearchPage/constants';
 import { useUsersort } from '@pages/SearchPage/hooks';
-import Spinner from '@components/Spinner';
-import UserListItem from '@components/UserListItem';
 
 interface UserListProps {
   keyword?: string;

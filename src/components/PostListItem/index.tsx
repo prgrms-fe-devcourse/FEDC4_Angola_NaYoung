@@ -1,11 +1,9 @@
+import { Icon, LinkButton, Modal } from '@components';
+import { BUTTON_VALUES } from '@constants';
 import styled from '@emotion/styled';
 import { MORE_LINK_BUTTON_STYLES } from '@styles';
-import Icon from '@components/Icon';
-import LinkButton from '@components/LinkButton';
-import Modal from '@components/Modal';
 import { splitPostBySeparator } from '@utils/parseDataBySeparator';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { BUTTON_VALUES } from '@constants/index';
 import { DELETE_POST_MODAL } from './constants';
 import { useDeletePost } from './hooks';
 

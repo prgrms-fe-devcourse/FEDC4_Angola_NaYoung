@@ -1,7 +1,6 @@
+import { PostList, UserList } from '@components';
+import { PARAM_VALUES, SEARCH_VALUES } from '@constants';
 import styled from '@emotion/styled';
-import PostList from '@components/PostList';
-import UserList from '@components/UserList';
-import { PARAM_VALUES, SEARCH_VALUES } from '@constants/index';
 
 interface SearchProps {
   target?: string;

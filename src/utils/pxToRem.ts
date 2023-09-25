@@ -1,4 +1,3 @@
-// 현재 브라우저의 기본 글꼴 크기를 가져오는 함수
 const getBaseFontSize = () => {
   const html = document.querySelector('html');
   const computedStyle = window.getComputedStyle(html as HTMLHtmlElement);
