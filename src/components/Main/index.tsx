@@ -3,9 +3,11 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useCurrentPage, useScrollToTop } from '@hooks';
 import { redirects, routes } from '@routes';
+import { useRecoilValue } from 'recoil';
 import Header from '@components/Header';
 import LevelViewer from '@components/LevelViewer';
 import { useFetchUserArchives } from '@apis/level';
+import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import ToTopButton from './ToTopButton';
 
@@ -13,6 +15,8 @@ const Main = () => {
   const { title, name, params, search } = useCurrentPage();
   const location = useLocation();
   const [scrollTargetRef, scrollToTop] = useScrollToTop<HTMLDivElement>();
+  const auth = useRecoilValue(authInfoState);
+
   useFetchUserArchives();
 
   useEffect(() => {
@@ -43,14 +47,20 @@ const Main = () => {
       />
       <PageContainer ref={scrollTargetRef}>
         <Routes>
-          {routes.map(({ path, name, component }) => (
+          {routes.map(({ path, name, component, authRequired }) => (
             <Route
               key={name}
               path={path}
-              element={React.createElement(component, {
-                ...params,
-                ...search,
-              })}></Route>
+              element={
+                authRequired && !auth ? (
+                  <Navigate to="/login" />
+                ) : (
+                  React.createElement(component, {
+                    ...params,
+                    ...search,
+                  })
+                )
+              }></Route>
           ))}
           {redirects.map(({ from, to }) => (
             <Route

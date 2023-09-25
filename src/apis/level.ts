@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 import { userArchives } from '@store/level';
 import useAxiosInstance from './instance';
 
-export const useFetchUserArchives = async () => {
+export const useFetchUserArchives = () => {
   const { authInstance } = useAxiosInstance();
   const setUserArchives = useSetRecoilState(userArchives);
   const { data, isSuccess, isError, isLoading } = useQuery<
