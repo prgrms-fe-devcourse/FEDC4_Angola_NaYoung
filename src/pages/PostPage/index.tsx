@@ -31,6 +31,11 @@ interface PostPageProps {
 
 const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
   const myId = useRecoilValue(authInfoState)?.userId;
+
+  if (!myId && window.location.pathname.includes('&')) {
+    postId = postId.slice(0, postId.indexOf('&'));
+  }
+
   const [votedValue, setVotedValue] = useState<string>('');
   const [submitValue, setSubmitValue] = useState<string | undefined>('');
   const [isVoted, setIsVoted] = useState(false);
