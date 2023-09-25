@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import { User } from '@type';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useSetRecoilState } from 'recoil';
@@ -92,28 +92,5 @@ export const useFetchLogOut = () => {
     isLogOutSuccess: isSuccess,
     isLogOutError: isError,
     isLogOutLoading: isLoading,
-  };
-};
-
-export const useFetchAuthUser = async () => {
-  const { authInstance } = useAxiosInstance();
-  const { data, isSuccess, isError, isLoading } = useQuery<
-    AxiosResponse<User>,
-    AxiosError,
-    string | null
-  >('authUser', () => authInstance.get('/auth-user'), {
-    select: ({ data }) => {
-      if (data) {
-        return data._id;
-      }
-      return null;
-    },
-  });
-
-  return {
-    authUserData: data,
-    isAuthUserSuccess: isSuccess,
-    isAuthUserError: isError,
-    isAuthUserLoading: isLoading,
   };
 };

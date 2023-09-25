@@ -18,19 +18,24 @@ export const useFetchGetNotifications = () => {
     isGetNotificationsLoading: isLoading,
     isGetNotificationsError: isError,
     isGetNotificationsSuccess: isSuccess,
-    getNotificationRefetch: refetch
+    getNotificationRefetch: refetch,
   };
 };
 
-interface getPartNotificationsQueryParams{
+interface getPartNotificationsQueryParams {
   offset: number;
   limit: number;
 }
 
-export const useFetchGetPartNotifications = ({offset, limit} : getPartNotificationsQueryParams) => {
+// TODO:@MinwooP - 알림 목록 무한 스크롤 구현
+export const useFetchGetPartNotifications = ({
+  offset,
+  limit,
+}: getPartNotificationsQueryParams) => {
   const { authInstance } = useAxiosInstance();
 
-  const fetcher = () => authInstance.get(`/notifications?offset=${offset}&limit=${limit}`);
+  const fetcher = () =>
+    authInstance.get(`/notifications?offset=${offset}&limit=${limit}`);
 
   const { data, isLoading, isError, isSuccess, refetch } = useQuery<
     AxiosResponse<Notification[]>,
@@ -42,10 +47,9 @@ export const useFetchGetPartNotifications = ({offset, limit} : getPartNotificati
     isGetPartNotificationsLoading: isLoading,
     isGetPartNotificationsError: isError,
     isGetPartNotificationsSuccess: isSuccess,
-    getPartNotificationRefetch: refetch
+    getPartNotificationRefetch: refetch,
   };
 };
-
 
 export const useFetchReadNotifications = () => {
   const { authInstance } = useAxiosInstance();

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { SEARCH_KEYS, SEARCH_VALUES } from '@constants/index';
+import { SEARCH_KEYS, SEARCH_VALUES } from '@constants';
 
 export const useControlRouteByPost = ({
   postId,

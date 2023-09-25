@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { CHECK_MSG } from '@constants';
 import { useRecoilValue } from 'recoil';
 import { useFetchUpdateFullName } from '@apis/profile';
 import { useFetchUsers } from '@apis/user';
 import { authInfoState } from '@store/auth';
 import { checkFullNamePattern } from '@utils/userAuthentication';
-import { CHECK_MSG } from '@constants/index';
 
 interface useUpdateFullNameProps {
   name: string;

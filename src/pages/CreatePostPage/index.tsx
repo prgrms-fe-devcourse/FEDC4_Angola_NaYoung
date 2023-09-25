@@ -1,7 +1,5 @@
+import { Icon, Modal, Spinner } from '@components';
 import styled from '@emotion/styled';
-import Icon from '@components/Icon';
-import Modal from '@components/Modal';
-import Spinner from '@components/Spinner';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { COLOR, ID, MAX_INPUT_LENGTH, PLACEHOLDER, TEXT } from './constants';
 import { useCreatePost } from './hooks';

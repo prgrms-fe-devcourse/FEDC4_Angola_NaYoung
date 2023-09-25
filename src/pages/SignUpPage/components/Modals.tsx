@@ -1,5 +1,5 @@
+import { Modal } from '@components';
 import styled from '@emotion/styled';
-import Modal from '@components/Modal';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { MODAL } from '../constants';
 

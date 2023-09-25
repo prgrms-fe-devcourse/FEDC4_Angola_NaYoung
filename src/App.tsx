@@ -1,9 +1,8 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
+import { Main, NavBar } from '@components';
 import styled from '@emotion/styled';
 import { RecoilRoot } from 'recoil';
-import Main from '@components/Main';
-import NavBar from '@components/NavBar';
 
 const queryClient = new QueryClient();
 

@@ -1,4 +1,4 @@
-import { Notification } from '@type/index';
+import { Notification } from '@type';
 
 export const filterSameFollowerNotifications = (
   notificationList: Notification[],

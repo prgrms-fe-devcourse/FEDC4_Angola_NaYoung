@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
+import { Button } from '@components';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
-import Button from '@components/Button';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { LABEL, LOGIN_BUTTON_MSG, MSG } from './constants';
