@@ -71,7 +71,7 @@ const Wrapper = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 15;
+  z-index: ${ANGOLA_STYLES.zIndex.modal};
   backdrop-filter: blur(2.5px);
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;

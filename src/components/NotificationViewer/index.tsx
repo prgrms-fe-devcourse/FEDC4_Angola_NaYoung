@@ -145,7 +145,7 @@ const NotificationViewerBackGround = styled.div`
   background-color: rgba(0, 0, 0, 0);
   width: 100%;
   height: 100vh;
-  z-index: 20;
+  z-index: ${ANGOLA_STYLES.zIndex.modal};
   position: fixed;
   top: 0;
   left: 0;

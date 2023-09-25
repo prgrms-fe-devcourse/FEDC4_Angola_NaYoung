@@ -87,7 +87,6 @@ const MakeCommentContainer = styled.div`
   padding: 16px;
   border: ${ANGOLA_STYLES.border.default};
   border-radius: 24px 24px 0 0;
-  z-index: 10;
 `;
 
 const Form = styled.form`
@@ -143,7 +142,7 @@ const SubmitButton = styled(ButtonStyled)<{ votedValue: string }>`
   width: 120px;
   height: 120px;
   padding: 16px 0;
-  background-color: ${(props) => (props.votedValue ? 'none' : 'white')}
+  background-color: ${(props) => (props.votedValue ? 'none' : 'white')};
 
   color: ${(props) =>
     props.votedValue ? ANGOLA_STYLES.color.text : ANGOLA_STYLES.color.dark};

@@ -86,7 +86,6 @@ const Title = styled.div<{ isDetail: boolean }>`
   width: 100%;
   padding: 8px;
   position: relative;
-  z-index: 10;
 
   &::after {
     content: '';
@@ -148,7 +147,6 @@ const TitleShadow = styled(Title)<{
   isGradient: boolean;
 }>`
   position: absolute;
-  z-index: 0;
   bottom: -4px;
   background: ${({ levelColor }) => levelColor};
   border: none;

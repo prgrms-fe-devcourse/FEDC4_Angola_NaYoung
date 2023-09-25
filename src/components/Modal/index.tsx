@@ -82,7 +82,7 @@ const ModalWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: ${ANGOLA_STYLES.zIndex.modal};
 `;
 
 const Container = styled.div`
