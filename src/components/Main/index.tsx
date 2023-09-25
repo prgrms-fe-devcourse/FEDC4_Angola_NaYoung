@@ -40,7 +40,8 @@ const Main = () => {
         sortProps={name === 'search' ? objectForSort : undefined}
         keyword={
           name === 'search'
-            ? (search.keyword && decodeURIComponent(search.keyword)) ||
+            ? (search.keyword &&
+                decodeURIComponent(search.keyword.replace(/\+/g, '%20'))) ||
               (params.target === 'user' ? '전체 유저' : '전체 포스트')
             : undefined
         }
