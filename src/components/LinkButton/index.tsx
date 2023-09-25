@@ -7,11 +7,20 @@ interface LinkButtonProps {
   to: string;
   children: React.ReactNode;
   style?: CSSProperties;
+  onClick?: VoidFunction;
 }
 
-const LinkButton = ({ to, children, ...style }: LinkButtonProps) => {
+const LinkButton = ({
+  to,
+  children,
+  onClick: handleClick,
+  ...style
+}: LinkButtonProps) => {
   return (
     <LinkStyled
+      onClick={() => {
+        handleClick && handleClick();
+      }}
       to={to}
       {...style}>
       {children}

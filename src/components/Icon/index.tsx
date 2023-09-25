@@ -8,6 +8,7 @@ import {
 import {
   faArrowRight,
   faArrowUp,
+  faBars,
   faBell,
   faCheck,
   faCheckDouble,
@@ -55,7 +56,8 @@ export type IconName =
   | 'eye_slash'
   | 'double_check'
   | 'arrow_up'
-  | 'arrow_right';
+  | 'arrow_right'
+  | 'menu';
 
 const iconMap = {
   alert: faBell,
@@ -82,6 +84,7 @@ const iconMap = {
   double_check: faCheckDouble,
   arrow_up: faArrowUp,
   arrow_right: faArrowRight,
+  menu: faBars,
 };
 
 interface IconProps {
