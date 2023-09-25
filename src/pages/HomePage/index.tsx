@@ -39,7 +39,7 @@ const HomePage = () => {
           numberOfLikes={post.likes.length}></PostViewer>
       ))}
       <div ref={containerRef} />
-      {isPartPostsLoading || isLoading ? <Spinner size={50} /> : null}
+      {isPartPostsLoading || isLoading ? <Spinner /> : null}
     </Container>
   );
 };

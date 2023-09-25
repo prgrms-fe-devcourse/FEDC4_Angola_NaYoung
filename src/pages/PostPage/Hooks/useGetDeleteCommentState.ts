@@ -21,7 +21,7 @@ const useGetDeleteCommentState = ({
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
     searchParams.delete(SEARCH_KEYS.VOTED);
-    setSearchParams(searchParams);
+    setSearchParams(searchParams, { replace: true });
     setSubmitValue('');
   };
 

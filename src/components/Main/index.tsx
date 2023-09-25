@@ -7,6 +7,7 @@ import { redirects, routes } from '@routes';
 import { useRecoilValue } from 'recoil';
 import { useFetchUserArchives } from '@apis/level';
 import { authInfoState } from '@store/auth';
+import { decodeUri } from '@utils/decodeUri';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import ToTopButton from './ToTopButton';
 
@@ -39,7 +40,7 @@ const Main = () => {
         sortProps={name === 'search' ? objectForSort : undefined}
         keyword={
           name === 'search'
-            ? (search.keyword && decodeURIComponent(search.keyword)) ||
+            ? (search.keyword && decodeUri({ keyword: search.keyword })) ||
               (params.target === 'user' ? '전체 유저' : '전체 포스트')
             : undefined
         }

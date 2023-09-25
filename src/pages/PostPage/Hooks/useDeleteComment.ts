@@ -27,7 +27,7 @@ const useDeleteComment = ({
 
   useEffect(() => {
     setCommentsData(comments);
-  }, [comments.length, comments, setCommentsData]);
+  }, [comments.length, comments]);
 
   return {
     commentsData,

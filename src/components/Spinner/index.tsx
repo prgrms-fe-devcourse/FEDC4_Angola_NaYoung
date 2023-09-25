@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
-import { HashLoader } from 'react-spinners';
+import { FadeLoader } from 'react-spinners';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 const DEFAULT_POSITION_STYLE: Record<string, string> = {
   position: 'fixed',
@@ -14,15 +15,13 @@ interface SpinnerProps {
 }
 
 const Spinner = ({
-  color = '#86B7FF',
-  size = 100,
+  color = ANGOLA_STYLES.color.dark,
   spinnerPositionStyle = DEFAULT_POSITION_STYLE,
 }: SpinnerProps) => {
   return (
     <div style={{ ...spinnerPositionStyle }}>
-      <HashLoader
+      <FadeLoader
         color={color}
-        size={size}
         speedMultiplier={1.3}
       />
     </div>
