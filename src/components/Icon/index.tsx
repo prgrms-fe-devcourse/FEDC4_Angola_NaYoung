@@ -19,6 +19,7 @@ import {
   faEyeSlash,
   faHeart,
   faHeartCirclePlus,
+  faMinus,
   faPen,
   faPenToSquare,
   faSearch,
@@ -57,7 +58,8 @@ export type IconName =
   | 'double_check'
   | 'arrow_up'
   | 'arrow_right'
-  | 'menu';
+  | 'menu'
+  | 'minus';
 
 const iconMap = {
   alert: faBell,
@@ -85,6 +87,7 @@ const iconMap = {
   arrow_up: faArrowUp,
   arrow_right: faArrowRight,
   menu: faBars,
+  minus: faMinus,
 };
 
 interface IconProps {

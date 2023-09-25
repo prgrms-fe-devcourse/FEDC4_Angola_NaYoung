@@ -10,7 +10,7 @@ const DropDownNonAuthMenu = () => {
     <DropDownWrapper>
       <Drop onClick={() => setIsDropped((prev) => !prev)}>
         <Icon
-          name="menu"
+          name={isDropped ? 'minus' : 'menu'}
           size={'30'}
         />
       </Drop>
