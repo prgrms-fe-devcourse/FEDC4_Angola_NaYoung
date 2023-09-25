@@ -23,54 +23,56 @@ const MakeComment = ({
 }: MakeCommentProps) => (
   <MakeCommentContainer>
     <Form onSubmit={handleSubmitComment}>
-      <ItemButtonsContainer>
-        <Button
-          disabled={myId ? false : true}
-          type="button"
-          onClick={() => handleClickItem(VOTED_VALUES.A)}
-          style={{
-            width: '80px',
-            height: '50%',
-            paddingTop: '24px',
-            borderRadius: '40px 40px 0 0',
-            borderBottom: 'none',
-            color:
-              votedValue === VOTED_VALUES.A
-                ? ANGOLA_STYLES.color.text
-                : ANGOLA_STYLES.color.dark,
-            background:
-              votedValue === VOTED_VALUES.A
-                ? ANGOLA_STYLES.color.levels[authorLevel].fill
-                : 'white',
-          }}>
-          {VOTED_VALUES.A}
-        </Button>
-        <Button
-          disabled={myId ? false : true}
-          type="button"
-          onClick={() => handleClickItem(VOTED_VALUES.B)}
-          style={{
-            width: '80px',
-            height: '50%',
-            borderRadius: '0 0 40px 40px',
-            color:
-              votedValue === VOTED_VALUES.B
-                ? ANGOLA_STYLES.color.text
-                : ANGOLA_STYLES.color.dark,
-            background:
-              votedValue === VOTED_VALUES.B
-                ? ANGOLA_STYLES.color.levels[authorLevel].fill
-                : 'white',
-          }}>
-          {VOTED_VALUES.B}
-        </Button>
-      </ItemButtonsContainer>
-      <CommentWrapper>
-        <Comment
-          placeholder={CREATE_COMMENT.INPUT.PLACEHOLDER_MSG}
-          onChange={handleChangeComment}
-        />
-      </CommentWrapper>
+      <VoteContainer>
+        <ItemButtonsContainer>
+          <Button
+            disabled={myId ? false : true}
+            type="button"
+            onClick={() => handleClickItem(VOTED_VALUES.A)}
+            style={{
+              width: '60px',
+              height: '50%',
+              paddingTop: '24px',
+              borderRadius: '30px 30px 0 0',
+              borderBottom: 'none',
+              color:
+                votedValue === VOTED_VALUES.A
+                  ? ANGOLA_STYLES.color.text
+                  : ANGOLA_STYLES.color.dark,
+              background:
+                votedValue === VOTED_VALUES.A
+                  ? ANGOLA_STYLES.color.levels[authorLevel].fill
+                  : 'white',
+            }}>
+            {VOTED_VALUES.A}
+          </Button>
+          <Button
+            disabled={myId ? false : true}
+            type="button"
+            onClick={() => handleClickItem(VOTED_VALUES.B)}
+            style={{
+              width: '60px',
+              height: '50%',
+              borderRadius: '0 0 30px 30px',
+              color:
+                votedValue === VOTED_VALUES.B
+                  ? ANGOLA_STYLES.color.text
+                  : ANGOLA_STYLES.color.dark,
+              background:
+                votedValue === VOTED_VALUES.B
+                  ? ANGOLA_STYLES.color.levels[authorLevel].fill
+                  : 'white',
+            }}>
+            {VOTED_VALUES.B}
+          </Button>
+        </ItemButtonsContainer>
+        <CommentWrapper>
+          <Comment
+            placeholder={CREATE_COMMENT.INPUT.PLACEHOLDER_MSG}
+            onChange={handleChangeComment}
+          />
+        </CommentWrapper>
+      </VoteContainer>
       <SubmitButton
         size="md"
         disabled={votedValue ? false : true}
@@ -94,24 +96,44 @@ const Form = styled.form`
   flex-direction: row;
   width: 100%;
   gap: 16px;
+  @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+const VoteContainer = styled.div`
+  display: flex;
+  flex: 1;
+  gap: 16px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ItemButtonsContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 120px;
+  @media (max-width: 450px) {
+    display: none;
+  }
 `;
 
 const CommentWrapper = styled.div`
   display: flex;
   width: 100%;
+  height: 100%;
   overflow: hidden;
   padding: 14px 18px;
   border-radius: 40px;
   background-color: ${ANGOLA_STYLES.color.gray};
   border: ${ANGOLA_STYLES.border.default};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
-
+  @media (max-width: 800px) {
+    height: 120px;
+  }
   &:has(textarea:focus) {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
@@ -142,14 +164,15 @@ const SubmitButton = styled(ButtonStyled)<{ votedValue: string }>`
   width: 120px;
   height: 120px;
   padding: 16px 0;
-  background-color: ${(props) => (props.votedValue ? 'none' : 'white')};
-
-  color: ${(props) =>
-    props.votedValue ? ANGOLA_STYLES.color.text : ANGOLA_STYLES.color.dark};
 
   &:hover {
     ${(props) =>
       !props.votedValue &&
       `${ANGOLA_STYLES.shadow.buttonSm.hover}; ${ANGOLA_STYLES.border.default};`};
+  }
+
+  @media (max-width: 800px) {
+    height: 60px;
+    width: 120px;
   }
 `;

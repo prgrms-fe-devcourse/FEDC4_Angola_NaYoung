@@ -158,12 +158,18 @@ const PostPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+  @media (max-width: 800px) {
+    gap: 40px;
+  }
 `;
 
 const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  & > div:last-child {
+    border-radius: 0 0 24px 24px;
+  }
 `;
 
 const CommentHeader = styled.div<{ authorLevel: number }>`

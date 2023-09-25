@@ -86,6 +86,9 @@ export default MyPage;
 const MyPageWrapper = styled.div`
   display: flex;
   padding: 32px 40px;
+  @media (max-width: 450px) {
+    padding: 32px 4px;
+  }
   flex-direction: column;
   align-items: center;
   gap: 50px;

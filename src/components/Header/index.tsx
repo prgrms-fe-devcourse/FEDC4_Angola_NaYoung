@@ -62,7 +62,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
         <div />
       )}
 
-      <Title>
+      <Title className={keyword ? 'search-result' : ''}>
         {keyword ? getTruncatedKeyword({ keyword }) || '' : null}
         {title}
       </Title>
@@ -94,6 +94,9 @@ const Container = styled.div`
   gap: 20px;
   height: 48px;
   padding: 0px 60px;
+  @media (max-width: 450px) {
+    padding: 0px 30px;
+  }
   position: relative;
   justify-content: space-between;
   align-items: center;
@@ -144,7 +147,12 @@ const Title = styled.div`
     font-size: ${ANGOLA_STYLES.textSize.titleSm};
   }
   @media (max-width: 800px) {
-    display: none;
+    &.search-result {
+      display: none;
+    }
+  }
+  @media (max-width: 450px) {
+    font-size: ${ANGOLA_STYLES.textSize.text};
   }
 `;
 
