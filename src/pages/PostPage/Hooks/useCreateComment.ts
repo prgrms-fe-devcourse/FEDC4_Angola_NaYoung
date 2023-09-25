@@ -41,7 +41,7 @@ const useCreateComment = ({
       });
     }
     searchParams.set(SEARCH_KEYS.VOTED, votedValue);
-    setSearchParams(searchParams);
+    setSearchParams(searchParams, { replace: true });
     setComment('');
     setSubmitValue('');
     setIsVoted(true);
