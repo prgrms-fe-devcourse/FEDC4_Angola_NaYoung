@@ -21,7 +21,7 @@ const CreatePostPage = () => {
   } = useCreatePost();
 
   if (isCreatePostLoading) {
-    return <Spinner size={100} />;
+    return <Spinner/>;
   }
 
   return (
