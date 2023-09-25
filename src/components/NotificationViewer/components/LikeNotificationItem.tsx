@@ -1,6 +1,6 @@
+import { Icon } from '@components';
 import styled from '@emotion/styled';
-import { Notification } from '@type';
-import Icon from '@components/Icon';
+import type { Notification } from '@type';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { ID, NOTIFICATION_MESSAGE } from '../constants';
 

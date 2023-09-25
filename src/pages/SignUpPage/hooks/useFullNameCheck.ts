@@ -1,4 +1,5 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import { checkDuplicatedFullName, checkFullNamePattern } from '@utils';
 import { useFetchUsers } from '@apis/user';
 import { MSG, SIGNUP_INITIAL_VALUE } from '../constants';
@@ -9,7 +10,7 @@ interface useFullNameCheckProps {
 
 const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
   const [fullName, setFullName] = useState<string>(
-    SIGNUP_INITIAL_VALUE.FULLNAME,
+    SIGNUP_INITIAL_VALUE.FULL_NAME,
   );
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
     useState<boolean>(false);
@@ -28,7 +29,7 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
     setIsSubmitted(false);
 
     if (!e.target.value) {
-      setInvalidFullNameMsg(MSG.WARNING.EMPTY.FULLNAME);
+      setInvalidFullNameMsg(MSG.WARNING.EMPTY.FULL_NAME);
     } else if (msg === '이미 가입된 닉네임입니다.') {
       setValidFullNameMsg('닉네임 형식이 올바릅니다.');
     } else if (!isValidFullName) {

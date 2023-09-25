@@ -1,7 +1,6 @@
-import { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
+import { Button, Icon } from '@components';
 import styled from '@emotion/styled';
-import Button from '@components/Button';
-import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { BUTTON, COLOR, INPUT } from '../constants';
 
@@ -26,7 +25,7 @@ const InputFullName = ({
         <InputWrapper>
           <Input
             onChange={handleChangeFullName}
-            placeholder={INPUT.PLACEHOLDER.FUllNAME}
+            placeholder={INPUT.PLACEHOLDER.FULL_NAME}
           />
           {isDuplicatedFullNameChecked && (
             <DoubleCheckIcon>

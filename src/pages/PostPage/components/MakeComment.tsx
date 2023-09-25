@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import styled from '@emotion/styled';
 import Button, { ButtonStyled } from '@components/Button';
 import { ANGOLA_STYLES } from '@styles/commonStyles';

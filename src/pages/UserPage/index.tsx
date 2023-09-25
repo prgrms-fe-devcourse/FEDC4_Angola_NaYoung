@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PostListItem, Spinner } from '@components';
+import { USER_POSTS_TITLE } from '@constants';
 import styled from '@emotion/styled';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { useRecoilValue } from 'recoil';
-import PostListItem from '@components/PostListItem';
-import Spinner from '@components/Spinner';
 import { useFetchUser } from '@apis/user';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { USER_POSTS_TITLE } from '@constants/index';
-import UserInfo from './UserInfo';
+import UserInfo from './components/UserInfo';
 import './constants';
 
 interface UserPageProps {

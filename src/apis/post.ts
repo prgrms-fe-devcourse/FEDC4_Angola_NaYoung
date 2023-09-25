@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { useArchives } from '@hooks';
-import { Post } from '@type';
-import { AxiosError, AxiosResponse } from 'axios';
+import type { Post } from '@type';
+import type { AxiosError, AxiosResponse } from 'axios';
 import useAxiosInstance from './instance';
 
 const CHANNEL_ID = import.meta.env.VITE_CHANNEL_ID;
@@ -26,24 +26,6 @@ export const useFetchAllPosts = () => {
   };
 };
 
-export const useFetchUserPosts = (authorId: string) => {
-  const { baseInstance } = useAxiosInstance();
-  const path = `/posts/author/${authorId}`;
-
-  const { data, isError, isLoading, isSuccess, refetch } = useQuery<
-    AxiosResponse<Post[]>,
-    AxiosError
-  >('userPosts', () => baseInstance.get(path));
-
-  return {
-    userPostsData: data?.data,
-    isUserPostsError: isError,
-    isUserPostsLoading: isLoading,
-    isUserPostsSuccess: isSuccess,
-    userPostsRefetch: refetch,
-  };
-};
-
 export const useFetchPost = (postId: string) => {
   const { baseInstance } = useAxiosInstance();
   const path = `/posts/${postId}`;
@@ -52,24 +34,6 @@ export const useFetchPost = (postId: string) => {
     AxiosResponse<Post>,
     AxiosError
   >('post', () => baseInstance.get(path));
-  return {
-    postData: data?.data as Post,
-    isPostLoading: isLoading,
-    isPostSuccess: isSuccess,
-    isPostError: isError,
-    postRefetch: refetch,
-  };
-};
-
-// TODO:@MinwooP - 위 useFetchPost에 key만 다르게 넣을 수 있도록 변경하고, 합치기
-export const useFetchPostNotification = (postId: string) => {
-  const { baseInstance } = useAxiosInstance();
-  const path = `/posts/${postId}`;
-
-  const { data, isLoading, isSuccess, isError, refetch } = useQuery<
-    AxiosResponse<Post>,
-    AxiosError
-  >('postForNotification', () => baseInstance.get(path));
   return {
     postData: data?.data as Post,
     isPostLoading: isLoading,

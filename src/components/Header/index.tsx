@@ -1,10 +1,11 @@
+import { Icon } from '@components';
 import { PARAM_VALUES, SEARCH_VALUES } from '@constants';
 import styled from '@emotion/styled';
-import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { TabBarList } from './components';
 import { SELECT_OPTION } from './constants';
 import { useSelect } from './hooks';
+import { getTruncatedKeyword } from './utils';
 
 interface HeaderProps {
   title: string;
@@ -62,7 +63,7 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       )}
 
       <Title>
-        {keyword || ''}
+        {keyword ? getTruncatedKeyword({ keyword }) || '' : null}
         {title}
       </Title>
 
@@ -142,7 +143,7 @@ const Title = styled.div`
   @media (max-width: 1000px) {
     font-size: ${ANGOLA_STYLES.textSize.titleSm};
   }
-  @media (max-width: 760px) {
+  @media (max-width: 800px) {
     display: none;
   }
 `;

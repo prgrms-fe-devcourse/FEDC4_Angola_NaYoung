@@ -1,6 +1,7 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import type { MouseEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Notification } from '@type';
+import type { Notification } from '@type';
 import {
   useFetchGetNotifications,
   useFetchReadNotifications,
@@ -37,7 +38,10 @@ const useNotification = ({
     e: MouseEvent<HTMLLIElement>,
     notification: Notification,
   ) => {
-    if (e.target instanceof HTMLSpanElement && e.target.id === ID.USER_NAME_SPAN_ELEMENT) {
+    if (
+      e.target instanceof HTMLSpanElement &&
+      e.target.id === ID.USER_NAME_SPAN_ELEMENT
+    ) {
       navigate(`/user/${notification.author._id}`);
     } else {
       if (notification.post === null) {

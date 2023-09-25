@@ -1,6 +1,5 @@
+import { LinkButton, Modal } from '@components';
 import styled from '@emotion/styled';
-import LinkButton from '@components/LinkButton';
-import Modal from '@components/Modal';
 import { NON_AUTH_MODAL } from '../constants';
 import { linkButtonStyle } from '../style';
 

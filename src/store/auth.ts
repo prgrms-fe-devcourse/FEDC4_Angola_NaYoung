@@ -1,6 +1,6 @@
 import { authInfoStorage } from '@storage';
 import { atom, selector } from 'recoil';
-import { AuthInfo } from '@type/auth';
+import type { AuthInfo } from '@type/auth';
 
 const authInfo = atom<AuthInfo | null>({
   key: 'authInfo',

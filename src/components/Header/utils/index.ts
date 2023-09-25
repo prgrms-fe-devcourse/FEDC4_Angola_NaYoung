@@ -1,9 +1,13 @@
-import { NavigateFunction } from 'react-router-dom';
+import type { NavigateFunction } from 'react-router-dom';
 
 interface HandleClickTabBarProps {
   value: string;
   TARGET_VALUE?: string;
   navigate: NavigateFunction;
+}
+
+interface getTruncatedKeyword {
+  keyword?: string;
 }
 
 export const handleClickTabBar = ({
@@ -24,4 +28,8 @@ export const handleClickTabBar = ({
     }
     navigate('/search/post?sort=recent');
   }
+};
+
+export const getTruncatedKeyword = ({ keyword }: getTruncatedKeyword) => {
+  return keyword!.length > 6 ? keyword!.slice(0, 6) + '...' : keyword;
 };

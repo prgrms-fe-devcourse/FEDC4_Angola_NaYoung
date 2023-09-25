@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
+import { PostViewer, Spinner } from '@components';
 import styled from '@emotion/styled';
 import { calculateLevel } from '@utils';
 import { useRecoilValue } from 'recoil';
-import PostViewer from '@components/PostViewer';
-import Spinner from '@components/Spinner';
 import { useFetchPost } from '@apis/post';
 import { authInfoState } from '@store/auth';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
@@ -38,23 +37,20 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
 
   useEffect(() => {
     postRefetch();
-  }, [postId, postRefetch]);
+  }, [postId]);
 
   const isSamePostId = () => {
     return postId === postData?._id;
   };
 
-  // 투표 선택하는 hook
   const { handleClickItem } = useSelectItem({
     votedValue,
     setVotedValue,
     setSubmitValue,
   });
 
-  // 댓글 알림 hook
   useCommentNotification({ postData, isVoted, myId, setIsVoted });
 
-  // 댓글 생성 hook
   const { handleSubmitComment, handleChangeComment, isCreateCommentSuccess } =
     useCreateComment({
       votedValue,
@@ -63,7 +59,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
       setIsVoted,
     });
 
-  // 댓글 삭제 hook
   const {
     isDeleteCommentError,
     isDeleteCommentLoading,
@@ -71,7 +66,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     deleteComment,
   } = useGetDeleteCommentState({ setSubmitValue });
 
-  // 투표 여부 확인 hook
   useCheckVoted({
     postData,
     myId,
@@ -81,7 +75,6 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
     setSubmitValue,
   });
 
-  // 댓글 작성 및 삭제 시, postData refetch 및 url 업데이트 hook
   useControlRouteByComment({
     show,
     submitValue,
@@ -133,9 +126,11 @@ const PostPage = ({ voted, show, postId = '' }: PostPageProps) => {
                   )}
                 </>
               ) : (
-                <CommentHeader authorLevel={calculateLevel(postData.author)}>
-                  {COMMENT_HEADER}
-                </CommentHeader>
+                postData.comments.length > 0 && (
+                  <CommentHeader authorLevel={calculateLevel(postData.author)}>
+                    {COMMENT_HEADER}
+                  </CommentHeader>
+                )
               )}
               {postData && !isDeleteCommentError && (
                 <CommentList

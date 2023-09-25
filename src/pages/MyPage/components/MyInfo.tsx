@@ -1,12 +1,6 @@
+import { Button, Icon, Image, Modal, NameTag, Spinner } from '@components';
+import { USER_INFO, USER_PROFILE_IMAGE } from '@constants';
 import styled from '@emotion/styled';
-import Button from '@components/Button';
-import Icon from '@components/Icon';
-import Image from '@components/Image';
-import Modal from '@components/Modal';
-import NameTag from '@components/NameTag';
-import Spinner from '@components/Spinner';
-import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { USER_INFO, USER_PROFILE_IMAGE } from '@constants/index';
 import {
   CHECK_DUPLICATE_BUTTON,
   LABEL,
@@ -14,13 +8,14 @@ import {
   MODAL_ERROR_MESSAGE,
   PASSWORD_BUTTON,
   PLACEHOLDER,
-} from './constants';
+} from '@pages/MyPage/constants';
 import {
   useLogOut,
   useUpdateFullName,
   useUpdatePassWord,
   useUpdateProfile,
-} from './hooks';
+} from '@pages/MyPage/hooks';
+import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface MyInfoProps {
   id: string;

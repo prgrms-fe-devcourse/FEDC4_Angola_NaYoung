@@ -1,6 +1,7 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import type { MutableRefObject } from 'react';
+import { useEffect, useState } from 'react';
+import type { Post } from '@type';
 import { useFetchPartPosts } from '@apis/post';
-import { Post } from '@type/index';
 import { INTERACTION_OPTION, LIMIT } from '../constants';
 
 interface useInfinityScroll {

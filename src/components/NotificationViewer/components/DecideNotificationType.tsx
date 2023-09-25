@@ -1,4 +1,4 @@
-import { Notification } from '@type/index';
+import type { Notification } from '@type';
 import {
   CommentNotificationItem,
   FollowNotificationItem,

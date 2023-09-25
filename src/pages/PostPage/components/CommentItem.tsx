@@ -1,8 +1,8 @@
+import { Icon } from '@components';
 import styled from '@emotion/styled';
-import { Comment } from '@type';
+import type { Comment } from '@type';
 import { splitCommentBySeparator } from '@utils';
 import { ButtonStyled } from '@components/Button';
-import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface CommentProps {

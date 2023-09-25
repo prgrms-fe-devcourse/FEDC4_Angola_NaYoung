@@ -1,6 +1,6 @@
-import { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
+import { Icon } from '@components';
 import styled from '@emotion/styled';
-import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { COLOR, INPUT } from '../constants';
 

@@ -1,5 +1,5 @@
+import { Modal } from '@components';
 import styled from '@emotion/styled';
-import Modal from '@components/Modal';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { MODAL } from '../constants';
 
@@ -51,7 +51,7 @@ export const CheckFullNameModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
     <Modal onClose={handleClick}>
       <Content>
-        <Msg>{MODAL.MSG.WARN.FULLNAME}</Msg>
+        <Msg>{MODAL.MSG.WARN.FULL_NAME}</Msg>
       </Content>
     </Modal>
   );

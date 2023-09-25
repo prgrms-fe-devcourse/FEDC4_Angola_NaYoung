@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { SEARCH_KEYS } from '@constants/index';
+import { SEARCH_KEYS } from '@constants';
 
 const useKeyword = () => {
   const [searchParams, setSearchParams] = useSearchParams();

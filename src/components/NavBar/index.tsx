@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@store/auth';
-import { AuthMenuBar, CommonMenuBar, NonAuthMenuBar } from './MenuBar';
+import { AuthMenuBar, CommonMenuBar, NonAuthMenuBar } from './components';
 
 const NavBar = () => {
   const auth = useRecoilValue(authInfoState);
@@ -30,7 +30,7 @@ const NavBarContainer = styled.div`
 `;
 
 const MenuBarContainer = styled.div`
-  position: relative; // NotificationViewer를 absolute로 보여주기 위해 
+  position: relative;
   box-sizing: border-box;
   height: 100px;
   display: flex;

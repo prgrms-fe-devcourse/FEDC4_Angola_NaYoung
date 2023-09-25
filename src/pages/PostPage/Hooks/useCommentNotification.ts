@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import { Post } from '@type';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect } from 'react';
+import type { Post } from '@type';
 import { useFetchCreateNotification } from '@apis/notifications';
 
 interface useCommentNotificationProps {
@@ -36,7 +37,7 @@ const useCommentNotification = ({
         postId: postData._id,
       });
     }
-  }, [isVoted, postData, myId, createNotificationMutate, setIsVoted]);
+  }, [isVoted, postData, myId]);
 };
 
 export default useCommentNotification;

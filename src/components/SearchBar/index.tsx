@@ -1,8 +1,8 @@
+import { Icon } from '@components';
 import styled from '@emotion/styled';
-import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
-import { useKeyword } from './hooks';
 import { PLACEHOLDER } from './constants';
+import { useKeyword } from './hooks';
 
 const SearchBar = () => {
   const {

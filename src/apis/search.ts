@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
-import { Post, User } from '@type';
-import { AxiosError, AxiosResponse } from 'axios';
+import type { Post, User } from '@type';
+import type { AxiosError, AxiosResponse } from 'axios';
 import useAxiosInstance from './instance';
 
 interface SearchRequestQuery {

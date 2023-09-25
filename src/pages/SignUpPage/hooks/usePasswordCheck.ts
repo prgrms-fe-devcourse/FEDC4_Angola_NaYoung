@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
 import { checkPassWordPattern } from '@utils';
 import { MSG, SIGNUP_INITIAL_VALUE } from '../constants';
 

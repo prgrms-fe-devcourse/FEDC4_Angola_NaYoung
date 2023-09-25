@@ -12,7 +12,7 @@ export const TEXT = {
   EMPTY_NOTIFICATION_LIST: '알림 목록이 없습니다.',
   EMPTY_NEW_NOTIFICATION_LIST: '새 알림 목록이 없습니다.',
   NOTIFICATION_LIST: '알림 목록',
-  SEE_PREVIOUS_NOTIFICATION:'지난 알림 보기',
+  SEE_PREVIOUS_NOTIFICATION: '지난 알림 보기',
   IS_LOADING: '로딩중입니다',
-  READ_ALL_NOTIFICATION: '모든 알림 확인'
+  READ_ALL_NOTIFICATION: '모든 알림 확인',
 };

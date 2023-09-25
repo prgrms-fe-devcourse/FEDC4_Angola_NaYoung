@@ -1,2 +1,2 @@
 export { default as usePostSort } from './usePostSort';
-export { default as useUsersort } from './useUserSort';
+export { default as useUserSort } from './useUserSort';

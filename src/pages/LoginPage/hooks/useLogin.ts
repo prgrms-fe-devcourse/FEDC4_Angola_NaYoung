@@ -1,4 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { useState } from 'react';
 import { useFetchLogin } from '@apis/auth';
 import { LOGIN_INITIAL_VALUE } from '../constants';
 

@@ -1,4 +1,4 @@
-import { User } from '@type';
+import type { User } from '@type';
 
 const PASSWORD_REGEXP = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{5,15}$/;
 const EMAIL_REGEXP = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;

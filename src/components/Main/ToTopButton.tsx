@@ -1,6 +1,6 @@
+import { Icon } from '@components';
 import styled from '@emotion/styled';
 import { rgba } from 'emotion-rgba';
-import Icon from '@components/Icon';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 
 interface ToTopButtonProp {

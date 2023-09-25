@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
-import { User } from '@type';
-import { AxiosError, AxiosResponse } from 'axios';
+import type { User } from '@type';
+import type { AxiosError, AxiosResponse } from 'axios';
 import useAxiosInstance from './instance';
 
 export const useFetchUsers = () => {

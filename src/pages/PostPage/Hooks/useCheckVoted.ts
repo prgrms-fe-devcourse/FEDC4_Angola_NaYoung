@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import { Post } from '@type';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect } from 'react';
+import type { Post } from '@type';
 import { splitCommentBySeparator } from '@utils';
 
 interface useCheckVotedProps {
@@ -21,7 +22,7 @@ const useCheckVoted = ({
 }: useCheckVotedProps) => {
   useEffect(() => {
     setSubmitValue(voted);
-  }, [voted, setSubmitValue]);
+  }, [voted]);
 
   useEffect(() => {
     if (postData) {
@@ -37,7 +38,7 @@ const useCheckVoted = ({
         setSubmitValue(userVote);
       }
     }
-  }, [myId, postData, submitValue, setSubmitValue, setVotedValue]);
+  }, [myId, postData, submitValue]);
 };
 
 export default useCheckVoted;

@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { SEARCH_KEYS } from '@constants';
 import { useFetchDeleteComment } from '@apis/comment';
-import { SEARCH_KEYS } from '@constants/index';
 
 interface useGetDeleteCommentStateProps {
   setSubmitValue: Dispatch<SetStateAction<string | undefined>>;
@@ -21,7 +21,7 @@ const useGetDeleteCommentState = ({
   const deleteComment = (id: string) => {
     deleteCommentMutate({ id });
     searchParams.delete(SEARCH_KEYS.VOTED);
-    setSearchParams(searchParams);
+    setSearchParams(searchParams, { replace: true });
     setSubmitValue('');
   };
 

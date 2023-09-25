@@ -1,12 +1,11 @@
 import { useRef } from 'react';
+import { PostViewer, Spinner } from '@components';
 import styled from '@emotion/styled';
+import type { Comment } from '@type';
 import { useRecoilValue } from 'recoil';
-import PostViewer from '@components/PostViewer';
-import Spinner from '@components/Spinner';
 import { authInfoState } from '@store/auth';
 import { calculateLevel } from '@utils/calculateUserLevel';
 import { splitCommentBySeparator } from '@utils/parseDataBySeparator';
-import { Comment } from '@type/index';
 import { useInfiniteScroll } from './hooks';
 
 const HomePage = () => {
@@ -40,7 +39,7 @@ const HomePage = () => {
           numberOfLikes={post.likes.length}></PostViewer>
       ))}
       <div ref={containerRef} />
-      {isPartPostsLoading || isLoading ? <Spinner size={50} /> : null}
+      {isPartPostsLoading || isLoading ? <Spinner /> : null}
     </Container>
   );
 };
