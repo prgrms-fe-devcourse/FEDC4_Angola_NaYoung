@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import PostList from '@components/PostList';
 import UserList from '@components/UserList';
+import { decodeUri } from '@utils/decodeUri';
 import { PARAM_VALUES, SEARCH_VALUES } from '@constants/index';
 
 interface SearchProps {
@@ -14,12 +15,12 @@ const SearchPage = ({ target = 'post', keyword, sort }: SearchProps) => {
     <Container>
       {target === PARAM_VALUES.TARGET.USER ? (
         <UserList
-          keyword={keyword}
+          keyword={decodeUri({ keyword: keyword! })}
           sort={sort || SEARCH_VALUES.SORT.FOLLOWER}
         />
       ) : (
         <PostList
-          keyword={keyword}
+          keyword={decodeUri({ keyword: keyword! })}
           sort={sort || SEARCH_VALUES.SORT.RECENT}
         />
       )}
