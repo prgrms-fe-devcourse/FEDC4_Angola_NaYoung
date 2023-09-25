@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { ANGOLA_STYLES } from '@styles/commonStyles';

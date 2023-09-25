@@ -1,4 +1,5 @@
-import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
+import type { ChangeEvent, FocusEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFetchCreatePost } from '@apis/post';
 import { joinDataBySeparator } from '@utils/parseDataBySeparator';

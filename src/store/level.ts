@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 import { calculateLevelByArchives } from '@utils/calculateUserLevel';
-import { Archives } from '@type/level';
+import type { Archives } from '@type/level';
 
 export const userArchives = atom<Archives | null>({
   key: 'userArchives',

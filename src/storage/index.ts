@@ -1,4 +1,4 @@
-import { AuthInfo } from '@type/auth';
+import type { AuthInfo } from '@type/auth';
 import _Storage from './storage';
 
 export const authInfoStorage = new _Storage<AuthInfo | null>({

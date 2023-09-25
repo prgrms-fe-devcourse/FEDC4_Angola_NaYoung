@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { PostViewer, Spinner } from '@components';
 import styled from '@emotion/styled';
-import { Comment } from '@type';
+import type { Comment } from '@type';
 import { useRecoilValue } from 'recoil';
 import { authInfoState } from '@store/auth';
 import { calculateLevel } from '@utils/calculateUserLevel';

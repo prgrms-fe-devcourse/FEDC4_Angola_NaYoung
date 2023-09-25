@@ -1,4 +1,5 @@
-import { CSSProperties, useEffect } from 'react';
+import type { CSSProperties } from 'react';
+import { useEffect } from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import { Icon } from '@components';
 import styled from '@emotion/styled';

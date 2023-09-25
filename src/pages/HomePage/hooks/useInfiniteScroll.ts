@@ -1,5 +1,6 @@
-import { MutableRefObject, useEffect, useState } from 'react';
-import { Post } from '@type';
+import type { MutableRefObject } from 'react';
+import { useEffect, useState } from 'react';
+import type { Post } from '@type';
 import { useFetchPartPosts } from '@apis/post';
 import { INTERACTION_OPTION, LIMIT } from '../constants';
 

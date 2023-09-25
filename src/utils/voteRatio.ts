@@ -1,4 +1,4 @@
-import { Comment } from '@type';
+import type { Comment } from '@type';
 import { splitCommentBySeparator } from '.';
 
 export const voteRatio = (comments: Comment[]) => {

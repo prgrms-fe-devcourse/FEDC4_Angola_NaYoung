@@ -1,10 +1,5 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useState,
-} from 'react';
+import type { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SEARCH_KEYS } from '@constants';
 import { useFetchCreateComment } from '@apis/comment';

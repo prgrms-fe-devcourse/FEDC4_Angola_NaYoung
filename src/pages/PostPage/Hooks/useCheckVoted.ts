@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import { Post } from '@type';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect } from 'react';
+import type { Post } from '@type';
 import { splitCommentBySeparator } from '@utils';
 
 interface useCheckVotedProps {

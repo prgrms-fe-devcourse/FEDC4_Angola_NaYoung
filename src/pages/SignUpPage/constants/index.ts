@@ -1,7 +1,7 @@
 export const SIGNUP_INITIAL_VALUE = {
   EMAIL: 'init',
   PASSWORD: 'init',
-  FULLNAME: 'in',
+  FULL_NAME: 'in',
 };
 
 export const MSG = {
@@ -9,7 +9,7 @@ export const MSG = {
     EMPTY: {
       EMAIL: '이메일을 입력해주세요.',
       PASSWORD: '비밀번호를 입력해주세요.',
-      FULLNAME: '닉네임을 입력해주세요.',
+      FULL_NAME: '닉네임을 입력해주세요.',
     },
   },
   ERROR: {
@@ -37,7 +37,7 @@ export const INPUT = {
   LABEL: {
     EMAIL: '1. 이메일을 입력하세요.',
     PASSWORD: '2. 비밀번호를 입력하세요.',
-    FULLNAME: '3. 닉네임을 입력하세요.',
+    FULL_NAME: '3. 닉네임을 입력하세요.',
   },
   TYPE: {
     TEXT: 'text',
@@ -47,7 +47,7 @@ export const INPUT = {
     EMAIL: 'angola@gmail.com',
     PASSWORD: '5자리 이상 15자 이하 문자, 숫자, 특수문자로 입력해주세요.',
     PASSWORD_CONFIRM: '동일한 비밀번호를 다시 입력해주세요.',
-    FUllNAME: '3자 이상 8자 이하의 닉네임을 지어주세요.',
+    FULL_NAME: '3자 이상 8자 이하의 닉네임을 지어주세요.',
   },
   AUTO_COMPLETE: 'on',
 };
@@ -61,7 +61,7 @@ export const MODAL = {
     WARN: {
       EMAIL: '이메일 중복 검사를 해주세요!',
       PASSWORD: '비밀번호를 다시 확인해주세요!',
-      FULLNAME: '닉네임 중복 검사를 해주세요!',
+      FULL_NAME: '닉네임 중복 검사를 해주세요!',
     },
   },
 };
