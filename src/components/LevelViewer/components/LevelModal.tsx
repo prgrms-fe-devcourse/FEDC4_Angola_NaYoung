@@ -1,4 +1,5 @@
-import { CSSProperties, useEffect } from 'react';
+import type { CSSProperties } from 'react';
+import { useEffect } from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import { Icon } from '@components';
 import styled from '@emotion/styled';
@@ -71,7 +72,7 @@ const Wrapper = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 15;
+  z-index: ${ANGOLA_STYLES.zIndex.modal};
   backdrop-filter: blur(2.5px);
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;

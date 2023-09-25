@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Comment } from '@type';
+import type { Comment } from '@type';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { useVotingResult } from '../Hooks';
 import { VOTED_VALUES } from '../constants';
@@ -38,7 +38,6 @@ const TurnoutContainer = styled.div`
   padding: 16px;
   border: ${ANGOLA_STYLES.border.default};
   border-radius: 24px 24px 0 0;
-  z-index: 10;
 `;
 
 const TurnoutBar = styled.div`

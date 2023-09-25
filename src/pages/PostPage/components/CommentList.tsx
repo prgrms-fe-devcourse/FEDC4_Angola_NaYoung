@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Comment } from '@type';
+import type { Comment } from '@type';
 import { calculateLevel, getUserLevelInfo } from '@utils';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { useDeleteComment } from '../Hooks';

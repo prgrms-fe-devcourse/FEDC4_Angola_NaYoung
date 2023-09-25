@@ -1,4 +1,5 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import { checkDuplicatedEmail, checkEmailPattern } from '@utils';
 import { useFetchUsers } from '@apis/user';
 import { MSG, SIGNUP_INITIAL_VALUE } from '../constants';

@@ -1,5 +1,5 @@
-import { Post } from '@type';
-import { User } from '@type';
+import type { Post } from '@type';
+import type { User } from '@type';
 import { calculateLevel } from '@utils';
 
 export const getSortPostList = (

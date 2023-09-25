@@ -49,4 +49,7 @@ export const ANGOLA_STYLES = {
     hover: '3px solid #404040',
     notification_seen: '2px solid #9a9a9a',
   },
+  zIndex: {
+    modal: 20,
+  },
 } as const;

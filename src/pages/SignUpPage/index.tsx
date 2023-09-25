@@ -120,7 +120,7 @@ const SignUpPage = () => {
           />
         </Wrapper>
         <Wrapper>
-          <Label>{INPUT.LABEL.FULLNAME}</Label>
+          <Label>{INPUT.LABEL.FULL_NAME}</Label>
           <InputFullName
             handleChangeFullName={handleChangeFullName}
             isDuplicatedFullNameChecked={isDuplicatedFullNameChecked}

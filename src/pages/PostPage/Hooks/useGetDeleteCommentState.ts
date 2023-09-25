@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SEARCH_KEYS } from '@constants';
 import { useFetchDeleteComment } from '@apis/comment';

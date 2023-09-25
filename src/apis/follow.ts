@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query';
-import { Follow } from '@type';
-import { AxiosError, AxiosResponse } from 'axios';
+import type { Follow } from '@type';
+import type { AxiosError, AxiosResponse } from 'axios';
 import useAxiosInstance from './instance';
 
 interface FollowRequestBody {

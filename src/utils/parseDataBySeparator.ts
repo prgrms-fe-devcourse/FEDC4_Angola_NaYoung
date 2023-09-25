@@ -4,7 +4,7 @@ interface PostData {
   b: string;
 }
 
-const ANGOLA_SEPARATOR = import.meta.env.VITE_ANGOLA_SEPARATOR
+const ANGOLA_SEPARATOR = import.meta.env.VITE_ANGOLA_SEPARATOR;
 
 interface CommentData {
   vote: string;

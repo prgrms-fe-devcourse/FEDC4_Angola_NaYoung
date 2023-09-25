@@ -1,8 +1,8 @@
 import { Icon, Image, LinkButton, NameTag } from '@components';
 import { BUTTON_VALUES, USER_PROFILE_IMAGE } from '@constants';
 import styled from '@emotion/styled';
-import { MORE_LINK_BUTTON_STYLES } from '@styles';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
+import { MORE_LINK_BUTTON_STYLES } from '@styles/moreLinkButtonStyles';
 
 interface UserListItemProps {
   id: string;

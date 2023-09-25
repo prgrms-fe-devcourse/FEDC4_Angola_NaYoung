@@ -51,7 +51,7 @@ export const CheckFullNameModal = ({ onClick: handleClick }: ModalsProps) => {
   return (
     <Modal onClose={handleClick}>
       <Content>
-        <Msg>{MODAL.MSG.WARN.FULLNAME}</Msg>
+        <Msg>{MODAL.MSG.WARN.FULL_NAME}</Msg>
       </Content>
     </Modal>
   );

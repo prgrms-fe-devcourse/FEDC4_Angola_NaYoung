@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { CHECK_MSG } from '@constants';
 import { useFetchUpdatePassword } from '@apis/profile';
 import { checkPassWordPattern } from '@utils/userAuthentication';

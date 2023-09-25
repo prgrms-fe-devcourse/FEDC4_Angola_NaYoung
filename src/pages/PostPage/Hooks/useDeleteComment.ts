@@ -1,5 +1,6 @@
-import { MouseEvent, useEffect, useState } from 'react';
-import { Comment } from '@type';
+import type { MouseEvent } from 'react';
+import { useEffect, useState } from 'react';
+import type { Comment } from '@type';
 
 interface useDeleteCommentProps {
   deleteComment: (id: string) => void;

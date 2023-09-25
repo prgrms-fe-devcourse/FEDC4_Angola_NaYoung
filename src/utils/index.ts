@@ -6,7 +6,6 @@ export {
 } from '@utils/parseDataBySeparator';
 
 export { voteRatio } from '@utils/voteRatio';
-export { pxToRem } from '@utils/pxToRem';
 export { calculateLevel, getUserLevelInfo } from '@utils/calculateUserLevel';
 export {
   checkEmailPattern,
@@ -15,3 +14,4 @@ export {
   checkDuplicatedFullName,
   checkPassWordPattern,
 } from '@utils/userAuthentication';
+export { decodeUri } from '@utils/decodeUri';

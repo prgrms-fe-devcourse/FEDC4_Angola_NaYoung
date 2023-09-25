@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
 import { Icon, Spinner } from '@components';
 import styled from '@emotion/styled';
 import { ANGOLA_STYLES } from '@styles/commonStyles';
@@ -144,7 +144,7 @@ const NotificationViewerBackGround = styled.div`
   background-color: rgba(0, 0, 0, 0);
   width: 100%;
   height: 100vh;
-  z-index: 20;
+  z-index: ${ANGOLA_STYLES.zIndex.modal};
   position: fixed;
   top: 0;
   left: 0;

@@ -5,7 +5,7 @@ const NotFoundPage = () => {
   return (
     <div>
       <NouFoundContent>
-        <NotFoundImage src="/images/angola_404.svg"></NotFoundImage>
+        <NotFoundImage src="/images/angola_404.svg" />
         <NotFoundMsgContainer>
           <NotFoundMsg>404 NOT FOUND</NotFoundMsg>
           <NouFoundSubMsg>

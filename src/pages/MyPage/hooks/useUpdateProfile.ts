@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetchUpdateProfileImage } from '@apis/profile';
 
 interface useUpdateProfileProps {
