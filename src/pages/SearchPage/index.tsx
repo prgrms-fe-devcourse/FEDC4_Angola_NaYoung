@@ -15,12 +15,12 @@ const SearchPage = ({ target = 'post', keyword, sort }: SearchProps) => {
     <Container>
       {target === PARAM_VALUES.TARGET.USER ? (
         <UserList
-          keyword={decodeUri({ keyword: keyword! })}
+          keyword={keyword && decodeUri({ keyword: keyword! })}
           sort={sort || SEARCH_VALUES.SORT.FOLLOWER}
         />
       ) : (
         <PostList
-          keyword={decodeUri({ keyword: keyword! })}
+          keyword={keyword && decodeUri({ keyword: keyword! })}
           sort={sort || SEARCH_VALUES.SORT.RECENT}
         />
       )}
