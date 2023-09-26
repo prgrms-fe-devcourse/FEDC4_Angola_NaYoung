@@ -12,9 +12,10 @@ const CommonMenuBar = () => {
         <img
           src="/images/LOGO_SMALL.svg"
           alt="logo"
-          width={'54px'}
+          width={'48px'}
         />
       </LinkButton>
+
       {name === SEARCH ? (
         <SearchBar />
       ) : (

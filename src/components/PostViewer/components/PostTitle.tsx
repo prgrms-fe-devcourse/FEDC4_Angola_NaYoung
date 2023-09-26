@@ -86,7 +86,10 @@ const Title = styled.div<{ isDetail: boolean }>`
   width: 100%;
   padding: 8px;
   position: relative;
-
+  @media (max-width: 450px) {
+    flex-direction: column;
+    height: fit-content;
+  }
   &::after {
     content: '';
     position: absolute;
@@ -98,7 +101,7 @@ const Title = styled.div<{ isDetail: boolean }>`
     border-top: 24px solid ${ANGOLA_STYLES.color.white};
     border-bottom: 0;
     margin-left: -16px;
-    margin-bottom: -24px;
+    margin-bottom: -23px;
   }
   &::before {
     content: '';
@@ -125,14 +128,15 @@ const Text = styled.div<{ tagWidth: number; isDetail: boolean }>`
   font-size: ${ANGOLA_STYLES.textSize.title};
   max-width: calc(100% - 12px - ${({ tagWidth }) => `${tagWidth}px`});
   white-space: ${({ isDetail }) => (isDetail ? 'normal' : 'nowrap')};
+  @media (max-width: 450px) {
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
+    max-width: 100%;
+  }
   overflow: hidden;
   text-overflow: ellipsis;
   height: 100%;
   border-radius: 24px;
   padding: 4px 8px;
-  @media (max-width: 800px) {
-    font-size: ${ANGOLA_STYLES.textSize.titleSm};
-  }
   &.inHome {
     cursor: pointer;
     transition: 0.2s;

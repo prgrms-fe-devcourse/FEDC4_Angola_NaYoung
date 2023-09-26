@@ -39,6 +39,7 @@ export const ButtonStyled = styled.button<ButtonProps>`
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
   cursor: pointer;
+  transition: 0.2s;
 
   background-color: ${({ toggle }) =>
     toggle ? `${ANGOLA_STYLES.color.gray}` : `${ANGOLA_STYLES.color.white}`};
@@ -48,7 +49,7 @@ export const ButtonStyled = styled.button<ButtonProps>`
       ? `box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};`
       : `width: 150px; height: 45px; box-shadow: ${ANGOLA_STYLES.shadow.button.default};`}
 
-  &:hover {
+  &:hover:not(:active) {
     border: 3px solid ${ANGOLA_STYLES.color.text};
 
     ${(props) =>

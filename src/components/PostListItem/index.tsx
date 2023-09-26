@@ -86,6 +86,12 @@ const ListItemContainer = styled.li`
   &:has(.more:hover) {
     box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
   }
+  @media (max-width: 800px) {
+    gap: 12px;
+  }
+  @media (max-width: 600px) {
+    gap: 10px;
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -98,9 +104,12 @@ const TitleContainer = styled.div`
   background: #e5e5e5;
   overflow: hidden;
   margin-left: 16px;
-
+  @media (max-width: 800px) {
+    margin-left: 12px;
+  }
   @media (max-width: 600px) {
     padding: 16px;
+    margin-left: 10px;
   }
 `;
 
@@ -123,8 +132,13 @@ const LikesAndComments = styled.div`
   gap: 12px;
   font-size: ${ANGOLA_STYLES.textSize.title};
   flex-shrink: 0;
-
   @media (max-width: 800px) {
+    transform: scale(0.8);
+  }
+  @media (max-width: 600px) {
+    transform: scale(0.7);
+  }
+  @media (max-width: 450px) {
     display: none;
   }
 `;
@@ -148,19 +162,20 @@ const DeleteButton = styled.div`
 
 const More = styled.div`
   display: flex;
-  width: 121px;
+  width: fit-content;
   justify-content: center;
   align-self: stretch;
   border-left: ${ANGOLA_STYLES.border.default};
   font-size: ${ANGOLA_STYLES.textSize.title};
   cursor: pointer;
   flex-shrink: 0;
+  padding: 0 6px;
 
   @media (max-width: 800px) {
-    width: 80px;
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
   }
 
-  @media (max-width: 600px) {
-    width: 60px;
+  @media (max-width: 450px) {
+    font-size: ${ANGOLA_STYLES.textSize.text};
   }
 `;

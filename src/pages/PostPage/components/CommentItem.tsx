@@ -51,7 +51,7 @@ const VotedItem = styled.div`
   display: flex;
   width: 60px;
   height: 60px;
-  padding: 12px 12px 0 12px;
+  padding-top: 2px;
   justify-content: center;
   align-items: center;
   border-radius: 40px;

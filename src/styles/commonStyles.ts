@@ -28,20 +28,20 @@ export const ANGOLA_STYLES = {
   },
   shadow: {
     input: {
-      default: '0px 6px 0px 0px rgba(64, 64, 64, 0.50) inset',
-      focus: `0px 6px 0px 0px #404040 inset`,
+      default: '0px 4px 0px 0px rgba(64, 64, 64, 0.50) inset',
+      focus: `0px 4px 0px 0px #404040 inset`,
     },
     button: {
-      default: '0px 6px 0px 0px #404040',
-      hover: '0px 10px 0px 0px #404040',
-    },
-    buttonSm: {
       default: '0px 4px 0px 0px #404040',
       hover: '0px 6px 0px 0px #404040',
     },
-    buttonXs: {
+    buttonSm: {
       default: '0px 2px 0px 0px #404040',
       hover: '0px 4px 0px 0px #404040',
+    },
+    buttonXs: {
+      default: '0px 1.5px 0px 0px #404040',
+      hover: '0px 3px 0px 0px #404040',
     },
   },
   border: {

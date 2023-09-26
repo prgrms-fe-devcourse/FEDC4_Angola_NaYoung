@@ -20,8 +20,9 @@ const Main = () => {
   useFetchUserArchives();
 
   useEffect(() => {
+    if (name === 'post') return;
     scrollToTop();
-  }, [location.pathname, scrollToTop]);
+  }, [location.pathname, name, scrollToTop]);
 
   const objectForSort = {
     target: params.target || 'post',
@@ -81,7 +82,7 @@ export default Main;
 const MainContainer = styled.div`
   position: relative;
   box-sizing: border-box;
-  height: calc(100vh - 100px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,13 +93,13 @@ const MainContainer = styled.div`
   border-right: ${ANGOLA_STYLES.border.default};
   border-left: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
-  box-shadow: 0px 20px 20px 6px rgba(64, 64, 64, 0.8);
+  box-shadow: 0px 10px 0px 6px rgba(64, 64, 64, 0.8);
 `;
 
 const PageContainer = styled.div`
   box-sizing: border-box;
   display: flex;
-  min-height: calc(100vh - 148px);
+  height: 100%;
   padding: 32px 40px 0px 40px;
   flex-direction: column;
   justify-content: flex-start;

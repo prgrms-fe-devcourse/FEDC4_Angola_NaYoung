@@ -24,10 +24,16 @@ const App = () => {
 export default App;
 
 const PageContainer = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
   box-sizing: border-box;
   display: flex;
-  padding: 0 80px;
-  min-width: 600px;
+  padding: 0 24px;
+  @media (max-width: 450px) {
+    padding: 0 12px;
+  }
   max-width: 1400px;
   flex-direction: column;
   align-items: center;

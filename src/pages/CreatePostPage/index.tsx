@@ -110,7 +110,6 @@ export default CreatePostPage;
 
 const PageContainer = styled.div`
   display: flex;
-  padding: 0px 24px;
   flex-direction: column;
   align-items: center;
   gap: 32px;
@@ -118,6 +117,7 @@ const PageContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
+  width: 100%;
   display: flex;
   position: relative;
   box-sizing: border-box;
@@ -181,6 +181,14 @@ const OptionContainer = styled.div`
   @media (max-width: 1160px) {
     flex-direction: column;
     justify-content: center;
+    gap: 32px;
+  }
+  @media (max-width: 540px) {
+    transform: scale(0.85);
+    gap: 16px;
+  }
+  @media (max-width: 400px) {
+    transform: scale(0.8);
   }
 `;
 
@@ -265,6 +273,8 @@ const SubmitButton = styled.button`
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.default};
+  cursor: pointer;
+  margin-bottom: 24px;
 
   &:hover {
     box-shadow: ${ANGOLA_STYLES.shadow.buttonSm.hover};
@@ -272,5 +282,6 @@ const SubmitButton = styled.button`
 
   &:disabled {
     background: ${ANGOLA_STYLES.color.dark};
+    pointer-events: none;
   }
 `;

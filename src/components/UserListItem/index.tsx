@@ -76,6 +76,13 @@ const ListItemContainer = styled.li`
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.button.default};
   overflow: hidden;
+
+  @media (max-width: 450px) {
+    flex-direction: column;
+    gap: 8px;
+    height: fit-content;
+    padding-top: 10px;
+  }
   &:has(.user_name:hover, .more:hover) {
     box-shadow: ${ANGOLA_STYLES.shadow.button.hover};
   }
@@ -89,6 +96,9 @@ const ImageContainer = styled.div`
 
   @media (max-width: 600px) {
     margin: 0 0 0 10px;
+  }
+  @media (max-width: 450px) {
+    margin: 0;
   }
 `;
 

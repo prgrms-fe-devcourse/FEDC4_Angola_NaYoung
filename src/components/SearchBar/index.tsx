@@ -46,13 +46,15 @@ const StyledForm = styled.form`
   height: 60px;
   display: flex;
   padding: 0px 20px;
+  margin-top: 2px;
   align-items: center;
   border-radius: 44px;
   border: ${ANGOLA_STYLES.border.default};
   background: ${ANGOLA_STYLES.color.white};
   box-shadow: ${ANGOLA_STYLES.shadow.input.default};
   transition: box-shadow 0.2s;
-
+  width: 100%;
+  flex-grow: 1;
   &:focus-within {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
@@ -66,7 +68,7 @@ const SubmitButton = styled.button`
   border: none;
   cursor: pointer;
 
-  @media (max-width: 680px) {
+  @media (max-width: 600px) {
     display: none;
   }
 `;
@@ -78,10 +80,22 @@ const StyledInput = styled.input`
   margin: 0 0 0 12px;
   padding: 0;
   height: 30px;
-  width: calc((100vw - 514px) * 0.65);
-
-  @media (max-width: 780px) {
-    width: calc((100vw - 514px) * 0.4);
+  width: calc((100vw - 500px) * 0.65);
+  &::placeholder {
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  }
+  @media (max-width: 800px) {
+    width: calc(100vw - 300px);
+  }
+  @media (max-width: 600px) {
+    margin-left: 6px;
+    &::placeholder {
+      font-size: ${ANGOLA_STYLES.textSize.text};
+    }
+  }
+  @media (max-width: 400px) {
+    width: calc(100vw - 214px);
+    margin: 0;
   }
 `;
 
