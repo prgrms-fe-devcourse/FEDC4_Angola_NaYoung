@@ -9,7 +9,7 @@ interface ModalProps {
 }
 
 const Modal = ({ onClose, onConfirm, children, footerShow }: ModalProps) => {
-  const appNode = document.getElementById('app');
+  const appNode = document.getElementById('root');
 
   return (
     <>
