@@ -39,17 +39,16 @@ const CommentList = ({ comments, deleteComment, myId }: CommentListProps) => {
               myId={myId}
               handleClickDeleteComment={handleClickDeleteComment}
             />
-            {isClickedDeleteBtn && (
-              <CommentDeletionModal
-                setIsClickedDeleteBtn={setIsClickedDeleteBtn}
-                handleClickDeleteCommentModalBtn={
-                  handleClickDeleteCommentModalBtn
-                }
-              />
-            )}
           </CommentWrapper>
         );
       })}
+
+      {isClickedDeleteBtn && (
+        <CommentDeletionModal
+          setIsClickedDeleteBtn={setIsClickedDeleteBtn}
+          handleClickDeleteCommentModalBtn={handleClickDeleteCommentModalBtn}
+        />
+      )}
     </>
   );
 };

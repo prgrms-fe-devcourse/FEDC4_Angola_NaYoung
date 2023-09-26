@@ -23,7 +23,7 @@ const LevelViewer = () => {
     isUpperLevel && console.log('레벨상승', level, '도달!');
   }, [isUpperLevel]);
 
-  const appNode = document.getElementById('app');
+  const appNode = document.getElementById('root');
 
   return (
     <>
