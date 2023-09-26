@@ -286,6 +286,7 @@ const MyInfo = ({
             onClick={handleClickUpdatePassWord}
             style={{
               width: '150px',
+              whiteSpace: 'nowrap',
               height: '40px',
               fontSize: `${ANGOLA_STYLES.textSize.text}`,
             }}>
