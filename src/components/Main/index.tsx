@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Header, LevelViewer } from '@components';
+import { PARAM_VALUES, SEARCH_VALUES } from '@constants';
 import styled from '@emotion/styled';
 import { useCurrentPage, useScrollToTop } from '@hooks';
 import { redirects, routes } from '@routes';
@@ -13,24 +14,32 @@ import ToTopButton from './ToTopButton';
 
 const Main = () => {
   const { title, name, params, search } = useCurrentPage();
-  const location = useLocation();
+  const [prevPageName, setPrevPageName] = useState(name);
   const [scrollTargetRef, scrollToTop] = useScrollToTop<HTMLDivElement>();
+  const location = useLocation();
   const auth = useRecoilValue(authInfoState);
 
   useFetchUserArchives();
 
   useEffect(() => {
-    if (name === 'post') return;
+    if (name === 'post' && prevPageName === 'post') {
+      return;
+    }
     scrollToTop();
-  }, [location.pathname, name, scrollToTop]);
+    setPrevPageName(name);
+  }, [location.pathname, name, prevPageName, scrollToTop]);
 
   const objectForSort = {
-    target: params.target || 'post',
-    sort: search.sort
-      ? search.sort
-      : params.target === 'post'
-      ? 'recent'
-      : 'follower',
+    target: params.target || PARAM_VALUES.TARGET.POST,
+    sort: (() => {
+      if (search.sort) {
+        return search.sort;
+      } else if (params.target === PARAM_VALUES.TARGET.POST) {
+        return SEARCH_VALUES.SORT.RECENT;
+      } else {
+        return SEARCH_VALUES.SORT.FOLLOWER;
+      }
+    })(),
   };
 
   return (

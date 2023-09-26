@@ -38,7 +38,10 @@ const HomePage = () => {
           numberOfComments={post.comments.length}
           numberOfLikes={post.likes.length}></PostViewer>
       ))}
-      <div ref={containerRef} />
+      <div
+        ref={containerRef}
+        style={{ height: '24px' }}
+      />
       {isPartPostsLoading || isLoading ? <Spinner /> : null}
     </Container>
   );
