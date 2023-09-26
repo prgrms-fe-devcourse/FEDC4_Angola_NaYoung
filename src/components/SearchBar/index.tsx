@@ -58,11 +58,6 @@ const StyledForm = styled.form`
   &:focus-within {
     box-shadow: ${ANGOLA_STYLES.shadow.input.focus};
   }
-  @media (max-width: 400px) {
-    position: absolute;
-    width: fit-content;
-    left: 0;
-  }
 `;
 
 const SubmitButton = styled.button`
@@ -73,7 +68,7 @@ const SubmitButton = styled.button`
   border: none;
   cursor: pointer;
 
-  @media (max-width: 400px) {
+  @media (max-width: 600px) {
     display: none;
   }
 `;
@@ -86,11 +81,20 @@ const StyledInput = styled.input`
   padding: 0;
   height: 30px;
   width: calc((100vw - 500px) * 0.65);
+  &::placeholder {
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  }
   @media (max-width: 800px) {
     width: calc(100vw - 300px);
   }
+  @media (max-width: 600px) {
+    margin-left: 6px;
+    &::placeholder {
+      font-size: ${ANGOLA_STYLES.textSize.text};
+    }
+  }
   @media (max-width: 400px) {
-    width: calc(100vw - 148px);
+    width: calc(100vw - 214px);
     margin: 0;
   }
 `;
