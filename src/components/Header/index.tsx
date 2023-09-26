@@ -70,12 +70,12 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       {keyword ? (
         <TabBar>
           <TabBarList
-            name={PARAM_VALUES.TARGET.USER}
+            name={PARAM_VALUES.TARGET.POST}
             TARGET_VALUE={TARGET_VALUE}
           />
           |
           <TabBarList
-            name={PARAM_VALUES.TARGET.POST}
+            name={PARAM_VALUES.TARGET.USER}
             TARGET_VALUE={TARGET_VALUE}
           />
         </TabBar>

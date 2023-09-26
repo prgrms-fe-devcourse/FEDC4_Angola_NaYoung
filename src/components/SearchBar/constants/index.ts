@@ -1,3 +1,3 @@
 export const PLACEHOLDER = {
-  SEARCH_INPUT: '유저 또는 포스트를 검색하세요',
+  SEARCH_INPUT: '포스트 또는 유저를 검색하세요',
 };
