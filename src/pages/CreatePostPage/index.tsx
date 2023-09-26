@@ -45,7 +45,7 @@ const CreatePostPage = () => {
               value={inputValues.optionA}
               onChange={handleChangeOptionValues}
               onBlur={handleBlurTrim}
-              placeholder={PLACEHOLDER.OPTION_B}
+              placeholder={PLACEHOLDER.OPTION_A}
             />
             {isMaxLineInput.optionA && (
               <OptionInputWarning>
