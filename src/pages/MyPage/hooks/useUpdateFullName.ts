@@ -15,14 +15,11 @@ interface useUpdateFullNameProps {
 }
 
 const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
-  const {
-    updateFullNameMutate,
-    isUpdateFullNameError,
-    isUpdateFullNameSuccess,
-  } = useFetchUpdateFullName();
+  const { updateFullNameMutate, isUpdateFullNameError } =
+    useFetchUpdateFullName();
   const [newFullName, setNewFullName] = useState(name);
   const [isEditingFullName, setIsEditingFullName] = useState(false);
-  const { usersData, usersDataRefetch } = useFetchUsers();
+  const { usersDataRefetch } = useFetchUsers();
   const [invalidFullNameMsg, setInvalidFullNameMsg] = useState('');
   const [validFullNameMsg, setValidFullNameMsg] = useState('');
   const [isDuplicatedFullNameChecked, setIsDuplicatedFullNameChecked] =
@@ -62,24 +59,26 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
   };
 
   const handleClickDuplicatedFullNameCheckButton = () => {
-    const { isValidFullName, msg } = checkDuplicatedFullName({
-      fullName: newFullName,
-      usersData,
-      myFullName,
+    usersDataRefetch().then((res) => {
+      if (!res.data) {
+        console.error(CHECK_MSG.ERROR);
+        return;
+      }
+      const { isValidFullName, msg } = checkDuplicatedFullName({
+        fullName: newFullName,
+        usersData: res.data,
+        myFullName,
+      });
+      if (!isValidFullName) {
+        setIsDuplicatedFullNameChecked(false);
+        setValidFullNameMsg('');
+        setInvalidFullNameMsg(msg);
+      } else {
+        setValidFullNameMsg(msg);
+        setInvalidFullNameMsg('');
+        setIsDuplicatedFullNameChecked(true);
+      }
     });
-
-    if (!usersData) {
-      console.error(`${CHECK_MSG.ERROR}`);
-      return;
-    }
-    if (!isValidFullName) {
-      setInvalidFullNameMsg(msg);
-      setValidFullNameMsg('');
-    } else {
-      setValidFullNameMsg(msg);
-      setInvalidFullNameMsg('');
-      setIsDuplicatedFullNameChecked(true);
-    }
   };
 
   useEffect(() => {
@@ -88,12 +87,6 @@ const useUpdateFullName = ({ name }: useUpdateFullNameProps) => {
       setNewFullName(name);
     }
   }, [isUpdateFullNameError, setNewFullName, name]);
-
-  useEffect(() => {
-    if (isUpdateFullNameSuccess) {
-      usersDataRefetch();
-    }
-  }, [isUpdateFullNameSuccess, usersDataRefetch]);
 
   return {
     newFullName,

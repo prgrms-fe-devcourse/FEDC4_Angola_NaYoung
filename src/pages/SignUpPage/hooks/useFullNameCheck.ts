@@ -16,7 +16,7 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
     useState<boolean>(false);
   const [validFullNameMsg, setValidFullNameMsg] = useState<string>('');
   const [invalidFullNameMsg, setInvalidFullNameMsg] = useState<string>('');
-  const { usersData, isUsersError } = useFetchUsers();
+  const { usersDataRefetch } = useFetchUsers();
 
   const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
     const { isValidFullName, msg } = checkFullNamePattern({
@@ -37,43 +37,26 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
     }
   };
 
-  // const handleClickDuplicatedEmailCheckBtn = () => {
-  //   usersDataRefetch().then((res) => {
-  //     if (!res.data) {
-  //       console.error(MSG.ERROR.DUPLICATE_CHECK);
-  //       return;
-  //     }
-  //     const { isValidEmail, msg } = checkDuplicatedEmail({
-  //       email,
-  //       usersData: res.data,
-  //     });
-  //     if (!isValidEmail) {
-  //       setValidEmailMsg('');
-  //       setInvalidEmailMsg(msg);
-  //     } else {
-  //       setValidEmailMsg(msg);
-  //       setIsDuplicatedEmailChecked(true);
-  //     }
-  //   });
-  // };
-
   const handleClickDuplicatedFullNameCheckBtn = () => {
-    const { isValidFullName, msg } = checkDuplicatedFullName({
-      fullName,
-      usersData,
+    usersDataRefetch().then((res) => {
+      if (!res.data) {
+        console.error(MSG.ERROR.DUPLICATE_CHECK);
+        return;
+      }
+      const { isValidFullName, msg } = checkDuplicatedFullName({
+        fullName,
+        usersData: res.data,
+      });
+      if (!isValidFullName) {
+        setIsDuplicatedFullNameChecked(false);
+        setValidFullNameMsg('');
+        setInvalidFullNameMsg(msg);
+      } else {
+        setValidFullNameMsg(msg);
+        setInvalidFullNameMsg('');
+        setIsDuplicatedFullNameChecked(true);
+      }
     });
-
-    if (isUsersError || !usersData) {
-      console.error(MSG.ERROR.DUPLICATE_CHECK);
-      return;
-    }
-    if (!isValidFullName) {
-      setValidFullNameMsg('');
-      setInvalidFullNameMsg(msg);
-    } else {
-      setValidFullNameMsg(msg);
-      setIsDuplicatedFullNameChecked(true);
-    }
   };
 
   return {
