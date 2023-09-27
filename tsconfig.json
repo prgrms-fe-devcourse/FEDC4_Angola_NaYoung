@@ -5,9 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    "jsxImportSource": "@emotion/react",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -21,7 +19,34 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      // all files
+      "@apis/*": ["./src/apis/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@store/*": ["./src/store/*"],
+      "@storage/*": ["./src/storage/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@type/*": ["./src/types/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@routes/*": ["./src/routes/*"],
+      // for index files
+      "@apis": ["./src/apis"],
+      "@pages": ["./src/pages"],
+      "@components": ["./src/components"],
+      "@hooks": ["./src/hooks"],
+      "@store": ["./src/store"],
+      "@storage": ["./src/storage"],
+      "@utils": ["./src/utils"],
+      "@styles": ["./src/styles"],
+      "@type": ["./src/types"],
+      "@constants": ["./src/constants"],
+      "@routes": ["./src/routes"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

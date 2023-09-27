@@ -10,9 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "axios": "^1.5.0",
+    "emotion-rgba": "^0.0.12",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-canvas-confetti": "^1.4.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.15.0",
+    "react-spinners": "^0.13.8",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
