@@ -75,7 +75,6 @@ const MyInfo = ({
   const { handleClickLogOut, isLogOutModalOpen, setIsLogOutModalOpen } =
     useLogOut();
 
-  console.log(isDuplicatedFullNameChecked);
   return (
     <MyInfoWrapper>
       <MyProfileContainer>
@@ -163,7 +162,7 @@ const MyInfo = ({
                 borderRadius: '50%',
                 padding: '0px',
               }}
-              disabled={!isDuplicatedFullNameChecked && !validFullNameMsg}>
+              disabled={!isDuplicatedFullNameChecked}>
               <Icon
                 name="check"
                 size="20"
@@ -400,6 +399,8 @@ const InputBox = styled.div`
   flex-direction: column;
   gap: 10px;
   position: relative;
+  width: 300px;
+  line-height: 1.4;
 `;
 
 const Input = styled.input`
