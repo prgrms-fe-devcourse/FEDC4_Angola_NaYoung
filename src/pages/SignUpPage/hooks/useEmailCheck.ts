@@ -14,7 +14,7 @@ const useEmailCheck = ({ setIsSubmitted }: useEmailCheckProps) => {
     useState<boolean>(false);
   const [validEmailMsg, setValidEmailMsg] = useState<string>('');
   const [invalidEmailMsg, setInvalidEmailMsg] = useState<string>('');
-  const { usersData, isUsersError } = useFetchUsers();
+  const { usersDataRefetch } = useFetchUsers();
 
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     const { isValidEmail, msg } = checkEmailPattern({
@@ -36,19 +36,23 @@ const useEmailCheck = ({ setIsSubmitted }: useEmailCheckProps) => {
   };
 
   const handleClickDuplicatedEmailCheckBtn = () => {
-    const { isValidEmail, msg } = checkDuplicatedEmail({ email, usersData });
-
-    if (isUsersError || !usersData) {
-      console.error(MSG.ERROR.DUPLICATE_CHECK);
-      return;
-    }
-    if (!isValidEmail) {
-      setValidEmailMsg('');
-      setInvalidEmailMsg(msg);
-    } else {
-      setValidEmailMsg(msg);
-      setIsDuplicatedEmailChecked(true);
-    }
+    usersDataRefetch().then((res) => {
+      if (!res.data) {
+        console.error(MSG.ERROR.DUPLICATE_CHECK);
+        return;
+      }
+      const { isValidEmail, msg } = checkDuplicatedEmail({
+        email,
+        usersData: res.data,
+      });
+      if (!isValidEmail) {
+        setValidEmailMsg('');
+        setInvalidEmailMsg(msg);
+      } else {
+        setValidEmailMsg(msg);
+        setIsDuplicatedEmailChecked(true);
+      }
+    });
   };
 
   return {

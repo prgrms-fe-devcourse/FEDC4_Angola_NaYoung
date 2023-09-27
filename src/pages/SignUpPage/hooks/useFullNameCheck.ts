@@ -37,6 +37,26 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
     }
   };
 
+  // const handleClickDuplicatedEmailCheckBtn = () => {
+  //   usersDataRefetch().then((res) => {
+  //     if (!res.data) {
+  //       console.error(MSG.ERROR.DUPLICATE_CHECK);
+  //       return;
+  //     }
+  //     const { isValidEmail, msg } = checkDuplicatedEmail({
+  //       email,
+  //       usersData: res.data,
+  //     });
+  //     if (!isValidEmail) {
+  //       setValidEmailMsg('');
+  //       setInvalidEmailMsg(msg);
+  //     } else {
+  //       setValidEmailMsg(msg);
+  //       setIsDuplicatedEmailChecked(true);
+  //     }
+  //   });
+  // };
+
   const handleClickDuplicatedFullNameCheckBtn = () => {
     const { isValidFullName, msg } = checkDuplicatedFullName({
       fullName,
