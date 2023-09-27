@@ -149,7 +149,8 @@ const MyInfo = ({
                 height: '40px',
                 padding: '0',
                 fontSize: `${ANGOLA_STYLES.textSize.text}`,
-              }}>
+              }}
+              disabled={!validFullNameMsg}>
               {CHECK_DUPLICATE_BUTTON}
             </Button>
             <Button
@@ -161,7 +162,7 @@ const MyInfo = ({
                 borderRadius: '50%',
                 padding: '0px',
               }}
-              disabled={!validFullNameMsg}>
+              disabled={!isDuplicatedFullNameChecked}>
               <Icon
                 name="check"
                 size="20"
@@ -398,6 +399,8 @@ const InputBox = styled.div`
   flex-direction: column;
   gap: 10px;
   position: relative;
+  width: 300px;
+  line-height: 1.4;
 `;
 
 const Input = styled.input`

@@ -17,8 +17,6 @@ interface checkDuplicatedEmailProps {
 
 interface checkFullNamePatternProps {
   fullName: string;
-  usersData?: User[];
-  myFullName?: string;
 }
 
 interface checkDuplicatedFullNameProps {
@@ -66,8 +64,6 @@ export const checkDuplicatedEmail = ({
 
 export const checkFullNamePattern = ({
   fullName,
-  usersData,
-  myFullName,
 }: checkFullNamePatternProps) => {
   const trimmedFullName = fullName.trim();
 
@@ -81,14 +77,8 @@ export const checkFullNamePattern = ({
   ) {
     msg = '닉네임은 3자리 이상 8자리 이하 문자 또는 숫자로 구성하여야 합니다.';
     isValidFullName = false;
-  } else if (
-    myFullName !== fullName &&
-    usersData?.find((user) => user.fullName === fullName)
-  ) {
-    msg = '이미 가입된 닉네임입니다.';
-    isValidFullName = false;
   } else {
-    msg = '사용할 수 있는 닉네임입니다.';
+    msg = '유효한 닉네임 형식입니다.';
     isValidFullName = true;
   }
   return { msg, isValidFullName };
@@ -97,11 +87,15 @@ export const checkFullNamePattern = ({
 export const checkDuplicatedFullName = ({
   fullName,
   usersData,
+  myFullName,
 }: checkDuplicatedFullNameProps) => {
   let isValidFullName;
   let msg;
 
-  if (usersData?.find((user) => user.fullName === fullName)) {
+  if (
+    myFullName !== fullName &&
+    usersData?.find((user) => user.fullName === fullName)
+  ) {
     msg = '이미 가입된 닉네임입니다.';
     isValidFullName = false;
   } else {
