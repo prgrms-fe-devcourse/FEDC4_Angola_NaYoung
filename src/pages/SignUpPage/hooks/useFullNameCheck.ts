@@ -21,7 +21,6 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
   const handleChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
     const { isValidFullName, msg } = checkFullNamePattern({
       fullName: e.target.value,
-      usersData,
     });
     setFullName(e.target.value);
     setIsDuplicatedFullNameChecked(false);
@@ -30,13 +29,11 @@ const useFullNameCheck = ({ setIsSubmitted }: useFullNameCheckProps) => {
 
     if (!e.target.value) {
       setInvalidFullNameMsg(MSG.WARNING.EMPTY.FULL_NAME);
-    } else if (msg === '이미 가입된 닉네임입니다.') {
-      setValidFullNameMsg('닉네임 형식이 올바릅니다.');
     } else if (!isValidFullName) {
       setInvalidFullNameMsg(msg);
     } else {
       setInvalidFullNameMsg('');
-      setValidFullNameMsg('닉네임 형식이 올바릅니다.');
+      setValidFullNameMsg(msg);
     }
   };
 

@@ -75,6 +75,7 @@ const MyInfo = ({
   const { handleClickLogOut, isLogOutModalOpen, setIsLogOutModalOpen } =
     useLogOut();
 
+  console.log(isDuplicatedFullNameChecked);
   return (
     <MyInfoWrapper>
       <MyProfileContainer>
@@ -149,7 +150,8 @@ const MyInfo = ({
                 height: '40px',
                 padding: '0',
                 fontSize: `${ANGOLA_STYLES.textSize.text}`,
-              }}>
+              }}
+              disabled={!validFullNameMsg}>
               {CHECK_DUPLICATE_BUTTON}
             </Button>
             <Button
@@ -161,7 +163,7 @@ const MyInfo = ({
                 borderRadius: '50%',
                 padding: '0px',
               }}
-              disabled={!validFullNameMsg}>
+              disabled={!isDuplicatedFullNameChecked && !validFullNameMsg}>
               <Icon
                 name="check"
                 size="20"
