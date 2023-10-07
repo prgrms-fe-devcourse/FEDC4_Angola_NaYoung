@@ -74,6 +74,10 @@ const LoginContainer = styled.div`
   @media screen and (max-width: 700px) {
     padding: 40px;
   }
+  @media screen and (max-width: 400px) {
+    padding: 0;
+    padding-bottom: 30px;
+  }
 `;
 
 const Form = styled.form`
