@@ -40,12 +40,21 @@ const InputEmail = ({
           disabled={invalidEmailMsg || validEmailMsg == '' ? true : false}
           type="button"
           onClick={handleClickDuplicatedEmailCheckBtn}
-          style={{
-            width: '100px',
-            height: '36px',
-            padding: '8px 0px',
-            fontSize: ANGOLA_STYLES.textSize.titleSm,
-          }}>
+          style={
+            screen.width > 400
+              ? {
+                  width: '100px',
+                  height: '36px',
+                  padding: '8px 0px',
+                  fontSize: ANGOLA_STYLES.textSize.titleSm,
+                }
+              : {
+                  width: '76px',
+                  height: '28px',
+                  padding: '6px 0px',
+                  fontSize: '14px',
+                }
+          }>
           {BUTTON.DUPLICATE_CHECK}
         </Button>
       </InputContainer>

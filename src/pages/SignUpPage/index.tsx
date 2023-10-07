@@ -134,10 +134,19 @@ const SignUpPage = () => {
         <Button
           type="submit"
           size="md"
-          style={{
-            width: '150px',
-            fontSize: ANGOLA_STYLES.textSize.title,
-          }}
+          style={
+            screen.width > 400
+              ? {
+                  width: '150px',
+                  fontSize: ANGOLA_STYLES.textSize.title,
+                }
+              : {
+                  width: '120px',
+                  height: '40px',
+                  padding: '0px',
+                  fontSize: ANGOLA_STYLES.textSize.text,
+                }
+          }
           disabled={isSignUpDisabled}>
           {BUTTON.SIGN_UP}
         </Button>
