@@ -123,6 +123,10 @@ const DoubleCheckIcon = styled.div`
   right: 1.5rem;
   top: 50%;
   transform: translate(0, -50%);
+
+  @media screen and (max-width: 350px) {
+    display: none;
+  }
 `;
 
 const InputWarning = styled.div`
