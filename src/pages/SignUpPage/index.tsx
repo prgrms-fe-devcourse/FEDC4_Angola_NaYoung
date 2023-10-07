@@ -184,6 +184,17 @@ const SignUpContainer = styled.div`
   @media only screen and (max-width: 1024px) {
     padding: 0px;
   }
+
+  @media only screen and (max-width: 700px) {
+    height: auto;
+    padding: 0px;
+    padding-bottom: 30px;
+  }
+
+  @media only screen and (min-width: 1024px) and (max-height: 800px) {
+    height: auto;
+    padding-bottom: 30px;
+  }
 `;
 
 const Form = styled.form`
