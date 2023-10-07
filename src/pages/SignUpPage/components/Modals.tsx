@@ -65,8 +65,16 @@ const Content = styled.div`
   padding: 20px;
   height: 100%;
   gap: 2rem;
+
+  @media screen and (max-width: 400px) {
+    padding: 10px 0;
+  }
 `;
 
 const Msg = styled.div`
   font-size: ${ANGOLA_STYLES.textSize.titleLg};
+
+  @media screen and (max-width: 400px) {
+    font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  }
 `;
