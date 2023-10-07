@@ -91,6 +91,9 @@ const Input = styled.input`
     @media (max-width: 700px) {
       font-size: 8px;
     }
+    @media (max-width: 550px) {
+      color: transparent;
+    }
   }
 
   &:focus {
@@ -104,6 +107,10 @@ const EyeIcon = styled.div`
   top: 50%;
   transform: translate(0, -50%);
   cursor: pointer;
+
+  @media screen and (max-width: 550px) {
+    display: none;
+  }
 `;
 
 const InputWarning = styled.div`

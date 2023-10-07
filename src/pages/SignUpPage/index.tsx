@@ -191,6 +191,12 @@ const SignUpContainer = styled.div`
     padding-bottom: 30px;
   }
 
+  @media only screen and (max-width: 400px) {
+    width: calc(100% + 80px);
+    margin: -32px -40px 0 -40px;
+    padding-top: 30px;
+  }
+
   @media only screen and (min-width: 1024px) and (max-height: 800px) {
     height: auto;
     padding-bottom: 30px;
@@ -230,5 +236,9 @@ const Label = styled.label`
     text-align: center;
     padding-left: 0px;
     font-size: ${ANGOLA_STYLES.textSize.titleSm};
+  }
+
+  @media screen and (max-width: 320px) {
+    font-size: ${ANGOLA_STYLES.textSize.text};
   }
 `;
