@@ -9,6 +9,8 @@
 <h1>앙~골라</h1>
 
 <a href="https://fedc4-angola.vercel.app/">앙골라 바로가기</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.notion.so/prgrms/5a8ff9724e7c42d5b956fe64e122ec50?pvs=4">팀 노션</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.notion.so/prgrms/3d14556128154f5e860b67387eb8157b?pvs=4">기획서</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.notion.so/prgrms/b92dcc67b7b04a3da74d3eb29dcc1fdc?pvs=4">개발 문화</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://drive.google.com/file/d/1HEDd-Is6QJXpBssBEO64ckw0UFMVXiK6/view?usp=sharing">발표 영상</a>
+
 <br/>
 
 
