@@ -1,182 +1,84 @@
-## 앙~골라
 
-### 0. 개발 순서
+<div align="center">
+   
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fprgrms-fe-devcourse%2FFEDC4_Angola_NaYoung&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-### 프로젝트 기초 세팅 이슈 번호 #32
+<img width="800" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/cb858258-0444-46d9-b8dd-289ab316ddaf">
 
-**Issue > branch 파기 > kanban 보드 > 개발 > 커밋 > PR > Merge > Issue 닫기 & kanban 보드**
 
-### 1. Branch 전략
+<h1>앙~골라</h1>
 
----
-
-1. **브랜치 관리**
-
-```markdown
-main > dev > feature (기능 단위)
-```
-
-1. **브랜치 명명**
-
-```markdown
-feat/#이슈번호/기능명
-
-ex) feat/#12/make-post
-```
-
-1. **주의사항**
-
-- **브랜치는 삭제하지 않는다.**
-- 기능명 작성 시, 단어가 여러 개면 `-` 로 구분한다.
-
-### 2. Commit 규칙
-
----
-
-- 모든 커밋은 **[추가, 삭제 이동, 수정]**으로 끝낼 것
-- **커밋을 자주** 하자
-- 커밋 메세지 형식 : `feat: #12 - post 삭제 기능 추가`
-
-| prefix   | 해당 내용                                                    |
-| -------- | ------------------------------------------------------------ |
-| init     | 프로젝트 첫 세팅                                             |
-| feat     | 기능 구현, 사용자 입장에서 변화가 있을 경우                  |
-| refactor | 사용자 입장에서 변화가 없는 코드, 파일명 폴더명 변경 및 이동 |
-| chore    | 주석, 추가적인 의존성 설치, 리드미 수정, 기타                |
-| style    | CSS만 수정                                                   |
-| fix      | 버그 수정                                                    |
-
-- 커밋 메세지 Issue와 연결하기
-  [[개발] Github 이슈와 커밋 메시지를 연결해보자](https://devport.tistory.com/12)
-
-### 3. 디렉토리 구조
-
----
-
-- 각 폴더에 `index.ts` 넣기 (`export` 되는 것만)
-
-```markdown
-├── public
-| └── assets
-├── src
-│ ├── components
-| | └── Post // default 컴포넌트에서 분리가 발생하면 여기에 넣기
-| | └── index.tsx
-│ ├── types // 명세 + 한 번 이상 쓰이는 타입 파일
-| ├── pages
-| ├── constants // 스타일 상수, 그냥 상수는 파일로 분리!
-| ├── hooks
-| ├── apis
-| ├── App.tsx
-| ├── index.tsx
-| └── index.css // 전역 스타일
-└──
-```
-
-### 4. Code 규칙
-
----
-
-```tsx
-import React from 'react'
-
-const CONSTANT = 70 // 상수명 - import 문 바로 밑에
-const API_ENDPOINT = "Angola"
-
-interface 컴포넌트props { } // props 타입 별칭 (컴포넌트명+props)
-
-const 컴포넌트 = ({}: 컴포넌트props) => {
-	// ...
-
-	return ();
-}
-
-export default 컴포넌트;
-
-const Container = styled.div` // styled 부분 컴포넌트 아래에 쓰기
- // ...
-`
-```
-
-- 파일명 - 파스칼 케이스 ex) PostList.tsx
-- 함수명 - 함수 네이밍은 동사 + 명사 → getValue | getRandomNumber | fetchUsers | onChangeInput
-- 변수명, 함수명 작성 시, 줄임말 쓰지 않고 풀 네임 (btn x → button o)
-  - Nav는 예외적으로 가능
-- 이벤트 넣는 칸 이름 : on~ / 이벤트 발생 시 작동하는 함수 이름 : handle~
-- 중괄호는 생략하지 않는다.
-
-이벤트 핸들러
-
-- 현재 컴포넌트 이벤트 핸들러 - on + eventName : on[이벤트][이벤트 대상]
-- props로 받는 이벤트 핸들러 - handle : handle[이벤트][이벤트 대상]
-- 함수 네이밍 규칙 동일하게 동사 + 명사 규칙을 따릅니다.
-- 화살표 함수 사용
-- `styled` 부분 컴포넌트 아래에 쓰기
-- 타입
-  - 객체: `interface`
-  - 복잡한 타입(union, intersection..), 유틸(ReturnType, Omit..) 등: `type`
-- boolean 타입
-  - 변수명: is + -
-  - 함수명: check + -
-- css 크기 단위: px, rem (보류), 함수, 짝수
-- 함수 타입 필요시에만 사용
-- 비구조화 할당 - 추후 논의..
-- 이벤트 객체 네임 - `e`
-- 주석 - TODO, FIX
-
-```tsx
-// TODO: 로그인 기능 구현하기
-// FIX: ~ 버그 수정하기
-```
-
-- import order: react > 라이브러리 > component > hook
-- alias 절대 경로 /src ⇒ `@`
-- 같은 폴더 위치라면 상대경로로 그 외에는 절대경로 사용
-
-### 5. Issue 및 PR 전략
-
----
-
-- 머지데이 - 스프린트 끝날 때 다같이 머지 하자
-- 스크럼 시간에 스프린트도 유동적으로
-
-**Issue 템플릿**
-
-> **Issue 제목 : [Prefix] - 구현 내용**
-
-- **Prefix 내용**
-  **인증, 포스트 피드, 상단 메뉴, 포스트, 검색, 포스트 작성, 유저 페이지, 마이 페이지, 알림, 404**
-
-```markdown
-## 📑 구현 사항
-
-- [ ] 구현할 사항 작성
-
-</br>
-
-## 🚧 특이 사항
-
-이슈를 읽을 때 참고할 사항 작성
-```
-
-**PR 템플릿**
-
-> **PR 제목 : [Prefix] - 구현 내용 (간단히 한 줄로)**
-
-```markdown
-## 📑 구현 사항
-
-- [ ] 구현한 사항 작성
-
+<a href="https://fedc4-angola.vercel.app/">앙골라 바로가기</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.notion.so/prgrms/5a8ff9724e7c42d5b956fe64e122ec50?pvs=4">팀 노션</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.notion.so/prgrms/3d14556128154f5e860b67387eb8157b?pvs=4">기획서</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.notion.so/prgrms/b92dcc67b7b04a3da74d3eb29dcc1fdc?pvs=4">개발 문화</a>
 <br/>
 
-## 🚧 특이 사항
 
-- [ ]
+</div>
 
-</br>
-
-## 🚨관련 이슈
-
-#이슈번호
+## 실행 방법
 ```
+npm install
+```
+
+```
+npm run dev
+npm run build && npm run preview
+```
+
+## 팀원 소개
+
+<table>
+  <tr>
+    <td><img src="https://avatars.githubusercontent.com/u/39931980?v=4" width="120" height="120"/></td>
+    <td><img src="https://avatars.githubusercontent.com/u/109654823?v=4" width="120" height="120"/></td>
+    <td><img src="https://avatars.githubusercontent.com/u/88622675?v=4" width="120" height="120"/></td>
+    <td><img src="https://avatars.githubusercontent.com/u/31370590?v=4" width="120" height="120"/></td>
+    <td><img src="https://avatars.githubusercontent.com/u/62418379?v=4" width="120" height="120"/></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/dudwns">김영준</a><br><br><span>홈 페이지<br>검색 페이지<br>404 페이지</span>
+    </td>
+     <td align="center"><a href="https://github.com/JIY00N2">이지윤</a><br><br><span>유저 페이지<br>마이 페이지<br>문서화 작업</span></a>
+    </td>
+    <td align="center"><a href="https://github.com/hayamaster">김주하</a><br><br><span>포스트 페이지<br>회원가입<br>로그인</span>
+    </td>
+    <td align="center"><a href="https://github.com/MinwooP">박민우</a><br><br><span>포스트 작성<br>알림 기능<br>로딩 기능</span></a>
+    </td>
+    <td align="center"><a href="https://github.com/chasj0326">차세진</a><br><br><span>포스트 컴포넌트<br>레벨 기능<br>UI 디자인</span></a>
+    </td>
+  </tr>
+</table>
+
+## 서비스 개요
+#### 앙골라란 ?
+- **밸런스 게임 플랫폼**
+- **한 주제에 대해 사용자들이 A와 B 중 하나를 선택하여 각자의 의견 공유하는 플랫폼**
+
+
+#### 서비스 기능 
+- **인증**
+<img width="537" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/40e4adae-5ffe-462b-83c7-9256a78d1f13">
+
+- **포스트**
+<img width="538" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/adc3cd4d-9297-411d-8eb0-f54caec88de6">
+
+- **댓글 (투표)**
+<img width="539" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/43784f69-e0d0-44a8-b1c0-735ff1787631">
+
+- **좋아요 & 알림**
+<img width="535" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/0fd4ee8f-aa10-4472-8105-5cffef73053c">
+
+- **검색**
+<img width="535" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/b2c6144c-72b2-4bf6-bd03-46af518fa9d4">
+
+- **마이페이지 & 유저페이지**
+<img width="533" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/26c3c32c-0edc-4638-9271-561a9f0d2d75">
+
+- **레벨 기능**
+<img width="536" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/5669f442-efc5-4329-9743-9f177dde1915">
+  
+
+
+## 기술 스택
+
+<img width="400" alt="image" src="https://github.com/prgrms-fe-devcourse/FEDC4_Angola_NaYoung/assets/109654823/2a0d4273-a4af-40f3-825e-b7af9b032167">
+
