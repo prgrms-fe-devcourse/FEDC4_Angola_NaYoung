@@ -113,6 +113,10 @@ const EyeIcon = styled.div`
   top: 50%;
   transform: translate(0, -50%);
   cursor: pointer;
+
+  @media screen and (max-width: 550px) {
+    display: none;
+  }
 `;
 
 const InputWarning = styled.div`
