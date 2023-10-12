@@ -5,7 +5,6 @@ import { ANGOLA_STYLES } from '@styles/commonStyles';
 import { TabBarList } from './components';
 import { SELECT_OPTION } from './constants';
 import { useSelect } from './hooks';
-import { getTruncatedKeyword } from './utils';
 
 interface HeaderProps {
   title: string;
@@ -63,8 +62,8 @@ const Header = ({ title, sortProps, keyword }: HeaderProps) => {
       )}
 
       <Title className={keyword ? 'search-result' : ''}>
-        {keyword ? getTruncatedKeyword({ keyword }) || '' : null}
-        {title}
+        <Keyword>{keyword}</Keyword>
+        <SubText>{title}</SubText>
       </Title>
 
       {keyword ? (
@@ -142,6 +141,7 @@ const SortIcon = styled.div`
 const Title = styled.div`
   color: ${ANGOLA_STYLES.color.white};
   font-size: ${ANGOLA_STYLES.textSize.title};
+  display: flex;
 
   @media (max-width: 1000px) {
     font-size: ${ANGOLA_STYLES.textSize.titleSm};
@@ -154,6 +154,19 @@ const Title = styled.div`
   @media (max-width: 450px) {
     font-size: ${ANGOLA_STYLES.textSize.text};
   }
+`;
+
+const Keyword = styled.div`
+  color: ${ANGOLA_STYLES.color.white};
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+`;
+
+const SubText = styled.div`
+  color: ${ANGOLA_STYLES.color.white};
 `;
 
 const TabBar = styled.ul`
