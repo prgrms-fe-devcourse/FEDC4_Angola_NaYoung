@@ -158,7 +158,6 @@ const Title = styled.div`
 
 const Keyword = styled.div`
   color: ${ANGOLA_STYLES.color.white};
-  display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
